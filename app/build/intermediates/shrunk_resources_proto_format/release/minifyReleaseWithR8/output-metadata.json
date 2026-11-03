@@ -1,0 +1,20 @@
+{
+  "version": 3,
+  "artifactType": {
+    "type": "SHRUNK_RESOURCES_PROTO_FORMAT",
+    "kind": "Directory"
+  },
+  "applicationId": "com.sandalia.stockanchor",
+  "variantName": "release",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "attributes": [],
+      "versionCode": 5,
+      "versionName": "v1.0.5",
+      "outputFile": "shrunk-resources-proto-format-release.ap_"
+    }
+  ],
+  "elementType": "File"
+}

@@ -1,0 +1,1092 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:ns1="http://schemas.android.com/tools" xmlns:ns2="urn:oasis:names:tc:xliff:document:1.2" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <attr format="reference" name="nestedScrollViewStyle"/>
+    <attr format="reference" name="postSplashScreenTheme"/>
+    <attr format="dimension" name="splashScreenIconSize"/>
+    <attr format="reference" name="windowSplashScreenAnimatedIcon"/>
+    <attr format="integer" name="windowSplashScreenAnimationDuration"/>
+    <attr format="color" name="windowSplashScreenBackground"/>
+    <attr format="color" name="windowSplashScreenIconBackgroundColor"/>
+    <bool name="enable_system_alarm_service_default">true</bool>
+    <bool name="enable_system_foreground_service_default">true</bool>
+    <bool name="enable_system_job_service_default">false</bool>
+    <bool name="workmanager_test_configuration">false</bool>
+    <color name="androidx_core_ripple_material_light">#1f000000</color>
+    <color name="androidx_core_secondary_text_default_material_light">#8a000000</color>
+    <color name="brand_navy">#0F2A44</color>
+    <color name="brand_teal">#0E9F8E</color>
+    <color name="call_notification_answer_color">#1d873b</color>
+    <color name="call_notification_decline_color">#d93025</color>
+    <color name="common_google_signin_btn_text_dark_default">@android:color/white</color>
+    <color name="common_google_signin_btn_text_dark_disabled">#1F000000</color>
+    <color name="common_google_signin_btn_text_dark_focused">@android:color/black</color>
+    <color name="common_google_signin_btn_text_dark_pressed">@android:color/white</color>
+    <color name="common_google_signin_btn_text_light_default">#90000000</color>
+    <color name="common_google_signin_btn_text_light_disabled">#1F000000</color>
+    <color name="common_google_signin_btn_text_light_focused">#90000000</color>
+    <color name="common_google_signin_btn_text_light_pressed">#DE000000</color>
+    <color name="ic_launcher_background">#0F2A44</color>
+    <color name="notification_action_color_filter">#ffffffff</color>
+    <color name="notification_icon_bg_color">#ff9e9e9e</color>
+    <dimen name="compat_button_inset_horizontal_material">4dp</dimen>
+    <dimen name="compat_button_inset_vertical_material">6dp</dimen>
+    <dimen name="compat_button_padding_horizontal_material">8dp</dimen>
+    <dimen name="compat_button_padding_vertical_material">4dp</dimen>
+    <dimen name="compat_control_corner_material">2dp</dimen>
+    <dimen name="compat_notification_large_icon_max_height">320dp</dimen>
+    <dimen name="compat_notification_large_icon_max_width">320dp</dimen>
+    <dimen name="notification_action_icon_size">32dp</dimen>
+    <dimen name="notification_action_text_size">13sp</dimen>
+    <dimen name="notification_big_circle_margin">12dp</dimen>
+    <dimen name="notification_content_margin_start">8dp</dimen>
+    <dimen name="notification_large_icon_height">64dp</dimen>
+    <dimen name="notification_large_icon_width">64dp</dimen>
+    <dimen name="notification_main_column_padding_top">10dp</dimen>
+    <dimen name="notification_media_narrow_margin">@dimen/notification_content_margin_start</dimen>
+    <dimen name="notification_right_icon_size">16dp</dimen>
+    <dimen name="notification_right_side_padding_top">4dp</dimen>
+    <dimen name="notification_small_icon_background_padding">3dp</dimen>
+    <dimen name="notification_small_icon_size_as_large">24dp</dimen>
+    <dimen name="notification_subtext_size">13sp</dimen>
+    <dimen name="notification_top_pad">10dp</dimen>
+    <dimen name="notification_top_pad_large_text">5dp</dimen>
+    <dimen name="splashscreen_icon_mask_size_no_background">410dp</dimen>
+    <dimen name="splashscreen_icon_mask_size_with_background">342dp</dimen>
+    <dimen name="splashscreen_icon_mask_stroke_no_background">109dp</dimen>
+    <dimen name="splashscreen_icon_mask_stroke_with_background">92dp</dimen>
+    <dimen name="splashscreen_icon_size">?splashScreenIconSize</dimen>
+    <dimen name="splashscreen_icon_size_no_background">288dp</dimen>
+    <dimen name="splashscreen_icon_size_with_background">240dp</dimen>
+    <drawable name="notification_template_icon_bg">#3333B5E5</drawable>
+    <drawable name="notification_template_icon_low_bg">#0cffffff</drawable>
+    <item name="accessibility_action_clickable_span" type="id"/>
+    <item name="accessibility_custom_action_0" type="id"/>
+    <item name="accessibility_custom_action_1" type="id"/>
+    <item name="accessibility_custom_action_10" type="id"/>
+    <item name="accessibility_custom_action_11" type="id"/>
+    <item name="accessibility_custom_action_12" type="id"/>
+    <item name="accessibility_custom_action_13" type="id"/>
+    <item name="accessibility_custom_action_14" type="id"/>
+    <item name="accessibility_custom_action_15" type="id"/>
+    <item name="accessibility_custom_action_16" type="id"/>
+    <item name="accessibility_custom_action_17" type="id"/>
+    <item name="accessibility_custom_action_18" type="id"/>
+    <item name="accessibility_custom_action_19" type="id"/>
+    <item name="accessibility_custom_action_2" type="id"/>
+    <item name="accessibility_custom_action_20" type="id"/>
+    <item name="accessibility_custom_action_21" type="id"/>
+    <item name="accessibility_custom_action_22" type="id"/>
+    <item name="accessibility_custom_action_23" type="id"/>
+    <item name="accessibility_custom_action_24" type="id"/>
+    <item name="accessibility_custom_action_25" type="id"/>
+    <item name="accessibility_custom_action_26" type="id"/>
+    <item name="accessibility_custom_action_27" type="id"/>
+    <item name="accessibility_custom_action_28" type="id"/>
+    <item name="accessibility_custom_action_29" type="id"/>
+    <item name="accessibility_custom_action_3" type="id"/>
+    <item name="accessibility_custom_action_30" type="id"/>
+    <item name="accessibility_custom_action_31" type="id"/>
+    <item name="accessibility_custom_action_4" type="id"/>
+    <item name="accessibility_custom_action_5" type="id"/>
+    <item name="accessibility_custom_action_6" type="id"/>
+    <item name="accessibility_custom_action_7" type="id"/>
+    <item name="accessibility_custom_action_8" type="id"/>
+    <item name="accessibility_custom_action_9" type="id"/>
+    <item name="androidx_compose_ui_view_composition_context" type="id"/>
+    <item name="compose_view_saveable_id_tag" type="id"/>
+    <item name="consume_window_insets_tag" type="id"/>
+    <item name="fragment_container_view_tag" type="id"/>
+    <item name="hide_graphics_layer_in_inspector_tag" type="id"/>
+    <item name="hide_in_inspector_tag" type="id"/>
+    <item name="inspection_slot_table_set" type="id"/>
+    <item name="is_pooling_container_tag" type="id"/>
+    <item name="line1" type="id"/>
+    <item name="line3" type="id"/>
+    <item name="nav_controller_view_tag" type="id"/>
+    <item name="pooling_container_listener_holder_tag" type="id"/>
+    <item name="report_drawn" type="id"/>
+    <item name="special_effects_controller_view_tag" type="id"/>
+    <item name="tag_accessibility_actions" type="id"/>
+    <item name="tag_accessibility_clickable_spans" type="id"/>
+    <item name="tag_accessibility_heading" type="id"/>
+    <item name="tag_accessibility_pane_title" type="id"/>
+    <item name="tag_on_apply_window_listener" type="id"/>
+    <item name="tag_on_receive_content_listener" type="id"/>
+    <item name="tag_on_receive_content_mime_types" type="id"/>
+    <item name="tag_screen_reader_focusable" type="id"/>
+    <item name="tag_state_description" type="id"/>
+    <item name="tag_transition_group" type="id"/>
+    <item name="tag_unhandled_key_event_manager" type="id"/>
+    <item name="tag_unhandled_key_listeners" type="id"/>
+    <item name="tag_window_insets_animation_callback" type="id"/>
+    <item name="text" type="id"/>
+    <item name="text2" type="id"/>
+    <item name="title" type="id"/>
+    <id name="view_tree_lifecycle_owner"/>
+    <id name="view_tree_on_back_pressed_dispatcher_owner"/>
+    <id name="view_tree_saved_state_registry_owner"/>
+    <id name="view_tree_view_model_store_owner"/>
+    <item name="visible_removing_fragment_view_tag" type="id"/>
+    <item name="wrapped_composition_tag" type="id"/>
+    <integer name="default_icon_animation_duration">10000</integer>
+    <integer name="google_play_services_version">12451000</integer>
+    <integer name="m3c_window_layout_in_display_cutout_mode">1</integer>
+    <integer name="status_bar_notification_info_maxnum">999</integer>
+    <plurals name="n_invoices">
+        <item quantity="one">%1$d invoice</item>
+        <item quantity="other">%1$d invoices</item>
+    </plurals>
+    <plurals name="n_items">
+        <item quantity="one">%1$d item</item>
+        <item quantity="other">%1$d items</item>
+    </plurals>
+    <plurals name="n_products">
+        <item quantity="one">%1$d product</item>
+        <item quantity="other">%1$d products</item>
+    </plurals>
+    <plurals name="n_products_running_low">
+        <item quantity="one">%1$d product running low</item>
+        <item quantity="other">%1$d products running low</item>
+    </plurals>
+    <plurals name="n_sales">
+        <item quantity="one">%1$d sale</item>
+        <item quantity="other">%1$d sales</item>
+    </plurals>
+    <plurals name="n_warehouses">
+        <item quantity="one">%1$d warehouse</item>
+        <item quantity="other">%1$d warehouses</item>
+    </plurals>
+    <string name="a_snapshot_of_every_product_stock">A snapshot of every product, stock level, sale, purchase and movement.</string>
+    <string name="account_active">Account active</string>
+    <string name="accounts_permissions">Accounts &amp; permissions</string>
+    <string name="add">Add</string>
+    <string name="add_at_least_one_product">Add at least one product.</string>
+    <string name="add_expense">Add expense</string>
+    <string name="add_product">Add product</string>
+    <string name="add_products_to_start_a_sale">Add products to start a sale. An invoice is created automatically.</string>
+    <string name="add_stock">Add stock</string>
+    <string name="add_team_member">Add team member</string>
+    <string name="add_team_members_to_share_this">Add team members to share this inventory.</string>
+    <string name="add_the_businesses_you_buy_stock">Add the businesses you buy stock from.</string>
+    <string name="add_the_products_you_received_stock">Add the products you received. Stock increases when you save.</string>
+    <string name="add_this_device_s_products_and">Add this device\'s products and history to it as well, or just use what\'s already in the cloud?</string>
+    <string name="add_your_first_product_then_record">Add your first product, then record a purchase to put it in stock.</string>
+    <string name="address">Address</string>
+    <string name="adjust_stock_counts">Adjust stock counts</string>
+    <string name="adjustment">Adjustment</string>
+    <string name="all">All</string>
+    <string name="all_categories">All categories</string>
+    <string name="all_good">All good</string>
+    <string name="all_items_go_back_into_stock">All items go back into stock and the sale is excluded from reports.</string>
+    <string name="all_products">All products</string>
+    <string name="all_products_are_above_their_minimum">All products are above their minimum level. 🎉</string>
+    <string name="all_suppliers">All suppliers</string>
+    <string name="all_warehouses">All warehouses</string>
+    <string name="amount">Amount</string>
+    <string name="and_x_more">…and %1$s more</string>
+    <string name="androidx_startup" translatable="false">androidx.startup</string>
+    <string name="anyone_with_your_password_could_then">Anyone with your password could then sign in. Not recommended.</string>
+    <string name="app">App</string>
+    <string name="app_name" translatable="false">Stock Anchor</string>
+    <string name="ask_your_team_owner_for_the">Ask your team owner for the backups permission.</string>
+    <string name="at_least_8_characters">At least 8 characters</string>
+    <string name="authentication_code">Authentication code</string>
+    <string name="automatic_nightly_last_30_kept">Automatic nightly · last 30 kept</string>
+    <string name="available_in_source_x_x">Available in source: %1$s %2$s</string>
+    <string name="back">Back</string>
+    <string name="back_up_now">Back up now</string>
+    <string name="backup_created">Backup created</string>
+    <string name="backup_deleted">Backup deleted</string>
+    <string name="backup_restore">Backup &amp; restore</string>
+    <string name="backup_restored">Backup restored</string>
+    <string name="backups">Backups</string>
+    <string name="balance_x_x">bal %1$s %2$s</string>
+    <string name="barcode">Barcode</string>
+    <string name="barcode_is_already_used_by_x">Barcode is already used by \"%1$s\".</string>
+    <string name="basic">Basic</string>
+    <string name="basic_on_this_device">Basic · on this device</string>
+    <string name="basic_plan_data_on_this_device">Basic plan · data on this device</string>
+    <string name="best_value">BEST VALUE</string>
+    <string name="between_warehouses">Between warehouses</string>
+    <string name="billed_to">BILLED TO</string>
+    <string name="billing">Billing</string>
+    <string name="business">Business</string>
+    <string name="business_name">Business name</string>
+    <string name="business_name_on_invoices">Business name (on invoices)</string>
+    <string name="business_profile">Business profile</string>
+    <string name="business_profile_alerts_sync">Business profile, alerts, sync</string>
+    <string name="by_day_this_month">By day, this month</string>
+    <string name="by_hour_today">By hour, today</string>
+    <string name="by_month_this_year">By month, this year</string>
+    <string name="call_notification_answer_action">Answer</string>
+    <string name="call_notification_answer_video_action">Video</string>
+    <string name="call_notification_decline_action">Decline</string>
+    <string name="call_notification_hang_up_action">Hang Up</string>
+    <string name="call_notification_incoming_text">Incoming call</string>
+    <string name="call_notification_ongoing_text">Ongoing call</string>
+    <string name="call_notification_screening_text">Screening an incoming call</string>
+    <string name="can_t_reach_the_stock_anchor">Can\'t reach the Stock Anchor server. Check your internet connection.</string>
+    <string name="cancel">Cancel</string>
+    <string name="cancel_sale">Cancel sale</string>
+    <string name="cancel_sale_return_stock">Cancel sale &amp; return stock</string>
+    <string name="cancel_this_sale">Cancel this sale?</string>
+    <string name="cancelled">Cancelled</string>
+    <string name="cancelled_2">** CANCELLED **</string>
+    <string name="cart_is_empty">Cart is empty</string>
+    <string name="categories">Categories</string>
+    <string name="category">Category</string>
+    <string name="category_added">Category added</string>
+    <string name="category_deleted">Category deleted</string>
+    <string name="category_name_is_required">Category name is required.</string>
+    <string name="category_saved">Category saved</string>
+    <string name="checked_twice_a_day_and_after">Checked twice a day and after each sale</string>
+    <string name="checking">Checking…</string>
+    <string name="choose_a_category">Choose a category.</string>
+    <string name="choose_csv">Choose CSV</string>
+    <string name="choose_product">Choose product</string>
+    <string name="choose_two_different_warehouses">Choose two different warehouses.</string>
+    <string name="clear">Clear</string>
+    <string name="close_drawer">"Close navigation menu"</string>
+    <string name="close_sheet">"Close sheet"</string>
+    <string name="cloud_backup">Cloud backup</string>
+    <string name="cloud_backup_recovery">Cloud backup &amp; recovery</string>
+    <string name="cloud_backups">Cloud backups</string>
+    <string name="cloud_data_cached_on_this_device">Cloud data cached on this device will be removed. It stays safe in the cloud.</string>
+    <string name="cloud_inventory_for_growing_businesses_and">Cloud inventory for growing businesses and teams.</string>
+    <string name="cloud_server">Cloud server</string>
+    <string name="cloud_sync">Cloud sync</string>
+    <string name="cloud_synced">Cloud (synced)</string>
+    <string name="cloud_x">Cloud · %1$s</string>
+    <string name="code">Code</string>
+    <string name="columns_name_sku_barcode_category_warehouse">Columns: name, sku, barcode, category, warehouse, quantity, unit_cost, sale_price. Products are matched by SKU, then barcode, then name; missing products and categories are created. Quantities are added to stock.</string>
+    <string msgid="2523291102206661146" name="common_google_play_services_enable_button">Enable</string>
+    <string msgid="227660514972886228" name="common_google_play_services_enable_text"><ns2:g id="app_name">%1$s</ns2:g> won\'t work unless you enable Google Play services.</string>
+    <string msgid="5122002158466380389" name="common_google_play_services_enable_title">Enable Google Play services</string>
+    <string msgid="7153882981874058840" name="common_google_play_services_install_button">Install</string>
+    <string name="common_google_play_services_install_text"><ns2:g id="app_name">%1$s</ns2:g> won\'t run without Google Play services, which are missing from your device.</string>
+    <string msgid="7215213145546190223" name="common_google_play_services_install_title">Get Google Play services</string>
+    <string name="common_google_play_services_notification_channel_name">Google Play services availability</string>
+    <string name="common_google_play_services_notification_ticker">Google Play services error</string>
+    <string name="common_google_play_services_unknown_issue"><ns2:g id="app_name">%1$s</ns2:g> is having trouble with Google Play services. Please try again.</string>
+    <string name="common_google_play_services_unsupported_text"><ns2:g id="app_name">%1$s</ns2:g> won\'t run without Google Play services, which are not supported by your device.</string>
+    <string msgid="6556509956452265614" name="common_google_play_services_update_button">Update</string>
+    <string msgid="9053896323427875356" name="common_google_play_services_update_text"><ns2:g id="app_name">%1$s</ns2:g> won\'t run unless you update Google Play services.</string>
+    <string msgid="6006316683626838685" name="common_google_play_services_update_title">Update Google Play services</string>
+    <string name="common_google_play_services_updating_text"><ns2:g id="app_name">%1$s</ns2:g> won\'t run without Google Play services, which are currently updating.</string>
+    <string name="common_google_play_services_wear_update_text">New version of Google Play services needed. It will update itself shortly.</string>
+    <string name="common_open_on_phone">Open on phone</string>
+    <string name="common_signin_button_text">Sign in</string>
+    <string name="common_signin_button_text_long">Sign in with Google</string>
+    <string name="complete_sale">Complete sale</string>
+    <string name="completed_sales_and_their_invoices_appear">Completed sales and their invoices appear here.</string>
+    <string name="confirm_your_password_to_continue">Confirm your password to continue.</string>
+    <string name="continue_label">Continue</string>
+    <string name="continue_on_basic">Continue on Basic</string>
+    <string name="copied">Copied</string>
+    <string name="copy">Copy</string>
+    <string name="copy_codes">Copy codes</string>
+    <string name="cost_of_goods">Cost of goods</string>
+    <string name="cost_price">Cost price</string>
+    <string name="cost_x">Cost %1$s</string>
+    <string name="could_not_open_the_file">Could not open the file.</string>
+    <string name="could_not_open_the_file_for">Could not open the file for writing.</string>
+    <string name="couldn_t_reach_google_play_check">Couldn\'t reach Google Play. Check your internet connection and try again.</string>
+    <string name="count">Count</string>
+    <string name="counted_quantity">Counted quantity</string>
+    <string name="create_account">Create account</string>
+    <string name="create_backup">Create backup</string>
+    <string name="create_your_cloud_account">Create your cloud account</string>
+    <string name="csv_export_import">CSV export &amp; import</string>
+    <string name="csv_files_for_excel_google_sheets">CSV files for Excel / Google Sheets</string>
+    <string name="csv_import">CSV import</string>
+    <string name="currency">Currency</string>
+    <string name="currency_symbol">Currency symbol</string>
+    <string name="customer_name">Customer name *</string>
+    <string name="customer_name_is_required">Customer name is required.</string>
+    <string name="customer_phone_or_invoice_no">Customer, phone or invoice no.</string>
+    <string name="customer_x_x">Customer: %1$s%2$s</string>
+    <string name="daily_reminders_for_products_below_minimum">Daily reminders for products below minimum</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="data_stored">Data stored</string>
+    <string name="default_error_message">"Invalid input"</string>
+    <string name="default_for_sales_purchases">Default for sales &amp; purchases</string>
+    <string name="default_label">Default</string>
+    <string name="default_popup_window_title" ns1:ignore="ExtraTranslation">"Pop-Up Window"</string>
+    <string name="default_warehouse_lower">default warehouse</string>
+    <string name="delete">Delete</string>
+    <string name="delete_backup">Delete backup?</string>
+    <string name="delete_expense">Delete expense?</string>
+    <string name="delete_product">Delete product?</string>
+    <string name="delete_x">Delete “%1$s”?</string>
+    <string name="description">Description</string>
+    <string name="discount">Discount</string>
+    <string name="discount_x">Discount: -%1$s</string>
+    <string name="dropdown_menu">"Dropdown menu"</string>
+    <string name="edit">Edit</string>
+    <string name="edit_category">Edit category</string>
+    <string name="edit_expense">Edit expense</string>
+    <string name="edit_product">Edit product</string>
+    <string name="edit_supplier">Edit supplier</string>
+    <string name="edit_warehouse">Edit warehouse</string>
+    <string name="edit_x">Edit %1$s</string>
+    <string name="email">Email</string>
+    <string name="email_login">Email (login)</string>
+    <string name="ends">Ends</string>
+    <string name="enter_an_amount_greater_than_zero">Enter an amount greater than zero.</string>
+    <string name="enter_one_of_the_recovery_codes">Enter one of the recovery codes you saved. Each code works once.</string>
+    <string name="enter_the_6_digit_code_from">Enter the 6-digit code from your authenticator app.</string>
+    <string name="enter_the_quantity_you_physically_counted">Enter the quantity you physically counted. The difference is logged as an adjustment.</string>
+    <string name="estimated_profit">Estimated profit</string>
+    <string name="every_stock_change">Every stock change</string>
+    <string name="every_time_you_add_stock_it">Every time you add stock it is recorded here.</string>
+    <string name="everything_in_basic_plus">Everything in Basic, plus</string>
+    <string name="expense">Expense</string>
+    <string name="expense_deleted">Expense deleted</string>
+    <string name="expense_saved">Expense saved</string>
+    <string name="expenses">Expenses</string>
+    <string name="expenses_are_a_premium_feature">Expenses are a Premium feature.</string>
+    <string name="expenses_net_profit">Expenses &amp; net profit</string>
+    <string name="export">Export</string>
+    <string name="export_csv">Export CSV</string>
+    <string name="export_products_stock_sales_and_movements">Export products, stock, sales and movements, or bulk-load stock from a spreadsheet.</string>
+    <string name="exported_x_x_rows">Exported %1$s %2$s rows</string>
+    <string name="filter">Filter</string>
+    <string name="filtered">Filtered</string>
+    <string name="free_trial_x">Free trial %1$s</string>
+    <string name="from">From</string>
+    <string name="full_re_sync">Full re-sync</string>
+    <string name="full_sync_complete">Full sync complete</string>
+    <string name="generated_by_stock_anchor_page_x">Generated by Stock Anchor  •  Page %1$s of %2$s</string>
+    <string name="get_notified_before_you_run_out">Get notified before you run out.</string>
+    <string name="get_notified_when_products_drop_below">Get notified when products drop below their minimum level.</string>
+    <string name="google_play_billing_error_x_x">Google Play Billing error %1$s%2$s</string>
+    <string name="google_play_can_t_sell_subscriptions">Google Play can\'t sell subscriptions to this copy of the app. Install Stock Anchor from Google Play (testers: through the testing link) with the Play Store signed in, then try again.</string>
+    <string name="google_play_doesn_t_offer_this">Google Play doesn\'t offer this subscription to this app. Install Stock Anchor from Google Play (testers: use the testing link), and make sure the subscription \"%1$s\" is active in Play Console.</string>
+    <string name="gross_loss">Gross loss</string>
+    <string name="gross_profit">Gross profit</string>
+    <string name="group_products_e_g_electronics_groceries">Group products (e.g. Electronics, Groceries) to filter them quickly.</string>
+    <string name="history">History</string>
+    <string name="history_cancellations_pdf">History, cancellations, PDF</string>
+    <string name="i_saved_them">I saved them</string>
+    <string name="if_you_lose_your_phone_each">If you lose your phone, each code signs you in once. They are shown only now — keep them somewhere safe.</string>
+    <string name="import_csv">Import CSV</string>
+    <string name="import_export">Import &amp; export</string>
+    <string name="import_export_csv">Import &amp; export CSV</string>
+    <string name="import_finished">Import finished</string>
+    <string name="import_label">Import</string>
+    <string name="import_stock">Import stock</string>
+    <string name="import_x_rows">Import %1$s rows?</string>
+    <string name="imported_x_rows_created_x_new">Imported %1$s rows, created %2$s new products.</string>
+    <string name="in_progress">In progress</string>
+    <string name="indeterminate">Partially checked</string>
+    <string name="install_google_authenticator_or_a_similar">Install Google Authenticator (or a similar app) first, or enter the key manually</string>
+    <string name="inventory">Inventory</string>
+    <string name="invite_staff_with_their_own_login">Invite staff with their own login, role and permissions.</string>
+    <string name="invoice">Invoice</string>
+    <string name="invoice_x">Invoice %1$s</string>
+    <string name="items_sold">Items sold</string>
+    <string name="just_you_so_far">Just you so far</string>
+    <string name="keep">Keep</string>
+    <string name="keep_your_suppliers_contacts_and_link">Keep your suppliers\' contacts and link them to every purchase.</string>
+    <string name="label_amount">AMOUNT</string>
+    <string name="label_cancelled">CANCELLED</string>
+    <string name="label_date">DATE</string>
+    <string name="label_invoice">INVOICE</string>
+    <string name="label_item">ITEM</string>
+    <string name="label_optional">Label (optional)</string>
+    <string name="label_paid">PAID</string>
+    <string name="label_price">PRICE</string>
+    <string name="label_qty">QTY</string>
+    <string name="label_status">STATUS</string>
+    <string name="label_total">TOTAL</string>
+    <string name="language">Language</string>
+    <string name="language_hint">Changes the app\'s text. Numbers and dates follow your phone settings.</string>
+    <string name="language_system">Phone default</string>
+    <string name="last_synced">Last synced</string>
+    <string name="later">Later</string>
+    <string name="less">Less</string>
+    <string name="link_a_supplier">Link a supplier</string>
+    <string name="loading_prices_from_google_play">Loading prices from Google Play…</string>
+    <string name="location_address">Location / address</string>
+    <string name="low_stock">Low stock</string>
+    <string name="low_stock_alert_at">Low stock alert at</string>
+    <string name="low_stock_channel">Low stock alerts</string>
+    <string name="m3c_bottom_sheet_collapse_description">Collapse bottom sheet</string>
+    <string name="m3c_bottom_sheet_dismiss_description">Dismiss bottom sheet</string>
+    <string name="m3c_bottom_sheet_drag_handle_description">Drag handle</string>
+    <string name="m3c_bottom_sheet_expand_description">Expand bottom sheet</string>
+    <string name="m3c_bottom_sheet_pane_title">Bottom Sheet</string>
+    <string name="m3c_date_input_headline">Entered date</string>
+    <string name="m3c_date_input_headline_description">Entered date: %1$s</string>
+    <string name="m3c_date_input_invalid_for_pattern">Date does not match expected pattern: %1$s</string>
+    <string name="m3c_date_input_invalid_not_allowed">Date not allowed: %1$s</string>
+    <string name="m3c_date_input_invalid_year_range">
+        Date out of expected year range %1$s - %2$s
+    </string>
+    <string name="m3c_date_input_label">Date</string>
+    <string name="m3c_date_input_no_input_description">None</string>
+    <string name="m3c_date_input_title">Select date</string>
+    <string name="m3c_date_picker_headline">"Selected date"</string>
+    <string name="m3c_date_picker_headline_description">Current selection: %1$s</string>
+    <string name="m3c_date_picker_navigate_to_year_description">Navigate to year %1$s</string>
+    <string name="m3c_date_picker_no_selection_description">None</string>
+    <string name="m3c_date_picker_scroll_to_earlier_years">Scroll to show earlier years</string>
+    <string name="m3c_date_picker_scroll_to_later_years">Scroll to show later years</string>
+    <string name="m3c_date_picker_switch_to_calendar_mode">Switch to calendar input mode</string>
+    <string name="m3c_date_picker_switch_to_day_selection">
+        "Swipe to select a year, or tap to switch back to selecting a day"
+    </string>
+    <string name="m3c_date_picker_switch_to_input_mode">Switch to text input mode</string>
+    <string name="m3c_date_picker_switch_to_next_month">"Change to next month"</string>
+    <string name="m3c_date_picker_switch_to_previous_month">"Change to previous month"</string>
+    <string name="m3c_date_picker_switch_to_year_selection">"Switch to selecting a year"</string>
+    <string name="m3c_date_picker_title">"Select date"</string>
+    <string name="m3c_date_picker_today_description">Today</string>
+    <string name="m3c_date_picker_year_picker_pane_title">Year picker visible</string>
+    <string name="m3c_date_range_input_invalid_range_input">Invalid date range input</string>
+    <string name="m3c_date_range_input_title">Enter dates</string>
+    <string name="m3c_date_range_picker_day_in_range">In range</string>
+    <string name="m3c_date_range_picker_end_headline">End date</string>
+    <string name="m3c_date_range_picker_scroll_to_next_month">Scroll to show the next month</string>
+    <string name="m3c_date_range_picker_scroll_to_previous_month">Scroll to show the previous month</string>
+    <string name="m3c_date_range_picker_start_headline">Start date</string>
+    <string name="m3c_date_range_picker_title">Select dates</string>
+    <string name="m3c_dialog">"Dialog"</string>
+    <string name="m3c_dropdown_menu_collapsed">Collapsed</string>
+    <string name="m3c_dropdown_menu_expanded">Expanded</string>
+    <string name="m3c_dropdown_menu_toggle">Toggle dropdown menu</string>
+    <string name="m3c_search_bar_search">Search</string>
+    <string name="m3c_snackbar_dismiss">Dismiss</string>
+    <string name="m3c_suggestions_available">Suggestions below</string>
+    <string name="m3c_time_picker_am">AM</string>
+    <string name="m3c_time_picker_hour">Hour</string>
+    <string name="m3c_time_picker_hour_24h_suffix">%1$d hours</string>
+    <string name="m3c_time_picker_hour_selection">Select hour</string>
+    <string name="m3c_time_picker_hour_suffix">%1$d o\'clock</string>
+    <string name="m3c_time_picker_hour_text_field">for hour</string>
+    <string name="m3c_time_picker_minute">Minute</string>
+    <string name="m3c_time_picker_minute_selection">Select minutes</string>
+    <string name="m3c_time_picker_minute_suffix">%1$d minutes</string>
+    <string name="m3c_time_picker_minute_text_field">for minutes</string>
+    <string name="m3c_time_picker_period_toggle_description">Select AM or PM</string>
+    <string name="m3c_time_picker_pm">PM</string>
+    <string name="m3c_tooltip_long_press_label">Show tooltip</string>
+    <string name="m3c_tooltip_pane_description">Tooltip</string>
+    <string name="make_sales">Make sales</string>
+    <string name="manage_cancel_sales">Manage &amp; cancel sales</string>
+    <string name="manage_or_cancel_in_google_play">Manage or cancel in Google Play</string>
+    <string name="manage_products_categories">Manage products &amp; categories</string>
+    <string name="manage_suppliers">Manage suppliers</string>
+    <string name="manage_team">Manage team</string>
+    <string name="manage_warehouses">Manage warehouses</string>
+    <string name="margin_x_x_per_x">Margin %1$s%% · %2$s per %3$s</string>
+    <string name="member">Member</string>
+    <string name="member_added">Member added</string>
+    <string name="member_removed">Member removed</string>
+    <string name="member_updated">Member updated</string>
+    <string name="merge_both">Merge both</string>
+    <string name="min_x_x">Min %1$s %2$s</string>
+    <string name="minimum_x_x">Minimum %1$s %2$s</string>
+    <string name="monthly">Monthly</string>
+    <string name="more">More</string>
+    <string name="move_products_between_your_warehouses_with">Move products between your warehouses with a full audit trail.</string>
+    <string name="move_stock_between_warehouses">Move stock between warehouses</string>
+    <string name="move_your_data_to_the_cloud">Move your data to the cloud?</string>
+    <string name="movement_history">Movement history</string>
+    <string name="name">Name</string>
+    <string name="name_2">Name *</string>
+    <string name="name_sku_or_barcode">Name, SKU or barcode</string>
+    <string name="navigation_menu">"Navigation menu"</string>
+    <string name="need_more_locations_premium_has_unlimited">Need more locations? Premium has unlimited warehouses and stock transfers.</string>
+    <string name="net_loss">Net loss</string>
+    <string name="net_profit">Net profit</string>
+    <string name="net_profit_gross_profit_expenses">Net profit = gross profit − expenses</string>
+    <string name="net_x">" · net %1$s%%"</string>
+    <string name="never">Never</string>
+    <string name="new_category">New category</string>
+    <string name="new_label">+ New</string>
+    <string name="new_password_optional">New password (optional)</string>
+    <string name="new_product">New product</string>
+    <string name="new_recovery_codes">New recovery codes</string>
+    <string name="new_sale">New sale</string>
+    <string name="new_supplier">New supplier</string>
+    <string name="new_warehouse">New warehouse</string>
+    <string name="nightly_automatic_backups_of_your_whole">Nightly automatic backups of your whole inventory, plus one-tap restore.</string>
+    <string name="no_access">No access</string>
+    <string name="no_active_subscription">No active subscription</string>
+    <string name="no_active_subscription_found_on_this">No active subscription found on this Google account.</string>
+    <string name="no_address">No address</string>
+    <string name="no_app_available_to_open_or">No app available to open or share PDFs.</string>
+    <string name="no_app_available_to_share_with">No app available to share with.</string>
+    <string name="no_backups_yet">No backups yet.</string>
+    <string name="no_categories">No categories</string>
+    <string name="no_category">No category</string>
+    <string name="no_contact_details">No contact details</string>
+    <string name="no_expenses_x">No expenses %1$s</string>
+    <string name="no_items_yet">No items yet</string>
+    <string name="no_matches">No matches</string>
+    <string name="no_matches_2">No matches.</string>
+    <string name="no_movements">No movements</string>
+    <string name="no_product_is_below_its_minimum">No product is below its minimum level.</string>
+    <string name="no_product_with_barcode_x">No product with barcode %1$s</string>
+    <string name="no_products_in_this_warehouse_yet">No products in this warehouse yet.</string>
+    <string name="no_products_yet">No products yet</string>
+    <string name="no_purchases_yet">No purchases yet</string>
+    <string name="no_sales">No sales</string>
+    <string name="no_subscription_plan_is_available_for">No subscription plan is available for this Google account or country.</string>
+    <string name="no_supplier">No supplier</string>
+    <string name="no_suppliers_yet">No suppliers yet</string>
+    <string name="no_transfers_yet">No transfers yet.</string>
+    <string name="no_warehouse">No warehouse</string>
+    <string name="no_web_browser_found_please_install">No web browser found. Please install a browser (e.g. Chrome) to open the web panel.</string>
+    <string name="not_enough_stock_for_x_available">Not enough stock for \"%1$s\". Available: %2$s, requested: %3$s.</string>
+    <string name="not_selected">Not selected</string>
+    <string name="note">Note</string>
+    <string name="note_optional">Note (optional)</string>
+    <string name="note_x">Note: %1$s</string>
+    <string name="notifications">Notifications</string>
+    <string name="off_ask_for_a_code_from">Off · ask for a code from an authenticator app at sign-in</string>
+    <string name="ok">OK</string>
+    <string name="on_x_recovery_codes_left">On · %1$s recovery codes left</string>
+    <string name="only_empty_warehouses_can_be_deleted">Only empty warehouses can be deleted.</string>
+    <string name="only_x_x_in_this_warehouse">Only %1$s %2$s in this warehouse</string>
+    <string name="open_authenticator_app">Open authenticator app</string>
+    <string name="open_web_panel">Open web panel</string>
+    <string name="or_enter_this_key_in_the">Or enter this key in the app (time-based):</string>
+    <string name="organise_your_catalogue">Organise your catalogue</string>
+    <string name="password">Password</string>
+    <string name="password_min_8">Password (min 8)</string>
+    <string name="past_purchases_keep_their_records">Past purchases keep their records.</string>
+    <string name="payment_pending_premium_unlocks_as_soon">Payment pending. Premium unlocks as soon as Google confirms it.</string>
+    <string name="payment_received_one_last_step">Payment received — one last step</string>
+    <string name="per_month">per month</string>
+    <string name="per_year">per year</string>
+    <string name="permissions">Permissions</string>
+    <string name="pf_backup_blurb">Nightly automatic backups plus one-tap restore.</string>
+    <string name="pf_barcode">Barcode scanning</string>
+    <string name="pf_barcode_blurb">Scan to find products, fill product codes and ring up sales.</string>
+    <string name="pf_cloud">Cloud database</string>
+    <string name="pf_cloud_blurb">Your inventory lives on your own secure server and syncs across devices.</string>
+    <string name="pf_csv_blurb">Export products, stock and sales; bulk import stock from a spreadsheet.</string>
+    <string name="pf_expenses_blurb">Record rent, salaries and other costs to see your real (net) profit.</string>
+    <string name="pf_low_stock_blurb">Daily notifications when products drop below their threshold.</string>
+    <string name="pf_movements_blurb">Every in and out, by product, warehouse and type.</string>
+    <string name="pf_pdf">PDF invoices</string>
+    <string name="pf_pdf_blurb">Branded PDF invoices you can share on WhatsApp or email.</string>
+    <string name="pf_sales">Sales management</string>
+    <string name="pf_sales_blurb">Search sales history, cancel and return orders.</string>
+    <string name="pf_suppliers_blurb">Keep suppliers and link them to purchases.</string>
+    <string name="pf_team">Team accounts &amp; permissions</string>
+    <string name="pf_team_blurb">Invite staff with roles and fine-grained permissions.</string>
+    <string name="pf_transfers_blurb">Move products between warehouses with a full audit trail.</string>
+    <string name="pf_warehouses">Unlimited warehouses</string>
+    <string name="pf_warehouses_blurb">Track stock per location — Basic includes %1$s.</string>
+    <string name="phone">Phone</string>
+    <string name="plan_account">Plan &amp; account</string>
+    <string name="plan_refreshed">Plan refreshed</string>
+    <string name="plan_x">Plan: %1$s</string>
+    <string name="premium">Premium</string>
+    <string name="premium_chip">PREMIUM</string>
+    <string name="premium_has_ended">Premium has ended</string>
+    <string name="price">Price</string>
+    <string name="product">Product</string>
+    <string name="product_deleted">Product deleted</string>
+    <string name="product_name">Product name *</string>
+    <string name="product_name_is_required">Product name is required.</string>
+    <string name="product_saved">Product saved</string>
+    <string name="products">Products</string>
+    <string name="products_below_minimum">Products below minimum</string>
+    <string name="products_in_this_category_will_become">Products in this category will become uncategorised.</string>
+    <string name="profit">Profit</string>
+    <string name="purchase">Purchase</string>
+    <string name="purchase_failed_x">Purchase failed (%1$s).</string>
+    <string name="purchase_total">PURCHASE TOTAL</string>
+    <string name="purchases">Purchases</string>
+    <string name="quantities_must_be_greater_than_zero">Quantities must be greater than zero.</string>
+    <string name="quantity">Quantity</string>
+    <string name="quantity_must_be_greater_than_zero">Quantity must be greater than zero.</string>
+    <string name="range_end">"Range end"</string>
+    <string name="range_start">"Range start"</string>
+    <string name="reason">Reason</string>
+    <string name="reason_optional">Reason (optional)</string>
+    <string name="receive_into_warehouse">Receive into warehouse</string>
+    <string name="recent_transfers">Recent transfers</string>
+    <string name="record_a_purchase">Record a purchase</string>
+    <string name="record_expenses">Record expenses</string>
+    <string name="record_purchases">Record purchases</string>
+    <string name="record_rent_salaries_and_other_costs">Record rent, salaries and other costs to see your real profit after expenses.</string>
+    <string name="record_rent_salaries_and_other_costs_2">Record rent, salaries and other costs to see your net profit on the dashboard.</string>
+    <string name="recovery_code">Recovery code</string>
+    <string name="reference_note">Reference / note</string>
+    <string name="refresh_plan_status">Refresh plan status</string>
+    <string name="remove">Remove</string>
+    <string name="remove_x">Remove %1$s?</string>
+    <string name="renew">Renew</string>
+    <string name="renews">Renews</string>
+    <string name="rent_salaries_for_net_profit">Rent, salaries… for net profit</string>
+    <string name="reset">Reset</string>
+    <string name="restore">Restore</string>
+    <string name="restore_purchase">Restore purchase</string>
+    <string name="restore_this_backup">Restore this backup?</string>
+    <string name="retail_x">Retail %1$s</string>
+    <string name="revenue">Revenue</string>
+    <string name="role">Role</string>
+    <string name="s_14_days">14 days</string>
+    <string name="s_1_add_stock_anchor_to_google">1. Add Stock Anchor to Google Authenticator, Microsoft Authenticator or a similar app:</string>
+    <string name="s_1_month">1 month</string>
+    <string name="s_1_week">1 week</string>
+    <string name="s_1_year">1 year</string>
+    <string name="s_2_enter_the_6_digit_code">2. Enter the 6-digit code the app shows:</string>
+    <string name="s_3_days">3 days</string>
+    <string name="s_3_months">3 months</string>
+    <string name="s_6_months">6 months</string>
+    <string name="s_7_days">7 days</string>
+    <string name="sale">Sale</string>
+    <string name="sale_cancelled">Sale cancelled</string>
+    <string name="sale_completed">Sale completed</string>
+    <string name="sale_price">Sale price</string>
+    <string name="sales">Sales</string>
+    <string name="sales_invoices">Sales &amp; invoices</string>
+    <string name="save">Save</string>
+    <string name="save_as_csv">Save as CSV</string>
+    <string name="save_product">Save product</string>
+    <string name="save_purchase">Save purchase</string>
+    <string name="save_your_recovery_codes">Save your recovery codes</string>
+    <string name="saved">Saved</string>
+    <string name="scan">Scan</string>
+    <string name="scan_barcode">Scan barcode</string>
+    <string name="scanning_is_a_premium_feature">Scanning is a Premium feature</string>
+    <string name="search_name_sku_or_barcode">Search name, SKU or barcode</string>
+    <string name="see_all">See all</string>
+    <string name="see_every_purchase_sale_transfer_and">See every purchase, sale, transfer and adjustment for each product.</string>
+    <string name="see_plans">See plans</string>
+    <string name="selected">Selected</string>
+    <string name="sell">Sell</string>
+    <string name="sell_from">Sell from</string>
+    <string name="server_error_x">Server error (%1$s)</string>
+    <string name="server_updated">Server updated</string>
+    <string name="set_up">Set up</string>
+    <string name="set_up_two_step_verification">Set up two-step verification</string>
+    <string name="settings">Settings</string>
+    <string name="share">Share</string>
+    <string name="showing_the_last_30_days_search">Showing the last 30 days. Search, date ranges, cancellations and PDF invoices come with Premium.</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_in_to_an_existing_cloud">Sign in to an existing cloud account</string>
+    <string name="sign_out">Sign out?</string>
+    <string name="sign_out_2">Sign out</string>
+    <string name="sign_out_of_the_cloud">Sign out of the cloud</string>
+    <string name="signed_in_as">Signed in as</string>
+    <string name="signed_out">Signed out</string>
+    <string name="skipped_rows">Skipped:</string>
+    <string name="something_went_wrong">Something went wrong</string>
+    <string name="spreadsheets_in_and_out">Spreadsheets in and out</string>
+    <string name="staff_accounts">Staff accounts</string>
+    <string name="start_fresh">Start fresh</string>
+    <string name="state_empty">Empty</string>
+    <string name="state_off">Off</string>
+    <string name="state_on">On</string>
+    <string name="status">Status</string>
+    <string name="status_bar_notification_info_overflow">999+</string>
+    <string name="stock_added">Stock added</string>
+    <string name="stock_anchor_cloud">Stock Anchor Cloud</string>
+    <string name="stock_anchor_premium">Stock Anchor Premium</string>
+    <string name="stock_anchor_premium_is_active">Stock Anchor Premium is active 🎉</string>
+    <string name="stock_by_warehouse">Stock by warehouse</string>
+    <string name="stock_can_t_be_negative">Stock can\'t be negative.</string>
+    <string name="stock_changes_will_be_listed_here">Stock changes will be listed here.</string>
+    <string name="stock_count_x">Stock count · %1$s</string>
+    <string name="stock_movement_history">Stock movement history</string>
+    <string name="stock_movements">Stock movements</string>
+    <string name="stock_received">Stock received</string>
+    <string name="stock_transfer">Stock transfer</string>
+    <string name="stock_transfers">Stock transfers</string>
+    <string name="stock_updated">Stock updated</string>
+    <string name="stock_value">Stock value</string>
+    <string name="stock_value_cost">Stock value (cost)</string>
+    <string name="subscribe_monthly">Subscribe monthly</string>
+    <string name="subscribe_yearly">Subscribe yearly</string>
+    <string name="subscription_not_active_yet_try_restore">Subscription not active yet. Try “Restore purchase”.</string>
+    <string name="subscription_prices_are_still_loading_please">Subscription prices are still loading. Please try again in a moment.</string>
+    <string name="subscription_prices_couldn_t_be_loaded">Subscription prices couldn\'t be loaded from Google Play. Please try again later.</string>
+    <string name="subscriptions_renew_automatically_until_cancelle">Subscriptions renew automatically until cancelled in Google Play. One subscription covers your whole team. If it ends you keep everything on your device in Basic.</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="subtotal_x">Subtotal: %1$s</string>
+    <string name="supplier">Supplier</string>
+    <string name="supplier_added">Supplier added</string>
+    <string name="supplier_deleted">Supplier deleted</string>
+    <string name="supplier_management">Supplier management</string>
+    <string name="supplier_name_is_required">Supplier name is required.</string>
+    <string name="supplier_saved">Supplier saved</string>
+    <string name="suppliers">Suppliers</string>
+    <string name="switch_label">Switch</string>
+    <string name="switch_monthly_yearly">Switch monthly ↔ yearly</string>
+    <string name="switch_role">Switch</string>
+    <string name="switch_to_basic">Switch to Basic?</string>
+    <string name="switched_to_basic_your_data_is">Switched to Basic. Your data is kept on this device.</string>
+    <string name="sync_now">Sync now</string>
+    <string name="synced">Synced</string>
+    <string name="tab">Tab</string>
+    <string name="team">Team</string>
+    <string name="team_accounts">Team accounts</string>
+    <string name="team_member_sign_in">Team member? Sign in</string>
+    <string name="team_permissions">Team &amp; permissions</string>
+    <string name="template">Template</string>
+    <string name="template_percent"><ns2:g id="percentage">%1$d</ns2:g> percent.</string>
+    <string name="template_saved">Template saved</string>
+    <string name="thank_you_for_your_business">Thank you for your business!</string>
+    <string name="the_basic_plan_includes_x_upgrade">The Basic plan includes %1$s. Upgrade to Premium for unlimited warehouses.</string>
+    <string name="the_subscription_has_no_active_plans">The subscription has no active plans yet. In Play Console, activate the monthly and yearly base plans.</string>
+    <string name="the_web_panel_is_part_of">The web panel is part of Premium</string>
+    <string name="they_will_be_signed_out_on">They will be signed out on all devices and lose access to this inventory.</string>
+    <string name="this_device_only">This device only</string>
+    <string name="this_month">This month</string>
+    <string name="this_product_has_no_stock_in">This product has no stock in any warehouse.</string>
+    <string name="this_snapshot_will_be_permanently_removed">This snapshot will be permanently removed.</string>
+    <string name="this_warehouse">this warehouse</string>
+    <string name="this_warehouse_still_holds_stock_move">This warehouse still holds stock. Move or adjust it first.</string>
+    <string name="this_year">This year</string>
+    <string name="tip_new_products_start_with_zero">Tip: new products start with zero stock. Use “Add stock” to record a purchase.</string>
+    <string name="to">To</string>
+    <string name="today">Today</string>
+    <string name="tooltip_description">tooltip</string>
+    <string name="tooltip_label">show tooltip</string>
+    <string name="total">Total</string>
+    <string name="total_expenses_x">TOTAL EXPENSES · %1$s</string>
+    <string name="total_sales_x">TOTAL SALES · %1$s</string>
+    <string name="total_stock">Total stock</string>
+    <string name="total_x">TOTAL: %1$s</string>
+    <string name="transfer">Transfer</string>
+    <string name="transfer_in">Transfer in</string>
+    <string name="transfer_out">Transfer out</string>
+    <string name="transfer_stock">Transfer stock</string>
+    <string name="transferred_x_x_of_x">Transferred %1$s %2$s of %3$s</string>
+    <string name="try_again">Try again</string>
+    <string name="turn_off">Turn off</string>
+    <string name="turn_off_two_step_verification">Turn off two-step verification</string>
+    <string name="turn_on">Turn on</string>
+    <string name="two_step_verification">Two-step verification</string>
+    <string name="two_step_verification_is_off">Two-step verification is off</string>
+    <string name="two_step_verification_is_on">Two-step verification is on</string>
+    <string name="uncategorised">Uncategorised</string>
+    <string name="unit">Unit</string>
+    <string name="unit_cost">Unit cost</string>
+    <string name="unlimited_locations">Unlimited locations</string>
+    <string name="unlimited_on_premium">Unlimited on Premium</string>
+    <string name="update_product_cost_price_to_this">Update product cost price to this purchase</string>
+    <string name="upgrade">Upgrade</string>
+    <string name="upgrade_to_premium">Upgrade to Premium</string>
+    <string name="upload_my_data">Upload my data</string>
+    <string name="upload_the_products_stock_and_sales">Upload the products, stock and sales on this device to your new cloud account, or start with an empty cloud inventory.</string>
+    <string name="use_a_recovery_code">Use a recovery code</string>
+    <string name="use_cloud_only">Use cloud only</string>
+    <string name="use_premium_features_in_your_browser">Use Premium features in your browser at %1$s</string>
+    <string name="use_the_authenticator_app">Use the authenticator app</string>
+    <string name="verify">Verify</string>
+    <string name="view_dashboard_reports">View dashboard &amp; reports</string>
+    <string name="warehouse">Warehouse</string>
+    <string name="warehouse_deleted">Warehouse deleted</string>
+    <string name="warehouse_name_is_required">Warehouse name is required.</string>
+    <string name="warehouse_saved">Warehouse saved</string>
+    <string name="warehouses">Warehouses</string>
+    <string name="we_couldn_t_confirm_the_subscription">We couldn\'t confirm the subscription yet.</string>
+    <string name="who_you_buy_from">Who you buy from</string>
+    <string name="work_offline_on_basic_keep_data">Work offline on Basic (keep data on this device)</string>
+    <string name="x_continued">%1$s — continued</string>
+    <string name="x_in_x">+%1$s in %2$s</string>
+    <string name="x_isn_t_available_in_x">\"%1$s\" isn\'t available in %2$s</string>
+    <string name="x_more">+%1$s more</string>
+    <string name="x_of_x_on_basic">%1$s of %2$s on Basic</string>
+    <string name="x_on_basic">%1$s on Basic</string>
+    <string name="x_product_s_at_or_below">%1$s product(s) at or below minimum</string>
+    <string name="x_qty_x_x">%1$s · qty %2$s · %3$s</string>
+    <string name="x_sales_margin_x">%1$s sales · margin %2$s%%</string>
+    <string name="x_sales_x">%1$s sales · %2$s</string>
+    <string name="x_will_be_removed_with_its">“%1$s” will be removed with its stock levels. Past sales keep their history.</string>
+    <string name="x_x_on_x">%1$s · %2$s on %3$s</string>
+    <string name="x_x_x_left_min_x">%1$s: %2$s %3$s left (min %4$s)</string>
+    <string name="yearly">Yearly</string>
+    <string name="you_already_own_premium_use_restore">You already own Premium. Use \"Restore purchase\".</string>
+    <string name="you_don_t_have_permission_to">You don\'t have permission to export</string>
+    <string name="you_ll_keep_working_offline_with">You\'ll keep working offline with the data already on this device. Premium screens lock until you sign in again.</string>
+    <string name="you_need_at_least_one_warehouse">You need at least one warehouse.</string>
+    <string name="you_re_on_premium">You\'re on Premium ✓</string>
+    <string name="you_re_signed_in_but_your">You\'re signed in, but your team doesn\'t have Premium yet. Subscribe to unlock the cloud. Your Basic data stays on this device.</string>
+    <string name="your_account_has_been_disabled_by">Your account has been disabled by your team owner.</string>
+    <string name="your_cloud_already_has_data">Your cloud already has data</string>
+    <string name="your_company_account_is_suspended_please">Your company account is suspended. Please contact Stock Anchor support.</string>
+    <string name="your_current_recovery_codes_will_stop">Your current recovery codes will stop working.</string>
+    <string name="your_name">Your name</string>
+    <string name="your_password">Your password</string>
+    <string name="your_session_expired_please_sign_in">Your session expired. Please sign in again.</string>
+    <string name="your_subscription_is_ready_create_an">Your subscription is ready. Create an account (or sign in) to link it to your business.</string>
+    <string name="your_team_s_current_data_will">Your team\'s current data will be replaced with the snapshot from %1$s. A safety backup of the current state is made first. All devices re-sync.</string>
+    <string name="your_team_s_stock_anchor_premium">Your team\'s Stock Anchor Premium subscription is no longer active. Renew to keep using the cloud, or continue on Basic — everything already synced stays on this device.</string>
+    <style name="Base.Theme.SplashScreen" parent="Base.v21.Theme.SplashScreen"/>
+    <style name="Base.Theme.SplashScreen.DayNight" parent="Base.Theme.SplashScreen.Light"/>
+    <style name="Base.Theme.SplashScreen.Light" parent="Base.v21.Theme.SplashScreen.Light"/>
+    <style name="Base.v21.Theme.SplashScreen" parent="android:Theme.DeviceDefault.NoActionBar">
+    </style>
+    <style name="Base.v21.Theme.SplashScreen.Light" parent="android:Theme.DeviceDefault.Light.NoActionBar">
+    </style>
+    <style name="DialogWindowTheme">
+        <item name="android:windowClipToOutline">false</item>
+    </style>
+    <style name="EdgeToEdgeFloatingDialogTheme" parent="android:Theme.DeviceDefault.Dialog">
+        <item name="android:windowLayoutInDisplayCutoutMode" ns1:targetApi="27">@integer/m3c_window_layout_in_display_cutout_mode</item>
+        <item name="android:windowClipToOutline">false</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowElevation">0dp</item>
+    </style>
+    <style name="EdgeToEdgeFloatingDialogWindowTheme">
+        <item name="android:dialogTheme">@style/EdgeToEdgeFloatingDialogTheme</item>
+    </style>
+    <style name="FloatingDialogTheme">
+        <item name="android:windowIsFloating">false</item>
+    </style>
+    <style name="FloatingDialogWindowTheme">
+        <item name="android:windowClipToOutline">false</item>
+        <item name="android:dialogTheme">@style/FloatingDialogTheme</item>
+    </style>
+    <style name="TextAppearance.Compat.Notification" parent="@android:style/TextAppearance.StatusBar.EventContent"/>
+    <style name="TextAppearance.Compat.Notification.Info">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+    <style name="TextAppearance.Compat.Notification.Line2" parent="TextAppearance.Compat.Notification.Info"/>
+    <style name="TextAppearance.Compat.Notification.Time">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+    </style>
+    <style name="TextAppearance.Compat.Notification.Title" parent="@android:style/TextAppearance.StatusBar.EventContent.Title"/>
+    <style name="Theme.SplashScreen" parent="Theme.SplashScreen.Common">
+        <item name="postSplashScreenTheme">?android:attr/theme</item>
+        <item name="windowSplashScreenAnimationDuration">
+            @integer/default_icon_animation_duration
+        </item>
+        <item name="windowSplashScreenBackground">?android:colorBackground</item>
+        <item name="windowSplashScreenAnimatedIcon">@android:drawable/sym_def_app_icon</item>
+
+    </style>
+    <style name="Theme.SplashScreen.Common" parent="Base.Theme.SplashScreen.DayNight">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">
+            @drawable/compat_splash_screen_no_icon_background
+        </item>
+        <item name="android:opacity">opaque</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="splashScreenIconSize">@dimen/splashscreen_icon_size_no_background</item>
+    </style>
+    <style name="Theme.SplashScreen.IconBackground" parent="Theme.SplashScreen">
+        <item name="android:windowBackground">@drawable/compat_splash_screen</item>
+        <item name="splashScreenIconSize">@dimen/splashscreen_icon_size_with_background</item>
+    </style>
+    <style name="Theme.StockAnchor" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+    <style name="Theme.StockAnchor.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/brand_navy</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.StockAnchor</item>
+    </style>
+    <style name="Widget.Compat.NotificationActionContainer" parent=""/>
+    <style name="Widget.Compat.NotificationActionText" parent=""/>
+    <declare-styleable name="ActivityNavigator">
+        <attr name="android:name"/>
+        <attr format="string" name="action"/>
+        <attr format="string" name="data"/>
+        <attr format="string" name="dataPattern"/>
+        <attr format="string" name="targetPackage"/>
+    </declare-styleable>
+    <declare-styleable name="Capability">
+        
+        <attr format="reference" name="queryPatterns"/>
+        
+        <attr format="boolean" name="shortcutMatchRequired"/>
+    </declare-styleable>
+    <declare-styleable name="ColorStateListItem">
+        
+        <attr name="android:color"/>
+        
+        <attr format="float" name="alpha"/>
+        <attr name="android:alpha"/>
+        
+        <attr format="float" name="lStar"/>
+        <attr name="android:lStar"/>
+    </declare-styleable>
+    <declare-styleable name="FontFamily">
+        
+        <attr format="string" name="fontProviderAuthority"/>
+        
+        <attr format="string" name="fontProviderPackage"/>
+        
+        <attr format="string" name="fontProviderQuery"/>
+        
+        <attr format="string" name="fontProviderFallbackQuery"/>
+        
+        <attr format="reference" name="fontProviderCerts"/>
+        
+        <attr name="fontProviderFetchStrategy">
+            
+            <enum name="blocking" value="0"/>
+            
+            <enum name="async" value="1"/>
+        </attr>
+        
+        <attr format="integer" name="fontProviderFetchTimeout">
+            
+            <enum name="forever" value="-1"/>
+        </attr>
+        
+        <attr format="string" name="fontProviderSystemFontFamily"/>
+    </declare-styleable>
+    <declare-styleable name="FontFamilyFont">
+        
+        <attr name="fontStyle">
+            <enum name="normal" value="0"/>
+            <enum name="italic" value="1"/>
+        </attr>
+        
+        <attr format="reference" name="font"/>
+        
+        <attr format="integer" name="fontWeight"/>
+        
+        <attr format="string" name="fontVariationSettings"/>
+        
+        <attr format="integer" name="ttcIndex"/>
+        
+        <attr name="android:fontStyle"/>
+        <attr name="android:font"/>
+        <attr name="android:fontWeight"/>
+        <attr name="android:fontVariationSettings"/>
+        <attr name="android:ttcIndex"/>
+    </declare-styleable>
+    <declare-styleable name="Fragment">
+        <attr name="android:name"/>
+        <attr name="android:id"/>
+        <attr name="android:tag"/>
+    </declare-styleable>
+    <declare-styleable name="FragmentContainerView">
+        <attr name="android:name"/>
+        <attr name="android:tag"/>
+    </declare-styleable>
+    <declare-styleable name="GradientColor">
+        
+        <attr name="android:startColor"/>
+        
+        <attr name="android:centerColor"/>
+        
+        <attr name="android:endColor"/>
+        
+        <attr name="android:type"/>
+
+        
+        
+        <attr name="android:gradientRadius"/>
+
+        
+        
+        <attr name="android:centerX"/>
+        
+        <attr name="android:centerY"/>
+
+        
+        
+        <attr name="android:startX"/>
+        
+        <attr name="android:startY"/>
+        
+        <attr name="android:endX"/>
+        
+        <attr name="android:endY"/>
+
+        
+        <attr name="android:tileMode"/>
+    </declare-styleable>
+    <declare-styleable name="GradientColorItem">
+        
+        <attr name="android:offset"/>
+        
+        <attr name="android:color"/>
+    </declare-styleable>
+    <declare-styleable name="LoadingImageView"><attr name="imageAspectRatioAdjust">
+<enum name="none" value="0"/>
+
+<enum name="adjust_width" value="1"/>
+
+<enum name="adjust_height" value="2"/>
+
+</attr>
+
+<attr format="float" name="imageAspectRatio"/>
+
+<attr format="boolean" name="circleCrop"/>
+</declare-styleable>
+    <declare-styleable name="NavAction">
+        <attr name="android:id"/>
+        <attr format="reference" name="destination"/>
+        <attr format="boolean" name="launchSingleTop"/>
+        <attr format="boolean" name="restoreState"/>
+        <attr format="reference" name="popUpTo"/>
+        <attr format="boolean" name="popUpToInclusive"/>
+        <attr format="boolean" name="popUpToSaveState"/>
+        <attr format="reference" name="enterAnim"/>
+        <attr format="reference" name="exitAnim"/>
+        <attr format="reference" name="popEnterAnim"/>
+        <attr format="reference" name="popExitAnim"/>
+    </declare-styleable>
+    <declare-styleable name="NavArgument">
+        <attr name="android:name"/>
+        <attr name="android:defaultValue"/>
+        <attr format="boolean" name="nullable"/>
+        <attr format="string" name="argType"/>
+    </declare-styleable>
+    <declare-styleable name="NavDeepLink">
+        <attr format="string" name="uri"/>
+        <attr format="string" name="action"/>
+        <attr format="string" name="mimeType"/>
+        <attr name="android:autoVerify"/>
+    </declare-styleable>
+    <declare-styleable name="NavGraphNavigator">
+        <attr format="reference" name="startDestination"/>
+    </declare-styleable>
+    <declare-styleable name="NavHost">
+        <attr format="reference" name="navGraph"/>
+    </declare-styleable>
+    <declare-styleable name="NavInclude">
+        <attr format="reference" name="graph"/>
+    </declare-styleable>
+    <declare-styleable name="Navigator">
+        <attr name="android:id"/>
+        <attr format="string" name="route"/>
+        <attr name="android:label"/>
+    </declare-styleable>
+    <declare-styleable name="SignInButton"><attr format="reference" name="buttonSize">
+<enum name="standard" value="0"/>
+
+<enum name="wide" value="1"/>
+
+<enum name="icon_only" value="2"/>
+
+</attr>
+<attr format="reference" name="colorScheme">
+<enum name="dark" value="0"/>
+
+<enum name="light" value="1"/>
+
+<enum name="auto" value="2"/>
+
+</attr>
+
+<attr format="reference|string" name="scopeUris"/>
+</declare-styleable>
+</resources>

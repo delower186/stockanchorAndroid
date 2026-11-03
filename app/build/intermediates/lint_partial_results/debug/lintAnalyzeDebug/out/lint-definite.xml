@@ -1,0 +1,857 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<incidents format="6" by="lint 9.5.0" type="incidents">
+
+    <incident
+        id="OldTargetApi"
+        severity="warning"
+        message="Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the `android.os.Build.VERSION_CODES` javadoc for details.">
+        <fix-replace
+            description="Update targetSdkVersion to 37"
+            oldString="36"
+            replacement="37"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="27"
+            column="9"
+            startOffset="742"
+            endLine="27"
+            endColumn="23"
+            endOffset="756"/>
+    </incident>
+
+    <incident
+        id="AndroidGradlePluginVersion"
+        severity="warning"
+        message="A newer version of Gradle than 9.6.0 is available: 9.8.2">
+        <fix-replace
+            description="Update to 9.8.2"
+            oldString="9.6.0"
+            replacement="9.8.2"
+            priority="0"/>
+        <location
+            file="../gradle/wrapper/gradle-wrapper.properties"
+            line="3"
+            column="17"
+            startOffset="81"
+            endLine="3"
+            endColumn="80"
+            endOffset="144"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of `compileSdk` than 35 is available: 37">
+        <fix-replace
+            description="Set compileSdk to 37"
+            oldString="35"
+            replacement="37"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="22"
+            column="5"
+            startOffset="626"
+            endLine="22"
+            endColumn="20"
+            endOffset="641"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.core:core-ktx than 1.15.0 is available: 1.19.1">
+        <fix-replace
+            description="Change to 1.19.1"
+            family="Update versions"
+            oldString="1.15.0"
+            replacement="1.19.1"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="112"
+            column="20"
+            startOffset="4367"
+            endLine="112"
+            endColumn="51"
+            endOffset="4398"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.activity:activity-compose than 1.9.3 is available: 1.13.0">
+        <fix-replace
+            description="Change to 1.13.0"
+            family="Update versions"
+            oldString="1.9.3"
+            replacement="1.13.0"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="113"
+            column="20"
+            startOffset="4419"
+            endLine="113"
+            endColumn="62"
+            endOffset="4461"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.lifecycle:lifecycle-runtime-compose than 2.8.7 is available: 2.11.0">
+        <fix-replace
+            description="Change to 2.11.0"
+            family="Update versions"
+            oldString="2.8.7"
+            replacement="2.11.0"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="114"
+            column="20"
+            startOffset="4482"
+            endLine="114"
+            endColumn="72"
+            endOffset="4534"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.lifecycle:lifecycle-viewmodel-compose than 2.8.7 is available: 2.11.0">
+        <fix-replace
+            description="Change to 2.11.0"
+            family="Update versions"
+            oldString="2.8.7"
+            replacement="2.11.0"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="115"
+            column="20"
+            startOffset="4555"
+            endLine="115"
+            endColumn="74"
+            endOffset="4609"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.navigation:navigation-compose than 2.8.5 is available: 2.10.2">
+        <fix-replace
+            description="Change to 2.10.2"
+            family="Update versions"
+            oldString="2.8.5"
+            replacement="2.10.2"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="116"
+            column="20"
+            startOffset="4630"
+            endLine="116"
+            endColumn="66"
+            endOffset="4676"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.core:core-splashscreen than 1.0.1 is available: 1.2.0">
+        <fix-replace
+            description="Change to 1.2.0"
+            family="Update versions"
+            oldString="1.0.1"
+            replacement="1.2.0"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="117"
+            column="20"
+            startOffset="4697"
+            endLine="117"
+            endColumn="59"
+            endOffset="4736"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.fragment:fragment-ktx than 1.8.5 is available: 1.9.1">
+        <fix-replace
+            description="Change to 1.9.1"
+            family="Update versions"
+            oldString="1.8.5"
+            replacement="1.9.1"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="119"
+            column="20"
+            startOffset="4861"
+            endLine="119"
+            endColumn="58"
+            endOffset="4899"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.room:room-runtime than 2.7.2 is available: 2.8.5">
+        <fix-replace
+            description="Change to 2.8.5"
+            family="Update versions"
+            oldString="2.7.2"
+            replacement="2.8.5"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="122"
+            column="20"
+            startOffset="5018"
+            endLine="122"
+            endColumn="54"
+            endOffset="5052"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.room:room-ktx than 2.7.2 is available: 2.8.5">
+        <fix-replace
+            description="Change to 2.8.5"
+            family="Update versions"
+            oldString="2.7.2"
+            replacement="2.8.5"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="123"
+            column="20"
+            startOffset="5073"
+            endLine="123"
+            endColumn="50"
+            endOffset="5103"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.room:room-compiler than 2.7.2 is available: 2.8.5">
+        <fix-replace
+            description="Change to 2.8.5"
+            family="Update versions"
+            oldString="2.7.2"
+            replacement="2.8.5"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="124"
+            column="9"
+            startOffset="5113"
+            endLine="124"
+            endColumn="44"
+            endOffset="5148"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of androidx.work:work-runtime-ktx than 2.10.0 is available: 2.12.0">
+        <fix-replace
+            description="Change to 2.12.0"
+            family="Update versions"
+            oldString="2.10.0"
+            replacement="2.12.0"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="133"
+            column="20"
+            startOffset="5485"
+            endLine="133"
+            endColumn="59"
+            endOffset="5524"/>
+    </incident>
+
+    <incident
+        id="GradleDependency"
+        severity="warning"
+        message="A newer version of com.android.billingclient:billing-ktx than 8.3.0 is available: 9.1.0">
+        <fix-replace
+            description="Change to 9.1.0"
+            family="Update versions"
+            oldString="8.3.0"
+            replacement="9.1.0"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="136"
+            column="20"
+            startOffset="5567"
+            endLine="136"
+            endColumn="65"
+            endOffset="5612"/>
+    </incident>
+
+    <incident
+        id="NewerVersionAvailable"
+        severity="warning"
+        message="A newer version of com.squareup.retrofit2:retrofit than 2.11.0 is available: 3.0.0">
+        <fix-replace
+            description="Change to 3.0.0"
+            family="Update versions"
+            oldString="2.11.0"
+            replacement="3.0.0"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="127"
+            column="20"
+            startOffset="5187"
+            endLine="127"
+            endColumn="60"
+            endOffset="5227"/>
+    </incident>
+
+    <incident
+        id="NewerVersionAvailable"
+        severity="warning"
+        message="A newer version of com.squareup.retrofit2:converter-gson than 2.11.0 is available: 3.0.0">
+        <fix-replace
+            description="Change to 3.0.0"
+            family="Update versions"
+            oldString="2.11.0"
+            replacement="3.0.0"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="128"
+            column="20"
+            startOffset="5248"
+            endLine="128"
+            endColumn="66"
+            endOffset="5294"/>
+    </incident>
+
+    <incident
+        id="NewerVersionAvailable"
+        severity="warning"
+        message="A newer version of com.squareup.okhttp3:okhttp than 4.12.0 is available: 5.5.1">
+        <fix-replace
+            description="Change to 5.5.1"
+            family="Update versions"
+            oldString="4.12.0"
+            replacement="5.5.1"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="129"
+            column="20"
+            startOffset="5315"
+            endLine="129"
+            endColumn="56"
+            endOffset="5351"/>
+    </incident>
+
+    <incident
+        id="NewerVersionAvailable"
+        severity="warning"
+        message="A newer version of com.squareup.okhttp3:logging-interceptor than 4.12.0 is available: 5.5.1">
+        <fix-replace
+            description="Change to 5.5.1"
+            family="Update versions"
+            oldString="4.12.0"
+            replacement="5.5.1"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="130"
+            column="20"
+            startOffset="5372"
+            endLine="130"
+            endColumn="69"
+            endOffset="5421"/>
+    </incident>
+
+    <incident
+        id="NewerVersionAvailable"
+        severity="warning"
+        message="A newer version of org.jetbrains.kotlinx:kotlinx-coroutines-play-services than 1.9.0 is available: 1.11.0">
+        <fix-replace
+            description="Change to 1.11.0"
+            family="Update versions"
+            oldString="1.9.0"
+            replacement="1.11.0"
+            priority="0"/>
+        <location
+            file="${:app*projectDir}/build.gradle.kts"
+            line="141"
+            column="20"
+            startOffset="5789"
+            endLine="141"
+            endColumn="82"
+            endOffset="5851"/>
+    </incident>
+
+    <incident
+        id="ObsoleteSdkInt"
+        severity="warning"
+        message="This folder configuration (`v26`) is unnecessary; `minSdkVersion` is 26. Merge all the resources in this folder into `mipmap-anydpi`.">
+        <fix-data file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/mipmap-anydpi-v26" folderName="mipmap-anydpi" requiresApi="26"/>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*resDir*0}/mipmap-anydpi-v26"/>
+    </incident>
+
+    <incident
+        id="UseKtx"
+        severity="warning"
+        message="Use the KTX extension function `String.toUri` instead?">
+        <fix-replace
+            description="Replace with the toUri extension function"
+            family="Replace with the toUri extension function"
+            robot="true"
+            independent="true"
+            oldString="Uri.parse(&quot;https://play.google.com/store/account/subscriptions?sku=${BuildConfig.SUBSCRIPTION_PRODUCT_ID}&amp;package=${context.packageName}&quot;)"
+            replacement="&quot;https://play.google.com/store/account/subscriptions?sku=${BuildConfig.SUBSCRIPTION_PRODUCT_ID}&amp;package=${context.packageName}&quot;.toUri()"
+            reformat="value"
+            imports="androidx.core.net.toUri"
+            priority="0">
+            <range
+                file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/ui/screens/AccountScreens.kt"
+                startOffset="26288"
+                endOffset="26426"/>
+        </fix-replace>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/ui/screens/AccountScreens.kt"
+            line="456"
+            column="31"
+            startOffset="26288"
+            endLine="456"
+            endColumn="169"
+            endOffset="26426"/>
+    </incident>
+
+    <incident
+        id="UseKtx"
+        severity="warning"
+        message="Use the KTX extension function `String.toUri` instead?">
+        <fix-replace
+            description="Replace with the toUri extension function"
+            family="Replace with the toUri extension function"
+            robot="true"
+            independent="true"
+            oldString="Uri.parse(BuildConfig.WEB_PANEL_URL)"
+            replacement="BuildConfig.WEB_PANEL_URL.toUri()"
+            reformat="value"
+            imports="androidx.core.net.toUri"
+            priority="0">
+            <range
+                file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/ui/screens/AccountScreens.kt"
+                startOffset="32658"
+                endOffset="32694"/>
+        </fix-replace>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/ui/screens/AccountScreens.kt"
+            line="536"
+            column="88"
+            startOffset="32658"
+            endLine="536"
+            endColumn="124"
+            endOffset="32694"/>
+    </incident>
+
+    <incident
+        id="UseKtx"
+        severity="warning"
+        message="Use the KTX extension function `String.toUri` instead?">
+        <fix-replace
+            description="Replace with the toUri extension function"
+            family="Replace with the toUri extension function"
+            robot="true"
+            independent="true"
+            oldString="Uri.parse(BuildConfig.WEB_PANEL_URL)"
+            replacement="BuildConfig.WEB_PANEL_URL.toUri()"
+            reformat="value"
+            imports="androidx.core.net.toUri"
+            priority="0">
+            <range
+                file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/ui/screens/AccountScreens.kt"
+                startOffset="33362"
+                endOffset="33398"/>
+        </fix-replace>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/ui/screens/AccountScreens.kt"
+            line="549"
+            column="81"
+            startOffset="33362"
+            endLine="549"
+            endColumn="117"
+            endOffset="33398"/>
+    </incident>
+
+    <incident
+        id="UseKtx"
+        severity="warning"
+        message="Use the KTX extension function `SharedPreferences.edit` instead?">
+        <fix-composite
+            description="Replace with the edit extension function"
+            family="Replace with the edit extension function"
+            robot="true"
+            independent="true">
+            <fix-replace
+                description="Replace with edit"
+                robot="true"
+                independent="true"
+                oldString="edit("
+                replacement="edit"
+                reformat="value"
+                imports="androidx.core.content.edit"
+                priority="0">
+                <range
+                    file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/I18n.kt"
+                    startOffset="2075"
+                    endOffset="2080"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with  {"
+                robot="true"
+                independent="true"
+                oldString=")"
+                replacement=" {"
+                priority="0">
+                <range
+                    file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/I18n.kt"
+                    startOffset="2080"
+                    endOffset="2081"/>
+            </fix-replace>
+            <fix-replace
+                description="Delete &quot;.&quot;"
+                robot="true"
+                independent="true"
+                oldString="."
+                replacement=""
+                priority="0">
+                <range
+                    file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/I18n.kt"
+                    startOffset="2081"
+                    endOffset="2082"/>
+            </fix-replace>
+            <fix-replace
+                description="Replace with }"
+                robot="true"
+                independent="true"
+                oldString=".apply()"
+                replacement="}"
+                priority="0">
+                <range
+                    file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/I18n.kt"
+                    startOffset="2101"
+                    endOffset="2109"/>
+            </fix-replace>
+        </fix-composite>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/I18n.kt"
+            line="57"
+            column="9"
+            startOffset="2016"
+            endLine="57"
+            endColumn="74"
+            endOffset="2081"/>
+    </incident>
+
+    <incident
+        id="UseKtx"
+        severity="warning"
+        message="Use the KTX extension function `String.toColorInt` instead?">
+        <fix-replace
+            description="Replace with the toColorInt extension function"
+            family="Replace with the toColorInt extension function"
+            robot="true"
+            independent="true"
+            oldString="Color.parseColor(&quot;#0F2A44&quot;)"
+            replacement="&quot;#0F2A44&quot;.toColorInt()"
+            reformat="value"
+            imports="androidx.core.graphics.toColorInt"
+            priority="0">
+            <range
+                file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/InvoicePdf.kt"
+                startOffset="802"
+                endOffset="829"/>
+        </fix-replace>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/InvoicePdf.kt"
+            line="24"
+            column="24"
+            startOffset="802"
+            endLine="24"
+            endColumn="51"
+            endOffset="829"/>
+    </incident>
+
+    <incident
+        id="UseKtx"
+        severity="warning"
+        message="Use the KTX extension function `String.toColorInt` instead?">
+        <fix-replace
+            description="Replace with the toColorInt extension function"
+            family="Replace with the toColorInt extension function"
+            robot="true"
+            independent="true"
+            oldString="Color.parseColor(&quot;#0E9F8E&quot;)"
+            replacement="&quot;#0E9F8E&quot;.toColorInt()"
+            reformat="value"
+            imports="androidx.core.graphics.toColorInt"
+            priority="0">
+            <range
+                file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/InvoicePdf.kt"
+                startOffset="853"
+                endOffset="880"/>
+        </fix-replace>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/InvoicePdf.kt"
+            line="25"
+            column="24"
+            startOffset="853"
+            endLine="25"
+            endColumn="51"
+            endOffset="880"/>
+    </incident>
+
+    <incident
+        id="UseKtx"
+        severity="warning"
+        message="Use the KTX extension function `String.toColorInt` instead?">
+        <fix-replace
+            description="Replace with the toColorInt extension function"
+            family="Replace with the toColorInt extension function"
+            robot="true"
+            independent="true"
+            oldString="Color.parseColor(&quot;#6B7A8C&quot;)"
+            replacement="&quot;#6B7A8C&quot;.toColorInt()"
+            reformat="value"
+            imports="androidx.core.graphics.toColorInt"
+            priority="0">
+            <range
+                file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/InvoicePdf.kt"
+                startOffset="905"
+                endOffset="932"/>
+        </fix-replace>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/InvoicePdf.kt"
+            line="26"
+            column="25"
+            startOffset="905"
+            endLine="26"
+            endColumn="52"
+            endOffset="932"/>
+    </incident>
+
+    <incident
+        id="UseKtx"
+        severity="warning"
+        message="Use the KTX extension function `String.toColorInt` instead?">
+        <fix-replace
+            description="Replace with the toColorInt extension function"
+            family="Replace with the toColorInt extension function"
+            robot="true"
+            independent="true"
+            oldString="Color.parseColor(&quot;#E3E8EF&quot;)"
+            replacement="&quot;#E3E8EF&quot;.toColorInt()"
+            reformat="value"
+            imports="androidx.core.graphics.toColorInt"
+            priority="0">
+            <range
+                file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/InvoicePdf.kt"
+                startOffset="956"
+                endOffset="983"/>
+        </fix-replace>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/InvoicePdf.kt"
+            line="27"
+            column="24"
+            startOffset="956"
+            endLine="27"
+            endColumn="51"
+            endOffset="983"/>
+    </incident>
+
+    <incident
+        id="UseKtx"
+        severity="warning"
+        message="Use the KTX extension function `String.toColorInt` instead?">
+        <fix-replace
+            description="Replace with the toColorInt extension function"
+            family="Replace with the toColorInt extension function"
+            robot="true"
+            independent="true"
+            oldString="Color.parseColor(&quot;#F6F8FB&quot;)"
+            replacement="&quot;#F6F8FB&quot;.toColorInt()"
+            reformat="value"
+            imports="androidx.core.graphics.toColorInt"
+            priority="0">
+            <range
+                file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/InvoicePdf.kt"
+                startOffset="2112"
+                endOffset="2139"/>
+        </fix-replace>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/InvoicePdf.kt"
+            line="55"
+            column="84"
+            startOffset="2112"
+            endLine="55"
+            endColumn="111"
+            endOffset="2139"/>
+    </incident>
+
+    <incident
+        id="UseKtx"
+        severity="warning"
+        message="Use the KTX extension function `String.toColorInt` instead?">
+        <fix-replace
+            description="Replace with the toColorInt extension function"
+            family="Replace with the toColorInt extension function"
+            robot="true"
+            independent="true"
+            oldString="Color.parseColor(&quot;#B8C7D9&quot;)"
+            replacement="&quot;#B8C7D9&quot;.toColorInt()"
+            reformat="value"
+            imports="androidx.core.graphics.toColorInt"
+            priority="0">
+            <range
+                file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/InvoicePdf.kt"
+                startOffset="4562"
+                endOffset="4589"/>
+        </fix-replace>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/InvoicePdf.kt"
+            line="103"
+            column="60"
+            startOffset="4562"
+            endLine="103"
+            endColumn="87"
+            endOffset="4589"/>
+    </incident>
+
+    <incident
+        id="UseKtx"
+        severity="warning"
+        message="Use the KTX extension function `String.toColorInt` instead?">
+        <fix-replace
+            description="Replace with the toColorInt extension function"
+            family="Replace with the toColorInt extension function"
+            robot="true"
+            independent="true"
+            oldString="Color.parseColor(&quot;#B8C7D9&quot;)"
+            replacement="&quot;#B8C7D9&quot;.toColorInt()"
+            reformat="value"
+            imports="androidx.core.graphics.toColorInt"
+            priority="0">
+            <range
+                file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/InvoicePdf.kt"
+                startOffset="4777"
+                endOffset="4804"/>
+        </fix-replace>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/InvoicePdf.kt"
+            line="105"
+            column="59"
+            startOffset="4777"
+            endLine="105"
+            endColumn="86"
+            endOffset="4804"/>
+    </incident>
+
+    <incident
+        id="UseKtx"
+        severity="warning"
+        message="Use the KTX extension function `String.toColorInt` instead?">
+        <fix-replace
+            description="Replace with the toColorInt extension function"
+            family="Replace with the toColorInt extension function"
+            robot="true"
+            independent="true"
+            oldString="Color.parseColor(&quot;#C62828&quot;)"
+            replacement="&quot;#C62828&quot;.toColorInt()"
+            reformat="value"
+            imports="androidx.core.graphics.toColorInt"
+            priority="0">
+            <range
+                file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/InvoicePdf.kt"
+                startOffset="5502"
+                endOffset="5529"/>
+        </fix-replace>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/InvoicePdf.kt"
+            line="116"
+            column="39"
+            startOffset="5502"
+            endLine="116"
+            endColumn="66"
+            endOffset="5529"/>
+    </incident>
+
+    <incident
+        id="UseKtx"
+        severity="warning"
+        message="Use the KTX extension function `String.toColorInt` instead?">
+        <fix-replace
+            description="Replace with the toColorInt extension function"
+            family="Replace with the toColorInt extension function"
+            robot="true"
+            independent="true"
+            oldString="Color.parseColor(&quot;#EAF6F4&quot;)"
+            replacement="&quot;#EAF6F4&quot;.toColorInt()"
+            reformat="value"
+            imports="androidx.core.graphics.toColorInt"
+            priority="0">
+            <range
+                file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/InvoicePdf.kt"
+                startOffset="5825"
+                endOffset="5852"/>
+        </fix-replace>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/util/InvoicePdf.kt"
+            line="122"
+            column="70"
+            startOffset="5825"
+            endLine="122"
+            endColumn="97"
+            endOffset="5852"/>
+    </incident>
+
+    <incident
+        id="UseKtx"
+        severity="warning"
+        message="Use the KTX extension function `String.toUri` instead?">
+        <fix-replace
+            description="Replace with the toUri extension function"
+            family="Replace with the toUri extension function"
+            robot="true"
+            independent="true"
+            oldString="Uri.parse(s.otpauthUrl)"
+            replacement="s.otpauthUrl.toUri()"
+            reformat="value"
+            imports="androidx.core.net.toUri"
+            priority="0">
+            <range
+                file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/ui/screens/TwoFactorScreens.kt"
+                startOffset="7643"
+                endOffset="7666"/>
+        </fix-replace>
+        <location
+            file="${:app*debug*MAIN*sourceProvider*0*javaDir*0}/com/sandalia/stockanchor/ui/screens/TwoFactorScreens.kt"
+            line="152"
+            column="70"
+            startOffset="7643"
+            endLine="152"
+            endColumn="93"
+            endOffset="7666"/>
+    </incident>
+
+</incidents>

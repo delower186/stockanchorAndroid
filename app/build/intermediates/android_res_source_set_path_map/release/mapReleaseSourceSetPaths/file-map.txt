@@ -1,0 +1,10 @@
+com.sandalia.stockanchor.app-pngs-0 /run/media/delower/Development/DevSync/Workspaces/Claude/StockAnchor/android/app/build/generated/res/pngs/release
+com.sandalia.stockanchor.app-resValues-1 /run/media/delower/Development/DevSync/Workspaces/Claude/StockAnchor/android/app/build/generated/res/resValues/release
+com.sandalia.stockanchor.app-updated_navigation_xml-2 /run/media/delower/Development/DevSync/Workspaces/Claude/StockAnchor/android/app/build/generated/updated_navigation_xml/release
+com.sandalia.stockanchor.app-packageReleaseResources-3 /run/media/delower/Development/DevSync/Workspaces/Claude/StockAnchor/android/app/build/intermediates/incremental/release/packageReleaseResources/merged.dir
+com.sandalia.stockanchor.app-packageReleaseResources-4 /run/media/delower/Development/DevSync/Workspaces/Claude/StockAnchor/android/app/build/intermediates/incremental/release/packageReleaseResources/stripped.dir
+com.sandalia.stockanchor.app-merged-not-compiled-resources-5 /run/media/delower/Development/DevSync/Workspaces/Claude/StockAnchor/android/app/build/intermediates/merged-not-compiled-resources/release
+com.sandalia.stockanchor.app-release-6 /run/media/delower/Development/DevSync/Workspaces/Claude/StockAnchor/android/app/build/intermediates/merged_res/release/mergeReleaseResources
+com.sandalia.stockanchor.app-main-7 /run/media/delower/Development/DevSync/Workspaces/Claude/StockAnchor/android/app/src/main/res
+com.sandalia.stockanchor.app-release-8 /run/media/delower/Development/DevSync/Workspaces/Claude/StockAnchor/android/app/src/release/res
+gradleHome-0 /home/delower/.gradle
