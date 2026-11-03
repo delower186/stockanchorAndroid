@@ -1,7 +1,5 @@
 package com.sandalia.stockanchor.data.remote
 
-import com.sandalia.stockanchor.R
-import com.sandalia.stockanchor.util.str
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -77,7 +75,7 @@ class ApiClient(private val session: SessionStore) {
             return service.block()
         } catch (e: HttpException) {
             val body = e.response()?.errorBody()?.string().orEmpty()
-            var message = str(R.string.server_error_x, e.code())
+            var message = "Server error (${e.code()})"
             var code: String? = null
             runCatching {
                 val json = JsonParser.parseString(body).asJsonObject
@@ -96,7 +94,7 @@ class ApiClient(private val session: SessionStore) {
             }
             throw ApiException(message, e.code(), code)
         } catch (e: IOException) {
-            throw ApiException(str(R.string.can_t_reach_the_stock_anchor))
+            throw ApiException("Can't reach the Stock Anchor server. Check your internet connection.")
         }
     }
 

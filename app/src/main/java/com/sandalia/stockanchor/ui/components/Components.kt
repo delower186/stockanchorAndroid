@@ -1,7 +1,5 @@
 package com.sandalia.stockanchor.ui.components
 
-import com.sandalia.stockanchor.R
-import com.sandalia.stockanchor.util.str
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -104,7 +102,7 @@ class Runner(private val scope: CoroutineScope, private val snackbar: SnackbarHo
             } catch (e: kotlinx.coroutines.CancellationException) {
                 throw e
             } catch (e: Exception) {
-                e.message ?: str(R.string.something_went_wrong)
+                e.message ?: "Something went wrong"
             } finally {
                 busy = false
             }
@@ -150,7 +148,7 @@ fun ScreenScaffold(
                     },
                     navigationIcon = {
                         if (onBack != null) IconButton(onClick = onBack) {
-                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = str(R.string.back))
+                            Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Back")
                         }
                     },
                     actions = actions,
@@ -237,7 +235,7 @@ fun PremiumChip(modifier: Modifier = Modifier) {
         Row(Modifier.padding(horizontal = 8.dp, vertical = 3.dp), verticalAlignment = Alignment.CenterVertically) {
             Icon(Icons.Filled.WorkspacePremium, null, tint = Amber, modifier = Modifier.size(13.dp))
             Spacer(Modifier.width(3.dp))
-            Text(str(R.string.premium_chip), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onTertiaryContainer)
+            Text("PREMIUM", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onTertiaryContainer)
         }
     }
 }
@@ -263,7 +261,7 @@ fun LockedFeature(title: String, message: String, modifier: Modifier = Modifier)
         Text(message, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Spacer(Modifier.height(22.dp))
         Button(onClick = openPaywall, modifier = Modifier.fillMaxWidth().height(50.dp)) {
-            Icon(Icons.Filled.WorkspacePremium, null); Spacer(Modifier.width(8.dp)); Text(str(R.string.upgrade_to_premium))
+            Icon(Icons.Filled.WorkspacePremium, null); Spacer(Modifier.width(8.dp)); Text("Upgrade to Premium")
         }
     }
 }
@@ -336,7 +334,7 @@ fun SearchField(value: String, onValueChange: (String) -> Unit, placeholder: Str
         leadingIcon = { Icon(Icons.Filled.Search, null) },
         trailingIcon = {
             Row {
-                if (value.isNotEmpty()) IconButton(onClick = { onValueChange("") }) { Icon(Icons.Outlined.Close, str(R.string.clear)) }
+                if (value.isNotEmpty()) IconButton(onClick = { onValueChange("") }) { Icon(Icons.Outlined.Close, "Clear") }
                 trailing?.invoke()
             }
         },
@@ -350,7 +348,7 @@ fun SearchField(value: String, onValueChange: (String) -> Unit, placeholder: Str
 fun ConfirmDialog(
     title: String,
     message: String,
-    confirmLabel: String = str(R.string.delete),
+    confirmLabel: String = "Delete",
     destructive: Boolean = true,
     onConfirm: () -> Unit,
     onDismiss: () -> Unit,
@@ -364,7 +362,7 @@ fun ConfirmDialog(
                 Text(confirmLabel, color = if (destructive) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary)
             }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(str(R.string.cancel)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
     )
 }
 

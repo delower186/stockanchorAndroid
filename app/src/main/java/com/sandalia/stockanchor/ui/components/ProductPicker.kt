@@ -1,7 +1,5 @@
 package com.sandalia.stockanchor.ui.components
 
-import com.sandalia.stockanchor.R
-import com.sandalia.stockanchor.util.str
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -70,19 +68,19 @@ fun ProductPickerSheet(
 
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = sheet) {
         Column(Modifier.fillMaxHeight(0.85f).padding(horizontal = 16.dp)) {
-            Text(str(R.string.choose_product), style = MaterialTheme.typography.titleLarge)
+            Text("Choose product", style = MaterialTheme.typography.titleLarge)
             Spacer(Modifier.padding(4.dp))
-            SearchField(query, { query = it }, str(R.string.name_sku_or_barcode), trailing = {
+            SearchField(query, { query = it }, "Name, SKU or barcode", trailing = {
                 if (session.premiumActive) IconButton(onClick = {
                     scope.launch {
                         val code = BarcodeScanner.scan(context) ?: return@launch
                         val found = container.repo.findByCode(code)
-                        if (found == null) runner.toast(str(R.string.no_product_with_barcode_x, code)) else query = code
+                        if (found == null) runner.toast("No product with barcode $code") else query = code
                     }
-                }) { Icon(Icons.Filled.QrCodeScanner, str(R.string.scan_barcode)) }
+                }) { Icon(Icons.Filled.QrCodeScanner, "Scan barcode") }
             })
             if (products.isEmpty()) Text(
-                if (onlyWarehouse && query.isBlank()) str(R.string.no_products_in_this_warehouse_yet) else str(R.string.no_matches_2),
+                if (onlyWarehouse && query.isBlank()) "No products in this warehouse yet." else "No matches.",
                 Modifier.padding(vertical = 24.dp), color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             LazyColumn(Modifier.fillMaxWidth()) {
@@ -97,7 +95,7 @@ fun ProductPickerSheet(
                         Column(Modifier.weight(1f)) {
                             Text(p.name, fontWeight = FontWeight.Medium)
                             Text(
-                                (if (showCost) str(R.string.cost_x, Fmt.money(session.currency, p.costPrice)) else Fmt.money(session.currency, p.salePrice)) +
+                                (if (showCost) "Cost " + Fmt.money(session.currency, p.costPrice) else Fmt.money(session.currency, p.salePrice)) +
                                     (p.sku?.let { " · $it" } ?: ""),
                                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )

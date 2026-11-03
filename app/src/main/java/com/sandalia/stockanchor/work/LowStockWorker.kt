@@ -1,7 +1,5 @@
 package com.sandalia.stockanchor.work
 
-import com.sandalia.stockanchor.util.plural
-import com.sandalia.stockanchor.util.str
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.NotificationChannel
@@ -63,7 +61,7 @@ object LowStockNotifier {
         if (!container.session.current.premiumActive || !container.session.current.lowStockAlerts) return
         val low = container.db.catalog().lowStockNow()
         if (low.isEmpty()) return
-        notify(context, low.map { str(R.string.x_x_x_left_min_x, it.name, Fmt.qty(it.quantity), it.unit, Fmt.qty(it.lowStockThreshold)) })
+        notify(context, low.map { "${it.name}: ${Fmt.qty(it.quantity)} ${it.unit} left (min ${Fmt.qty(it.lowStockThreshold)})" })
     }
 
     @SuppressLint("MissingPermission")
@@ -74,7 +72,7 @@ object LowStockNotifier {
 
         val manager = context.getSystemService(NotificationManager::class.java)
         manager.createNotificationChannel(
-            NotificationChannel(CHANNEL, str(R.string.low_stock_channel), NotificationManager.IMPORTANCE_DEFAULT)
+            NotificationChannel(CHANNEL, context.getString(R.string.low_stock_channel), NotificationManager.IMPORTANCE_DEFAULT)
         )
         val open = PendingIntent.getActivity(
             context, 0,
@@ -83,11 +81,11 @@ object LowStockNotifier {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
         val style = NotificationCompat.InboxStyle().also { s -> lines.take(6).forEach { s.addLine(it) } }
-        if (lines.size > 6) style.setSummaryText(str(R.string.x_more, lines.size - 6))
+        if (lines.size > 6) style.setSummaryText("+${lines.size - 6} more")
 
         val notification = NotificationCompat.Builder(context, CHANNEL)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle(plural(R.plurals.n_products_running_low, lines.size, lines.size))
+            .setContentTitle("${lines.size} product${if (lines.size == 1) "" else "s"} running low")
             .setContentText(lines.first())
             .setStyle(style)
             .setContentIntent(open)

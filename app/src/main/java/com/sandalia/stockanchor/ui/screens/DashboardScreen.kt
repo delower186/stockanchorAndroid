@@ -1,8 +1,5 @@
 package com.sandalia.stockanchor.ui.screens
 
-import com.sandalia.stockanchor.util.plural
-import com.sandalia.stockanchor.R
-import com.sandalia.stockanchor.util.str
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -180,18 +177,18 @@ fun DashboardScreen(nav: NavHostController) {
                         )
                         Spacer(Modifier.width(4.dp))
                         Text(
-                            if (session.isCloud) str(R.string.cloud_x, session.userName) else str(R.string.basic_on_this_device),
+                            if (session.isCloud) "Cloud · ${session.userName}" else "Basic · on this device",
                             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
                 }
                 if (session.isCloud) {
-                    IconButton(onClick = { runner.run(str(R.string.synced)) { container.sync.pull() } }, enabled = !syncing) {
-                        Icon(Icons.Filled.Sync, str(R.string.sync_now))
+                    IconButton(onClick = { runner.run("Synced") { container.sync.pull() } }, enabled = !syncing) {
+                        Icon(Icons.Filled.Sync, "Sync now")
                     }
                 }
                 if (session.premiumActive) PremiumChip() else TextButton(onClick = openPaywall) {
-                    Icon(Icons.Filled.WorkspacePremium, null, tint = Amber); Spacer(Modifier.width(4.dp)); Text(str(R.string.upgrade))
+                    Icon(Icons.Filled.WorkspacePremium, null, tint = Amber); Spacer(Modifier.width(4.dp)); Text("Upgrade")
                 }
             }
         }
@@ -214,26 +211,26 @@ fun DashboardScreen(nav: NavHostController) {
 
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                StatCard(str(R.string.total_stock), Fmt.qty(state.stock.quantity), Icons.Filled.Inventory, Teal, Modifier.weight(1f),
-                    caption = str(R.string.x_in_x, Fmt.qty(state.stockIn), state.period.label.lowercase()))
-                StatCard(str(R.string.stock_value), Fmt.moneyShort(cur, state.stock.costValue), Icons.Filled.Warehouse, MaterialTheme.colorScheme.primary,
-                    Modifier.weight(1f), caption = str(R.string.retail_x, Fmt.moneyShort(cur, state.stock.retailValue)))
+                StatCard("Total stock", Fmt.qty(state.stock.quantity), Icons.Filled.Inventory, Teal, Modifier.weight(1f),
+                    caption = "+${Fmt.qty(state.stockIn)} in ${state.period.label.lowercase()}")
+                StatCard("Stock value", Fmt.moneyShort(cur, state.stock.costValue), Icons.Filled.Warehouse, MaterialTheme.colorScheme.primary,
+                    Modifier.weight(1f), caption = "Retail ${Fmt.moneyShort(cur, state.stock.retailValue)}")
             }
         }
         item {
             Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                StatCard(str(R.string.purchases), Fmt.moneyShort(cur, state.purchases), Icons.Filled.LocalShipping, Amber, Modifier.weight(1f),
+                StatCard("Purchases", Fmt.moneyShort(cur, state.purchases), Icons.Filled.LocalShipping, Amber, Modifier.weight(1f),
                     caption = state.period.label)
-                StatCard(str(R.string.items_sold), Fmt.qty(state.itemsSold), Icons.Filled.ShoppingCart, Positive, Modifier.weight(1f),
-                    caption = plural(R.plurals.n_invoices, state.totals.salesCount, state.totals.salesCount))
+                StatCard("Items sold", Fmt.qty(state.itemsSold), Icons.Filled.ShoppingCart, Positive, Modifier.weight(1f),
+                    caption = "${state.totals.salesCount} invoices")
             }
         }
 
         item {
             AppCard(Modifier.fillMaxWidth()) {
-                Text(str(R.string.revenue), style = MaterialTheme.typography.titleMedium)
+                Text("Revenue", style = MaterialTheme.typography.titleMedium)
                 Text(
-                    when (state.period) { Period.DAY -> str(R.string.by_hour_today); Period.MONTH -> str(R.string.by_day_this_month); Period.YEAR -> str(R.string.by_month_this_year) },
+                    when (state.period) { Period.DAY -> "By hour, today"; Period.MONTH -> "By day, this month"; Period.YEAR -> "By month, this year" },
                     style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Spacer(Modifier.height(14.dp))
@@ -247,15 +244,15 @@ fun DashboardScreen(nav: NavHostController) {
         val canCatalog = session.can(Perm.CATALOG_MANAGE)
         if (canSell || canPurchase || canCatalog) item {
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
-                if (canSell) QuickAction(str(R.string.new_sale), Icons.Filled.PointOfSale, Modifier.weight(1f)) { nav.navigate(Routes.SELL) }
-                if (canPurchase) QuickAction(str(R.string.add_stock), Icons.Filled.AddBox, Modifier.weight(1f)) { nav.navigate(Routes.PURCHASE) }
-                if (canCatalog) QuickAction(str(R.string.product), Icons.Filled.Inventory, Modifier.weight(1f)) { nav.navigate(Routes.productEdit()) }
+                if (canSell) QuickAction("New sale", Icons.Filled.PointOfSale, Modifier.weight(1f)) { nav.navigate(Routes.SELL) }
+                if (canPurchase) QuickAction("Add stock", Icons.Filled.AddBox, Modifier.weight(1f)) { nav.navigate(Routes.PURCHASE) }
+                if (canCatalog) QuickAction("Product", Icons.Filled.Inventory, Modifier.weight(1f)) { nav.navigate(Routes.productEdit()) }
             }
         }
 
         item {
-            SectionTitle(str(R.string.low_stock), action = {
-                if (session.premiumActive && state.lowStock.isNotEmpty()) TextButton(onClick = { nav.navigate(Routes.LOW_STOCK) }) { Text(str(R.string.see_all)) }
+            SectionTitle("Low stock", action = {
+                if (session.premiumActive && state.lowStock.isNotEmpty()) TextButton(onClick = { nav.navigate(Routes.LOW_STOCK) }) { Text("See all") }
             })
             if (!session.premiumActive) {
                 AppCard(Modifier.fillMaxWidth(), onClick = openPaywall) {
@@ -263,8 +260,8 @@ fun DashboardScreen(nav: NavHostController) {
                         Icon(Icons.Filled.Warning, null, tint = Amber)
                         Spacer(Modifier.width(12.dp))
                         Column(Modifier.weight(1f)) {
-                            Text(str(R.string.low_stock_channel), style = MaterialTheme.typography.titleSmall)
-                            Text(str(R.string.get_notified_before_you_run_out), style = MaterialTheme.typography.bodySmall,
+                            Text("Low stock alerts", style = MaterialTheme.typography.titleSmall)
+                            Text("Get notified before you run out.", style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         PremiumChip()
@@ -272,7 +269,7 @@ fun DashboardScreen(nav: NavHostController) {
                 }
             } else if (state.lowStock.isEmpty()) {
                 AppCard(Modifier.fillMaxWidth()) {
-                    Text(str(R.string.all_products_are_above_their_minimum), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("All products are above their minimum level. 🎉", color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             } else {
                 AppCard(Modifier.fillMaxWidth()) {
@@ -280,7 +277,7 @@ fun DashboardScreen(nav: NavHostController) {
                         Row(Modifier.fillMaxWidth().padding(vertical = 6.dp), verticalAlignment = Alignment.CenterVertically) {
                             Column(Modifier.weight(1f)) {
                                 Text(p.name, style = MaterialTheme.typography.bodyLarge, fontWeight = FontWeight.Medium)
-                                Text(str(R.string.min_x_x, Fmt.qty(p.lowStockThreshold), p.unit), style = MaterialTheme.typography.bodySmall,
+                                Text("Min ${Fmt.qty(p.lowStockThreshold)} ${p.unit}", style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                             StockPill(p.quantity, p.lowStockThreshold, p.unit)
@@ -301,31 +298,31 @@ private fun HeroCard(state: DashboardState, cur: String, showNet: Boolean) {
             .padding(20.dp)
     ) {
         Column {
-            Text(str(R.string.total_sales_x, state.period.label.uppercase()), style = MaterialTheme.typography.labelSmall, color = Color(0xFFB8C7D9))
+            Text("TOTAL SALES · ${state.period.label.uppercase()}", style = MaterialTheme.typography.labelSmall, color = Color(0xFFB8C7D9))
             Spacer(Modifier.height(6.dp))
             Text(Fmt.money(cur, state.totals.revenue), style = MaterialTheme.typography.displaySmall, color = Color.White)
             Spacer(Modifier.height(16.dp))
             Row {
                 HeroMetric(
-                    if (state.profit >= 0) str(R.string.gross_profit) else str(R.string.gross_loss), Fmt.money(cur, state.profit), profitColor,
+                    if (state.profit >= 0) "Gross profit" else "Gross loss", Fmt.money(cur, state.profit), profitColor,
                     if (state.profit >= 0) Icons.AutoMirrored.Filled.TrendingUp else Icons.AutoMirrored.Filled.TrendingDown, Modifier.weight(1f),
                 )
-                HeroMetric(str(R.string.cost_of_goods), Fmt.money(cur, state.totals.cost), Color.White, Icons.Filled.MonetizationOn, Modifier.weight(1f))
+                HeroMetric("Cost of goods", Fmt.money(cur, state.totals.cost), Color.White, Icons.Filled.MonetizationOn, Modifier.weight(1f))
             }
             // Expenses / net profit are Premium.
             if (showNet) Spacer(Modifier.height(10.dp))
             if (showNet) Row {
-                HeroMetric(str(R.string.expenses), "−" + Fmt.money(cur, state.expenses), Color.White, Icons.Filled.Payments, Modifier.weight(1f))
+                HeroMetric("Expenses", "−" + Fmt.money(cur, state.expenses), Color.White, Icons.Filled.Payments, Modifier.weight(1f))
                 HeroMetric(
-                    if (state.netProfit >= 0) str(R.string.net_profit) else str(R.string.net_loss), Fmt.money(cur, state.netProfit),
+                    if (state.netProfit >= 0) "Net profit" else "Net loss", Fmt.money(cur, state.netProfit),
                     if (state.netProfit >= 0) TealLight else Color(0xFFFF9A9E), Icons.Filled.AccountBalanceWallet, Modifier.weight(1f),
                 )
             }
             Spacer(Modifier.height(10.dp))
             Surface(color = Color.White.copy(alpha = 0.1f), shape = RoundedCornerShape(50)) {
                 Text(
-                    str(R.string.x_sales_margin_x, state.totals.salesCount, "%.1f".format(state.margin)) +
-                        if (showNet) str(R.string.net_x, "%.1f".format(state.netMargin)) else "",
+                    "${state.totals.salesCount} sales · margin ${"%.1f".format(state.margin)}%" +
+                        if (showNet) " · net ${"%.1f".format(state.netMargin)}%" else "",
                     Modifier.padding(horizontal = 12.dp, vertical = 5.dp),
                     style = MaterialTheme.typography.labelMedium, color = Color.White,
                 )

@@ -1,7 +1,5 @@
 package com.sandalia.stockanchor.ui.screens
 
-import com.sandalia.stockanchor.R
-import com.sandalia.stockanchor.util.str
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
@@ -56,29 +54,29 @@ fun TwoFactorCodeDialog(busy: Boolean, onSubmit: (String) -> Unit, onDismiss: ()
     AlertDialog(
         onDismissRequest = onDismiss,
         icon = { Icon(Icons.Filled.Shield, null) },
-        title = { Text(str(R.string.two_step_verification)) },
+        title = { Text("Two-step verification") },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(
-                    if (recovery) str(R.string.enter_one_of_the_recovery_codes)
-                    else str(R.string.enter_the_6_digit_code_from),
+                    if (recovery) "Enter one of the recovery codes you saved. Each code works once."
+                    else "Enter the 6-digit code from your authenticator app.",
                     style = MaterialTheme.typography.bodyMedium,
                 )
                 OutlinedTextField(
                     code, { code = if (recovery) it.take(20) else it.filter(Char::isDigit).take(6) },
-                    label = { Text(if (recovery) str(R.string.recovery_code) else str(R.string.authentication_code)) }, singleLine = true,
+                    label = { Text(if (recovery) "Recovery code" else "Authentication code") }, singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = if (recovery) KeyboardType.Ascii else KeyboardType.NumberPassword),
                     modifier = Modifier.fillMaxWidth(),
                 )
                 TextButton(onClick = { recovery = !recovery; code = "" }) {
-                    Text(if (recovery) str(R.string.use_the_authenticator_app) else str(R.string.use_a_recovery_code))
+                    Text(if (recovery) "Use the authenticator app" else "Use a recovery code")
                 }
             }
         },
         confirmButton = {
-            Button(onClick = { onSubmit(code) }, enabled = !busy && (if (recovery) code.length >= 8 else code.length == 6)) { Text(str(R.string.verify)) }
+            Button(onClick = { onSubmit(code) }, enabled = !busy && (if (recovery) code.length >= 8 else code.length == 6)) { Text("Verify") }
         },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(str(R.string.cancel)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
     )
 }
 
@@ -99,22 +97,22 @@ fun TwoFactorCard(runner: Runner) {
             Icon(Icons.Filled.Shield, null, tint = if (status?.enabled == true) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.onSurfaceVariant)
             Spacer(Modifier.width(10.dp))
             Column(Modifier.weight(1f)) {
-                Text(str(R.string.two_step_verification), style = MaterialTheme.typography.titleMedium)
+                Text("Two-step verification", style = MaterialTheme.typography.titleMedium)
                 Text(
                     when (status?.enabled) {
-                        true -> str(R.string.on_x_recovery_codes_left, status?.recoveryCodesLeft)
-                        false -> str(R.string.off_ask_for_a_code_from)
-                        null -> str(R.string.checking)
+                        true -> "On · ${status?.recoveryCodesLeft} recovery codes left"
+                        false -> "Off · ask for a code from an authenticator app at sign-in"
+                        null -> "Checking…"
                     },
                     style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
         }
         when (status?.enabled) {
-            false -> Button(onClick = { askPassword = "on" }, modifier = Modifier.fillMaxWidth()) { Text(str(R.string.set_up)) }
+            false -> Button(onClick = { askPassword = "on" }, modifier = Modifier.fillMaxWidth()) { Text("Set up") }
             true -> Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedButton(onClick = { askPassword = "codes" }, modifier = Modifier.weight(1f)) { Text(str(R.string.new_recovery_codes)) }
-                TextButton(onClick = { askPassword = "off" }) { Text(str(R.string.turn_off), color = MaterialTheme.colorScheme.error) }
+                OutlinedButton(onClick = { askPassword = "codes" }, modifier = Modifier.weight(1f)) { Text("New recovery codes") }
+                TextButton(onClick = { askPassword = "off" }) { Text("Turn off", color = MaterialTheme.colorScheme.error) }
             }
             null -> Unit
         }
@@ -122,16 +120,16 @@ fun TwoFactorCard(runner: Runner) {
 
     askPassword?.let { purpose ->
         PasswordDialog(
-            title = when (purpose) { "on" -> str(R.string.set_up_two_step_verification); "codes" -> str(R.string.new_recovery_codes); else -> str(R.string.turn_off_two_step_verification) },
+            title = when (purpose) { "on" -> "Set up two-step verification"; "codes" -> "New recovery codes"; else -> "Turn off two-step verification" },
             message = when (purpose) {
-                "on" -> str(R.string.confirm_your_password_to_continue)
-                "codes" -> str(R.string.your_current_recovery_codes_will_stop)
-                else -> str(R.string.anyone_with_your_password_could_then)
+                "on" -> "Confirm your password to continue."
+                "codes" -> "Your current recovery codes will stop working."
+                else -> "Anyone with your password could then sign in. Not recommended."
             },
             busy = runner.busy,
             onDismiss = { askPassword = null },
             onConfirm = { password ->
-                runner.run(if (purpose == "off") str(R.string.two_step_verification_is_off) else null) {
+                runner.run(if (purpose == "off") "Two-step verification is off" else null) {
                     when (purpose) {
                         "on" -> setup = container.account.beginTwoFactor(password)
                         "codes" -> recoveryCodes = container.account.newRecoveryCodes(password)
@@ -151,11 +149,11 @@ fun TwoFactorCard(runner: Runner) {
                 try {
                     context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(s.otpauthUrl)))
                 } catch (e: ActivityNotFoundException) {
-                    runner.toast(str(R.string.install_google_authenticator_or_a_similar))
+                    runner.toast("Install Google Authenticator (or a similar app) first, or enter the key manually")
                 }
             },
             onConfirm = { code ->
-                runner.run(str(R.string.two_step_verification_is_on)) {
+                runner.run("Two-step verification is on") {
                     recoveryCodes = container.account.confirmTwoFactor(code)
                     setup = null
                     status = container.account.twoFactorStatus()
@@ -174,29 +172,29 @@ private fun TwoFactorSetupDialog(setup: TwoFactorSetup, busy: Boolean, onOpenApp
     var code by remember { mutableStateOf("") }
     AlertDialog(
         onDismissRequest = {},
-        title = { Text(str(R.string.set_up_two_step_verification)) },
+        title = { Text("Set up two-step verification") },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
-                Text(str(R.string.s_1_add_stock_anchor_to_google), style = MaterialTheme.typography.bodyMedium)
+                Text("1. Add Stock Anchor to Google Authenticator, Microsoft Authenticator or a similar app:", style = MaterialTheme.typography.bodyMedium)
                 OutlinedButton(onClick = onOpenApp, modifier = Modifier.fillMaxWidth()) {
-                    Icon(Icons.Filled.OpenInNew, null); Spacer(Modifier.width(8.dp)); Text(str(R.string.open_authenticator_app))
+                    Icon(Icons.Filled.OpenInNew, null); Spacer(Modifier.width(8.dp)); Text("Open authenticator app")
                 }
-                Text(str(R.string.or_enter_this_key_in_the), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text("Or enter this key in the app (time-based):", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(setup.secret.chunked(4).joinToString(" "), fontFamily = FontFamily.Monospace, modifier = Modifier.weight(1f))
                     TextButton(onClick = { clipboard.setText(AnnotatedString(setup.secret)) }) {
-                        Icon(Icons.Filled.ContentCopy, null); Spacer(Modifier.width(4.dp)); Text(str(R.string.copy))
+                        Icon(Icons.Filled.ContentCopy, null); Spacer(Modifier.width(4.dp)); Text("Copy")
                     }
                 }
-                Text(str(R.string.s_2_enter_the_6_digit_code), style = MaterialTheme.typography.bodyMedium)
+                Text("2. Enter the 6-digit code the app shows:", style = MaterialTheme.typography.bodyMedium)
                 OutlinedTextField(
-                    code, { code = it.filter(Char::isDigit).take(6) }, label = { Text(str(R.string.code)) }, singleLine = true,
+                    code, { code = it.filter(Char::isDigit).take(6) }, label = { Text("Code") }, singleLine = true,
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword), modifier = Modifier.fillMaxWidth(),
                 )
             }
         },
-        confirmButton = { Button(onClick = { onConfirm(code) }, enabled = !busy && code.length == 6) { Text(str(R.string.turn_on)) } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(str(R.string.cancel)) } },
+        confirmButton = { Button(onClick = { onConfirm(code) }, enabled = !busy && code.length == 6) { Text("Turn on") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
     )
 }
 
@@ -206,20 +204,20 @@ private fun RecoveryCodesDialog(codes: List<String>, onDismiss: () -> Unit) {
     var copied by remember { mutableStateOf(false) }
     AlertDialog(
         onDismissRequest = {},
-        title = { Text(str(R.string.save_your_recovery_codes)) },
+        title = { Text("Save your recovery codes") },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text(str(R.string.if_you_lose_your_phone_each),
+                Text("If you lose your phone, each code signs you in once. They are shown only now — keep them somewhere safe.",
                     style = MaterialTheme.typography.bodyMedium)
                 codes.chunked(2).forEach { pair ->
                     Row { pair.forEach { Text(it, fontFamily = FontFamily.Monospace, fontWeight = FontWeight.Medium, modifier = Modifier.weight(1f)) } }
                 }
                 OutlinedButton(onClick = { clipboard.setText(AnnotatedString(codes.joinToString("\n"))); copied = true }) {
-                    Icon(Icons.Filled.ContentCopy, null); Spacer(Modifier.width(8.dp)); Text(if (copied) str(R.string.copied) else str(R.string.copy_codes))
+                    Icon(Icons.Filled.ContentCopy, null); Spacer(Modifier.width(8.dp)); Text(if (copied) "Copied" else "Copy codes")
                 }
             }
         },
-        confirmButton = { Button(onClick = onDismiss) { Text(str(R.string.i_saved_them)) } },
+        confirmButton = { Button(onClick = onDismiss) { Text("I saved them") } },
     )
 }
 
@@ -233,13 +231,13 @@ private fun PasswordDialog(title: String, message: String, busy: Boolean, onConf
             Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                 Text(message, style = MaterialTheme.typography.bodyMedium)
                 OutlinedTextField(
-                    password, { password = it }, label = { Text(str(R.string.your_password)) }, singleLine = true,
+                    password, { password = it }, label = { Text("Your password") }, singleLine = true,
                     visualTransformation = PasswordVisualTransformation(),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password), modifier = Modifier.fillMaxWidth(),
                 )
             }
         },
-        confirmButton = { Button(onClick = { onConfirm(password) }, enabled = !busy && password.isNotEmpty()) { Text(str(R.string.continue_label)) } },
-        dismissButton = { TextButton(onClick = onDismiss) { Text(str(R.string.cancel)) } },
+        confirmButton = { Button(onClick = { onConfirm(password) }, enabled = !busy && password.isNotEmpty()) { Text("Continue") } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text("Cancel") } },
     )
 }

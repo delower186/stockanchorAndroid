@@ -1,7 +1,5 @@
 package com.sandalia.stockanchor.util
 
-import androidx.annotation.StringRes
-import com.sandalia.stockanchor.R
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
@@ -40,13 +38,13 @@ object Fmt {
     fun time(millis: Long): String = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date(millis))
 
     fun movementLabel(type: String): String = when (type) {
-        "purchase" -> str(R.string.purchase)
-        "sale" -> str(R.string.sale)
-        "sale_cancel" -> str(R.string.sale_cancelled)
-        "transfer_in" -> str(R.string.transfer_in)
-        "transfer_out" -> str(R.string.transfer_out)
-        "adjustment" -> str(R.string.adjustment)
-        "import" -> str(R.string.csv_import)
+        "purchase" -> "Purchase"
+        "sale" -> "Sale"
+        "sale_cancel" -> "Sale cancelled"
+        "transfer_in" -> "Transfer in"
+        "transfer_out" -> "Transfer out"
+        "adjustment" -> "Adjustment"
+        "import" -> "CSV import"
         else -> type.replaceFirstChar { it.uppercase() }
     }
 }
@@ -69,10 +67,8 @@ object Dates {
     }
 }
 
-enum class Period(@StringRes val labelRes: Int, val sqlFormat: String) {
-    DAY(R.string.today, "%H"),
-    MONTH(R.string.this_month, "%Y-%m-%d"),
-    YEAR(R.string.this_year, "%Y-%m");
-
-    val label: String get() = str(labelRes)
+enum class Period(val label: String, val sqlFormat: String) {
+    DAY("Today", "%H"),
+    MONTH("This month", "%Y-%m-%d"),
+    YEAR("This year", "%Y-%m"),
 }

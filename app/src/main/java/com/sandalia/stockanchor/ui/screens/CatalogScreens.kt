@@ -1,8 +1,5 @@
 package com.sandalia.stockanchor.ui.screens
 
-import com.sandalia.stockanchor.util.plural
-import com.sandalia.stockanchor.R
-import com.sandalia.stockanchor.util.str
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -68,14 +65,14 @@ fun CategoriesScreen(onBack: () -> Unit) {
     val canEdit = session.can(Perm.CATALOG_MANAGE)
 
     ScreenScaffold(
-        str(R.string.categories), onBack = onBack, busy = runner.busy,
+        "Categories", onBack = onBack, busy = runner.busy,
         floatingActionButton = {
             if (canEdit) ExtendedFloatingActionButton(onClick = { editing = Triple(null, "", "") },
-                icon = { Icon(Icons.Filled.Add, null) }, text = { Text(str(R.string.category)) })
+                icon = { Icon(Icons.Filled.Add, null) }, text = { Text("Category") })
         },
     ) { pad ->
         if (categories.isEmpty()) {
-            EmptyState(Icons.Filled.Category, str(R.string.no_categories), str(R.string.group_products_e_g_electronics_groceries), Modifier.padding(pad))
+            EmptyState(Icons.Filled.Category, "No categories", "Group products (e.g. Electronics, Groceries) to filter them quickly.", Modifier.padding(pad))
             return@ScreenScaffold
         }
         LazyColumn(Modifier.padding(pad), contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 96.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -86,12 +83,12 @@ fun CategoriesScreen(onBack: () -> Unit) {
                         Spacer(Modifier.width(12.dp))
                         Column(Modifier.weight(1f)) {
                             Text(c.name, style = MaterialTheme.typography.titleSmall)
-                            Text(plural(R.plurals.n_products, c.productCount, c.productCount) + (c.description?.let { " · $it" } ?: ""),
+                            Text("${c.productCount} product${if (c.productCount == 1) "" else "s"}" + (c.description?.let { " · $it" } ?: ""),
                                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1)
                         }
                         if (canEdit) {
-                            IconButton(onClick = { editing = Triple(c.id, c.name, c.description.orEmpty()) }) { Icon(Icons.Filled.Edit, str(R.string.edit)) }
-                            IconButton(onClick = { deleting = c.id to c.name }) { Icon(Icons.Filled.Delete, str(R.string.delete)) }
+                            IconButton(onClick = { editing = Triple(c.id, c.name, c.description.orEmpty()) }) { Icon(Icons.Filled.Edit, "Edit") }
+                            IconButton(onClick = { deleting = c.id to c.name }) { Icon(Icons.Filled.Delete, "Delete") }
                         }
                     }
                 }
@@ -104,25 +101,25 @@ fun CategoriesScreen(onBack: () -> Unit) {
         var desc by remember(id) { mutableStateOf(d) }
         AlertDialog(
             onDismissRequest = { editing = null },
-            title = { Text(if (id == null) str(R.string.new_category) else str(R.string.edit_category)) },
+            title = { Text(if (id == null) "New category" else "Edit category") },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedTextField(name, { name = it }, label = { Text(str(R.string.name)) }, singleLine = true)
-                    OutlinedTextField(desc, { desc = it }, label = { Text(str(R.string.description)) })
+                    OutlinedTextField(name, { name = it }, label = { Text("Name") }, singleLine = true)
+                    OutlinedTextField(desc, { desc = it }, label = { Text("Description") })
                 }
             },
             confirmButton = {
                 TextButton(enabled = name.isNotBlank(), onClick = {
                     editing = null
-                    runner.run(str(R.string.category_saved)) { container.repo.saveCategory(id, name, desc) }
-                }) { Text(str(R.string.save)) }
+                    runner.run("Category saved") { container.repo.saveCategory(id, name, desc) }
+                }) { Text("Save") }
             },
-            dismissButton = { TextButton(onClick = { editing = null }) { Text(str(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { editing = null }) { Text("Cancel") } },
         )
     }
     deleting?.let { (id, name) ->
-        ConfirmDialog(str(R.string.delete_x, name), str(R.string.products_in_this_category_will_become),
-            onConfirm = { runner.run(str(R.string.category_deleted)) { container.repo.deleteCategory(id) } }, onDismiss = { deleting = null })
+        ConfirmDialog("Delete “$name”?", "Products in this category will become uncategorised.",
+            onConfirm = { runner.run("Category deleted") { container.repo.deleteCategory(id) } }, onDismiss = { deleting = null })
     }
 }
 
@@ -141,12 +138,12 @@ fun WarehousesScreen(onBack: () -> Unit) {
     val atLimit = !session.premiumActive && warehouses.size >= Limits.BASIC_WAREHOUSES
 
     ScreenScaffold(
-        str(R.string.warehouses), onBack = onBack, busy = runner.busy,
-        subtitle = if (session.premiumActive) str(R.string.unlimited_on_premium) else str(R.string.x_of_x_on_basic, warehouses.size, Limits.warehouses()),
+        "Warehouses", onBack = onBack, busy = runner.busy,
+        subtitle = if (session.premiumActive) "Unlimited on Premium" else "${warehouses.size} of ${Limits.warehouses()} on Basic",
         floatingActionButton = {
             if (canEdit) ExtendedFloatingActionButton(
                 onClick = { if (atLimit) openPaywall() else editing = WarehouseEntity(id = 0, name = "") },
-                icon = { Icon(Icons.Filled.Add, null) }, text = { Text(str(R.string.warehouse)) },
+                icon = { Icon(Icons.Filled.Add, null) }, text = { Text("Warehouse") },
             )
         },
     ) { pad ->
@@ -154,7 +151,7 @@ fun WarehousesScreen(onBack: () -> Unit) {
             if (atLimit) item {
                 AppCard(Modifier.fillMaxWidth(), onClick = openPaywall) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(str(R.string.need_more_locations_premium_has_unlimited), Modifier.weight(1f),
+                        Text("Need more locations? Premium has unlimited warehouses and stock transfers.", Modifier.weight(1f),
                             style = MaterialTheme.typography.bodyMedium)
                         Spacer(Modifier.width(8.dp)); PremiumChip()
                     }
@@ -168,13 +165,13 @@ fun WarehousesScreen(onBack: () -> Unit) {
                         Column(Modifier.weight(1f)) {
                             Row(verticalAlignment = Alignment.CenterVertically) {
                                 Text(w.name, style = MaterialTheme.typography.titleSmall)
-                                if (w.isDefault) { Spacer(Modifier.width(6.dp)); Icon(Icons.Filled.Star, str(R.string.default_label), tint = Amber, modifier = Modifier.padding(0.dp)) }
+                                if (w.isDefault) { Spacer(Modifier.width(6.dp)); Icon(Icons.Filled.Star, "Default", tint = Amber, modifier = Modifier.padding(0.dp)) }
                             }
-                            Text(w.location ?: str(R.string.no_address), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                            Text(w.location ?: "No address", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         if (canEdit) {
-                            IconButton(onClick = { editing = w }) { Icon(Icons.Filled.Edit, str(R.string.edit)) }
-                            IconButton(onClick = { deleting = w }) { Icon(Icons.Filled.Delete, str(R.string.delete)) }
+                            IconButton(onClick = { editing = w }) { Icon(Icons.Filled.Edit, "Edit") }
+                            IconButton(onClick = { deleting = w }) { Icon(Icons.Filled.Delete, "Delete") }
                         }
                     }
                 }
@@ -188,29 +185,29 @@ fun WarehousesScreen(onBack: () -> Unit) {
         var isDefault by remember(w.id) { mutableStateOf(w.isDefault) }
         AlertDialog(
             onDismissRequest = { editing = null },
-            title = { Text(if (w.id == 0L) str(R.string.new_warehouse) else str(R.string.edit_warehouse)) },
+            title = { Text(if (w.id == 0L) "New warehouse" else "Edit warehouse") },
             icon = { Icon(Icons.Filled.Warehouse, null) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedTextField(name, { name = it }, label = { Text(str(R.string.name)) }, singleLine = true)
-                    OutlinedTextField(location, { location = it }, label = { Text(str(R.string.location_address)) })
+                    OutlinedTextField(name, { name = it }, label = { Text("Name") }, singleLine = true)
+                    OutlinedTextField(location, { location = it }, label = { Text("Location / address") })
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Checkbox(isDefault, { isDefault = it }); Text(str(R.string.default_for_sales_purchases))
+                        Checkbox(isDefault, { isDefault = it }); Text("Default for sales & purchases")
                     }
                 }
             },
             confirmButton = {
                 TextButton(enabled = name.isNotBlank(), onClick = {
                     editing = null
-                    runner.run(str(R.string.warehouse_saved)) { container.repo.saveWarehouse(w.id.takeIf { it != 0L }, name, location, isDefault) }
-                }) { Text(str(R.string.save)) }
+                    runner.run("Warehouse saved") { container.repo.saveWarehouse(w.id.takeIf { it != 0L }, name, location, isDefault) }
+                }) { Text("Save") }
             },
-            dismissButton = { TextButton(onClick = { editing = null }) { Text(str(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { editing = null }) { Text("Cancel") } },
         )
     }
     deleting?.let { w ->
-        ConfirmDialog(str(R.string.delete_x, w.name), str(R.string.only_empty_warehouses_can_be_deleted),
-            onConfirm = { runner.run(str(R.string.warehouse_deleted)) { container.repo.deleteWarehouse(w.id) } }, onDismiss = { deleting = null })
+        ConfirmDialog("Delete “${w.name}”?", "Only empty warehouses can be deleted.",
+            onConfirm = { runner.run("Warehouse deleted") { container.repo.deleteWarehouse(w.id) } }, onDismiss = { deleting = null })
     }
 }
 
@@ -227,18 +224,18 @@ fun SuppliersScreen(onBack: () -> Unit) {
     val canEdit = session.can(Perm.SUPPLIERS_MANAGE)
 
     ScreenScaffold(
-        str(R.string.suppliers), onBack = onBack, busy = runner.busy,
+        "Suppliers", onBack = onBack, busy = runner.busy,
         floatingActionButton = {
             if (session.premiumActive && canEdit) ExtendedFloatingActionButton(onClick = { editing = SupplierEntity(name = "") },
-                icon = { Icon(Icons.Filled.Add, null) }, text = { Text(str(R.string.supplier)) })
+                icon = { Icon(Icons.Filled.Add, null) }, text = { Text("Supplier") })
         },
     ) { pad ->
         if (!session.premiumActive) {
-            LockedFeature(str(R.string.supplier_management), str(R.string.keep_your_suppliers_contacts_and_link), Modifier.padding(pad))
+            LockedFeature("Supplier management", "Keep your suppliers' contacts and link them to every purchase.", Modifier.padding(pad))
             return@ScreenScaffold
         }
         if (suppliers.isEmpty()) {
-            EmptyState(Icons.Filled.LocalShipping, str(R.string.no_suppliers_yet), str(R.string.add_the_businesses_you_buy_stock), Modifier.padding(pad))
+            EmptyState(Icons.Filled.LocalShipping, "No suppliers yet", "Add the businesses you buy stock from.", Modifier.padding(pad))
             return@ScreenScaffold
         }
         LazyColumn(Modifier.padding(pad), contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 96.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -249,13 +246,13 @@ fun SuppliersScreen(onBack: () -> Unit) {
                         Spacer(Modifier.width(12.dp))
                         Column(Modifier.weight(1f)) {
                             Text(s.name, style = MaterialTheme.typography.titleSmall)
-                            Text(listOfNotNull(s.phone, s.email).joinToString(" · ").ifBlank { str(R.string.no_contact_details) },
+                            Text(listOfNotNull(s.phone, s.email).joinToString(" · ").ifBlank { "No contact details" },
                                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             s.address?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
                         }
                         if (canEdit) {
-                            IconButton(onClick = { editing = s }) { Icon(Icons.Filled.Edit, str(R.string.edit)) }
-                            IconButton(onClick = { deleting = s }) { Icon(Icons.Filled.Delete, str(R.string.delete)) }
+                            IconButton(onClick = { editing = s }) { Icon(Icons.Filled.Edit, "Edit") }
+                            IconButton(onClick = { deleting = s }) { Icon(Icons.Filled.Delete, "Delete") }
                         }
                     }
                 }
@@ -271,27 +268,27 @@ fun SuppliersScreen(onBack: () -> Unit) {
         var note by remember(s.id) { mutableStateOf(s.note.orEmpty()) }
         AlertDialog(
             onDismissRequest = { editing = null },
-            title = { Text(if (s.id == 0L) str(R.string.new_supplier) else str(R.string.edit_supplier)) },
+            title = { Text(if (s.id == 0L) "New supplier" else "Edit supplier") },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedTextField(name, { name = it }, label = { Text(str(R.string.name_2)) }, singleLine = true)
-                    OutlinedTextField(phone, { phone = it }, label = { Text(str(R.string.phone)) }, singleLine = true)
-                    OutlinedTextField(email, { email = it }, label = { Text(str(R.string.email)) }, singleLine = true)
-                    OutlinedTextField(address, { address = it }, label = { Text(str(R.string.address)) })
-                    OutlinedTextField(note, { note = it }, label = { Text(str(R.string.note)) })
+                    OutlinedTextField(name, { name = it }, label = { Text("Name *") }, singleLine = true)
+                    OutlinedTextField(phone, { phone = it }, label = { Text("Phone") }, singleLine = true)
+                    OutlinedTextField(email, { email = it }, label = { Text("Email") }, singleLine = true)
+                    OutlinedTextField(address, { address = it }, label = { Text("Address") })
+                    OutlinedTextField(note, { note = it }, label = { Text("Note") })
                 }
             },
             confirmButton = {
                 TextButton(enabled = name.isNotBlank(), onClick = {
                     editing = null
-                    runner.run(str(R.string.supplier_saved)) { container.repo.saveSupplier(s.id.takeIf { it != 0L }, name, phone, email, address, note) }
-                }) { Text(str(R.string.save)) }
+                    runner.run("Supplier saved") { container.repo.saveSupplier(s.id.takeIf { it != 0L }, name, phone, email, address, note) }
+                }) { Text("Save") }
             },
-            dismissButton = { TextButton(onClick = { editing = null }) { Text(str(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { editing = null }) { Text("Cancel") } },
         )
     }
     deleting?.let { s ->
-        ConfirmDialog(str(R.string.delete_x, s.name), str(R.string.past_purchases_keep_their_records),
-            onConfirm = { runner.run(str(R.string.supplier_deleted)) { container.repo.deleteSupplier(s.id) } }, onDismiss = { deleting = null })
+        ConfirmDialog("Delete “${s.name}”?", "Past purchases keep their records.",
+            onConfirm = { runner.run("Supplier deleted") { container.repo.deleteSupplier(s.id) } }, onDismiss = { deleting = null })
     }
 }

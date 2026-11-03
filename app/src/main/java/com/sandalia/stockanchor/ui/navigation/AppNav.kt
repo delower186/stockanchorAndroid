@@ -1,8 +1,5 @@
 package com.sandalia.stockanchor.ui.navigation
 
-import androidx.annotation.StringRes
-import com.sandalia.stockanchor.R
-import com.sandalia.stockanchor.util.str
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.padding
@@ -102,16 +99,14 @@ object Routes {
     fun account(mode: String) = "account?mode=$mode"
 }
 
-private data class Tab(val route: String, @StringRes val labelRes: Int, val icon: ImageVector, val selectedIcon: ImageVector) {
-    val label: String get() = str(labelRes)
-}
+private data class Tab(val route: String, val label: String, val icon: ImageVector, val selectedIcon: ImageVector)
 
 private val tabs = listOf(
-    Tab(Routes.DASHBOARD, R.string.dashboard, Icons.Outlined.Dashboard, Icons.Filled.Dashboard),
-    Tab(Routes.PRODUCTS, R.string.products, Icons.Outlined.Inventory2, Icons.Filled.Inventory2),
-    Tab(Routes.SELL, R.string.sell, Icons.Outlined.PointOfSale, Icons.Filled.PointOfSale),
-    Tab(Routes.SALES, R.string.sales, Icons.AutoMirrored.Outlined.ReceiptLong, Icons.AutoMirrored.Filled.ReceiptLong),
-    Tab(Routes.MORE, R.string.more, Icons.Outlined.Apps, Icons.Filled.Apps),
+    Tab(Routes.DASHBOARD, "Dashboard", Icons.Outlined.Dashboard, Icons.Filled.Dashboard),
+    Tab(Routes.PRODUCTS, "Products", Icons.Outlined.Inventory2, Icons.Filled.Inventory2),
+    Tab(Routes.SELL, "Sell", Icons.Outlined.PointOfSale, Icons.Filled.PointOfSale),
+    Tab(Routes.SALES, "Sales", Icons.AutoMirrored.Outlined.ReceiptLong, Icons.AutoMirrored.Filled.ReceiptLong),
+    Tab(Routes.MORE, "More", Icons.Outlined.Apps, Icons.Filled.Apps),
 )
 
 @Composable

@@ -1,7 +1,5 @@
 package com.sandalia.stockanchor.ui.screens
 
-import com.sandalia.stockanchor.R
-import com.sandalia.stockanchor.util.str
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -90,16 +88,16 @@ fun ExpensesScreen(onBack: () -> Unit) {
     val total = expenses.sumOf { it.amount }
 
     ScreenScaffold(
-        str(R.string.expenses), subtitle = str(R.string.net_profit_gross_profit_expenses), onBack = onBack, busy = runner.busy,
+        "Expenses", subtitle = "Net profit = gross profit − expenses", onBack = onBack, busy = runner.busy,
         floatingActionButton = {
             if (canEdit && session.premiumActive) ExtendedFloatingActionButton(
                 onClick = { editing = ExpenseEntity(category = "", amount = 0.0, date = System.currentTimeMillis()) },
-                icon = { Icon(Icons.Filled.Add, null) }, text = { Text(str(R.string.expense)) },
+                icon = { Icon(Icons.Filled.Add, null) }, text = { Text("Expense") },
             )
         },
     ) { pad ->
         if (!session.premiumActive) {
-            LockedFeature(str(R.string.expenses_net_profit), str(R.string.record_rent_salaries_and_other_costs), Modifier.padding(pad))
+            LockedFeature("Expenses & net profit", "Record rent, salaries and other costs to see your real profit after expenses.", Modifier.padding(pad))
             return@ScreenScaffold
         }
         LazyColumn(Modifier.padding(pad), contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 96.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -112,7 +110,7 @@ fun ExpensesScreen(onBack: () -> Unit) {
             }
             item {
                 AppCard(Modifier.fillMaxWidth()) {
-                    Text(str(R.string.total_expenses_x, period.label.uppercase()), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("TOTAL EXPENSES · ${period.label.uppercase()}", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Text(Fmt.money(cur, total), style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.error)
                     Text("${expenses.size} ${if (expenses.size == 1) "entry" else "entries"}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     if (byCategory.isNotEmpty()) {
@@ -132,7 +130,7 @@ fun ExpensesScreen(onBack: () -> Unit) {
                 }
             }
             if (expenses.isEmpty()) item {
-                EmptyState(Icons.Filled.Payments, str(R.string.no_expenses_x, period.label.lowercase()), str(R.string.record_rent_salaries_and_other_costs_2))
+                EmptyState(Icons.Filled.Payments, "No expenses ${period.label.lowercase()}", "Record rent, salaries and other costs to see your net profit on the dashboard.")
             }
             items(expenses, key = { it.id }) { e ->
                 AppCard(Modifier.fillMaxWidth(), onClick = if (canEdit) ({ editing = e }) else null) {
@@ -155,13 +153,13 @@ fun ExpensesScreen(onBack: () -> Unit) {
             suggestions = (used + EXPENSE_CATEGORIES).distinct(),
             currency = cur,
             onDismiss = { editing = null },
-            onSave = { saved -> editing = null; runner.run(str(R.string.expense_saved)) { container.repo.saveExpense(saved) } },
+            onSave = { saved -> editing = null; runner.run("Expense saved") { container.repo.saveExpense(saved) } },
             onDelete = if (e.id != 0L) ({ editing = null; deleting = e }) else null,
         )
     }
     deleting?.let { e ->
-        ConfirmDialog(str(R.string.delete_expense), str(R.string.x_x_on_x, e.category, Fmt.money(cur, e.amount), Fmt.date(e.date)),
-            onConfirm = { runner.run(str(R.string.expense_deleted)) { container.repo.deleteExpense(e.id) } }, onDismiss = { deleting = null })
+        ConfirmDialog("Delete expense?", "${e.category} · ${Fmt.money(cur, e.amount)} on ${Fmt.date(e.date)}",
+            onConfirm = { runner.run("Expense deleted") { container.repo.deleteExpense(e.id) } }, onDismiss = { deleting = null })
     }
 }
 
@@ -184,29 +182,29 @@ private fun ExpenseDialog(
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text(if (expense.id == 0L) str(R.string.add_expense) else str(R.string.edit_expense)) },
+        title = { Text(if (expense.id == 0L) "Add expense" else "Edit expense") },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedTextField(category, { category = it }, label = { Text(str(R.string.category)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(category, { category = it }, label = { Text("Category") }, singleLine = true, modifier = Modifier.fillMaxWidth())
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     suggestions.forEach { s -> FilterChip(selected = category == s, onClick = { category = s }, label = { Text(s) }) }
                 }
-                NumberField(amount, { amount = it }, str(R.string.amount), Modifier.fillMaxWidth(), prefix = currency)
+                NumberField(amount, { amount = it }, "Amount", Modifier.fillMaxWidth(), prefix = currency)
                 OutlinedButton(onClick = { picking = true }, modifier = Modifier.fillMaxWidth()) {
                     Icon(Icons.Filled.CalendarMonth, null); Spacer(Modifier.width(8.dp)); Text(Fmt.date(date))
                 }
-                OutlinedTextField(note, { note = it }, label = { Text(str(R.string.note)) }, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(note, { note = it }, label = { Text("Note") }, modifier = Modifier.fillMaxWidth())
             }
         },
         confirmButton = {
             TextButton(enabled = category.isNotBlank() && value > 0, onClick = {
                 onSave(expense.copy(category = category, amount = value, note = note, date = date))
-            }) { Text(str(R.string.save)) }
+            }) { Text("Save") }
         },
         dismissButton = {
             Row {
-                onDelete?.let { TextButton(onClick = it) { Text(str(R.string.delete), color = MaterialTheme.colorScheme.error) } }
-                TextButton(onClick = onDismiss) { Text(str(R.string.cancel)) }
+                onDelete?.let { TextButton(onClick = it) { Text("Delete", color = MaterialTheme.colorScheme.error) } }
+                TextButton(onClick = onDismiss) { Text("Cancel") }
             }
         },
     )
@@ -231,9 +229,9 @@ private fun ExpenseDialog(
                         date = day.atTime(current.toLocalTime()).atZone(zone).toInstant().toEpochMilli()
                     }
                     picking = false
-                }) { Text(str(R.string.ok)) }
+                }) { Text("OK") }
             },
-            dismissButton = { TextButton(onClick = { picking = false }) { Text(str(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { picking = false }) { Text("Cancel") } },
         ) { DatePicker(state) }
     }
 }

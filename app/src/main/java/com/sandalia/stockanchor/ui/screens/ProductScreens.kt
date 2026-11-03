@@ -1,8 +1,5 @@
 package com.sandalia.stockanchor.ui.screens
 
-import com.sandalia.stockanchor.util.plural
-import com.sandalia.stockanchor.R
-import com.sandalia.stockanchor.util.str
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -110,64 +107,64 @@ fun ProductsScreen(nav: NavHostController) {
     val openPaywall = LocalOpenPaywall.current
 
     ScreenScaffold(
-        title = str(R.string.products),
-        subtitle = plural(R.plurals.n_items, products.size, products.size),
+        title = "Products",
+        subtitle = "${products.size} item${if (products.size == 1) "" else "s"}",
         actions = {
-            IconButton(onClick = { nav.navigate(Routes.CATEGORIES) }) { Icon(Icons.Filled.Tune, str(R.string.categories)) }
+            IconButton(onClick = { nav.navigate(Routes.CATEGORIES) }) { Icon(Icons.Filled.Tune, "Categories") }
         },
         floatingActionButton = {
             if (session.can(Perm.CATALOG_MANAGE)) ExtendedFloatingActionButton(
                 onClick = { nav.navigate(Routes.productEdit()) },
-                icon = { Icon(Icons.Filled.Add, null) }, text = { Text(str(R.string.product)) },
+                icon = { Icon(Icons.Filled.Add, null) }, text = { Text("Product") },
             )
         },
     ) { pad ->
         Column(Modifier.padding(pad).fillMaxSize()) {
             Column(Modifier.padding(horizontal = 16.dp)) {
-                SearchField(query, { query = it }, str(R.string.search_name_sku_or_barcode), trailing = {
+                SearchField(query, { query = it }, "Search name, SKU or barcode", trailing = {
                     IconButton(onClick = {
                         if (!session.premiumActive) openPaywall() else scope.launch {
                             val code = BarcodeScanner.scan(context) ?: return@launch
                             val p = container.repo.findByCode(code)
-                            if (p != null) nav.navigate(Routes.product(p.id)) else { query = code; runner.toast(str(R.string.no_product_with_barcode_x, code)) }
+                            if (p != null) nav.navigate(Routes.product(p.id)) else { query = code; runner.toast("No product with barcode $code") }
                         }
-                    }) { Icon(Icons.Filled.QrCodeScanner, str(R.string.scan)) }
+                    }) { Icon(Icons.Filled.QrCodeScanner, "Scan") }
                 })
                 Spacer(Modifier.height(8.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
                     FilterChip(
                         selected = filtered,
                         onClick = { showFilters = !showFilters },
-                        label = { Text(if (filtered) str(R.string.filtered) else str(R.string.filter)) },
+                        label = { Text(if (filtered) "Filtered" else "Filter") },
                         leadingIcon = { Icon(Icons.Filled.Tune, null) },
                     )
                     categoryId?.let { id ->
-                        FilterChip(true, onClick = { categoryId = null }, label = { Text(categories.firstOrNull { it.id == id }?.name ?: str(R.string.category)) })
+                        FilterChip(true, onClick = { categoryId = null }, label = { Text(categories.firstOrNull { it.id == id }?.name ?: "Category") })
                     }
                     warehouseId?.let { id ->
-                        FilterChip(true, onClick = { warehouseId = null }, label = { Text(warehouses.firstOrNull { it.id == id }?.name ?: str(R.string.warehouse)) })
+                        FilterChip(true, onClick = { warehouseId = null }, label = { Text(warehouses.firstOrNull { it.id == id }?.name ?: "Warehouse") })
                     }
                     supplierFilter?.let { id ->
-                        FilterChip(true, onClick = { supplierId = null }, label = { Text(suppliers.firstOrNull { it.id == id }?.name ?: str(R.string.supplier)) })
+                        FilterChip(true, onClick = { supplierId = null }, label = { Text(suppliers.firstOrNull { it.id == id }?.name ?: "Supplier") })
                     }
                 }
                 if (showFilters) {
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        DropdownField(str(R.string.category), categories, categories.firstOrNull { it.id == categoryId }, { it.name },
-                            { categoryId = it?.id }, Modifier.weight(1f), noneLabel = str(R.string.all_categories))
-                        DropdownField(str(R.string.warehouse), warehouses, warehouses.firstOrNull { it.id == warehouseId }, { it.name },
-                            { warehouseId = it?.id }, Modifier.weight(1f), noneLabel = str(R.string.all_warehouses))
+                        DropdownField("Category", categories, categories.firstOrNull { it.id == categoryId }, { it.name },
+                            { categoryId = it?.id }, Modifier.weight(1f), noneLabel = "All categories")
+                        DropdownField("Warehouse", warehouses, warehouses.firstOrNull { it.id == warehouseId }, { it.name },
+                            { warehouseId = it?.id }, Modifier.weight(1f), noneLabel = "All warehouses")
                     }
                     if (session.premiumActive) {
                         Spacer(Modifier.height(8.dp))
-                        DropdownField(str(R.string.supplier), suppliers, suppliers.firstOrNull { it.id == supplierId }, { it.name },
-                            { supplierId = it?.id }, Modifier.fillMaxWidth(), noneLabel = str(R.string.all_suppliers))
+                        DropdownField("Supplier", suppliers, suppliers.firstOrNull { it.id == supplierId }, { it.name },
+                            { supplierId = it?.id }, Modifier.fillMaxWidth(), noneLabel = "All suppliers")
                     }
                 }
             }
             if (products.isEmpty()) {
-                EmptyState(Icons.Filled.Inventory2, if (query.isBlank() && !filtered) str(R.string.no_products_yet) else str(R.string.no_matches),
-                    str(R.string.add_your_first_product_then_record))
+                EmptyState(Icons.Filled.Inventory2, if (query.isBlank() && !filtered) "No products yet" else "No matches",
+                    "Add your first product, then record a purchase to put it in stock.")
             } else {
                 LazyColumn(contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 96.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     items(products, key = { it.id }) { p ->
@@ -180,7 +177,7 @@ fun ProductsScreen(nav: NavHostController) {
                                     Text(
                                         // Filtered: the chosen warehouse (quantity is for it). Otherwise where the stock is, else the home warehouse.
                                         listOfNotNull(
-                                            p.categoryName ?: str(R.string.uncategorised),
+                                            p.categoryName ?: "Uncategorised",
                                             warehouseId?.let { id -> warehouses.firstOrNull { it.id == id }?.name } ?: p.stockLocations ?: p.warehouseName,
                                             p.sku,
                                         ).joinToString(" · "),
@@ -242,63 +239,63 @@ fun ProductEditScreen(productId: Long, onBack: () -> Unit) {
     }
 
     ScreenScaffold(
-        title = if (productId == 0L) str(R.string.new_product) else str(R.string.edit_product),
+        title = if (productId == 0L) "New product" else "Edit product",
         onBack = onBack,
         busy = runner.busy,
         actions = {
-            if (productId != 0L) IconButton(onClick = { confirmDelete = true }) { Icon(Icons.Filled.Delete, str(R.string.delete)) }
+            if (productId != 0L) IconButton(onClick = { confirmDelete = true }) { Icon(Icons.Filled.Delete, "Delete") }
         },
     ) { pad ->
         Column(
             Modifier.padding(pad).fillMaxSize().imePadding().verticalScroll(rememberScrollState()).padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            OutlinedTextField(name, { name = it }, label = { Text(str(R.string.product_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+            OutlinedTextField(name, { name = it }, label = { Text("Product name *") }, singleLine = true, modifier = Modifier.fillMaxWidth())
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                DropdownField(str(R.string.category), categories, categories.firstOrNull { it.id == categoryId }, CategoryEntity::name,
-                    { categoryId = it?.id }, Modifier.weight(1f), noneLabel = str(R.string.no_category))
-                TextButton(onClick = { newCategory = "" }) { Text(str(R.string.new_label)) }
+                DropdownField("Category", categories, categories.firstOrNull { it.id == categoryId }, CategoryEntity::name,
+                    { categoryId = it?.id }, Modifier.weight(1f), noneLabel = "No category")
+                TextButton(onClick = { newCategory = "" }) { Text("+ New") }
             }
-            DropdownField(str(R.string.warehouse), warehouses, warehouses.firstOrNull { it.id == warehouseId }, WarehouseEntity::name,
-                { warehouseId = it?.id }, Modifier.fillMaxWidth(), noneLabel = str(R.string.no_warehouse))
+            DropdownField("Warehouse", warehouses, warehouses.firstOrNull { it.id == warehouseId }, WarehouseEntity::name,
+                { warehouseId = it?.id }, Modifier.fillMaxWidth(), noneLabel = "No warehouse")
             if (session.premiumActive) Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                DropdownField(str(R.string.supplier), suppliers, suppliers.firstOrNull { it.id == supplierId }, SupplierEntity::name,
-                    { supplierId = it?.id }, Modifier.weight(1f), noneLabel = str(R.string.no_supplier))
-                if (session.can(Perm.SUPPLIERS_MANAGE)) TextButton(onClick = { newSupplier = "" }) { Text(str(R.string.new_label)) }
+                DropdownField("Supplier", suppliers, suppliers.firstOrNull { it.id == supplierId }, SupplierEntity::name,
+                    { supplierId = it?.id }, Modifier.weight(1f), noneLabel = "No supplier")
+                if (session.can(Perm.SUPPLIERS_MANAGE)) TextButton(onClick = { newSupplier = "" }) { Text("+ New") }
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedTextField(sku, { sku = it }, label = { Text("SKU") }, singleLine = true, modifier = Modifier.weight(1f))
-                OutlinedTextField(unit, { unit = it }, label = { Text(str(R.string.unit)) }, singleLine = true, modifier = Modifier.weight(0.6f))
+                OutlinedTextField(unit, { unit = it }, label = { Text("Unit") }, singleLine = true, modifier = Modifier.weight(0.6f))
             }
             OutlinedTextField(
-                barcode, { barcode = it }, label = { Text(str(R.string.barcode)) }, singleLine = true, modifier = Modifier.fillMaxWidth(),
+                barcode, { barcode = it }, label = { Text("Barcode") }, singleLine = true, modifier = Modifier.fillMaxWidth(),
                 trailingIcon = {
                     IconButton(onClick = {
                         if (!session.premiumActive) openPaywall()
                         else scope.launch { BarcodeScanner.scan(context)?.let { barcode = it } }
-                    }) { Icon(Icons.Filled.QrCodeScanner, str(R.string.scan_barcode)) }
+                    }) { Icon(Icons.Filled.QrCodeScanner, "Scan barcode") }
                 },
-                supportingText = { if (!session.premiumActive) Row { Text(str(R.string.scanning_is_a_premium_feature)); Spacer(Modifier.width(6.dp)); PremiumChip() } },
+                supportingText = { if (!session.premiumActive) Row { Text("Scanning is a Premium feature  "); PremiumChip() } },
             )
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                NumberField(cost, { cost = it }, str(R.string.cost_price), Modifier.weight(1f), prefix = session.currency)
-                NumberField(price, { price = it }, str(R.string.sale_price), Modifier.weight(1f), prefix = session.currency)
+                NumberField(cost, { cost = it }, "Cost price", Modifier.weight(1f), prefix = session.currency)
+                NumberField(price, { price = it }, "Sale price", Modifier.weight(1f), prefix = session.currency)
             }
             val c = cost.toDoubleOrNull() ?: 0.0
             val pr = price.toDoubleOrNull() ?: 0.0
             if (pr > 0) {
                 val margin = (pr - c) / pr * 100
                 Text(
-                    str(R.string.margin_x_x_per_x, "%.1f".format(margin), Fmt.money(session.currency, pr - c), unit.ifBlank { "unit" }),
+                    "Margin ${"%.1f".format(margin)}% · ${Fmt.money(session.currency, pr - c)} per ${unit.ifBlank { "unit" }}",
                     style = MaterialTheme.typography.bodySmall,
                     color = if (pr >= c) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.error,
                 )
             }
-            NumberField(threshold, { threshold = it }, str(R.string.low_stock_alert_at), Modifier.fillMaxWidth(), suffix = unit)
-            OutlinedTextField(description, { description = it }, label = { Text(str(R.string.description)) }, minLines = 3, modifier = Modifier.fillMaxWidth())
+            NumberField(threshold, { threshold = it }, "Low stock alert at", Modifier.fillMaxWidth(), suffix = unit)
+            OutlinedTextField(description, { description = it }, label = { Text("Description") }, minLines = 3, modifier = Modifier.fillMaxWidth())
             Button(
                 onClick = {
-                    runner.run(success = str(R.string.product_saved), onDone = onBack) {
+                    runner.run(success = "Product saved", onDone = onBack) {
                         container.repo.saveProduct(
                             ProductEntity(
                                 id = productId, name = name, sku = sku, barcode = barcode, categoryId = categoryId, warehouseId = warehouseId, supplierId = supplierId,
@@ -311,37 +308,37 @@ fun ProductEditScreen(productId: Long, onBack: () -> Unit) {
                 },
                 enabled = name.isNotBlank() && !runner.busy && session.can(Perm.CATALOG_MANAGE),
                 modifier = Modifier.fillMaxWidth().height(52.dp),
-            ) { Text(str(R.string.save_product)) }
+            ) { Text("Save product") }
             if (productId == 0L) Text(
-                str(R.string.tip_new_products_start_with_zero),
+                "Tip: new products start with zero stock. Use “Add stock” to record a purchase.",
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
     }
 
     if (confirmDelete) ConfirmDialog(
-        str(R.string.delete_product), str(R.string.x_will_be_removed_with_its, name),
-        onConfirm = { runner.run(str(R.string.product_deleted), onDone = onBack) { container.repo.deleteProduct(productId) } },
+        "Delete product?", "“$name” will be removed with its stock levels. Past sales keep their history.",
+        onConfirm = { runner.run("Product deleted", onDone = onBack) { container.repo.deleteProduct(productId) } },
         onDismiss = { confirmDelete = false },
     )
 
     newCategory?.let { text ->
         AlertDialog(
             onDismissRequest = { newCategory = null },
-            title = { Text(str(R.string.new_category)) },
-            text = { OutlinedTextField(text, { newCategory = it }, label = { Text(str(R.string.name)) }, singleLine = true) },
+            title = { Text("New category") },
+            text = { OutlinedTextField(text, { newCategory = it }, label = { Text("Name") }, singleLine = true) },
             confirmButton = {
                 TextButton(onClick = {
                     val n = text
                     newCategory = null
-                    runner.run(str(R.string.category_added)) {
+                    runner.run("Category added") {
                         container.repo.saveCategory(null, n, null)
                         // pick the new category
                         container.db.catalog().allCategories().firstOrNull { it.name.equals(n.trim(), true) }?.let { categoryId = it.id }
                     }
-                }, enabled = text.isNotBlank()) { Text(str(R.string.add)) }
+                }, enabled = text.isNotBlank()) { Text("Add") }
             },
-            dismissButton = { TextButton(onClick = { newCategory = null }) { Text(str(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { newCategory = null }) { Text("Cancel") } },
         )
     }
 
@@ -349,11 +346,11 @@ fun ProductEditScreen(productId: Long, onBack: () -> Unit) {
         var phone by remember { mutableStateOf("") }
         AlertDialog(
             onDismissRequest = { newSupplier = null },
-            title = { Text(str(R.string.new_supplier)) },
+            title = { Text("New supplier") },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedTextField(text, { newSupplier = it }, label = { Text(str(R.string.name_2)) }, singleLine = true)
-                    OutlinedTextField(phone, { phone = it }, label = { Text(str(R.string.phone)) }, singleLine = true)
+                    OutlinedTextField(text, { newSupplier = it }, label = { Text("Name *") }, singleLine = true)
+                    OutlinedTextField(phone, { phone = it }, label = { Text("Phone") }, singleLine = true)
                 }
             },
             confirmButton = {
@@ -361,14 +358,14 @@ fun ProductEditScreen(productId: Long, onBack: () -> Unit) {
                     val n = text
                     val ph = phone
                     newSupplier = null
-                    runner.run(str(R.string.supplier_added)) {
+                    runner.run("Supplier added") {
                         container.repo.saveSupplier(null, n, ph, null, null, null)
                         // pick the new supplier
                         container.db.catalog().allSuppliers().filter { it.name.equals(n.trim(), true) }.maxByOrNull { it.id }?.let { supplierId = it.id }
                     }
-                }, enabled = text.isNotBlank()) { Text(str(R.string.add)) }
+                }, enabled = text.isNotBlank()) { Text("Add") }
             },
-            dismissButton = { TextButton(onClick = { newSupplier = null }) { Text(str(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { newSupplier = null }) { Text("Cancel") } },
         )
     }
 }
@@ -390,11 +387,11 @@ fun ProductDetailScreen(productId: Long, nav: NavHostController) {
 
     val p = product
     ScreenScaffold(
-        title = p?.name ?: str(R.string.product),
+        title = p?.name ?: "Product",
         onBack = { nav.popBackStack() },
         busy = runner.busy,
         actions = {
-            if (session.can(Perm.CATALOG_MANAGE)) IconButton(onClick = { nav.navigate(Routes.productEdit(productId)) }) { Icon(Icons.Filled.Edit, str(R.string.edit)) }
+            if (session.can(Perm.CATALOG_MANAGE)) IconButton(onClick = { nav.navigate(Routes.productEdit(productId)) }) { Icon(Icons.Filled.Edit, "Edit") }
         },
     ) { pad ->
         if (p == null) return@ScreenScaffold
@@ -407,7 +404,7 @@ fun ProductDetailScreen(productId: Long, nav: NavHostController) {
                         Spacer(Modifier.width(14.dp))
                         Column(Modifier.weight(1f)) {
                             Text(p.name, style = MaterialTheme.typography.titleLarge)
-                            Text(categories.firstOrNull { it.id == p.categoryId }?.name ?: str(R.string.uncategorised),
+                            Text(categories.firstOrNull { it.id == p.categoryId }?.name ?: "Uncategorised",
                                 color = MaterialTheme.colorScheme.onSurfaceVariant, style = MaterialTheme.typography.bodySmall)
                         }
                         StockPill(total, p.lowStockThreshold, p.unit)
@@ -415,29 +412,29 @@ fun ProductDetailScreen(productId: Long, nav: NavHostController) {
                     Spacer(Modifier.height(12.dp))
                     HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                     Spacer(Modifier.height(8.dp))
-                    KeyValue(str(R.string.sale_price), Fmt.money(session.currency, p.salePrice), strong = true)
-                    KeyValue(str(R.string.cost_price), Fmt.money(session.currency, p.costPrice))
-                    KeyValue(str(R.string.stock_value_cost), Fmt.money(session.currency, total * p.costPrice))
-                    KeyValue(str(R.string.warehouse), warehouses.firstOrNull { it.id == p.warehouseId }?.name ?: "—")
-                    if (session.premiumActive) KeyValue(str(R.string.supplier), suppliers.firstOrNull { it.id == p.supplierId }?.name ?: "—")
+                    KeyValue("Sale price", Fmt.money(session.currency, p.salePrice), strong = true)
+                    KeyValue("Cost price", Fmt.money(session.currency, p.costPrice))
+                    KeyValue("Stock value (cost)", Fmt.money(session.currency, total * p.costPrice))
+                    KeyValue("Warehouse", warehouses.firstOrNull { it.id == p.warehouseId }?.name ?: "—")
+                    if (session.premiumActive) KeyValue("Supplier", suppliers.firstOrNull { it.id == p.supplierId }?.name ?: "—")
                     KeyValue("SKU", p.sku ?: "—")
-                    KeyValue(str(R.string.barcode), p.barcode ?: "—")
-                    KeyValue(str(R.string.low_stock_alert_at), "${Fmt.qty(p.lowStockThreshold)} ${p.unit}")
+                    KeyValue("Barcode", p.barcode ?: "—")
+                    KeyValue("Low stock alert at", "${Fmt.qty(p.lowStockThreshold)} ${p.unit}")
                     p.description?.let { Spacer(Modifier.height(6.dp)); Text(it, style = MaterialTheme.typography.bodyMedium) }
                 }
             }
             item {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    if (session.can(Perm.PURCHASES_CREATE)) DetailAction(str(R.string.add_stock), Icons.Filled.AddBox, Modifier.weight(1f)) { nav.navigate(Routes.PURCHASE) }
-                    if (session.can(Perm.TRANSFERS_CREATE)) DetailAction(str(R.string.transfer), Icons.AutoMirrored.Filled.CompareArrows, Modifier.weight(1f)) {
+                    if (session.can(Perm.PURCHASES_CREATE)) DetailAction("Add stock", Icons.Filled.AddBox, Modifier.weight(1f)) { nav.navigate(Routes.PURCHASE) }
+                    if (session.can(Perm.TRANSFERS_CREATE)) DetailAction("Transfer", Icons.AutoMirrored.Filled.CompareArrows, Modifier.weight(1f)) {
                         if (session.premiumActive) nav.navigate(Routes.TRANSFERS) else openPaywall()
                     }
-                    DetailAction(str(R.string.history), Icons.Filled.History, Modifier.weight(1f)) {
+                    DetailAction("History", Icons.Filled.History, Modifier.weight(1f)) {
                         if (session.premiumActive) nav.navigate(Routes.movements(productId)) else openPaywall()
                     }
                 }
             }
-            item { SectionTitle(str(R.string.stock_by_warehouse)) }
+            item { SectionTitle("Stock by warehouse") }
             items(warehouses, key = { it.id }) { w ->
                 val row: StockRow? = stock.firstOrNull { it.warehouseId == w.id }
                 AppCard(Modifier.fillMaxWidth()) {
@@ -447,7 +444,7 @@ fun ProductDetailScreen(productId: Long, nav: NavHostController) {
                             w.location?.let { Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant) }
                         }
                         StockPill(row?.quantity ?: 0.0, p.lowStockThreshold, p.unit)
-                        if (session.can(Perm.STOCK_ADJUST)) TextButton(onClick = { adjusting = w }) { Text(str(R.string.count)) }
+                        if (session.can(Perm.STOCK_ADJUST)) TextButton(onClick = { adjusting = w }) { Text("Count") }
                     }
                 }
             }
@@ -459,23 +456,23 @@ fun ProductDetailScreen(productId: Long, nav: NavHostController) {
         var note by remember { mutableStateOf("") }
         AlertDialog(
             onDismissRequest = { adjusting = null },
-            title = { Text(str(R.string.stock_count_x, w.name)) },
+            title = { Text("Stock count · ${w.name}") },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(str(R.string.enter_the_quantity_you_physically_counted),
+                    Text("Enter the quantity you physically counted. The difference is logged as an adjustment.",
                         style = MaterialTheme.typography.bodySmall)
-                    NumberField(value, { value = it }, str(R.string.counted_quantity), Modifier.fillMaxWidth(), suffix = p?.unit)
-                    OutlinedTextField(note, { note = it }, label = { Text(str(R.string.reason_optional)) }, singleLine = true)
+                    NumberField(value, { value = it }, "Counted quantity", Modifier.fillMaxWidth(), suffix = p?.unit)
+                    OutlinedTextField(note, { note = it }, label = { Text("Reason (optional)") }, singleLine = true)
                 }
             },
             confirmButton = {
                 TextButton(onClick = {
                     val target = value.toDoubleOrNull() ?: return@TextButton
                     adjusting = null
-                    runner.run(str(R.string.stock_updated)) { container.repo.adjust(productId, w.id, target, note) }
-                }) { Text(str(R.string.save)) }
+                    runner.run("Stock updated") { container.repo.adjust(productId, w.id, target, note) }
+                }) { Text("Save") }
             },
-            dismissButton = { TextButton(onClick = { adjusting = null }) { Text(str(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { adjusting = null }) { Text("Cancel") } },
         )
     }
 }

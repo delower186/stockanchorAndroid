@@ -1,8 +1,5 @@
 package com.sandalia.stockanchor.ui.screens
 
-import com.sandalia.stockanchor.util.plural
-import com.sandalia.stockanchor.R
-import com.sandalia.stockanchor.util.str
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -130,43 +127,43 @@ fun TransfersScreen(onBack: () -> Unit) {
         if (toId == fromId) toId = null
     }
 
-    ScreenScaffold(str(R.string.stock_transfer), subtitle = str(R.string.move_stock_between_warehouses), onBack = onBack, busy = runner.busy) { pad ->
+    ScreenScaffold("Stock transfer", subtitle = "Move stock between warehouses", onBack = onBack, busy = runner.busy) { pad ->
         if (!session.premiumActive) {
-            LockedFeature(str(R.string.stock_transfers), str(R.string.move_products_between_your_warehouses_with), Modifier.padding(pad)); return@ScreenScaffold
+            LockedFeature("Stock transfers", "Move products between your warehouses with a full audit trail.", Modifier.padding(pad)); return@ScreenScaffold
         }
         LazyColumn(Modifier.padding(pad), contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             item {
                 AppCard(Modifier.fillMaxWidth()) {
                     OutlinedButton(onClick = { picking = true }, modifier = Modifier.fillMaxWidth().height(52.dp)) {
-                        Icon(Icons.Filled.Inventory2, null); Spacer(Modifier.width(8.dp)); Text(product?.name ?: str(R.string.choose_product))
+                        Icon(Icons.Filled.Inventory2, null); Spacer(Modifier.width(8.dp)); Text(product?.name ?: "Choose product")
                     }
                     Spacer(Modifier.height(10.dp))
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
-                        DropdownField(str(R.string.from), sources, sources.firstOrNull { it.warehouseId == fromId },
+                        DropdownField("From", sources, sources.firstOrNull { it.warehouseId == fromId },
                             { "${it.warehouseName} (${Fmt.qty(it.quantity)})" }, { fromId = it?.warehouseId }, Modifier.weight(1f),
                             enabled = sources.isNotEmpty())
                         Icon(Icons.AutoMirrored.Filled.CompareArrows, null, tint = MaterialTheme.colorScheme.secondary)
                         val destinations = warehouses.filter { it.id != fromId }
-                        DropdownField(str(R.string.to), destinations, destinations.firstOrNull { it.id == toId }, { it.name }, { toId = it?.id }, Modifier.weight(1f),
+                        DropdownField("To", destinations, destinations.firstOrNull { it.id == toId }, { it.name }, { toId = it?.id }, Modifier.weight(1f),
                             enabled = fromId != null)
                     }
                     if (product != null && sources.isEmpty()) {
-                        Text(str(R.string.this_product_has_no_stock_in), style = MaterialTheme.typography.bodySmall,
+                        Text("This product has no stock in any warehouse.", style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(top = 6.dp))
                     }
                     available?.let {
-                        Text(str(R.string.available_in_source_x_x, Fmt.qty(it), product?.unit.orEmpty()), style = MaterialTheme.typography.bodySmall,
+                        Text("Available in source: ${Fmt.qty(it)} ${product?.unit.orEmpty()}", style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 6.dp))
                     }
                     Spacer(Modifier.height(8.dp))
-                    NumberField(qty, { qty = it }, str(R.string.quantity), Modifier.fillMaxWidth(), suffix = product?.unit)
+                    NumberField(qty, { qty = it }, "Quantity", Modifier.fillMaxWidth(), suffix = product?.unit)
                     Spacer(Modifier.height(8.dp))
-                    OutlinedTextField(note, { note = it }, label = { Text(str(R.string.note)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                    OutlinedTextField(note, { note = it }, label = { Text("Note") }, singleLine = true, modifier = Modifier.fillMaxWidth())
                     Spacer(Modifier.height(12.dp))
                     Button(
                         onClick = {
                             val p = product ?: return@Button; val f = fromId ?: return@Button; val t = toId ?: return@Button
-                            runner.run(str(R.string.transferred_x_x_of_x, qty, p.unit, p.name)) {
+                            runner.run("Transferred ${qty} ${p.unit} of ${p.name}") {
                                 container.repo.transfer(p.id, f, t, qty.toDoubleOrNull() ?: 0.0, note)
                                 qty = ""; note = ""
                             }
@@ -175,11 +172,11 @@ fun TransfersScreen(onBack: () -> Unit) {
                             (qty.toDoubleOrNull() ?: 0.0) <= (available ?: 0.0) &&
                             session.can(Perm.TRANSFERS_CREATE) && !runner.busy,
                         modifier = Modifier.fillMaxWidth().height(50.dp),
-                    ) { Text(str(R.string.transfer_stock)) }
+                    ) { Text("Transfer stock") }
                 }
             }
-            item { SectionTitle(str(R.string.recent_transfers)) }
-            if (transfers.isEmpty()) item { Text(str(R.string.no_transfers_yet), color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            item { SectionTitle("Recent transfers") }
+            if (transfers.isEmpty()) item { Text("No transfers yet.", color = MaterialTheme.colorScheme.onSurfaceVariant) }
             items(transfers, key = { it.id }) { t ->
                 AppCard(Modifier.fillMaxWidth()) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -211,19 +208,19 @@ fun MovementsScreen(productId: Long?, onBack: () -> Unit) {
     var warehouseId by rememberSaveable { mutableStateOf<Long?>(null) }
     val rows by remember(productId, warehouseId, type) { container.repo.movements(productId, warehouseId, type) }.collectAsStateWithLifecycle(emptyList())
 
-    ScreenScaffold(str(R.string.stock_movements), subtitle = if (productId != null) rows.firstOrNull()?.productName else str(R.string.all_products), onBack = onBack) { pad ->
+    ScreenScaffold("Stock movements", subtitle = if (productId != null) rows.firstOrNull()?.productName else "All products", onBack = onBack) { pad ->
         if (!session.premiumActive) {
-            LockedFeature(str(R.string.stock_movement_history), str(R.string.see_every_purchase_sale_transfer_and), Modifier.padding(pad)); return@ScreenScaffold
+            LockedFeature("Stock movement history", "See every purchase, sale, transfer and adjustment for each product.", Modifier.padding(pad)); return@ScreenScaffold
         }
         Column(Modifier.padding(pad).fillMaxSize()) {
             Row(Modifier.horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                FilterChip(type == null, onClick = { type = null }, label = { Text(str(R.string.all)) })
+                FilterChip(type == null, onClick = { type = null }, label = { Text("All") })
                 movementTypes.forEach { t -> FilterChip(type == t, onClick = { type = t }, label = { Text(Fmt.movementLabel(t)) }) }
             }
-            DropdownField(str(R.string.warehouse), warehouses, warehouses.firstOrNull { it.id == warehouseId }, { it.name }, { warehouseId = it?.id },
-                Modifier.fillMaxWidth().padding(16.dp, 8.dp), noneLabel = str(R.string.all_warehouses))
+            DropdownField("Warehouse", warehouses, warehouses.firstOrNull { it.id == warehouseId }, { it.name }, { warehouseId = it?.id },
+                Modifier.fillMaxWidth().padding(16.dp, 8.dp), noneLabel = "All warehouses")
             if (rows.isEmpty()) {
-                EmptyState(Icons.Filled.History, str(R.string.no_movements), str(R.string.stock_changes_will_be_listed_here))
+                EmptyState(Icons.Filled.History, "No movements", "Stock changes will be listed here.")
             } else LazyColumn(contentPadding = PaddingValues(16.dp, 4.dp, 16.dp, 24.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 items(rows, key = { it.id }) { m ->
                     val inbound = m.quantity >= 0
@@ -237,7 +234,7 @@ fun MovementsScreen(productId: Long?, onBack: () -> Unit) {
                             }
                             Column(horizontalAlignment = Alignment.End) {
                                 Text((if (inbound) "+" else "") + Fmt.qty(m.quantity), color = if (inbound) Positive else Coral, fontWeight = FontWeight.Bold)
-                                Text(str(R.string.balance_x_x, Fmt.qty(m.balanceAfter), m.unit), style = MaterialTheme.typography.labelSmall,
+                                Text("bal ${Fmt.qty(m.balanceAfter)} ${m.unit}", style = MaterialTheme.typography.labelSmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant)
                             }
                         }
@@ -256,9 +253,9 @@ fun LowStockScreen(nav: NavHostController) {
     val session by container.session.state.collectAsStateWithLifecycle()
     val low by container.repo.lowStock().collectAsStateWithLifecycle(emptyList())
 
-    ScreenScaffold(str(R.string.low_stock), subtitle = str(R.string.x_product_s_at_or_below, low.size), onBack = { nav.popBackStack() }) { pad ->
+    ScreenScaffold("Low stock", subtitle = "${low.size} product(s) at or below minimum", onBack = { nav.popBackStack() }) { pad ->
         if (!session.premiumActive) {
-            LockedFeature(str(R.string.low_stock_channel), str(R.string.get_notified_when_products_drop_below), Modifier.padding(pad)); return@ScreenScaffold
+            LockedFeature("Low stock alerts", "Get notified when products drop below their minimum level.", Modifier.padding(pad)); return@ScreenScaffold
         }
         LazyColumn(Modifier.padding(pad), contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             item {
@@ -267,25 +264,25 @@ fun LowStockScreen(nav: NavHostController) {
                         Icon(Icons.Filled.NotificationsActive, null, tint = MaterialTheme.colorScheme.secondary)
                         Spacer(Modifier.width(12.dp))
                         Column(Modifier.weight(1f)) {
-                            Text(str(R.string.notifications), style = MaterialTheme.typography.titleSmall)
-                            Text(str(R.string.checked_twice_a_day_and_after), style = MaterialTheme.typography.bodySmall,
+                            Text("Notifications", style = MaterialTheme.typography.titleSmall)
+                            Text("Checked twice a day and after each sale", style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         Switch(session.lowStockAlerts, { container.session.setLowStockAlerts(it) })
                     }
                 }
             }
-            if (low.isEmpty()) item { EmptyState(Icons.Filled.Inventory2, str(R.string.all_good), str(R.string.no_product_is_below_its_minimum)) }
+            if (low.isEmpty()) item { EmptyState(Icons.Filled.Inventory2, "All good", "No product is below its minimum level.") }
             items(low, key = { it.id }) { p ->
                 AppCard(Modifier.fillMaxWidth(), onClick = { nav.navigate(Routes.product(p.id)) }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
                             Text(p.name, style = MaterialTheme.typography.titleSmall)
-                            Text(str(R.string.minimum_x_x, Fmt.qty(p.lowStockThreshold), p.unit), style = MaterialTheme.typography.bodySmall,
+                            Text("Minimum ${Fmt.qty(p.lowStockThreshold)} ${p.unit}", style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
                         StockPill(p.quantity, p.lowStockThreshold, p.unit)
-                        if (session.can(Perm.PURCHASES_CREATE)) IconButton(onClick = { nav.navigate(Routes.PURCHASE) }) { Icon(Icons.Filled.AddBox, str(R.string.add_stock)) }
+                        if (session.can(Perm.PURCHASES_CREATE)) IconButton(onClick = { nav.navigate(Routes.PURCHASE) }) { Icon(Icons.Filled.AddBox, "Add stock") }
                     }
                 }
             }
@@ -309,7 +306,7 @@ fun DataToolsScreen(onBack: () -> Unit) {
         val what = exporting ?: return@rememberLauncherForActivityResult
         if (uri != null) runner.run {
             val n = withContext(Dispatchers.IO) { Csv.export(context, container.db, what, uri) }
-            runner.toast(str(R.string.exported_x_x_rows, n, what.title.lowercase()))
+            runner.toast("Exported $n ${what.title.lowercase()} rows")
         }
         exporting = null
     }
@@ -317,41 +314,42 @@ fun DataToolsScreen(onBack: () -> Unit) {
         if (uri != null) runner.run { preview = withContext(Dispatchers.IO) { Csv.read(context, uri) } }
     }
     val saveTemplate = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/csv")) { uri: Uri? ->
-        if (uri != null) runner.run(str(R.string.template_saved)) {
+        if (uri != null) runner.run("Template saved") {
             withContext(Dispatchers.IO) { context.contentResolver.openOutputStream(uri)?.use { it.write(Csv.IMPORT_TEMPLATE.toByteArray()) } }
         }
     }
 
-    ScreenScaffold(str(R.string.import_export), subtitle = str(R.string.csv_files_for_excel_google_sheets), onBack = onBack, busy = runner.busy) { pad ->
+    ScreenScaffold("Import & export", subtitle = "CSV files for Excel / Google Sheets", onBack = onBack, busy = runner.busy) { pad ->
         if (!session.premiumActive) {
-            LockedFeature(str(R.string.csv_export_import), str(R.string.export_products_stock_sales_and_movements), Modifier.padding(pad))
+            LockedFeature("CSV export & import", "Export products, stock, sales and movements, or bulk-load stock from a spreadsheet.", Modifier.padding(pad))
             return@ScreenScaffold
         }
         Column(Modifier.padding(pad).verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            SectionTitle(str(R.string.export))
+            SectionTitle("Export")
             AppCard(Modifier.fillMaxWidth()) {
                 CsvExport.entries.forEach { e ->
-                    MenuRow(Icons.Filled.Download, e.title, str(R.string.save_as_csv)) {
-                        if (!session.can(Perm.DATA_EXPORT)) { runner.toast(str(R.string.you_don_t_have_permission_to)); return@MenuRow }
+                    MenuRow(Icons.Filled.Download, e.title, "Save as CSV") {
+                        if (!session.can(Perm.DATA_EXPORT)) { runner.toast("You don't have permission to export"); return@MenuRow }
                         exporting = e
                         val stamp = SimpleDateFormat("yyyyMMdd-HHmm", Locale.US).format(Date())
                         createDoc.launch("stock-anchor-${e.fileName}-$stamp.csv")
                     }
                 }
             }
-            SectionTitle(str(R.string.import_stock))
+            SectionTitle("Import stock")
             AppCard(Modifier.fillMaxWidth()) {
                 Text(
-                    str(R.string.columns_name_sku_barcode_category_warehouse),
+                    "Columns: name, sku, barcode, category, warehouse, quantity, unit_cost, sale_price. Products are matched by SKU, " +
+                        "then barcode, then name; missing products and categories are created. Quantities are added to stock.",
                     style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
                 Spacer(Modifier.height(12.dp))
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedButton(onClick = { saveTemplate.launch("stock-anchor-import-template.csv") }, modifier = Modifier.weight(1f)) { Text(str(R.string.template)) }
+                    OutlinedButton(onClick = { saveTemplate.launch("stock-anchor-import-template.csv") }, modifier = Modifier.weight(1f)) { Text("Template") }
                     Button(
                         onClick = { openDoc.launch(arrayOf("text/csv", "text/comma-separated-values", "text/plain", "application/vnd.ms-excel")) },
                         enabled = session.can(Perm.DATA_IMPORT), modifier = Modifier.weight(1f),
-                    ) { Icon(Icons.Filled.FileUpload, null); Spacer(Modifier.width(6.dp)); Text(str(R.string.choose_csv)) }
+                    ) { Icon(Icons.Filled.FileUpload, null); Spacer(Modifier.width(6.dp)); Text("Choose CSV") }
                 }
             }
         }
@@ -360,14 +358,14 @@ fun DataToolsScreen(onBack: () -> Unit) {
     preview?.let { rows ->
         AlertDialog(
             onDismissRequest = { preview = null },
-            title = { Text(str(R.string.import_x_rows, rows.size)) },
+            title = { Text("Import ${rows.size} rows?") },
             text = {
                 Column(Modifier.heightIn(max = 300.dp).verticalScroll(rememberScrollState())) {
                     rows.take(8).forEach { r ->
-                        Text(str(R.string.x_qty_x_x, r["name"] ?: r["sku"] ?: r["barcode"], r["quantity"] ?: "0", r["warehouse"].orEmpty().ifBlank { str(R.string.default_warehouse_lower) }),
+                        Text("${r["name"] ?: r["sku"] ?: r["barcode"]} · qty ${r["quantity"] ?: "0"} · ${r["warehouse"].orEmpty().ifBlank { "default warehouse" }}",
                             style = MaterialTheme.typography.bodySmall)
                     }
-                    if (rows.size > 8) Text(str(R.string.and_x_more, rows.size - 8), style = MaterialTheme.typography.bodySmall)
+                    if (rows.size > 8) Text("…and ${rows.size - 8} more", style = MaterialTheme.typography.bodySmall)
                 }
             },
             confirmButton = {
@@ -376,18 +374,18 @@ fun DataToolsScreen(onBack: () -> Unit) {
                     runner.run {
                         val r = container.repo.importStock(rows)
                         result = buildString {
-                            append(str(R.string.imported_x_rows_created_x_new, r.imported ?: 0, r.createdProducts ?: 0))
-                            r.errors?.takeIf { it.isNotEmpty() }?.let { append("\n\n" + str(R.string.skipped_rows) + "\n" + it.take(15).joinToString("\n")) }
+                            append("Imported ${r.imported ?: 0} rows, created ${r.createdProducts ?: 0} new products.")
+                            r.errors?.takeIf { it.isNotEmpty() }?.let { append("\n\nSkipped:\n" + it.take(15).joinToString("\n")) }
                         }
                     }
-                }) { Text(str(R.string.import_label)) }
+                }) { Text("Import") }
             },
-            dismissButton = { TextButton(onClick = { preview = null }) { Text(str(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { preview = null }) { Text("Cancel") } },
         )
     }
     result?.let {
-        AlertDialog(onDismissRequest = { result = null }, title = { Text(str(R.string.import_finished)) }, text = { Text(it) },
-            confirmButton = { TextButton(onClick = { result = null }) { Text(str(R.string.ok)) } })
+        AlertDialog(onDismissRequest = { result = null }, title = { Text("Import finished") }, text = { Text(it) },
+            confirmButton = { TextButton(onClick = { result = null }) { Text("OK") } })
     }
 }
 
@@ -413,17 +411,17 @@ fun TeamScreen(onBack: () -> Unit) {
     }
 
     ScreenScaffold(
-        str(R.string.team), subtitle = str(R.string.accounts_permissions), onBack = onBack, busy = runner.busy,
+        "Team", subtitle = "Accounts & permissions", onBack = onBack, busy = runner.busy,
         floatingActionButton = {
             if (session.premiumActive && canManage) ExtendedFloatingActionButton(onClick = { editing = UserDto(id = 0, role = "staff") },
-                icon = { Icon(Icons.Filled.Add, null) }, text = { Text(str(R.string.member)) })
+                icon = { Icon(Icons.Filled.Add, null) }, text = { Text("Member") })
         },
     ) { pad ->
         if (!session.premiumActive) {
-            LockedFeature(str(R.string.team_accounts), str(R.string.invite_staff_with_their_own_login), Modifier.padding(pad)); return@ScreenScaffold
+            LockedFeature("Team accounts", "Invite staff with their own login, role and permissions.", Modifier.padding(pad)); return@ScreenScaffold
         }
         if (members.isEmpty() && !runner.busy) {
-            EmptyState(Icons.Filled.Group, str(R.string.just_you_so_far), str(R.string.add_team_members_to_share_this), Modifier.padding(pad)); return@ScreenScaffold
+            EmptyState(Icons.Filled.Group, "Just you so far", "Add team members to share this inventory.", Modifier.padding(pad)); return@ScreenScaffold
         }
         LazyColumn(Modifier.padding(pad), contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 96.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             items(members, key = { it.id }) { m ->
@@ -440,8 +438,8 @@ fun TeamScreen(onBack: () -> Unit) {
                             }
                         }
                         if (canManage && m.role != "owner") {
-                            IconButton(onClick = { editing = m }) { Icon(Icons.Filled.Edit, str(R.string.edit)) }
-                            IconButton(onClick = { removing = m }) { Icon(Icons.Filled.Delete, str(R.string.remove)) }
+                            IconButton(onClick = { editing = m }) { Icon(Icons.Filled.Edit, "Edit") }
+                            IconButton(onClick = { removing = m }) { Icon(Icons.Filled.Delete, "Remove") }
                         }
                     }
                 }
@@ -459,19 +457,19 @@ fun TeamScreen(onBack: () -> Unit) {
         var perms by remember(m.id) { mutableStateOf((m.effectivePermissions ?: roles[role] ?: emptyList()).toSet()) }
         AlertDialog(
             onDismissRequest = { editing = null },
-            title = { Text(if (isNew) str(R.string.add_team_member) else str(R.string.edit_x, m.name)) },
+            title = { Text(if (isNew) "Add team member" else "Edit ${m.name}") },
             text = {
                 Column(Modifier.heightIn(max = 480.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedTextField(name, { name = it }, label = { Text(str(R.string.name)) }, singleLine = true)
-                    if (isNew) OutlinedTextField(email, { email = it }, label = { Text(str(R.string.email_login)) }, singleLine = true)
-                    OutlinedTextField(password, { password = it }, label = { Text(if (isNew) str(R.string.password_min_8) else str(R.string.new_password_optional)) }, singleLine = true)
-                    DropdownField(str(R.string.role), listOf("admin", "manager", "staff"), role, { it.replaceFirstChar { c -> c.uppercase() } }, {
+                    OutlinedTextField(name, { name = it }, label = { Text("Name") }, singleLine = true)
+                    if (isNew) OutlinedTextField(email, { email = it }, label = { Text("Email (login)") }, singleLine = true)
+                    OutlinedTextField(password, { password = it }, label = { Text(if (isNew) "Password (min 8)" else "New password (optional)") }, singleLine = true)
+                    DropdownField("Role", listOf("admin", "manager", "staff"), role, { it.replaceFirstChar { c -> c.uppercase() } }, {
                         if (it != null) { role = it; perms = roles[it].orEmpty().toSet() }
                     }, Modifier.fillMaxWidth())
                     if (!isNew) Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(str(R.string.account_active), Modifier.weight(1f)); Switch(active, { active = it })
+                        Text("Account active", Modifier.weight(1f)); Switch(active, { active = it })
                     }
-                    Text(str(R.string.permissions), style = MaterialTheme.typography.titleSmall)
+                    Text("Permissions", style = MaterialTheme.typography.titleSmall)
                     Perm.ALL.forEach { p ->
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Checkbox(p in perms, { checked -> perms = if (checked) perms + p else perms - p })
@@ -484,18 +482,18 @@ fun TeamScreen(onBack: () -> Unit) {
                 TextButton(enabled = name.isNotBlank() && (!isNew || (email.isNotBlank() && password.length >= 8)), onClick = {
                     editing = null
                     val body = MemberRequest(name, if (isNew) email else null, password.ifBlank { null }, role, perms.toList(), active)
-                    runner.run(if (isNew) str(R.string.member_added) else str(R.string.member_updated)) {
+                    runner.run(if (isNew) "Member added" else "Member updated") {
                         container.api.call { if (isNew) createMember(body) else updateMember(m.id, body) }
                         reload++
                     }
-                }) { Text(str(R.string.save)) }
+                }) { Text("Save") }
             },
-            dismissButton = { TextButton(onClick = { editing = null }) { Text(str(R.string.cancel)) } },
+            dismissButton = { TextButton(onClick = { editing = null }) { Text("Cancel") } },
         )
     }
     removing?.let { m ->
-        ConfirmDialog(str(R.string.remove_x, m.name), str(R.string.they_will_be_signed_out_on), confirmLabel = str(R.string.remove),
-            onConfirm = { runner.run(str(R.string.member_removed)) { container.api.call { deleteMember(m.id) }; reload++ } }, onDismiss = { removing = null })
+        ConfirmDialog("Remove ${m.name}?", "They will be signed out on all devices and lose access to this inventory.", confirmLabel = "Remove",
+            onConfirm = { runner.run("Member removed") { container.api.call { deleteMember(m.id) }; reload++ } }, onDismiss = { removing = null })
     }
 }
 
@@ -523,30 +521,30 @@ fun BackupScreen(onBack: () -> Unit) {
         if (session.premiumActive && session.can(Perm.BACKUPS_MANAGE)) runner.run { backups = container.api.call { backups() } }
     }
 
-    ScreenScaffold(str(R.string.cloud_backup), subtitle = str(R.string.automatic_nightly_last_30_kept), onBack = onBack, busy = runner.busy) { pad ->
+    ScreenScaffold("Cloud backup", subtitle = "Automatic nightly · last 30 kept", onBack = onBack, busy = runner.busy) { pad ->
         if (!session.premiumActive) {
-            LockedFeature(str(R.string.cloud_backup_recovery), str(R.string.nightly_automatic_backups_of_your_whole), Modifier.padding(pad))
+            LockedFeature("Cloud backup & recovery", "Nightly automatic backups of your whole inventory, plus one-tap restore.", Modifier.padding(pad))
             return@ScreenScaffold
         }
         if (!session.can(Perm.BACKUPS_MANAGE)) {
-            EmptyState(Icons.Filled.Backup, str(R.string.no_access), str(R.string.ask_your_team_owner_for_the), Modifier.padding(pad)); return@ScreenScaffold
+            EmptyState(Icons.Filled.Backup, "No access", "Ask your team owner for the backups permission.", Modifier.padding(pad)); return@ScreenScaffold
         }
         LazyColumn(Modifier.padding(pad), contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
             item {
                 AppCard(Modifier.fillMaxWidth()) {
-                    Text(str(R.string.back_up_now), style = MaterialTheme.typography.titleMedium)
-                    Text(str(R.string.a_snapshot_of_every_product_stock), style = MaterialTheme.typography.bodySmall,
+                    Text("Back up now", style = MaterialTheme.typography.titleMedium)
+                    Text("A snapshot of every product, stock level, sale, purchase and movement.", style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Spacer(Modifier.height(8.dp))
-                    OutlinedTextField(note, { note = it }, label = { Text(str(R.string.label_optional)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                    OutlinedTextField(note, { note = it }, label = { Text("Label (optional)") }, singleLine = true, modifier = Modifier.fillMaxWidth())
                     Spacer(Modifier.height(8.dp))
                     Button(onClick = {
-                        runner.run(str(R.string.backup_created)) { container.api.call { createBackup(BackupRequest(note.ifBlank { null })) }; note = ""; reload++ }
-                    }, modifier = Modifier.fillMaxWidth()) { Icon(Icons.Filled.CloudUpload, null); Spacer(Modifier.width(8.dp)); Text(str(R.string.create_backup)) }
+                        runner.run("Backup created") { container.api.call { createBackup(BackupRequest(note.ifBlank { null })) }; note = ""; reload++ }
+                    }, modifier = Modifier.fillMaxWidth()) { Icon(Icons.Filled.CloudUpload, null); Spacer(Modifier.width(8.dp)); Text("Create backup") }
                 }
             }
-            item { SectionTitle(str(R.string.backups)) }
-            if (backups.isEmpty()) item { Text(str(R.string.no_backups_yet), color = MaterialTheme.colorScheme.onSurfaceVariant) }
+            item { SectionTitle("Backups") }
+            if (backups.isEmpty()) item { Text("No backups yet.", color = MaterialTheme.colorScheme.onSurfaceVariant) }
             items(backups, key = { it.id }) { b ->
                 AppCard(Modifier.fillMaxWidth()) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
@@ -555,13 +553,13 @@ fun BackupScreen(onBack: () -> Unit) {
                         Column(Modifier.weight(1f)) {
                             Text(Fmt.dateTime(Dates.parse(b.createdAt)), style = MaterialTheme.typography.titleSmall)
                             Text(
-                                listOfNotNull(b.note, (b.counts?.get("products") ?: 0).let { plural(R.plurals.n_products, it, it) }, (b.counts?.get("sales") ?: 0).let { plural(R.plurals.n_sales, it, it) },
+                                listOfNotNull(b.note, "${b.counts?.get("products") ?: 0} products", "${b.counts?.get("sales") ?: 0} sales",
                                     "${(b.size ?: 0) / 1024} KB").joinToString(" · "),
                                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
                         }
-                        IconButton(onClick = { restoring = b }) { Icon(Icons.Filled.Restore, str(R.string.restore)) }
-                        IconButton(onClick = { deleting = b }) { Icon(Icons.Filled.Delete, str(R.string.delete)) }
+                        IconButton(onClick = { restoring = b }) { Icon(Icons.Filled.Restore, "Restore") }
+                        IconButton(onClick = { deleting = b }) { Icon(Icons.Filled.Delete, "Delete") }
                     }
                 }
             }
@@ -570,11 +568,12 @@ fun BackupScreen(onBack: () -> Unit) {
 
     restoring?.let { b ->
         ConfirmDialog(
-            str(R.string.restore_this_backup),
-            str(R.string.your_team_s_current_data_will, Fmt.dateTime(Dates.parse(b.createdAt))),
-            confirmLabel = str(R.string.restore),
+            "Restore this backup?",
+            "Your team's current data will be replaced with the snapshot from ${Fmt.dateTime(Dates.parse(b.createdAt))}. " +
+                "A safety backup of the current state is made first. All devices re-sync.",
+            confirmLabel = "Restore",
             onConfirm = {
-                runner.run(str(R.string.backup_restored)) {
+                runner.run("Backup restored") {
                     container.api.call { restoreBackup(b.id) }
                     container.sync.pull(full = true)
                     reload++
@@ -584,7 +583,7 @@ fun BackupScreen(onBack: () -> Unit) {
         )
     }
     deleting?.let { b ->
-        ConfirmDialog(str(R.string.delete_backup), str(R.string.this_snapshot_will_be_permanently_removed),
-            onConfirm = { runner.run(str(R.string.backup_deleted)) { container.api.call { deleteBackup(b.id) }; reload++ } }, onDismiss = { deleting = null })
+        ConfirmDialog("Delete backup?", "This snapshot will be permanently removed.",
+            onConfirm = { runner.run("Backup deleted") { container.api.call { deleteBackup(b.id) }; reload++ } }, onDismiss = { deleting = null })
     }
 }

@@ -2,20 +2,16 @@ package com.sandalia.stockanchor.util
 
 import android.content.Context
 import android.net.Uri
-import androidx.annotation.StringRes
-import com.sandalia.stockanchor.R
 import com.sandalia.stockanchor.data.local.AppDatabase
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.io.OutputStreamWriter
 
-enum class CsvExport(@StringRes val titleRes: Int, val fileName: String) {
-    PRODUCTS(R.string.products, "products"),
-    STOCK(R.string.stock_by_warehouse, "stock"),
-    SALES(R.string.sales, "sales"),
-    MOVEMENTS(R.string.stock_movements, "movements");
-
-    val title: String get() = str(titleRes)
+enum class CsvExport(val title: String, val fileName: String) {
+    PRODUCTS("Products", "products"),
+    STOCK("Stock by warehouse", "stock"),
+    SALES("Sales", "sales"),
+    MOVEMENTS("Stock movements", "movements"),
 }
 
 /** RFC-4180 CSV export/import over the Storage Access Framework (no storage permission needed). */
@@ -63,11 +59,11 @@ object Csv {
 
         context.contentResolver.openOutputStream(uri, "wt")?.use { out ->
             OutputStreamWriter(out, Charsets.UTF_8).use { w ->
-                w.write("\uFEFF") // BOM so Excel opens UTF-8 correctly
+                w.write("﻿") // BOM so Excel opens UTF-8 correctly
                 w.write(header.joinToString(",") + "\r\n")
                 rows.forEach { r -> w.write(r.joinToString(",") { esc(it) } + "\r\n") }
             }
-        } ?: error(str(R.string.could_not_open_the_file_for))
+        } ?: error("Could not open the file for writing.")
         return rows.size
     }
 
@@ -75,8 +71,8 @@ object Csv {
     fun read(context: Context, uri: Uri): List<Map<String, String>> {
         val text = context.contentResolver.openInputStream(uri)?.use { input ->
             BufferedReader(InputStreamReader(input, Charsets.UTF_8)).readText()
-        } ?: error(str(R.string.could_not_open_the_file))
-        val records = parse(text.removePrefix("\uFEFF"))
+        } ?: error("Could not open the file.")
+        val records = parse(text.removePrefix("﻿"))
         if (records.isEmpty()) return emptyList()
         val header = records.first().map { it.trim().lowercase() }
         return records.drop(1)

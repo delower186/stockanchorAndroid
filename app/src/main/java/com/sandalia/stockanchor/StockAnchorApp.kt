@@ -8,7 +8,6 @@ import com.sandalia.stockanchor.data.remote.ApiClient
 import com.sandalia.stockanchor.data.repo.AccountManager
 import com.sandalia.stockanchor.data.repo.StockRepository
 import com.sandalia.stockanchor.data.repo.SyncManager
-import com.sandalia.stockanchor.util.I18n
 import com.sandalia.stockanchor.work.LowStockWorker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
@@ -32,7 +31,6 @@ class StockAnchorApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        I18n.init(this)
         container = AppContainer(this)
         container.billing.connect()
         LowStockWorker.schedule(this)

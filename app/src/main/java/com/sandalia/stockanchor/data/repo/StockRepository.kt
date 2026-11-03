@@ -1,7 +1,5 @@
 package com.sandalia.stockanchor.data.repo
 
-import com.sandalia.stockanchor.R
-import com.sandalia.stockanchor.util.str
 import androidx.room.withTransaction
 import com.sandalia.stockanchor.data.remote.ExpenseRequest
 import com.sandalia.stockanchor.data.local.ExpenseEntity
@@ -94,9 +92,9 @@ class StockRepository(
     fun usedExpenseCategories() = db.expenses().usedCategories()
 
     suspend fun saveExpense(e: ExpenseEntity) {
-        if (!session.current.premiumActive) throw UserFacingException(str(R.string.expenses_are_a_premium_feature))
-        require(e.category.isNotBlank()) { str(R.string.choose_a_category) }
-        if (e.amount <= 0) throw UserFacingException(str(R.string.enter_an_amount_greater_than_zero))
+        if (!session.current.premiumActive) throw UserFacingException("Expenses are a Premium feature.")
+        require(e.category.isNotBlank()) { "Choose a category." }
+        if (e.amount <= 0) throw UserFacingException("Enter an amount greater than zero.")
         val clean = e.copy(category = e.category.trim(), note = e.note.nb())
         if (cloud) {
             val iso = java.time.Instant.ofEpochMilli(clean.date).atZone(java.time.ZoneId.systemDefault()).toOffsetDateTime().toString()
@@ -116,7 +114,7 @@ class StockRepository(
 
     // ------------------------------------------------------------------ categories
     suspend fun saveCategory(id: Long?, name: String, description: String?) {
-        require(name.isNotBlank()) { str(R.string.category_name_is_required) }
+        require(name.isNotBlank()) { "Category name is required." }
         if (cloud) {
             val body = CategoryRequest(name.trim(), description?.trim()?.ifBlank { null })
             api.call { if (id == null) createCategory(body) else updateCategory(id, body) }
@@ -136,7 +134,7 @@ class StockRepository(
 
     // ------------------------------------------------------------------ warehouses
     suspend fun saveWarehouse(id: Long?, name: String, location: String?, isDefault: Boolean) {
-        require(name.isNotBlank()) { str(R.string.warehouse_name_is_required) }
+        require(name.isNotBlank()) { "Warehouse name is required." }
         if (cloud) {
             val body = WarehouseRequest(name.trim(), location?.trim()?.ifBlank { null }, isDefault)
             api.call { if (id == null) createWarehouse(body) else updateWarehouse(id, body) }
@@ -145,7 +143,7 @@ class StockRepository(
         }
         db.withTransaction {
             if (id == null && catalog.warehouseCount() >= Limits.BASIC_WAREHOUSES) {
-                throw UserFacingException(str(R.string.the_basic_plan_includes_x_upgrade, Limits.warehouses()))
+                throw UserFacingException("The Basic plan includes ${Limits.warehouses()}. Upgrade to Premium for unlimited warehouses.")
             }
             val newId = catalog.upsertWarehouse(WarehouseEntity(id ?: 0, name.trim(), location?.trim()?.ifBlank { null }, isDefault))
             val savedId = if (id == null || id == 0L) newId else id
@@ -158,8 +156,8 @@ class StockRepository(
             api.call { deleteWarehouse(id) }; sync.pull(); return
         }
         db.withTransaction {
-            if (catalog.warehouseCount() <= 1) throw UserFacingException(str(R.string.you_need_at_least_one_warehouse))
-            if (catalog.warehouseQuantity(id) > 0) throw UserFacingException(str(R.string.this_warehouse_still_holds_stock_move))
+            if (catalog.warehouseCount() <= 1) throw UserFacingException("You need at least one warehouse.")
+            if (catalog.warehouseQuantity(id) > 0) throw UserFacingException("This warehouse still holds stock. Move or adjust it first.")
             catalog.deleteWarehouse(id)
             if (catalog.defaultWarehouse() == null) catalog.allWarehouses().firstOrNull()?.let { catalog.upsertWarehouse(it.copy(isDefault = true)) }
         }
@@ -167,7 +165,7 @@ class StockRepository(
 
     // ------------------------------------------------------------------ suppliers (Premium)
     suspend fun saveSupplier(id: Long?, name: String, phone: String?, email: String?, address: String?, note: String?) {
-        require(name.isNotBlank()) { str(R.string.supplier_name_is_required) }
+        require(name.isNotBlank()) { "Supplier name is required." }
         val body = SupplierRequest(name.trim(), phone.nb(), email.nb(), address.nb(), note.nb())
         api.call { if (id == null) createSupplier(body) else updateSupplier(id, body) }
         sync.pull()
@@ -179,7 +177,7 @@ class StockRepository(
 
     // ------------------------------------------------------------------ products
     suspend fun saveProduct(p: ProductEntity) {
-        require(p.name.isNotBlank()) { str(R.string.product_name_is_required) }
+        require(p.name.isNotBlank()) { "Product name is required." }
         val clean = p.copy(name = p.name.trim(), sku = p.sku.nb(), barcode = p.barcode.nb(), description = p.description.nb())
         if (cloud) {
             val body = ProductRequest(
@@ -192,7 +190,7 @@ class StockRepository(
         }
         clean.barcode?.let { code ->
             val other = catalog.productByCode(code)
-            if (other != null && other.id != p.id) throw UserFacingException(str(R.string.barcode_is_already_used_by_x, other.name))
+            if (other != null && other.id != p.id) throw UserFacingException("Barcode is already used by \"${other.name}\".")
         }
         catalog.upsertProduct(clean)
     }
@@ -208,8 +206,8 @@ class StockRepository(
 
     // ------------------------------------------------------------------ purchase (stock in)
     suspend fun purchase(warehouseId: Long, supplierId: Long?, note: String?, lines: List<CartLine>, updateCost: Boolean = true) {
-        if (lines.isEmpty()) throw UserFacingException(str(R.string.add_at_least_one_product))
-        if (lines.any { it.quantity <= 0 }) throw UserFacingException(str(R.string.quantities_must_be_greater_than_zero))
+        if (lines.isEmpty()) throw UserFacingException("Add at least one product.")
+        if (lines.any { it.quantity <= 0 }) throw UserFacingException("Quantities must be greater than zero.")
         if (cloud) {
             api.call {
                 createPurchase(PurchaseRequest(warehouseId, supplierId, note.nb(), updateCost,
@@ -238,8 +236,8 @@ class StockRepository(
     suspend fun sale(
         customerName: String, customerPhone: String?, warehouseId: Long, discount: Double, note: String?, lines: List<CartLine>,
     ): Long {
-        if (customerName.isBlank()) throw UserFacingException(str(R.string.customer_name_is_required))
-        if (lines.isEmpty()) throw UserFacingException(str(R.string.add_at_least_one_product))
+        if (customerName.isBlank()) throw UserFacingException("Customer name is required.")
+        if (lines.isEmpty()) throw UserFacingException("Add at least one product.")
         if (cloud) {
             val created = api.call {
                 createSale(SaleRequest(customerName.trim(), customerPhone.nb(), warehouseId, discount, note.nb(),
@@ -278,15 +276,15 @@ class StockRepository(
 
     // ------------------------------------------------------------------ transfers (Premium)
     suspend fun transfer(productId: Long, fromId: Long, toId: Long, quantity: Double, note: String?) {
-        if (fromId == toId) throw UserFacingException(str(R.string.choose_two_different_warehouses))
-        if (quantity <= 0) throw UserFacingException(str(R.string.quantity_must_be_greater_than_zero))
+        if (fromId == toId) throw UserFacingException("Choose two different warehouses.")
+        if (quantity <= 0) throw UserFacingException("Quantity must be greater than zero.")
         api.call { createTransfer(TransferRequest(productId, fromId, toId, quantity, note.nb())) }
         sync.pull()
     }
 
     // ------------------------------------------------------------------ stock count correction
     suspend fun adjust(productId: Long, warehouseId: Long, setTo: Double, note: String?) {
-        if (setTo < 0) throw UserFacingException(str(R.string.stock_can_t_be_negative))
+        if (setTo < 0) throw UserFacingException("Stock can't be negative.")
         if (cloud) {
             api.call { adjustStock(AdjustRequest(productId, warehouseId, setTo, note.nb())) }
             sync.pull()
@@ -314,7 +312,7 @@ class StockRepository(
         val next = Math.round((current + delta) * 1000.0) / 1000.0
         if (next < 0) {
             val name = catalog.product(productId)?.name ?: "product"
-            throw UserFacingException(str(R.string.not_enough_stock_for_x_available, name, Fmt.qty(current), Fmt.qty(-delta)))
+            throw UserFacingException("Not enough stock for \"$name\". Available: ${Fmt.qty(current)}, requested: ${Fmt.qty(-delta)}.")
         }
         catalog.upsertStock(StockEntity(productId, warehouseId, next))
         tx.insertMovement(

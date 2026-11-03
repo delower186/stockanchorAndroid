@@ -1,8 +1,5 @@
 package com.sandalia.stockanchor.ui.screens
 
-import androidx.annotation.StringRes
-import com.sandalia.stockanchor.R
-import com.sandalia.stockanchor.util.str
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -75,11 +72,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.time.LocalDate
 
-private enum class SaleRange(@StringRes val labelRes: Int) {
-    TODAY(R.string.today), WEEK(R.string.s_7_days), MONTH(R.string.this_month), YEAR(R.string.this_year), ALL(R.string.all);
-
-    val label: String get() = str(labelRes)
-}
+private enum class SaleRange(val label: String) { TODAY("Today"), WEEK("7 days"), MONTH("This month"), YEAR("This year"), ALL("All") }
 
 @Composable
 fun SalesScreen(nav: NavHostController) {
@@ -102,11 +95,11 @@ fun SalesScreen(nav: NavHostController) {
     val sales by remember(q, from, to) { container.repo.sales(q, from, to, if (premium) 1000 else 100) }.collectAsStateWithLifecycle(emptyList())
     val completed = sales.filter { it.status == SaleStatus.COMPLETED }
 
-    ScreenScaffold(str(R.string.sales), subtitle = str(R.string.x_sales_x, completed.size, Fmt.money(session.currency, completed.sumOf { it.total }))) { pad ->
+    ScreenScaffold("Sales", subtitle = "${completed.size} sales · ${Fmt.money(session.currency, completed.sumOf { it.total })}") { pad ->
         Column(Modifier.padding(pad).fillMaxSize()) {
             if (premium) {
                 Column(Modifier.padding(horizontal = 16.dp)) {
-                    SearchField(query, { query = it }, str(R.string.customer_phone_or_invoice_no))
+                    SearchField(query, { query = it }, "Customer, phone or invoice no.")
                     Row(Modifier.horizontalScroll(rememberScrollState()).padding(vertical = 8.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         SaleRange.entries.forEach { r -> FilterChip(range == r, onClick = { range = r }, label = { Text(r.label) }) }
                     }
@@ -114,7 +107,7 @@ fun SalesScreen(nav: NavHostController) {
             } else {
                 AppCard(Modifier.fillMaxWidth().padding(horizontal = 16.dp), onClick = openPaywall) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(str(R.string.showing_the_last_30_days_search),
+                        Text("Showing the last 30 days. Search, date ranges, cancellations and PDF invoices come with Premium.",
                             Modifier.weight(1f), style = MaterialTheme.typography.bodySmall)
                         Spacer(Modifier.width(8.dp)); PremiumChip()
                     }
@@ -122,8 +115,8 @@ fun SalesScreen(nav: NavHostController) {
                 Spacer(Modifier.height(8.dp))
             }
             if (sales.isEmpty()) {
-                EmptyState(Icons.Filled.PointOfSale, str(R.string.no_sales), str(R.string.completed_sales_and_their_invoices_appear), action = {
-                    if (session.can(Perm.SALES_CREATE)) Button(onClick = { nav.navigate(Routes.SELL) }) { Text(str(R.string.new_sale)) }
+                EmptyState(Icons.Filled.PointOfSale, "No sales", "Completed sales and their invoices appear here.", action = {
+                    if (session.can(Perm.SALES_CREATE)) Button(onClick = { nav.navigate(Routes.SELL) }) { Text("New sale") }
                 })
             } else {
                 LazyColumn(contentPadding = PaddingValues(16.dp, 4.dp, 16.dp, 24.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -139,7 +132,7 @@ fun SalesScreen(nav: NavHostController) {
                                 Column(horizontalAlignment = Alignment.End) {
                                     Text(Fmt.money(session.currency, s.total), fontWeight = FontWeight.Bold,
                                         textDecoration = if (cancelled) TextDecoration.LineThrough else null)
-                                    if (cancelled) Text(str(R.string.cancelled), color = Coral, style = MaterialTheme.typography.labelSmall)
+                                    if (cancelled) Text("Cancelled", color = Coral, style = MaterialTheme.typography.labelSmall)
                                     else Text("+" + Fmt.money(session.currency, s.total - s.totalCost), color = MaterialTheme.colorScheme.secondary,
                                         style = MaterialTheme.typography.labelSmall)
                                 }
@@ -167,7 +160,7 @@ fun InvoiceScreen(saleId: Long, onBack: () -> Unit) {
     var cancelling by remember { mutableStateOf(false) }
 
     val s = sale
-    ScreenScaffold(str(R.string.invoice), subtitle = s?.invoiceNo, onBack = onBack, busy = runner.busy) { pad ->
+    ScreenScaffold("Invoice", subtitle = s?.invoiceNo, onBack = onBack, busy = runner.busy) { pad ->
         if (s == null) return@ScreenScaffold
         val cancelled = s.status == SaleStatus.CANCELLED
         LazyColumn(Modifier.padding(pad), contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -178,7 +171,7 @@ fun InvoiceScreen(saleId: Long, onBack: () -> Unit) {
                             Column {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                     Text(session.companyName, color = Color.White, style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
-                                    Text(str(R.string.label_invoice), color = Color.White, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Black)
+                                    Text("INVOICE", color = Color.White, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Black)
                                 }
                                 Text(s.invoiceNo, color = Color(0xFFB8C7D9), style = MaterialTheme.typography.bodySmall)
                             }
@@ -187,12 +180,12 @@ fun InvoiceScreen(saleId: Long, onBack: () -> Unit) {
                         Column(Modifier.padding(20.dp)) {
                             Row {
                                 Column(Modifier.weight(1f)) {
-                                    Text(str(R.string.billed_to), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                    Text("BILLED TO", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                     Text(s.customerName, style = MaterialTheme.typography.titleMedium)
                                     s.customerPhone?.let { Text(it, style = MaterialTheme.typography.bodySmall) }
                                 }
                                 Column(horizontalAlignment = Alignment.End) {
-                                    Text(str(R.string.label_date), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                                    Text("DATE", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                                     Text(Fmt.date(s.date), style = MaterialTheme.typography.bodyMedium)
                                     Text(Fmt.time(s.date), style = MaterialTheme.typography.bodySmall)
                                 }
@@ -202,7 +195,7 @@ fun InvoiceScreen(saleId: Long, onBack: () -> Unit) {
                                 shape = RoundedCornerShape(50),
                                 color = (if (cancelled) Coral else Teal).copy(alpha = 0.14f),
                             ) {
-                                Text(if (cancelled) str(R.string.label_cancelled) else str(R.string.label_paid), Modifier.padding(horizontal = 10.dp, vertical = 3.dp),
+                                Text(if (cancelled) "CANCELLED" else "PAID", Modifier.padding(horizontal = 10.dp, vertical = 3.dp),
                                     color = if (cancelled) Coral else Teal, style = MaterialTheme.typography.labelSmall)
                             }
                             Spacer(Modifier.height(16.dp))
@@ -218,12 +211,12 @@ fun InvoiceScreen(saleId: Long, onBack: () -> Unit) {
                                 HorizontalDivider(color = MaterialTheme.colorScheme.outlineVariant)
                             }
                             Spacer(Modifier.height(8.dp))
-                            KeyValue(str(R.string.subtotal), Fmt.money(session.currency, s.subtotal))
-                            if (s.discount > 0) KeyValue(str(R.string.discount), "-" + Fmt.money(session.currency, s.discount))
-                            KeyValue(str(R.string.total), Fmt.money(session.currency, s.total), strong = true)
-                            if (session.can(Perm.REPORTS_VIEW)) KeyValue(str(R.string.profit), Fmt.money(session.currency, s.total - s.totalCost),
+                            KeyValue("Subtotal", Fmt.money(session.currency, s.subtotal))
+                            if (s.discount > 0) KeyValue("Discount", "-" + Fmt.money(session.currency, s.discount))
+                            KeyValue("Total", Fmt.money(session.currency, s.total), strong = true)
+                            if (session.can(Perm.REPORTS_VIEW)) KeyValue("Profit", Fmt.money(session.currency, s.total - s.totalCost),
                                 valueColor = MaterialTheme.colorScheme.secondary)
-                            warehouses.firstOrNull { it.id == s.warehouseId }?.let { KeyValue(str(R.string.warehouse), it.name) }
+                            warehouses.firstOrNull { it.id == s.warehouseId }?.let { KeyValue("Warehouse", it.name) }
                             s.note?.let { Spacer(Modifier.height(6.dp)); Text(it, style = MaterialTheme.typography.bodySmall) }
                         }
                     }
@@ -233,9 +226,9 @@ fun InvoiceScreen(saleId: Long, onBack: () -> Unit) {
                 Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     OutlinedButton(onClick = {
                         val text = InvoicePdf.asText(s, items, session.companyName, session.currency)
-                        if (!ShareIntents.shareText(context, text, str(R.string.invoice_x, s.invoiceNo))) runner.toast(str(R.string.no_app_available_to_share_with))
+                        if (!ShareIntents.shareText(context, text, "Invoice ${s.invoiceNo}")) runner.toast("No app available to share with.")
                     }, modifier = Modifier.weight(1f).height(48.dp)) {
-                        Icon(Icons.Filled.Share, null); Spacer(Modifier.width(6.dp)); Text(str(R.string.share))
+                        Icon(Icons.Filled.Share, null); Spacer(Modifier.width(6.dp)); Text("Share")
                     }
                     Button(onClick = {
                         if (!session.premiumActive) openPaywall() else runner.run {
@@ -244,8 +237,8 @@ fun InvoiceScreen(saleId: Long, onBack: () -> Unit) {
                                     warehouses.firstOrNull { it.id == s.warehouseId }?.name)
                             }
                             // Open in a PDF viewer; fall back to sending it when no viewer is installed.
-                            if (!InvoicePdf.open(context, file) && !InvoicePdf.share(context, file, str(R.string.invoice_x, s.invoiceNo))) {
-                                runner.toast(str(R.string.no_app_available_to_open_or))
+                            if (!InvoicePdf.open(context, file) && !InvoicePdf.share(context, file, "Invoice ${s.invoiceNo}")) {
+                                runner.toast("No app available to open or share PDFs.")
                             }
                         }
                     }, modifier = Modifier.weight(1f).height(48.dp)) {
@@ -257,7 +250,7 @@ fun InvoiceScreen(saleId: Long, onBack: () -> Unit) {
             if (!cancelled && session.premiumActive && session.can(Perm.SALES_MANAGE)) item {
                 TextButton(onClick = { cancelling = true }, modifier = Modifier.fillMaxWidth()) {
                     Icon(Icons.Filled.Block, null, tint = MaterialTheme.colorScheme.error); Spacer(Modifier.width(6.dp))
-                    Text(str(R.string.cancel_sale_return_stock), color = MaterialTheme.colorScheme.error)
+                    Text("Cancel sale & return stock", color = MaterialTheme.colorScheme.error)
                 }
             }
         }
@@ -268,19 +261,19 @@ fun InvoiceScreen(saleId: Long, onBack: () -> Unit) {
         AlertDialog(
             onDismissRequest = { cancelling = false },
             icon = { Icon(Icons.AutoMirrored.Filled.ReceiptLong, null) },
-            title = { Text(str(R.string.cancel_this_sale)) },
+            title = { Text("Cancel this sale?") },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    Text(str(R.string.all_items_go_back_into_stock))
-                    OutlinedTextField(reason, { reason = it }, label = { Text(str(R.string.reason)) }, singleLine = true)
+                    Text("All items go back into stock and the sale is excluded from reports.")
+                    OutlinedTextField(reason, { reason = it }, label = { Text("Reason") }, singleLine = true)
                 }
             },
             confirmButton = {
-                TextButton(onClick = { cancelling = false; runner.run(str(R.string.sale_cancelled)) { container.repo.cancelSale(saleId, reason) } }) {
-                    Text(str(R.string.cancel_sale), color = MaterialTheme.colorScheme.error)
+                TextButton(onClick = { cancelling = false; runner.run("Sale cancelled") { container.repo.cancelSale(saleId, reason) } }) {
+                    Text("Cancel sale", color = MaterialTheme.colorScheme.error)
                 }
             },
-            dismissButton = { TextButton(onClick = { cancelling = false }) { Text(str(R.string.keep)) } },
+            dismissButton = { TextButton(onClick = { cancelling = false }) { Text("Keep") } },
         )
     }
 }

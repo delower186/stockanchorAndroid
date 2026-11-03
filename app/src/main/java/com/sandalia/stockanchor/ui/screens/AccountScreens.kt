@@ -1,7 +1,5 @@
 package com.sandalia.stockanchor.ui.screens
 
-import com.sandalia.stockanchor.R
-import com.sandalia.stockanchor.util.str
 import com.sandalia.stockanchor.ui.components.LocalSnackbar
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.CircularProgressIndicator
@@ -114,7 +112,6 @@ import com.sandalia.stockanchor.ui.theme.NavyLight
 import com.sandalia.stockanchor.ui.theme.TealLight
 import com.sandalia.stockanchor.util.Dates
 import com.sandalia.stockanchor.util.Fmt
-import com.sandalia.stockanchor.util.I18n
 
 /* ============================================================ Upgrade → cloud activation */
 
@@ -141,9 +138,9 @@ class ActivationFlow(private val container: AppContainer, private val runner: Ru
     // Called directly from begin(): a nested runner.run would be skipped because the runner is already busy.
     private suspend fun doActivate(upload: Boolean, merge: Boolean) {
         when (container.account.activateCloud(upload, merge)) {
-            ActivationResult.Activated -> { runner.toast(str(R.string.stock_anchor_premium_is_active)); onFinished() }
+            ActivationResult.Activated -> { runner.toast("Stock Anchor Premium is active 🎉"); onFinished() }
             ActivationResult.NeedsMergeDecision -> { askMerge = true }
-            ActivationResult.NotPremium -> runner.toast(str(R.string.subscription_not_active_yet_try_restore))
+            ActivationResult.NotPremium -> runner.toast("Subscription not active yet. Try “Restore purchase”.")
         }
     }
 }
@@ -156,18 +153,18 @@ fun rememberActivation(nav: NavHostController): ActivationFlow {
     if (flow.askUpload) AlertDialog(
         onDismissRequest = {},
         icon = { Icon(Icons.Filled.Cloud, null) },
-        title = { Text(str(R.string.move_your_data_to_the_cloud)) },
-        text = { Text(str(R.string.upload_the_products_stock_and_sales)) },
-        confirmButton = { TextButton(onClick = { flow.askUpload = false; flow.activate(upload = true, merge = false) }) { Text(str(R.string.upload_my_data)) } },
-        dismissButton = { TextButton(onClick = { flow.askUpload = false; flow.activate(upload = false, merge = false) }) { Text(str(R.string.start_fresh)) } },
+        title = { Text("Move your data to the cloud?") },
+        text = { Text("Upload the products, stock and sales on this device to your new cloud account, or start with an empty cloud inventory.") },
+        confirmButton = { TextButton(onClick = { flow.askUpload = false; flow.activate(upload = true, merge = false) }) { Text("Upload my data") } },
+        dismissButton = { TextButton(onClick = { flow.askUpload = false; flow.activate(upload = false, merge = false) }) { Text("Start fresh") } },
     )
     if (flow.askMerge) AlertDialog(
         onDismissRequest = {},
         icon = { Icon(Icons.Filled.Warning, null) },
-        title = { Text(str(R.string.your_cloud_already_has_data)) },
-        text = { Text(str(R.string.add_this_device_s_products_and)) },
-        confirmButton = { TextButton(onClick = { flow.askMerge = false; flow.activate(upload = true, merge = true) }) { Text(str(R.string.merge_both)) } },
-        dismissButton = { TextButton(onClick = { flow.askMerge = false; flow.activate(upload = false, merge = false) }) { Text(str(R.string.use_cloud_only)) } },
+        title = { Text("Your cloud already has data") },
+        text = { Text("Add this device's products and history to it as well, or just use what's already in the cloud?") },
+        confirmButton = { TextButton(onClick = { flow.askMerge = false; flow.activate(upload = true, merge = true) }) { Text("Merge both") } },
+        dismissButton = { TextButton(onClick = { flow.askMerge = false; flow.activate(upload = false, merge = false) }) { Text("Use cloud only") } },
     )
     return flow
 }
@@ -195,9 +192,9 @@ fun PaywallScreen(nav: NavHostController) {
             when (e) {
                 is PurchaseEvent.Success ->
                     if (container.session.current.loggedIn) runner.run {
-                        if (container.account.verifyPendingPurchase()) activation.begin() else runner.toast(str(R.string.we_couldn_t_confirm_the_subscription))
+                        if (container.account.verifyPendingPurchase()) activation.begin() else runner.toast("We couldn't confirm the subscription yet.")
                     } else nav.navigate(Routes.account("upgrade"))
-                PurchaseEvent.Pending -> runner.toast(str(R.string.payment_pending_premium_unlocks_as_soon))
+                PurchaseEvent.Pending -> runner.toast("Payment pending. Premium unlocks as soon as Google confirms it.")
                 PurchaseEvent.Cancelled -> Unit
                 is PurchaseEvent.Error -> runner.toast(e.message)
             }
@@ -211,22 +208,22 @@ fun PaywallScreen(nav: NavHostController) {
                 .statusBarsPadding().padding(20.dp)
         ) {
             Column {
-                IconButton(onClick = { nav.popBackStack() }) { Icon(Icons.AutoMirrored.Filled.ArrowBack, str(R.string.back), tint = Color.White) }
+                IconButton(onClick = { nav.popBackStack() }) { Icon(Icons.AutoMirrored.Filled.ArrowBack, "Back", tint = Color.White) }
                 Spacer(Modifier.height(8.dp))
                 Box(Modifier.size(64.dp).clip(RoundedCornerShape(18.dp)).background(Color.White.copy(alpha = 0.12f)), contentAlignment = Alignment.Center) {
                     Icon(Icons.Filled.Anchor, null, tint = TealLight, modifier = Modifier.size(36.dp))
                 }
                 Spacer(Modifier.height(14.dp))
-                Text(str(R.string.stock_anchor_premium), style = MaterialTheme.typography.headlineMedium, color = Color.White)
-                Text(str(R.string.cloud_inventory_for_growing_businesses_and), color = Color(0xFFB8C7D9))
+                Text("Stock Anchor Premium", style = MaterialTheme.typography.headlineMedium, color = Color.White)
+                Text("Cloud inventory for growing businesses and teams.", color = Color(0xFFB8C7D9))
             }
         }
 
         Column(Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             if (session.premiumActive) {
                 AppCard(Modifier.fillMaxWidth()) {
-                    Text(str(R.string.you_re_on_premium), style = MaterialTheme.typography.titleMedium)
-                    Text(str(R.string.plan_x, session.plan ?: "—"), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text("You're on Premium ✓", style = MaterialTheme.typography.titleMedium)
+                    Text("Plan: ${session.plan ?: "—"}", color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
 
@@ -240,7 +237,7 @@ fun PaywallScreen(nav: NavHostController) {
                     when {
                         billingReady -> container.billing.launch(context as Activity, offer)
                         BuildConfig.ALLOW_TEST_PURCHASES -> container.billing.testPurchase(offer.planId)
-                        else -> { container.billing.connect(); runner.toast(billingProblem ?: str(R.string.loading_prices_from_google_play)) }
+                        else -> { container.billing.connect(); runner.toast(billingProblem ?: "Loading prices from Google Play…") }
                     }
                 },
                 enabled = !runner.busy,
@@ -248,18 +245,18 @@ fun PaywallScreen(nav: NavHostController) {
                 colors = ButtonDefaults.buttonColors(containerColor = Amber, contentColor = Navy),
             ) {
                 Icon(Icons.Filled.WorkspacePremium, null); Spacer(Modifier.width(8.dp))
-                Text(if (selected == BuildConfig.PLAN_YEARLY) str(R.string.subscribe_yearly) else str(R.string.subscribe_monthly), fontWeight = FontWeight.Bold)
+                Text(if (selected == BuildConfig.PLAN_YEARLY) "Subscribe yearly" else "Subscribe monthly", fontWeight = FontWeight.Bold)
             }
             if (!billingReady && !BuildConfig.ALLOW_TEST_PURCHASES) {
                 AppCard(Modifier.fillMaxWidth()) {
                     if (billingProblem == null) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             CircularProgressIndicator(Modifier.size(18.dp), strokeWidth = 2.dp); Spacer(Modifier.width(10.dp))
-                            Text(str(R.string.loading_prices_from_google_play), style = MaterialTheme.typography.bodyMedium)
+                            Text("Loading prices from Google Play…", style = MaterialTheme.typography.bodyMedium)
                         }
                     } else {
                         Text(billingProblem.orEmpty(), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.error)
-                        TextButton(onClick = { container.billing.connect() }) { Text(str(R.string.try_again)) }
+                        TextButton(onClick = { container.billing.connect() }) { Text("Try again") }
                     }
                 }
             }
@@ -271,17 +268,17 @@ fun PaywallScreen(nav: NavHostController) {
                 TextButton(onClick = {
                     runner.run {
                         val p = container.billing.activeSubscriptions().firstOrNull()
-                        if (p == null) { runner.toast(str(R.string.no_active_subscription_found_on_this)); return@run }
+                        if (p == null) { runner.toast("No active subscription found on this Google account."); return@run }
                         container.session.setPendingPurchase(p.purchaseToken, null)
                         if (container.session.current.loggedIn) {
                             if (container.account.verifyPendingPurchase()) activation.begin()
                         } else nav.navigate(Routes.account("upgrade"))
                     }
-                }) { Text(str(R.string.restore_purchase)) }
-                if (!session.loggedIn) TextButton(onClick = { nav.navigate(Routes.account("login")) }) { Text(str(R.string.team_member_sign_in)) }
+                }) { Text("Restore purchase") }
+                if (!session.loggedIn) TextButton(onClick = { nav.navigate(Routes.account("login")) }) { Text("Team member? Sign in") }
             }
 
-            SectionTitle(str(R.string.everything_in_basic_plus))
+            SectionTitle("Everything in Basic, plus")
             AppCard(Modifier.fillMaxWidth()) {
                 PremiumFeature.entries.forEach { f ->
                     Row(Modifier.padding(vertical = 7.dp), verticalAlignment = Alignment.Top) {
@@ -295,7 +292,8 @@ fun PaywallScreen(nav: NavHostController) {
                 }
             }
             Text(
-                str(R.string.subscriptions_renew_automatically_until_cancelle),
+                "Subscriptions renew automatically until cancelled in Google Play. One subscription covers your whole team. " +
+                    "If it ends you keep everything on your device in Basic.",
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center,
             )
             Spacer(Modifier.height(24.dp))
@@ -316,12 +314,12 @@ private fun PlanCard(offer: PlanOffer, selected: Boolean, modifier: Modifier, on
     ) {
         Column(Modifier.padding(16.dp)) {
             if (yearly) Surface(shape = RoundedCornerShape(50), color = Amber) {
-                Text(str(R.string.best_value), Modifier.padding(horizontal = 8.dp, vertical = 2.dp), style = MaterialTheme.typography.labelSmall, color = Navy)
+                Text("BEST VALUE", Modifier.padding(horizontal = 8.dp, vertical = 2.dp), style = MaterialTheme.typography.labelSmall, color = Navy)
             } else Spacer(Modifier.height(18.dp))
             Spacer(Modifier.height(8.dp))
             Text(offer.title, style = MaterialTheme.typography.titleMedium)
             Text(offer.price, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
-            Text(if (yearly) str(R.string.per_year) else str(R.string.per_month), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Text(if (yearly) "per year" else "per month", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             offer.trial?.let { Text(it, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.secondary) }
         }
     }
@@ -351,8 +349,8 @@ fun AccountScreen(mode: String, nav: NavHostController) {
     }
 
     ScreenScaffold(
-        title = if (upgrading) str(R.string.create_your_cloud_account) else str(R.string.stock_anchor_cloud),
-        subtitle = if (upgrading) str(R.string.payment_received_one_last_step) else null,
+        title = if (upgrading) "Create your cloud account" else "Stock Anchor Cloud",
+        subtitle = if (upgrading) "Payment received — one last step" else null,
         onBack = { nav.popBackStack() }, busy = runner.busy,
     ) { pad ->
         Column(Modifier.padding(pad).fillMaxSize().imePadding().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -360,23 +358,23 @@ fun AccountScreen(mode: String, nav: NavHostController) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Filled.CheckCircle, null, tint = MaterialTheme.colorScheme.secondary)
                     Spacer(Modifier.width(10.dp))
-                    Text(str(R.string.your_subscription_is_ready_create_an), style = MaterialTheme.typography.bodyMedium)
+                    Text("Your subscription is ready. Create an account (or sign in) to link it to your business.", style = MaterialTheme.typography.bodyMedium)
                 }
             }
             PrimaryTabRow(selectedTabIndex = tab, containerColor = MaterialTheme.colorScheme.background) {
-                Tab(tab == 0, { tab = 0 }, text = { Text(str(R.string.create_account)) })
-                Tab(tab == 1, { tab = 1 }, text = { Text(str(R.string.sign_in)) })
+                Tab(tab == 0, { tab = 0 }, text = { Text("Create account") })
+                Tab(tab == 1, { tab = 1 }, text = { Text("Sign in") })
             }
             if (tab == 0) {
-                OutlinedTextField(name, { name = it }, label = { Text(str(R.string.your_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(company, { company = it }, label = { Text(str(R.string.business_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
-                DropdownField(str(R.string.currency), listOf("BDT", "USD", "EUR", "GBP", "INR", "PKR"), currency, { it }, { if (it != null) currency = it }, Modifier.fillMaxWidth())
+                OutlinedTextField(name, { name = it }, label = { Text("Your name") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(company, { company = it }, label = { Text("Business name") }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                DropdownField("Currency", listOf("BDT", "USD", "EUR", "GBP", "INR", "PKR"), currency, { it }, { if (it != null) currency = it }, Modifier.fillMaxWidth())
             }
-            OutlinedTextField(email, { email = it }, label = { Text(str(R.string.email)) }, singleLine = true, modifier = Modifier.fillMaxWidth(),
+            OutlinedTextField(email, { email = it }, label = { Text("Email") }, singleLine = true, modifier = Modifier.fillMaxWidth(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email))
-            OutlinedTextField(password, { password = it }, label = { Text(str(R.string.password)) }, singleLine = true, modifier = Modifier.fillMaxWidth(),
+            OutlinedTextField(password, { password = it }, label = { Text("Password") }, singleLine = true, modifier = Modifier.fillMaxWidth(),
                 visualTransformation = PasswordVisualTransformation(), keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                supportingText = { if (tab == 0) Text(str(R.string.at_least_8_characters)) })
+                supportingText = { if (tab == 0) Text("At least 8 characters") })
             Button(
                 onClick = {
                     runner.run {
@@ -388,7 +386,7 @@ fun AccountScreen(mode: String, nav: NavHostController) {
                 enabled = !runner.busy && email.isNotBlank() && password.length >= (if (tab == 0) 8 else 1) &&
                     (tab == 1 || (name.isNotBlank() && company.isNotBlank())),
                 modifier = Modifier.fillMaxWidth().height(52.dp),
-            ) { Text(if (tab == 0) str(R.string.create_account) else str(R.string.sign_in)) }
+            ) { Text(if (tab == 0) "Create account" else "Sign in") }
             if (BuildConfig.ALLOW_SERVER_OVERRIDE) Text("Server: ${container.session.baseUrl()}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
@@ -409,10 +407,10 @@ fun AccountScreen(mode: String, nav: NavHostController) {
 
     if (notPremium) AlertDialog(
         onDismissRequest = { notPremium = false },
-        title = { Text(str(R.string.no_active_subscription)) },
-        text = { Text(str(R.string.you_re_signed_in_but_your)) },
-        confirmButton = { TextButton(onClick = { notPremium = false; nav.navigate(Routes.PAYWALL) { popUpTo(Routes.PAYWALL) { inclusive = true } } }) { Text(str(R.string.see_plans)) } },
-        dismissButton = { TextButton(onClick = { notPremium = false; nav.popBackStack() }) { Text(str(R.string.later)) } },
+        title = { Text("No active subscription") },
+        text = { Text("You're signed in, but your team doesn't have Premium yet. Subscribe to unlock the cloud. Your Basic data stays on this device.") },
+        confirmButton = { TextButton(onClick = { notPremium = false; nav.navigate(Routes.PAYWALL) { popUpTo(Routes.PAYWALL) { inclusive = true } } }) { Text("See plans") } },
+        dismissButton = { TextButton(onClick = { notPremium = false; nav.popBackStack() }) { Text("Later") } },
     )
 }
 
@@ -427,60 +425,60 @@ fun SubscriptionScreen(nav: NavHostController) {
     var confirmSignOut by remember { mutableStateOf(false) }
     var confirmDowngrade by remember { mutableStateOf(false) }
 
-    ScreenScaffold(str(R.string.plan_account), onBack = { nav.popBackStack() }, busy = runner.busy) { pad ->
+    ScreenScaffold("Plan & account", onBack = { nav.popBackStack() }, busy = runner.busy) { pad ->
         Column(Modifier.padding(pad).verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             AppCard(Modifier.fillMaxWidth()) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(if (session.premiumActive) str(R.string.premium) else str(R.string.basic), style = MaterialTheme.typography.headlineSmall, modifier = Modifier.weight(1f))
+                    Text(if (session.premiumActive) "Premium" else "Basic", style = MaterialTheme.typography.headlineSmall, modifier = Modifier.weight(1f))
                     if (session.premiumActive) PremiumChip()
                 }
                 Spacer(Modifier.height(6.dp))
-                KeyValue(str(R.string.data_stored), if (session.isCloud) str(R.string.cloud_synced) else str(R.string.this_device_only))
+                KeyValue("Data stored", if (session.isCloud) "Cloud (synced)" else "This device only")
                 if (session.loggedIn) {
-                    KeyValue(str(R.string.signed_in_as), session.email)
-                    KeyValue(str(R.string.role), session.role.replaceFirstChar { it.uppercase() })
-                    KeyValue(str(R.string.billing), session.plan?.replaceFirstChar { it.uppercase() } ?: "—")
-                    KeyValue(str(R.string.status), session.subscriptionStatus ?: "—")
-                    session.expiresAt?.let { KeyValue(if (session.subscriptionStatus == "canceled") str(R.string.ends) else str(R.string.renews), Fmt.date(Dates.parse(it))) }
+                    KeyValue("Signed in as", session.email)
+                    KeyValue("Role", session.role.replaceFirstChar { it.uppercase() })
+                    KeyValue("Billing", session.plan?.replaceFirstChar { it.uppercase() } ?: "—")
+                    KeyValue("Status", session.subscriptionStatus ?: "—")
+                    session.expiresAt?.let { KeyValue(if (session.subscriptionStatus == "canceled") "Ends" else "Renews", Fmt.date(Dates.parse(it))) }
                 }
             }
             if (!session.premiumActive) {
                 Button(onClick = { nav.navigate(Routes.PAYWALL) }, modifier = Modifier.fillMaxWidth().height(52.dp)) {
-                    Icon(Icons.Filled.WorkspacePremium, null); Spacer(Modifier.width(8.dp)); Text(str(R.string.upgrade_to_premium))
+                    Icon(Icons.Filled.WorkspacePremium, null); Spacer(Modifier.width(8.dp)); Text("Upgrade to Premium")
                 }
                 if (!session.loggedIn) OutlinedButton(onClick = { nav.navigate(Routes.account("login")) }, modifier = Modifier.fillMaxWidth()) {
-                    Text(str(R.string.sign_in_to_an_existing_cloud))
+                    Text("Sign in to an existing cloud account")
                 }
             } else {
                 if (session.role == "owner") OutlinedButton(onClick = {
                     val uri = Uri.parse("https://play.google.com/store/account/subscriptions?sku=${BuildConfig.SUBSCRIPTION_PRODUCT_ID}&package=${context.packageName}")
                     context.startActivity(Intent(Intent.ACTION_VIEW, uri))
-                }, modifier = Modifier.fillMaxWidth()) { Text(str(R.string.manage_or_cancel_in_google_play)) }
+                }, modifier = Modifier.fillMaxWidth()) { Text("Manage or cancel in Google Play") }
                 if (session.role == "owner") OutlinedButton(onClick = { nav.navigate(Routes.PAYWALL) }, modifier = Modifier.fillMaxWidth()) {
-                    Text(str(R.string.switch_monthly_yearly))
+                    Text("Switch monthly ↔ yearly")
                 }
-                OutlinedButton(onClick = { runner.run(str(R.string.plan_refreshed)) { container.account.refresh() } }, modifier = Modifier.fillMaxWidth()) {
-                    Text(str(R.string.refresh_plan_status))
+                OutlinedButton(onClick = { runner.run("Plan refreshed") { container.account.refresh() } }, modifier = Modifier.fillMaxWidth()) {
+                    Text("Refresh plan status")
                 }
             }
             if (session.loggedIn) TwoFactorCard(runner)
             if (session.isCloud) {
                 HorizontalDivider()
-                TextButton(onClick = { confirmDowngrade = true }) { Text(str(R.string.work_offline_on_basic_keep_data)) }
+                TextButton(onClick = { confirmDowngrade = true }) { Text("Work offline on Basic (keep data on this device)") }
             }
             if (session.loggedIn) TextButton(onClick = { confirmSignOut = true }) {
                 Icon(Icons.AutoMirrored.Filled.Logout, null, tint = MaterialTheme.colorScheme.error); Spacer(Modifier.width(6.dp))
-                Text(str(R.string.sign_out_of_the_cloud), color = MaterialTheme.colorScheme.error)
+                Text("Sign out of the cloud", color = MaterialTheme.colorScheme.error)
             }
         }
     }
     if (confirmSignOut) ConfirmDialog(
-        str(R.string.sign_out), str(R.string.cloud_data_cached_on_this_device), confirmLabel = str(R.string.sign_out_2),
-        onConfirm = { runner.run(str(R.string.signed_out)) { container.account.signOut(); nav.goHome() } }, onDismiss = { confirmSignOut = false },
+        "Sign out?", "Cloud data cached on this device will be removed. It stays safe in the cloud.", confirmLabel = "Sign out",
+        onConfirm = { runner.run("Signed out") { container.account.signOut(); nav.goHome() } }, onDismiss = { confirmSignOut = false },
     )
     if (confirmDowngrade) ConfirmDialog(
-        str(R.string.switch_to_basic), str(R.string.you_ll_keep_working_offline_with),
-        confirmLabel = str(R.string.switch_label), destructive = false,
+        "Switch to Basic?", "You'll keep working offline with the data already on this device. Premium screens lock until you sign in again.",
+        confirmLabel = "Switch", destructive = false,
         onConfirm = { container.account.downgradeToBasic(); nav.goHome() }, onDismiss = { confirmDowngrade = false },
     )
 }
@@ -496,45 +494,45 @@ fun MoreScreen(nav: NavHostController) {
     val go: (String) -> Unit = { nav.navigate(it) }
     val context = LocalContext.current
 
-    ScreenScaffold(str(R.string.more)) { pad ->
+    ScreenScaffold("More") { pad ->
         Column(Modifier.padding(pad).verticalScroll(rememberScrollState()).padding(horizontal = 16.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
             AppCard(Modifier.fillMaxWidth(), onClick = { go(Routes.SUBSCRIPTION) }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
                         Text(session.companyName, style = MaterialTheme.typography.titleMedium)
                         Text(
-                            if (session.loggedIn) "${session.userName} · ${session.role}" else str(R.string.basic_plan_data_on_this_device),
+                            if (session.loggedIn) "${session.userName} · ${session.role}" else "Basic plan · data on this device",
                             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
                     if (premium) PremiumChip() else Button(onClick = { go(Routes.PAYWALL) }, colors = ButtonDefaults.buttonColors(containerColor = Amber, contentColor = Navy)) {
-                        Text(str(R.string.upgrade))
+                        Text("Upgrade")
                     }
                 }
             }
-            SectionTitle(str(R.string.inventory))
-            MenuRow(Icons.Filled.Category, str(R.string.categories), str(R.string.organise_your_catalogue)) { go(Routes.CATEGORIES) }
-            MenuRow(Icons.Filled.Warehouse, str(R.string.warehouses), if (premium) str(R.string.unlimited_locations) else str(R.string.x_on_basic, Limits.warehouses())) { go(Routes.WAREHOUSES) }
-            MenuRow(Icons.Filled.AddBox, str(R.string.purchases), str(R.string.stock_received)) { go(Routes.PURCHASES) }
-            if (session.can(Perm.TRANSFERS_CREATE) || locked) MenuRow(Icons.AutoMirrored.Filled.CompareArrows, str(R.string.stock_transfers), str(R.string.between_warehouses), premium = locked) { go(Routes.TRANSFERS) }
-            MenuRow(Icons.Filled.History, str(R.string.movement_history), str(R.string.every_stock_change), premium = locked) { go(Routes.movements()) }
-            MenuRow(Icons.Filled.Warning, str(R.string.low_stock), str(R.string.products_below_minimum), premium = locked) { go(Routes.LOW_STOCK) }
-            MenuRow(Icons.Filled.LocalShipping, str(R.string.suppliers), str(R.string.who_you_buy_from), premium = locked) { go(Routes.SUPPLIERS) }
-            SectionTitle(str(R.string.business))
-            MenuRow(Icons.AutoMirrored.Filled.ReceiptLong, str(R.string.sales_invoices), str(R.string.history_cancellations_pdf)) { go(Routes.SALES) }
-            if (session.can(Perm.EXPENSES_MANAGE) || session.can(Perm.REPORTS_VIEW) || locked) MenuRow(Icons.Filled.Payments, str(R.string.expenses), str(R.string.rent_salaries_for_net_profit), premium = locked) { go(Routes.EXPENSES) }
-            if (session.can(Perm.DATA_EXPORT) || session.can(Perm.DATA_IMPORT) || locked) MenuRow(Icons.Filled.ImportExport, str(R.string.import_export_csv), str(R.string.spreadsheets_in_and_out), premium = locked) { go(Routes.DATA) }
-            if (session.can(Perm.TEAM_MANAGE) || locked) MenuRow(Icons.Filled.Group, str(R.string.team_permissions), str(R.string.staff_accounts), premium = locked) { go(Routes.TEAM) }
-            if (session.can(Perm.BACKUPS_MANAGE) || locked) MenuRow(Icons.Filled.Backup, str(R.string.cloud_backup), str(R.string.backup_restore), premium = locked) { go(Routes.BACKUPS) }
-            SectionTitle(str(R.string.app))
-            MenuRow(Icons.Filled.WorkspacePremium, str(R.string.plan_account), if (premium) str(R.string.premium) else str(R.string.basic), tint = Amber) { go(Routes.SUBSCRIPTION) }
-            MenuRow(Icons.Filled.Settings, str(R.string.settings), str(R.string.business_profile_alerts_sync)) { go(Routes.SETTINGS) }
+            SectionTitle("Inventory")
+            MenuRow(Icons.Filled.Category, "Categories", "Organise your catalogue") { go(Routes.CATEGORIES) }
+            MenuRow(Icons.Filled.Warehouse, "Warehouses", if (premium) "Unlimited locations" else "${Limits.warehouses()} on Basic") { go(Routes.WAREHOUSES) }
+            MenuRow(Icons.Filled.AddBox, "Purchases", "Stock received") { go(Routes.PURCHASES) }
+            if (session.can(Perm.TRANSFERS_CREATE) || locked) MenuRow(Icons.AutoMirrored.Filled.CompareArrows, "Stock transfers", "Between warehouses", premium = locked) { go(Routes.TRANSFERS) }
+            MenuRow(Icons.Filled.History, "Movement history", "Every stock change", premium = locked) { go(Routes.movements()) }
+            MenuRow(Icons.Filled.Warning, "Low stock", "Products below minimum", premium = locked) { go(Routes.LOW_STOCK) }
+            MenuRow(Icons.Filled.LocalShipping, "Suppliers", "Who you buy from", premium = locked) { go(Routes.SUPPLIERS) }
+            SectionTitle("Business")
+            MenuRow(Icons.AutoMirrored.Filled.ReceiptLong, "Sales & invoices", "History, cancellations, PDF") { go(Routes.SALES) }
+            if (session.can(Perm.EXPENSES_MANAGE) || session.can(Perm.REPORTS_VIEW) || locked) MenuRow(Icons.Filled.Payments, "Expenses", "Rent, salaries… for net profit", premium = locked) { go(Routes.EXPENSES) }
+            if (session.can(Perm.DATA_EXPORT) || session.can(Perm.DATA_IMPORT) || locked) MenuRow(Icons.Filled.ImportExport, "Import & export CSV", "Spreadsheets in and out", premium = locked) { go(Routes.DATA) }
+            if (session.can(Perm.TEAM_MANAGE) || locked) MenuRow(Icons.Filled.Group, "Team & permissions", "Staff accounts", premium = locked) { go(Routes.TEAM) }
+            if (session.can(Perm.BACKUPS_MANAGE) || locked) MenuRow(Icons.Filled.Backup, "Cloud backup", "Backup & restore", premium = locked) { go(Routes.BACKUPS) }
+            SectionTitle("App")
+            MenuRow(Icons.Filled.WorkspacePremium, "Plan & account", if (premium) "Premium" else "Basic", tint = Amber) { go(Routes.SUBSCRIPTION) }
+            MenuRow(Icons.Filled.Settings, "Settings", "Business profile, alerts, sync") { go(Routes.SETTINGS) }
             Spacer(Modifier.height(16.dp))
             Button(
                 onClick = {
                     if (premium) {
                         runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(BuildConfig.WEB_PANEL_URL))) }
-                            .onFailure { Toast.makeText(context, str(R.string.no_web_browser_found_please_install), Toast.LENGTH_LONG).show() }
+                            .onFailure { Toast.makeText(context, "No web browser found. Please install a browser (e.g. Chrome) to open the web panel.", Toast.LENGTH_LONG).show() }
                     } else {
                         go(Routes.PAYWALL)
                     }
@@ -542,12 +540,12 @@ fun MoreScreen(nav: NavHostController) {
                 modifier = Modifier.fillMaxWidth().height(52.dp),
             ) {
                 Icon(Icons.Filled.OpenInBrowser, null); Spacer(Modifier.width(8.dp))
-                Text(str(R.string.open_web_panel))
+                Text("Open web panel")
                 if (locked) { Spacer(Modifier.width(8.dp)); PremiumChip() }
             }
             Text(
-                if (premium) str(R.string.use_premium_features_in_your_browser, Uri.parse(BuildConfig.WEB_PANEL_URL).host)
-                else str(R.string.the_web_panel_is_part_of),
+                if (premium) "Use Premium features in your browser at ${Uri.parse(BuildConfig.WEB_PANEL_URL).host}"
+                else "The web panel is part of Premium",
                 Modifier.fillMaxWidth(), textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
@@ -570,60 +568,48 @@ fun SettingsScreen(nav: NavHostController) {
     var currency by rememberSaveable { mutableStateOf(session.currency) }
     var server by rememberSaveable { mutableStateOf(container.session.baseUrl()) }
 
-    ScreenScaffold(str(R.string.settings), onBack = { nav.popBackStack() }, busy = runner.busy) { pad ->
+    ScreenScaffold("Settings", onBack = { nav.popBackStack() }, busy = runner.busy) { pad ->
         Column(Modifier.padding(pad).imePadding().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            SectionTitle(str(R.string.business_profile))
+            SectionTitle("Business profile")
             AppCard(Modifier.fillMaxWidth()) {
-                OutlinedTextField(company, { company = it }, label = { Text(str(R.string.business_name_on_invoices)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(company, { company = it }, label = { Text("Business name (on invoices)") }, singleLine = true, modifier = Modifier.fillMaxWidth())
                 Spacer(Modifier.height(8.dp))
-                OutlinedTextField(currency, { currency = it.take(4) }, label = { Text(str(R.string.currency_symbol)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                OutlinedTextField(currency, { currency = it.take(4) }, label = { Text("Currency symbol") }, singleLine = true, modifier = Modifier.fillMaxWidth())
                 Spacer(Modifier.height(8.dp))
-                Button(onClick = { container.session.setCompany(company.ifBlank { "My Business" }, currency.ifBlank { "৳" }); runner.toast(str(R.string.saved)) }) { Text(str(R.string.save)) }
+                Button(onClick = { container.session.setCompany(company.ifBlank { "My Business" }, currency.ifBlank { "৳" }); runner.toast("Saved") }) { Text("Save") }
             }
-            SectionTitle(str(R.string.language))
-            AppCard(Modifier.fillMaxWidth()) {
-                val activity = LocalContext.current as Activity
-                val currentLanguage = remember { I18n.current(activity) }
-                DropdownField(
-                    str(R.string.language), I18n.LANGUAGES.map { it.first }, currentLanguage,
-                    { tag -> I18n.LANGUAGES.first { it.first == tag }.second ?: str(R.string.language_system) },
-                    { tag -> if (tag != null && tag != currentLanguage) I18n.setLanguage(activity, tag) },
-                    Modifier.fillMaxWidth(),
-                )
-                Text(str(R.string.language_hint), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
-            }
-            SectionTitle(str(R.string.notifications))
+            SectionTitle("Notifications")
             AppCard(Modifier.fillMaxWidth()) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
-                        Row(verticalAlignment = Alignment.CenterVertically) { Text(str(R.string.low_stock_channel)); Spacer(Modifier.width(6.dp)); if (!session.premiumActive) PremiumChip() }
-                        Text(str(R.string.daily_reminders_for_products_below_minimum), style = MaterialTheme.typography.bodySmall,
+                        Row(verticalAlignment = Alignment.CenterVertically) { Text("Low stock alerts"); Spacer(Modifier.width(6.dp)); if (!session.premiumActive) PremiumChip() }
+                        Text("Daily reminders for products below minimum", style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     Switch(session.lowStockAlerts, { container.session.setLowStockAlerts(it) }, enabled = session.premiumActive)
                 }
             }
             if (BuildConfig.ALLOW_SERVER_OVERRIDE) {
-                SectionTitle(str(R.string.cloud_server))
+                SectionTitle("Cloud server")
                 AppCard(Modifier.fillMaxWidth()) {
                     OutlinedTextField(server, { server = it }, label = { Text("API base URL") }, singleLine = true, modifier = Modifier.fillMaxWidth(),
                         supportingText = { Text("Your Laravel API, ending in /api/ (debug builds only)") })
                     Row {
-                        TextButton(onClick = { container.session.setBaseUrl(server); runner.toast(str(R.string.server_updated)) }) { Text(str(R.string.save)) }
-                        TextButton(onClick = { server = BuildConfig.API_BASE_URL; container.session.setBaseUrl("") }) { Text(str(R.string.reset)) }
+                        TextButton(onClick = { container.session.setBaseUrl(server); runner.toast("Server updated") }) { Text("Save") }
+                        TextButton(onClick = { server = BuildConfig.API_BASE_URL; container.session.setBaseUrl("") }) { Text("Reset") }
                     }
                 }
             }
             if (session.isCloud) {
-                SectionTitle(str(R.string.cloud_sync))
+                SectionTitle("Cloud sync")
                 AppCard(Modifier.fillMaxWidth()) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
-                            Text(str(R.string.last_synced))
-                            Text(session.lastSync?.let { Fmt.dateTime(Dates.parse(it)) } ?: str(R.string.never), style = MaterialTheme.typography.bodySmall,
+                            Text("Last synced")
+                            Text(session.lastSync?.let { Fmt.dateTime(Dates.parse(it)) } ?: "Never", style = MaterialTheme.typography.bodySmall,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
-                        OutlinedButton(onClick = { runner.run(str(R.string.full_sync_complete)) { container.sync.pull(full = true) } }) { Text(str(R.string.full_re_sync)) }
+                        OutlinedButton(onClick = { runner.run("Full sync complete") { container.sync.pull(full = true) } }) { Text("Full re-sync") }
                     }
                 }
             }

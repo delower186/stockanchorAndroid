@@ -1,7 +1,5 @@
 package com.sandalia.stockanchor.billing
 
-import com.sandalia.stockanchor.R
-import com.sandalia.stockanchor.util.str
 import android.app.Activity
 import android.content.Context
 import com.android.billingclient.api.AcknowledgePurchaseParams
@@ -139,18 +137,18 @@ class BillingManager(context: Context, private val session: SessionStore, privat
                 val free = phases.firstOrNull { it.priceAmountMicros == 0L }
                 PlanOffer(
                     planId = planId,
-                    title = if (planId == BuildConfig.PLAN_YEARLY) str(R.string.yearly) else str(R.string.monthly),
+                    title = if (planId == BuildConfig.PLAN_YEARLY) "Yearly" else "Monthly",
                     price = recurring.formattedPrice,
                     billingPeriod = recurring.billingPeriod,
                     offerToken = offer.offerToken,
                     details = details,
-                    trial = free?.let { str(R.string.free_trial_x, periodLabel(it.billingPeriod)) },
+                    trial = free?.let { "Free trial " + periodLabel(it.billingPeriod) },
                 )
             }
             .sortedBy { if (it.planId == BuildConfig.PLAN_MONTHLY) 0 else 1 }
 
         if (offers.isEmpty()) {
-            _problem.value = str(R.string.the_subscription_has_no_active_plans)
+            _problem.value = "The subscription has no active plans yet. In Play Console, activate the monthly and yearly base plans."
             return
         }
         _offers.value = offers
@@ -160,25 +158,27 @@ class BillingManager(context: Context, private val session: SessionStore, privat
 
     private fun setupProblem(result: BillingResult): String = when (result.responseCode) {
         BillingClient.BillingResponseCode.BILLING_UNAVAILABLE, BillingClient.BillingResponseCode.SERVICE_DISCONNECTED ->
-            str(R.string.google_play_can_t_sell_subscriptions)
+            "Google Play can't sell subscriptions to this copy of the app. Install Stock Anchor from Google Play (testers: through the " +
+                "testing link) with the Play Store signed in, then try again."
         BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE, BillingClient.BillingResponseCode.NETWORK_ERROR ->
-            str(R.string.couldn_t_reach_google_play_check)
-        else -> str(R.string.google_play_billing_error_x_x, result.responseCode, result.debugMessage.takeIf { it.isNotBlank() }?.let { ": $it" }.orEmpty())
+            "Couldn't reach Google Play. Check your internet connection and try again."
+        else -> "Google Play Billing error ${result.responseCode}${result.debugMessage.takeIf { it.isNotBlank() }?.let { ": $it" }.orEmpty()}"
     }
 
     private fun productProblem(status: Int?): String = when (status) {
         UnfetchedProduct.StatusCode.PRODUCT_NOT_FOUND ->
-            str(R.string.google_play_doesn_t_offer_this, BuildConfig.SUBSCRIPTION_PRODUCT_ID)
+            "Google Play doesn't offer this subscription to this app. Install Stock Anchor from Google Play (testers: use the testing link), " +
+                "and make sure the subscription \"${BuildConfig.SUBSCRIPTION_PRODUCT_ID}\" is active in Play Console."
         UnfetchedProduct.StatusCode.NO_ELIGIBLE_OFFER ->
-            str(R.string.no_subscription_plan_is_available_for)
-        else -> str(R.string.subscription_prices_couldn_t_be_loaded)
+            "No subscription plan is available for this Google account or country."
+        else -> "Subscription prices couldn't be loaded from Google Play. Please try again later."
     }
 
     fun launch(activity: Activity, offer: PlanOffer) {
         val details = offer.details
         val token = offer.offerToken
         if (details == null || token == null) {
-            _events.tryEmit(PurchaseEvent.Error(_problem.value ?: str(R.string.subscription_prices_are_still_loading_please)))
+            _events.tryEmit(PurchaseEvent.Error(_problem.value ?: "Subscription prices are still loading. Please try again in a moment."))
             connect()
             return
         }
@@ -201,8 +201,8 @@ class BillingManager(context: Context, private val session: SessionStore, privat
             BillingClient.BillingResponseCode.OK -> purchases?.forEach { handle(it) }
             BillingClient.BillingResponseCode.USER_CANCELED -> _events.tryEmit(PurchaseEvent.Cancelled)
             BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED ->
-                _events.tryEmit(PurchaseEvent.Error(str(R.string.you_already_own_premium_use_restore)))
-            else -> _events.tryEmit(PurchaseEvent.Error(result.debugMessage.ifBlank { str(R.string.purchase_failed_x, result.responseCode) }))
+                _events.tryEmit(PurchaseEvent.Error("You already own Premium. Use \"Restore purchase\"."))
+            else -> _events.tryEmit(PurchaseEvent.Error(result.debugMessage.ifBlank { "Purchase failed (${result.responseCode})." }))
         }
     }
 
@@ -242,14 +242,14 @@ class BillingManager(context: Context, private val session: SessionStore, privat
     }
 
     private fun fallbackOffers() = listOf(
-        PlanOffer(BuildConfig.PLAN_MONTHLY, str(R.string.monthly), "—", "P1M", null, null),
-        PlanOffer(BuildConfig.PLAN_YEARLY, str(R.string.yearly), "—", "P1Y", null, null),
+        PlanOffer(BuildConfig.PLAN_MONTHLY, "Monthly", "—", "P1M", null, null),
+        PlanOffer(BuildConfig.PLAN_YEARLY, "Yearly", "—", "P1Y", null, null),
     )
 
     companion object {
         fun periodLabel(iso: String): String = when (iso) {
-            "P1W" -> str(R.string.s_1_week); "P3D" -> str(R.string.s_3_days); "P7D" -> str(R.string.s_7_days); "P14D" -> str(R.string.s_14_days)
-            "P1M" -> str(R.string.s_1_month); "P3M" -> str(R.string.s_3_months); "P6M" -> str(R.string.s_6_months); "P1Y" -> str(R.string.s_1_year)
+            "P1W" -> "1 week"; "P3D" -> "3 days"; "P7D" -> "7 days"; "P14D" -> "14 days"
+            "P1M" -> "1 month"; "P3M" -> "3 months"; "P6M" -> "6 months"; "P1Y" -> "1 year"
             else -> iso.removePrefix("P").lowercase()
         }
     }

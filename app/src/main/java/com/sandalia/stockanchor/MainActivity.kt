@@ -1,6 +1,5 @@
 package com.sandalia.stockanchor
 
-import com.sandalia.stockanchor.util.str
 import android.Manifest
 import android.os.Build
 import android.os.Bundle
@@ -30,17 +29,11 @@ import com.sandalia.stockanchor.ui.components.LocalSnackbar
 import com.sandalia.stockanchor.ui.navigation.AppNav
 import com.sandalia.stockanchor.ui.navigation.Routes
 import com.sandalia.stockanchor.ui.theme.StockAnchorTheme
-import com.sandalia.stockanchor.util.I18n
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
 
     private var startRoute by mutableStateOf<String?>(null)
-
-    // Applies the language chosen in Settings (and right-to-left layout for Arabic).
-    override fun attachBaseContext(newBase: android.content.Context) {
-        super.attachBaseContext(I18n.wrap(newBase))
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -78,9 +71,9 @@ class MainActivity : ComponentActivity() {
                 container.api.events.collect { event ->
                     val ended = when (event) {
                         ApiEvent.SUBSCRIPTION_REQUIRED -> { showLapsed = true; null }
-                        ApiEvent.UNAUTHENTICATED -> str(R.string.your_session_expired_please_sign_in)
-                        ApiEvent.ACCOUNT_DISABLED -> str(R.string.your_account_has_been_disabled_by)
-                        ApiEvent.TEAM_SUSPENDED -> str(R.string.your_company_account_is_suspended_please)
+                        ApiEvent.UNAUTHENTICATED -> "Your session expired. Please sign in again."
+                        ApiEvent.ACCOUNT_DISABLED -> "Your account has been disabled by your team owner."
+                        ApiEvent.TEAM_SUSPENDED -> "Your company account is suspended. Please contact Stock Anchor support."
                     } ?: return@collect
                     // Leave the cloud exactly like "Sign out", then go home and say why.
                     scope.launch {
@@ -100,23 +93,24 @@ class MainActivity : ComponentActivity() {
                     if (showLapsed && session.isCloud) {
                         AlertDialog(
                             onDismissRequest = { showLapsed = false },
-                            title = { Text(str(R.string.premium_has_ended)) },
+                            title = { Text("Premium has ended") },
                             text = {
                                 Text(
-                                    str(R.string.your_team_s_stock_anchor_premium)
+                                    "Your team's Stock Anchor Premium subscription is no longer active. Renew to keep using the cloud, " +
+                                        "or continue on Basic — everything already synced stays on this device."
                                 )
                             },
                             confirmButton = {
-                                TextButton(onClick = { showLapsed = false; startRoute = "paywall" }) { Text(str(R.string.renew)) }
+                                TextButton(onClick = { showLapsed = false; startRoute = "paywall" }) { Text("Renew") }
                             },
                             dismissButton = {
                                 TextButton(onClick = {
                                     showLapsed = false
                                     scope.launch {
                                         container.account.downgradeToBasic()
-                                        snackbar.showSnackbar(str(R.string.switched_to_basic_your_data_is))
+                                        snackbar.showSnackbar("Switched to Basic. Your data is kept on this device.")
                                     }
-                                }) { Text(str(R.string.continue_on_basic)) }
+                                }) { Text("Continue on Basic") }
                             },
                         )
                     }

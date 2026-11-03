@@ -1,6 +1,5 @@
 package com.sandalia.stockanchor.util
 
-import com.sandalia.stockanchor.R
 import android.content.Context
 import android.content.Intent
 import android.graphics.Canvas
@@ -45,7 +44,7 @@ object InvoicePdf {
                 y = header(c, sale, company, warehouse)
             } else {
                 y = M + 10
-                c.drawText(str(R.string.x_continued, sale.invoiceNo), M, y, paint(11f, muted)); y += 20
+                c.drawText("${sale.invoiceNo} — continued", M, y, paint(11f, muted)); y += 20
             }
             y = tableHeader(c, y)
 
@@ -101,18 +100,18 @@ object InvoicePdf {
         c.drawRect(0f, 120f, W.toFloat(), 124f, fill(teal))
         c.drawText(company, M, 58f, paint(22f, Color.WHITE, bold = true))
         warehouse?.let { c.drawText(it, M, 80f, paint(11f, Color.parseColor("#B8C7D9"))) }
-        c.drawText(str(R.string.label_invoice), W - M, 58f, paint(26f, Color.WHITE, bold = true, align = Paint.Align.RIGHT))
+        c.drawText("INVOICE", W - M, 58f, paint(26f, Color.WHITE, bold = true, align = Paint.Align.RIGHT))
         c.drawText(sale.invoiceNo, W - M, 80f, paint(11f, Color.parseColor("#B8C7D9"), align = Paint.Align.RIGHT))
 
         var y = 160f
-        c.drawText(str(R.string.billed_to), M, y, paint(9f, muted, bold = true))
-        c.drawText(str(R.string.label_date), 330f, y, paint(9f, muted, bold = true))
-        c.drawText(str(R.string.label_status), W - M, y, paint(9f, muted, bold = true, align = Paint.Align.RIGHT))
+        c.drawText("BILLED TO", M, y, paint(9f, muted, bold = true))
+        c.drawText("DATE", 330f, y, paint(9f, muted, bold = true))
+        c.drawText("STATUS", W - M, y, paint(9f, muted, bold = true, align = Paint.Align.RIGHT))
         y += 18
         c.drawText(sale.customerName, M, y, paint(13f, navy, bold = true))
         c.drawText(Fmt.dateTime(sale.date), 330f, y, paint(11f, navy))
         val cancelled = sale.status == SaleStatus.CANCELLED
-        c.drawText(if (cancelled) str(R.string.label_cancelled) else str(R.string.label_paid), W - M, y,
+        c.drawText(if (cancelled) "CANCELLED" else "PAID", W - M, y,
             paint(11f, if (cancelled) Color.parseColor("#C62828") else teal, bold = true, align = Paint.Align.RIGHT))
         sale.customerPhone?.let { y += 16; c.drawText(it, M, y, paint(11f, muted)) }
         return y + 34
@@ -121,10 +120,10 @@ object InvoicePdf {
     private fun tableHeader(c: Canvas, top: Float): Float {
         c.drawRoundRect(RectF(M, top, W - M, top + 26), 4f, 4f, fill(Color.parseColor("#EAF6F4")))
         val y = top + 17
-        c.drawText(str(R.string.label_item), M + 8, y, paint(9.5f, navy, bold = true))
-        c.drawText(str(R.string.label_qty), 330f, y, paint(9.5f, navy, bold = true, align = Paint.Align.RIGHT))
-        c.drawText(str(R.string.label_price), 440f, y, paint(9.5f, navy, bold = true, align = Paint.Align.RIGHT))
-        c.drawText(str(R.string.label_amount), W - M - 8, y, paint(9.5f, navy, bold = true, align = Paint.Align.RIGHT))
+        c.drawText("ITEM", M + 8, y, paint(9.5f, navy, bold = true))
+        c.drawText("QTY", 330f, y, paint(9.5f, navy, bold = true, align = Paint.Align.RIGHT))
+        c.drawText("PRICE", 440f, y, paint(9.5f, navy, bold = true, align = Paint.Align.RIGHT))
+        c.drawText("AMOUNT", W - M - 8, y, paint(9.5f, navy, bold = true, align = Paint.Align.RIGHT))
         return top + 48
     }
 
@@ -136,19 +135,19 @@ object InvoicePdf {
             c.drawText(value, W - M - 8, y, paint(if (big) 15f else 11f, navy, bold = true, align = Paint.Align.RIGHT))
             y += if (big) 26 else 20
         }
-        row(str(R.string.subtotal), Fmt.money(currency, sale.subtotal))
-        if (sale.discount > 0) row(str(R.string.discount), "-" + Fmt.money(currency, sale.discount))
+        row("Subtotal", Fmt.money(currency, sale.subtotal))
+        if (sale.discount > 0) row("Discount", "-" + Fmt.money(currency, sale.discount))
         c.drawRoundRect(RectF(310f, y - 4, W - M, y + 30), 6f, 6f, fill(navy))
-        c.drawText(str(R.string.label_total), 322f, y + 18, paint(12f, Color.WHITE, bold = true))
+        c.drawText("TOTAL", 322f, y + 18, paint(12f, Color.WHITE, bold = true))
         c.drawText(Fmt.money(currency, sale.total), W - M - 10, y + 19, paint(15f, Color.WHITE, bold = true, align = Paint.Align.RIGHT))
         y += 56
-        sale.note?.let { c.drawText(str(R.string.note_x, ellipsize(it, 90)), M, y, paint(10f, muted)) }
+        sale.note?.let { c.drawText("Note: ${ellipsize(it, 90)}", M, y, paint(10f, muted)) }
     }
 
     private fun footer(c: Canvas, page: Int, pages: Int) {
         c.drawLine(M, H - 50f, W - M, H - 50f, stroke(line))
-        c.drawText(str(R.string.thank_you_for_your_business), M, H - 32f, paint(10f, teal, bold = true))
-        c.drawText(str(R.string.generated_by_stock_anchor_page_x, page, pages), W - M, H - 32f, paint(9f, muted, align = Paint.Align.RIGHT))
+        c.drawText("Thank you for your business!", M, H - 32f, paint(10f, teal, bold = true))
+        c.drawText("Generated by Stock Anchor  •  Page $page of $pages", W - M, H - 32f, paint(9f, muted, align = Paint.Align.RIGHT))
     }
 
     private fun paint(size: Float, color: Int, bold: Boolean = false, align: Paint.Align = Paint.Align.LEFT) = Paint(Paint.ANTI_ALIAS_FLAG).apply {
@@ -162,15 +161,15 @@ object InvoicePdf {
 
     /** Plain-text invoice (Basic plan share). */
     fun asText(sale: SaleEntity, items: List<SaleItemEntity>, company: String, currency: String): String = buildString {
-        appendLine(company); appendLine(str(R.string.invoice_x, sale.invoiceNo)); appendLine(Fmt.dateTime(sale.date))
-        appendLine(str(R.string.customer_x_x, sale.customerName, sale.customerPhone?.let { " ($it)" } ?: ""))
+        appendLine(company); appendLine("Invoice ${sale.invoiceNo}"); appendLine(Fmt.dateTime(sale.date))
+        appendLine("Customer: ${sale.customerName}${sale.customerPhone?.let { " ($it)" } ?: ""}")
         appendLine("--------------------------------")
         items.forEach { appendLine("${it.productName}\n  ${Fmt.qty(it.quantity)} x ${Fmt.money(currency, it.unitPrice)} = ${Fmt.money(currency, it.quantity * it.unitPrice)}") }
         appendLine("--------------------------------")
-        appendLine(str(R.string.subtotal_x, Fmt.money(currency, sale.subtotal)))
-        if (sale.discount > 0) appendLine(str(R.string.discount_x, Fmt.money(currency, sale.discount)))
-        appendLine(str(R.string.total_x, Fmt.money(currency, sale.total)))
-        if (sale.status == SaleStatus.CANCELLED) appendLine(str(R.string.cancelled_2))
-        append(str(R.string.thank_you_for_your_business))
+        appendLine("Subtotal: ${Fmt.money(currency, sale.subtotal)}")
+        if (sale.discount > 0) appendLine("Discount: -${Fmt.money(currency, sale.discount)}")
+        appendLine("TOTAL: ${Fmt.money(currency, sale.total)}")
+        if (sale.status == SaleStatus.CANCELLED) appendLine("** CANCELLED **")
+        append("Thank you for your business!")
     }
 }

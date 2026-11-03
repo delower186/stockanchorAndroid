@@ -1,8 +1,4 @@
 package com.sandalia.stockanchor.domain
-import androidx.annotation.StringRes
-import com.sandalia.stockanchor.R
-import com.sandalia.stockanchor.util.plural
-import com.sandalia.stockanchor.util.str
 
 /** Permission keys — must match App\Support\Permissions on the server. */
 object Perm {
@@ -28,42 +24,39 @@ object Perm {
     )
 
     fun label(p: String): String = when (p) {
-        CATALOG_MANAGE -> str(R.string.manage_products_categories)
-        PURCHASES_CREATE -> str(R.string.record_purchases)
-        SALES_CREATE -> str(R.string.make_sales)
-        SALES_MANAGE -> str(R.string.manage_cancel_sales)
-        TRANSFERS_CREATE -> str(R.string.transfer_stock)
-        STOCK_ADJUST -> str(R.string.adjust_stock_counts)
-        WAREHOUSES_MANAGE -> str(R.string.manage_warehouses)
-        SUPPLIERS_MANAGE -> str(R.string.manage_suppliers)
-        REPORTS_VIEW -> str(R.string.view_dashboard_reports)
-        DATA_EXPORT -> str(R.string.export_csv)
-        DATA_IMPORT -> str(R.string.import_csv)
-        TEAM_MANAGE -> str(R.string.manage_team)
-        BACKUPS_MANAGE -> str(R.string.cloud_backups)
-        EXPENSES_MANAGE -> str(R.string.record_expenses)
+        CATALOG_MANAGE -> "Manage products & categories"
+        PURCHASES_CREATE -> "Record purchases"
+        SALES_CREATE -> "Make sales"
+        SALES_MANAGE -> "Manage & cancel sales"
+        TRANSFERS_CREATE -> "Transfer stock"
+        STOCK_ADJUST -> "Adjust stock counts"
+        WAREHOUSES_MANAGE -> "Manage warehouses"
+        SUPPLIERS_MANAGE -> "Manage suppliers"
+        REPORTS_VIEW -> "View dashboard & reports"
+        DATA_EXPORT -> "Export CSV"
+        DATA_IMPORT -> "Import CSV"
+        TEAM_MANAGE -> "Manage team"
+        BACKUPS_MANAGE -> "Cloud backups"
+        EXPENSES_MANAGE -> "Record expenses"
         else -> p
     }
 }
 
 /** Premium-only features, used for paywall copy and gating. */
-enum class PremiumFeature(@StringRes val titleRes: Int, @StringRes val blurbRes: Int) {
-    CLOUD(R.string.pf_cloud, R.string.pf_cloud_blurb),
-    WAREHOUSES(R.string.pf_warehouses, R.string.pf_warehouses_blurb),
-    TRANSFERS(R.string.stock_transfers, R.string.pf_transfers_blurb),
-    SALES_MANAGEMENT(R.string.pf_sales, R.string.pf_sales_blurb),
-    PDF_INVOICE(R.string.pf_pdf, R.string.pf_pdf_blurb),
-    CSV(R.string.csv_export_import, R.string.pf_csv_blurb),
-    LOW_STOCK(R.string.low_stock_channel, R.string.pf_low_stock_blurb),
-    BARCODE(R.string.pf_barcode, R.string.pf_barcode_blurb),
-    MOVEMENTS(R.string.stock_movement_history, R.string.pf_movements_blurb),
-    SUPPLIERS(R.string.supplier_management, R.string.pf_suppliers_blurb),
-    EXPENSES(R.string.expenses_net_profit, R.string.pf_expenses_blurb),
-    TEAM(R.string.pf_team, R.string.pf_team_blurb),
-    BACKUP(R.string.cloud_backup_recovery, R.string.pf_backup_blurb);
-
-    val title: String get() = str(titleRes)
-    val blurb: String get() = if (this == WAREHOUSES) str(blurbRes, Limits.warehouses()) else str(blurbRes)
+enum class PremiumFeature(val title: String, val blurb: String) {
+    CLOUD("Cloud database", "Your inventory lives on your own secure server and syncs across devices."),
+    WAREHOUSES("Unlimited warehouses", "Track stock per location — Basic includes ${Limits.warehouses()}."),
+    TRANSFERS("Stock transfers", "Move products between warehouses with a full audit trail."),
+    SALES_MANAGEMENT("Sales management", "Search sales history, cancel and return orders."),
+    PDF_INVOICE("PDF invoices", "Branded PDF invoices you can share on WhatsApp or email."),
+    CSV("CSV export & import", "Export products, stock and sales; bulk import stock from a spreadsheet."),
+    LOW_STOCK("Low stock alerts", "Daily notifications when products drop below their threshold."),
+    BARCODE("Barcode scanning", "Scan to find products, fill product codes and ring up sales."),
+    MOVEMENTS("Stock movement history", "Every in and out, by product, warehouse and type."),
+    SUPPLIERS("Supplier management", "Keep suppliers and link them to purchases."),
+    EXPENSES("Expenses & net profit", "Record rent, salaries and other costs to see your real (net) profit."),
+    TEAM("Team accounts & permissions", "Invite staff with roles and fine-grained permissions."),
+    BACKUP("Cloud backup & recovery", "Nightly automatic backups plus one-tap restore."),
 }
 
 object Limits {
@@ -71,5 +64,5 @@ object Limits {
     const val BASIC_WAREHOUSES = 1
 
     /** "1 warehouse" / "3 warehouses" */
-    fun warehouses(n: Int = BASIC_WAREHOUSES) = plural(R.plurals.n_warehouses, n, n)
+    fun warehouses(n: Int = BASIC_WAREHOUSES) = if (n == 1) "1 warehouse" else "$n warehouses"
 }

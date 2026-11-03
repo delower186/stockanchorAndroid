@@ -1,8 +1,5 @@
 package com.sandalia.stockanchor.ui.screens
 
-import com.sandalia.stockanchor.util.plural
-import com.sandalia.stockanchor.R
-import com.sandalia.stockanchor.util.str
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -125,19 +122,19 @@ fun SellScreen(onDone: (Long) -> Unit, nav: NavHostController) {
     val total = subtotal - discount
 
     ScreenScaffold(
-        str(R.string.new_sale), busy = runner.busy,
-        actions = { IconButton(onClick = { nav.navigate(Routes.SALES) }) { Icon(Icons.Filled.History, str(R.string.sales)) } },
+        "New sale", busy = runner.busy,
+        actions = { IconButton(onClick = { nav.navigate(Routes.SALES) }) { Icon(Icons.Filled.History, "Sales") } },
         bottomBar = {
             if (vm.lines.isNotEmpty()) Surface(tonalElevation = 3.dp, shadowElevation = 8.dp) {
                 Row(Modifier.fillMaxWidth().padding(16.dp).navigationBarsPadding(), verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
-                        Text(str(R.string.label_total), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text("TOTAL", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         Text(Fmt.money(session.currency, total), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
                     }
                     Button(
                         onClick = {
                             val wh = vm.warehouseId ?: return@Button
-                            runner.run(str(R.string.sale_completed)) {
+                            runner.run("Sale completed") {
                                 val id = container.repo.sale(vm.customer, vm.phone, wh, discount, vm.note, vm.lines.toList())
                                 vm.reset()
                                 com.sandalia.stockanchor.work.LowStockNotifier.check(context)
@@ -146,7 +143,7 @@ fun SellScreen(onDone: (Long) -> Unit, nav: NavHostController) {
                         },
                         enabled = !runner.busy && vm.customer.isNotBlank() && session.can(Perm.SALES_CREATE),
                         modifier = Modifier.height(52.dp),
-                    ) { Text(str(R.string.complete_sale)) }
+                    ) { Text("Complete sale") }
                 }
             }
         },
@@ -158,11 +155,11 @@ fun SellScreen(onDone: (Long) -> Unit, nav: NavHostController) {
         ) {
             item {
                 AppCard(Modifier.fillMaxWidth()) {
-                    OutlinedTextField(vm.customer, { vm.customer = it }, label = { Text(str(R.string.customer_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                    OutlinedTextField(vm.customer, { vm.customer = it }, label = { Text("Customer name *") }, singleLine = true, modifier = Modifier.fillMaxWidth())
                     Spacer(Modifier.height(8.dp))
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        OutlinedTextField(vm.phone, { vm.phone = it }, label = { Text(str(R.string.phone)) }, singleLine = true, modifier = Modifier.weight(1f))
-                        DropdownField(str(R.string.sell_from), warehouses, warehouses.firstOrNull { it.id == vm.warehouseId }, { it.name },
+                        OutlinedTextField(vm.phone, { vm.phone = it }, label = { Text("Phone") }, singleLine = true, modifier = Modifier.weight(1f))
+                        DropdownField("Sell from", warehouses, warehouses.firstOrNull { it.id == vm.warehouseId }, { it.name },
                             { it?.let { w -> vm.warehouseId = w.id } }, Modifier.weight(1f))
                     }
                 }
@@ -174,7 +171,7 @@ fun SellScreen(onDone: (Long) -> Unit, nav: NavHostController) {
                         contentPadding = PaddingValues(horizontal = 12.dp),
                     ) {
                         Icon(Icons.Filled.AddShoppingCart, null); Spacer(Modifier.width(8.dp))
-                        Text(str(R.string.add_product), maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis)
+                        Text("Add product", maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis)
                     }
                     OutlinedButton(
                         onClick = {
@@ -183,10 +180,10 @@ fun SellScreen(onDone: (Long) -> Unit, nav: NavHostController) {
                                 val p = container.repo.findByCode(code)
                                 val here = p?.let { found -> vm.warehouseId?.let { container.repo.stockOf(found.id, it) } } ?: 0.0
                                 // Same rule as the picker: assigned to the selected warehouse, or stocked there.
-                                if (p == null) runner.toast(str(R.string.no_product_with_barcode_x, code))
+                                if (p == null) runner.toast("No product with barcode $code")
                                 else if (p.warehouseId != vm.warehouseId && here <= 0) {
-                                    val wName = warehouses.firstOrNull { it.id == vm.warehouseId }?.name ?: str(R.string.this_warehouse)
-                                    runner.toast(str(R.string.x_isn_t_available_in_x, p.name, wName))
+                                    val wName = warehouses.firstOrNull { it.id == vm.warehouseId }?.name ?: "this warehouse"
+                                    runner.toast("\"${p.name}\" isn't available in $wName")
                                 } else {
                                     vm.add(ProductWithStock(p.id, p.name, p.sku, p.barcode, p.categoryId, null, p.warehouseId, null, p.unit, p.costPrice, p.salePrice, p.lowStockThreshold, here), purchase = false)
                                 }
@@ -201,23 +198,23 @@ fun SellScreen(onDone: (Long) -> Unit, nav: NavHostController) {
                 }
             }
             if (vm.lines.isEmpty()) item {
-                EmptyState(Icons.Filled.AddShoppingCart, str(R.string.cart_is_empty), str(R.string.add_products_to_start_a_sale))
+                EmptyState(Icons.Filled.AddShoppingCart, "Cart is empty", "Add products to start a sale. An invoice is created automatically.")
             }
             itemsIndexed(vm.lines, key = { _, l -> l.productId }) { i, line ->
-                CartLineCard(line, session.currency, str(R.string.price), onQty = { vm.setQty(i, it) }, onAmount = { vm.setAmount(i, it) },
+                CartLineCard(line, session.currency, "Price", onQty = { vm.setQty(i, it) }, onAmount = { vm.setAmount(i, it) },
                     warnStock = line.quantity > line.available)
             }
             if (vm.lines.isNotEmpty()) item {
                 AppCard(Modifier.fillMaxWidth()) {
-                    NumberField(vm.discount, { vm.discount = it }, str(R.string.discount), Modifier.fillMaxWidth(), prefix = session.currency)
+                    NumberField(vm.discount, { vm.discount = it }, "Discount", Modifier.fillMaxWidth(), prefix = session.currency)
                     Spacer(Modifier.height(8.dp))
-                    OutlinedTextField(vm.note, { vm.note = it }, label = { Text(str(R.string.note_optional)) }, modifier = Modifier.fillMaxWidth())
+                    OutlinedTextField(vm.note, { vm.note = it }, label = { Text("Note (optional)") }, modifier = Modifier.fillMaxWidth())
                     Spacer(Modifier.height(8.dp))
-                    KeyValue(str(R.string.subtotal), Fmt.money(session.currency, subtotal))
-                    if (discount > 0) KeyValue(str(R.string.discount), "-" + Fmt.money(session.currency, discount))
-                    KeyValue(str(R.string.total), Fmt.money(session.currency, total), strong = true)
+                    KeyValue("Subtotal", Fmt.money(session.currency, subtotal))
+                    if (discount > 0) KeyValue("Discount", "-" + Fmt.money(session.currency, discount))
+                    KeyValue("Total", Fmt.money(session.currency, total), strong = true)
                     val profit = total - vm.lines.sumOf { it.quantity * it.unitCost }
-                    KeyValue(str(R.string.estimated_profit), Fmt.money(session.currency, profit),
+                    KeyValue("Estimated profit", Fmt.money(session.currency, profit),
                         valueColor = if (profit >= 0) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.error)
                 }
             }
@@ -237,20 +234,20 @@ private fun CartLineCard(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(line.name, style = MaterialTheme.typography.titleSmall)
-                if (warnStock) Text(str(R.string.only_x_x_in_this_warehouse, Fmt.qty(line.available), line.unit),
+                if (warnStock) Text("Only ${Fmt.qty(line.available)} ${line.unit} in this warehouse",
                     style = MaterialTheme.typography.bodySmall, color = Amber)
             }
-            IconButton(onClick = { onQty(0.0) }) { Icon(Icons.Filled.Close, str(R.string.remove)) }
+            IconButton(onClick = { onQty(0.0) }) { Icon(Icons.Filled.Close, "Remove") }
         }
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
-            FilledTonalIconButton(onClick = { onQty(line.quantity - 1) }, modifier = Modifier.size(38.dp)) { Icon(Icons.Filled.Remove, str(R.string.less)) }
+            FilledTonalIconButton(onClick = { onQty(line.quantity - 1) }, modifier = Modifier.size(38.dp)) { Icon(Icons.Filled.Remove, "Less") }
             OutlinedTextField(
                 qtyText, { v -> if (v.isEmpty() || v.matches(Regex("^\\d*\\.?\\d*$"))) { qtyText = v; v.toDoubleOrNull()?.let { if (it > 0) onQty(it) } } },
                 singleLine = true, modifier = Modifier.width(78.dp), shape = RoundedCornerShape(10.dp),
                 textStyle = MaterialTheme.typography.bodyLarge.copy(textAlign = TextAlign.Center),
                 keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Decimal),
             )
-            FilledTonalIconButton(onClick = { onQty(line.quantity + 1) }, modifier = Modifier.size(38.dp)) { Icon(Icons.Filled.Add, str(R.string.more)) }
+            FilledTonalIconButton(onClick = { onQty(line.quantity + 1) }, modifier = Modifier.size(38.dp)) { Icon(Icons.Filled.Add, "More") }
             NumberField(amountText, { amountText = it; onAmount(it.toDoubleOrNull() ?: 0.0) }, amountLabel, Modifier.weight(1f), prefix = currency)
         }
         Spacer(Modifier.height(6.dp))
@@ -282,25 +279,25 @@ fun PurchaseScreen(onBack: () -> Unit) {
     val total = vm.lines.sumOf { it.lineTotal }
 
     ScreenScaffold(
-        str(R.string.add_stock), subtitle = str(R.string.record_a_purchase), onBack = onBack, busy = runner.busy,
+        "Add stock", subtitle = "Record a purchase", onBack = onBack, busy = runner.busy,
         bottomBar = {
             if (vm.lines.isNotEmpty()) Surface(tonalElevation = 3.dp, shadowElevation = 8.dp) {
                 Row(Modifier.fillMaxWidth().padding(16.dp).navigationBarsPadding(), verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
-                        Text(str(R.string.purchase_total), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text("PURCHASE TOTAL", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         Text(Fmt.money(session.currency, total), style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
                     }
                     Button(
                         onClick = {
                             val wh = vm.warehouseId ?: return@Button
-                            runner.run(str(R.string.stock_added), onDone = onBack) {
+                            runner.run("Stock added", onDone = onBack) {
                                 container.repo.purchase(wh, vm.supplierId, vm.note, vm.lines.toList(), vm.updateCost)
                                 vm.reset()
                             }
                         },
                         enabled = !runner.busy && session.can(Perm.PURCHASES_CREATE),
                         modifier = Modifier.height(52.dp),
-                    ) { Text(str(R.string.save_purchase)) }
+                    ) { Text("Save purchase") }
                 }
             }
         },
@@ -308,22 +305,22 @@ fun PurchaseScreen(onBack: () -> Unit) {
         LazyColumn(Modifier.padding(pad).fillMaxSize().imePadding(), contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             item {
                 AppCard(Modifier.fillMaxWidth()) {
-                    DropdownField(str(R.string.receive_into_warehouse), warehouses, warehouses.firstOrNull { it.id == vm.warehouseId }, { it.name },
+                    DropdownField("Receive into warehouse", warehouses, warehouses.firstOrNull { it.id == vm.warehouseId }, { it.name },
                         { it?.let { w -> vm.warehouseId = w.id } }, Modifier.fillMaxWidth())
                     Spacer(Modifier.height(8.dp))
                     if (session.premiumActive) {
-                        DropdownField(str(R.string.supplier), suppliers, suppliers.firstOrNull { it.id == vm.supplierId }, { it.name },
-                            { vm.supplierId = it?.id }, Modifier.fillMaxWidth(), noneLabel = str(R.string.no_supplier))
+                        DropdownField("Supplier", suppliers, suppliers.firstOrNull { it.id == vm.supplierId }, { it.name },
+                            { vm.supplierId = it?.id }, Modifier.fillMaxWidth(), noneLabel = "No supplier")
                     } else {
                         OutlinedButton(onClick = openPaywall, modifier = Modifier.fillMaxWidth()) {
-                            Icon(Icons.Filled.LocalShipping, null); Spacer(Modifier.width(8.dp)); Text(str(R.string.link_a_supplier)); Spacer(Modifier.width(8.dp)); PremiumChip()
+                            Icon(Icons.Filled.LocalShipping, null); Spacer(Modifier.width(8.dp)); Text("Link a supplier"); Spacer(Modifier.width(8.dp)); PremiumChip()
                         }
                     }
                     Spacer(Modifier.height(8.dp))
-                    OutlinedTextField(vm.note, { vm.note = it }, label = { Text(str(R.string.reference_note)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                    OutlinedTextField(vm.note, { vm.note = it }, label = { Text("Reference / note") }, singleLine = true, modifier = Modifier.fillMaxWidth())
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Checkbox(vm.updateCost, { vm.updateCost = it })
-                        Text(str(R.string.update_product_cost_price_to_this), style = MaterialTheme.typography.bodySmall)
+                        Text("Update product cost price to this purchase", style = MaterialTheme.typography.bodySmall)
                     }
                 }
             }
@@ -334,23 +331,23 @@ fun PurchaseScreen(onBack: () -> Unit) {
                         contentPadding = PaddingValues(horizontal = 12.dp),
                     ) {
                         Icon(Icons.Filled.Add, null); Spacer(Modifier.width(8.dp))
-                        Text(str(R.string.add_product), maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis)
+                        Text("Add product", maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis)
                     }
                     OutlinedButton(onClick = {
                         if (!session.premiumActive) openPaywall() else scope.launch {
                             val code = BarcodeScanner.scan(context) ?: return@launch
                             val p = container.repo.findByCode(code)
-                            if (p == null) runner.toast(str(R.string.no_product_with_barcode_x, code))
+                            if (p == null) runner.toast("No product with barcode $code")
                             else vm.add(ProductWithStock(p.id, p.name, p.sku, p.barcode, p.categoryId, null, p.warehouseId, null, p.unit, p.costPrice, p.salePrice, p.lowStockThreshold, 0.0), purchase = true)
                         }
-                    }, modifier = Modifier.height(48.dp)) { Icon(Icons.Filled.QrCodeScanner, str(R.string.scan)) }
+                    }, modifier = Modifier.height(48.dp)) { Icon(Icons.Filled.QrCodeScanner, "Scan") }
                 }
             }
             if (vm.lines.isEmpty()) item {
-                EmptyState(Icons.Filled.LocalShipping, str(R.string.no_items_yet), str(R.string.add_the_products_you_received_stock))
+                EmptyState(Icons.Filled.LocalShipping, "No items yet", "Add the products you received. Stock increases when you save.")
             }
             itemsIndexed(vm.lines, key = { _, l -> l.productId }) { i, line ->
-                CartLineCard(line, session.currency, str(R.string.unit_cost), onQty = { vm.setQty(i, it) }, onAmount = { vm.setAmount(i, it) })
+                CartLineCard(line, session.currency, "Unit cost", onQty = { vm.setQty(i, it) }, onAmount = { vm.setAmount(i, it) })
             }
         }
     }
@@ -367,14 +364,14 @@ fun PurchasesScreen(nav: NavHostController) {
     val purchases by container.repo.recentPurchases().collectAsStateWithLifecycle(emptyList())
 
     ScreenScaffold(
-        str(R.string.purchases), onBack = { nav.popBackStack() },
+        "Purchases", onBack = { nav.popBackStack() },
         floatingActionButton = {
             if (session.can(Perm.PURCHASES_CREATE)) androidx.compose.material3.ExtendedFloatingActionButton(onClick = { nav.navigate(Routes.PURCHASE) },
-                icon = { Icon(Icons.Filled.Add, null) }, text = { Text(str(R.string.add_stock)) })
+                icon = { Icon(Icons.Filled.Add, null) }, text = { Text("Add stock") })
         },
     ) { pad ->
         if (purchases.isEmpty()) {
-            EmptyState(Icons.Filled.LocalShipping, str(R.string.no_purchases_yet), str(R.string.every_time_you_add_stock_it), Modifier.padding(pad))
+            EmptyState(Icons.Filled.LocalShipping, "No purchases yet", "Every time you add stock it is recorded here.", Modifier.padding(pad))
             return@ScreenScaffold
         }
         LazyColumn(Modifier.padding(pad), contentPadding = PaddingValues(16.dp, 8.dp, 16.dp, 96.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -383,7 +380,7 @@ fun PurchasesScreen(nav: NavHostController) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {
                             Text(p.refNo, style = MaterialTheme.typography.titleSmall)
-                            Text(listOfNotNull(p.supplierName, p.warehouseName, plural(R.plurals.n_items, p.itemCount, p.itemCount)).joinToString(" · "),
+                            Text(listOfNotNull(p.supplierName, p.warehouseName, "${p.itemCount} item(s)").joinToString(" · "),
                                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                             Text(Fmt.dateTime(p.date), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                         }
