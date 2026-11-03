@@ -1,0 +1,256 @@
+package com.sandalia.stockanchor.billing
+
+import android.app.Activity
+import android.content.Context
+import com.android.billingclient.api.AcknowledgePurchaseParams
+import com.android.billingclient.api.BillingClient
+import com.android.billingclient.api.BillingClientStateListener
+import com.android.billingclient.api.BillingFlowParams
+import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.PendingPurchasesParams
+import com.android.billingclient.api.ProductDetails
+import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.PurchasesUpdatedListener
+import com.android.billingclient.api.QueryProductDetailsParams
+import com.android.billingclient.api.QueryPurchasesParams
+import com.android.billingclient.api.UnfetchedProduct
+import com.android.billingclient.api.acknowledgePurchase
+import com.android.billingclient.api.queryPurchasesAsync
+import com.sandalia.stockanchor.BuildConfig
+import com.sandalia.stockanchor.data.prefs.SessionStore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+
+/** One purchasable base plan of the Premium subscription. */
+data class PlanOffer(
+    val planId: String,
+    val title: String,
+    val price: String,
+    val billingPeriod: String,
+    val offerToken: String?,
+    val details: ProductDetails?,
+    /** e.g. "7-day free trial" when the offer has a free phase */
+    val trial: String? = null,
+)
+
+sealed interface PurchaseEvent {
+    data class Success(val token: String, val planId: String?) : PurchaseEvent
+    data object Cancelled : PurchaseEvent
+    data object Pending : PurchaseEvent
+    data class Error(val message: String) : PurchaseEvent
+}
+
+/**
+ * Google Play Billing for the monthly & yearly Premium subscription.
+ *
+ * Play Console setup: Monetize → Subscriptions → product id `stock_anchor_premium`
+ * with two auto-renewing base plans: `monthly` (P1M) and `yearly` (P1Y).
+ *
+ * The purchase token is NOT trusted on-device; it is sent to the Laravel API which verifies it with
+ * the Play Developer API and unlocks Premium for the whole team.
+ */
+class BillingManager(context: Context, private val session: SessionStore, private val scope: CoroutineScope) :
+    PurchasesUpdatedListener {
+
+    private val client = BillingClient.newBuilder(context.applicationContext)
+        .setListener(this)
+        .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
+        .enableAutoServiceReconnection() // Billing 8+: reconnects by itself when Play Services restarts
+        .build()
+
+    private val _offers = MutableStateFlow(fallbackOffers())
+    val offers: StateFlow<List<PlanOffer>> = _offers
+
+    private val _ready = MutableStateFlow(false)
+    /** True when Play Billing is connected and real products were loaded. */
+    val ready: StateFlow<Boolean> = _ready
+
+    private val _problem = MutableStateFlow<String?>(null)
+    /** Why prices couldn't be loaded (shown on the paywall), null while loading or when ready. */
+    val problem: StateFlow<String?> = _problem
+
+    private val _events = MutableSharedFlow<PurchaseEvent>(extraBufferCapacity = 4)
+    val events: SharedFlow<PurchaseEvent> = _events
+
+    private var pendingPlanId: String? = null
+
+    /** Connects to Google Play and loads the plans; safe to call again (the paywall does on every visit). */
+    fun connect() {
+        if (_ready.value) return
+        _problem.value = null
+        if (client.isReady) loadProducts() else startConnection()
+    }
+
+    private fun startConnection() {
+        client.startConnection(object : BillingClientStateListener {
+            override fun onBillingSetupFinished(result: BillingResult) {
+                if (result.responseCode == BillingClient.BillingResponseCode.OK) loadProducts(retry = false)
+                else _problem.value = setupProblem(result)
+            }
+
+            override fun onBillingServiceDisconnected() {
+                _ready.value = false
+            }
+        })
+    }
+
+    /** [retry]: a "disconnected" answer reconnects once, so the real setup error (e.g. billing unavailable) is shown. */
+    private fun loadProducts(retry: Boolean = true) {
+        val params = QueryProductDetailsParams.newBuilder().setProductList(
+            listOf(
+                QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId(BuildConfig.SUBSCRIPTION_PRODUCT_ID)
+                    .setProductType(BillingClient.ProductType.SUBS)
+                    .build()
+            )
+        ).build()
+        client.queryProductDetailsAsync(params) { result, query ->
+            if (result.responseCode == BillingClient.BillingResponseCode.SERVICE_DISCONNECTED && retry) {
+                startConnection()
+                return@queryProductDetailsAsync
+            }
+            if (result.responseCode != BillingClient.BillingResponseCode.OK) {
+                _problem.value = setupProblem(result)
+                return@queryProductDetailsAsync
+            }
+            val details = query.productDetailsList.firstOrNull()
+            if (details == null) {
+                _problem.value = productProblem(query.unfetchedProductList.firstOrNull()?.statusCode)
+                return@queryProductDetailsAsync
+            }
+            showOffers(details)
+        }
+    }
+
+    private fun showOffers(details: ProductDetails) {
+        val offers = details.subscriptionOfferDetails.orEmpty()
+            .groupBy { it.basePlanId }
+            .mapNotNull { (planId, list) ->
+                // Prefer an offer with a free trial / intro phase, else the plain base plan.
+                val offer = list.maxByOrNull { it.pricingPhases.pricingPhaseList.size } ?: return@mapNotNull null
+                val phases = offer.pricingPhases.pricingPhaseList
+                val recurring = phases.last()
+                val free = phases.firstOrNull { it.priceAmountMicros == 0L }
+                PlanOffer(
+                    planId = planId,
+                    title = if (planId == BuildConfig.PLAN_YEARLY) "Yearly" else "Monthly",
+                    price = recurring.formattedPrice,
+                    billingPeriod = recurring.billingPeriod,
+                    offerToken = offer.offerToken,
+                    details = details,
+                    trial = free?.let { "Free trial " + periodLabel(it.billingPeriod) },
+                )
+            }
+            .sortedBy { if (it.planId == BuildConfig.PLAN_MONTHLY) 0 else 1 }
+
+        if (offers.isEmpty()) {
+            _problem.value = "The subscription has no active plans yet. In Play Console, activate the monthly and yearly base plans."
+            return
+        }
+        _offers.value = offers
+        _problem.value = null
+        _ready.value = true
+    }
+
+    private fun setupProblem(result: BillingResult): String = when (result.responseCode) {
+        BillingClient.BillingResponseCode.BILLING_UNAVAILABLE, BillingClient.BillingResponseCode.SERVICE_DISCONNECTED ->
+            "Google Play can't sell subscriptions to this copy of the app. Install Stock Anchor from Google Play (testers: through the " +
+                "testing link) with the Play Store signed in, then try again."
+        BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE, BillingClient.BillingResponseCode.NETWORK_ERROR ->
+            "Couldn't reach Google Play. Check your internet connection and try again."
+        else -> "Google Play Billing error ${result.responseCode}${result.debugMessage.takeIf { it.isNotBlank() }?.let { ": $it" }.orEmpty()}"
+    }
+
+    private fun productProblem(status: Int?): String = when (status) {
+        UnfetchedProduct.StatusCode.PRODUCT_NOT_FOUND ->
+            "Google Play doesn't offer this subscription to this app. Install Stock Anchor from Google Play (testers: use the testing link), " +
+                "and make sure the subscription \"${BuildConfig.SUBSCRIPTION_PRODUCT_ID}\" is active in Play Console."
+        UnfetchedProduct.StatusCode.NO_ELIGIBLE_OFFER ->
+            "No subscription plan is available for this Google account or country."
+        else -> "Subscription prices couldn't be loaded from Google Play. Please try again later."
+    }
+
+    fun launch(activity: Activity, offer: PlanOffer) {
+        val details = offer.details
+        val token = offer.offerToken
+        if (details == null || token == null) {
+            _events.tryEmit(PurchaseEvent.Error(_problem.value ?: "Subscription prices are still loading. Please try again in a moment."))
+            connect()
+            return
+        }
+        pendingPlanId = offer.planId
+        val params = BillingFlowParams.newBuilder()
+            .setProductDetailsParamsList(
+                listOf(
+                    BillingFlowParams.ProductDetailsParams.newBuilder()
+                        .setProductDetails(details)
+                        .setOfferToken(token)
+                        .build()
+                )
+            )
+            .build()
+        client.launchBillingFlow(activity, params)
+    }
+
+    override fun onPurchasesUpdated(result: BillingResult, purchases: MutableList<Purchase>?) {
+        when (result.responseCode) {
+            BillingClient.BillingResponseCode.OK -> purchases?.forEach { handle(it) }
+            BillingClient.BillingResponseCode.USER_CANCELED -> _events.tryEmit(PurchaseEvent.Cancelled)
+            BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED ->
+                _events.tryEmit(PurchaseEvent.Error("You already own Premium. Use \"Restore purchase\"."))
+            else -> _events.tryEmit(PurchaseEvent.Error(result.debugMessage.ifBlank { "Purchase failed (${result.responseCode})." }))
+        }
+    }
+
+    private fun handle(purchase: Purchase) {
+        when (purchase.purchaseState) {
+            Purchase.PurchaseState.PURCHASED -> {
+                session.setPendingPurchase(purchase.purchaseToken, pendingPlanId)
+                _events.tryEmit(PurchaseEvent.Success(purchase.purchaseToken, pendingPlanId))
+            }
+            Purchase.PurchaseState.PENDING -> _events.tryEmit(PurchaseEvent.Pending)
+            else -> Unit
+        }
+    }
+
+    /** Acknowledge after the server confirmed the token (Play refunds unacknowledged purchases after 3 days). */
+    suspend fun acknowledgeAll() {
+        if (!client.isReady) return
+        activeSubscriptions().filter { !it.isAcknowledged }.forEach {
+            client.acknowledgePurchase(AcknowledgePurchaseParams.newBuilder().setPurchaseToken(it.purchaseToken).build())
+        }
+    }
+
+    /** Active Play subscriptions owned by this Google account (Restore purchase). */
+    suspend fun activeSubscriptions(): List<Purchase> {
+        if (!client.isReady) return emptyList()
+        val result = client.queryPurchasesAsync(
+            QueryPurchasesParams.newBuilder().setProductType(BillingClient.ProductType.SUBS).build()
+        )
+        return result.purchasesList.filter { it.purchaseState == Purchase.PurchaseState.PURCHASED }
+    }
+
+    /** Debug builds: simulate a purchase that the API accepts in SUBSCRIPTION_VERIFY_MODE=fake. */
+    fun testPurchase(planId: String) {
+        val token = "test_${planId}_${System.currentTimeMillis()}"
+        session.setPendingPurchase(token, planId)
+        _events.tryEmit(PurchaseEvent.Success(token, planId))
+    }
+
+    private fun fallbackOffers() = listOf(
+        PlanOffer(BuildConfig.PLAN_MONTHLY, "Monthly", "—", "P1M", null, null),
+        PlanOffer(BuildConfig.PLAN_YEARLY, "Yearly", "—", "P1Y", null, null),
+    )
+
+    companion object {
+        fun periodLabel(iso: String): String = when (iso) {
+            "P1W" -> "1 week"; "P3D" -> "3 days"; "P7D" -> "7 days"; "P14D" -> "14 days"
+            "P1M" -> "1 month"; "P3M" -> "3 months"; "P6M" -> "6 months"; "P1Y" -> "1 year"
+            else -> iso.removePrefix("P").lowercase()
+        }
+    }
+}

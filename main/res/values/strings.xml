@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Stock Anchor</string>
+    <string name="low_stock_channel">Low stock alerts</string>
+</resources>
