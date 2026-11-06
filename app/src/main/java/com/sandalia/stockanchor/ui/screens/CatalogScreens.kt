@@ -2,6 +2,11 @@ package com.sandalia.stockanchor.ui.screens
 
 import com.sandalia.stockanchor.util.plural
 import com.sandalia.stockanchor.R
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.foundation.text.KeyboardOptions
+import com.sandalia.stockanchor.ui.components.FormField
+import com.sandalia.stockanchor.util.FieldLimit
+import com.sandalia.stockanchor.util.Validate
 import com.sandalia.stockanchor.util.str
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -108,8 +113,8 @@ fun CategoriesScreen(onBack: () -> Unit) {
             title = { Text(if (id == null) str(R.string.new_category) else str(R.string.edit_category)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedTextField(name, { name = it }, label = { Text(str(R.string.name)) }, singleLine = true)
-                    OutlinedTextField(desc, { desc = it }, label = { Text(str(R.string.description)) })
+                    FormField(name, { name = it }, str(R.string.name), singleLine = true, maxLength = FieldLimit.NAME, error = Validate.name(name))
+                    FormField(desc, { desc = it }, str(R.string.description), maxLength = FieldLimit.DESCRIPTION)
                 }
             },
             confirmButton = {
@@ -193,8 +198,8 @@ fun WarehousesScreen(onBack: () -> Unit) {
             icon = { Icon(Icons.Filled.Warehouse, null) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedTextField(name, { name = it }, label = { Text(str(R.string.name)) }, singleLine = true)
-                    OutlinedTextField(location, { location = it }, label = { Text(str(R.string.location_address)) })
+                    FormField(name, { name = it }, str(R.string.name), singleLine = true, maxLength = FieldLimit.NAME, error = Validate.name(name))
+                    FormField(location, { location = it }, str(R.string.location_address), maxLength = FieldLimit.ADDRESS)
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Checkbox(isDefault, { isDefault = it }); Text(str(R.string.default_for_sales_purchases))
                     }
@@ -275,15 +280,15 @@ fun SuppliersScreen(onBack: () -> Unit) {
             title = { Text(if (s.id == 0L) str(R.string.new_supplier) else str(R.string.edit_supplier)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedTextField(name, { name = it }, label = { Text(str(R.string.name_2)) }, singleLine = true)
+                    FormField(name, { name = it }, str(R.string.name_2), singleLine = true, maxLength = FieldLimit.NAME, error = Validate.name(name))
                     PhoneField(phone, { phone = it })
-                    OutlinedTextField(email, { email = it }, label = { Text(str(R.string.email)) }, singleLine = true)
-                    OutlinedTextField(address, { address = it }, label = { Text(str(R.string.address)) })
-                    OutlinedTextField(note, { note = it }, label = { Text(str(R.string.note)) })
+                    FormField(email, { email = it }, str(R.string.email), singleLine = true, maxLength = FieldLimit.EMAIL, error = Validate.email(email), keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email))
+                    FormField(address, { address = it }, str(R.string.address), maxLength = FieldLimit.ADDRESS)
+                    FormField(note, { note = it }, str(R.string.note), maxLength = FieldLimit.NOTE)
                 }
             },
             confirmButton = {
-                TextButton(enabled = name.isNotBlank(), onClick = {
+                TextButton(enabled = Validate.name(name) == null && Validate.phone(phone) == null && Validate.email(email) == null, onClick = {
                     editing = null
                     runner.run(str(R.string.supplier_saved)) { container.repo.saveSupplier(s.id.takeIf { it != 0L }, name, phone, email, address, note) }
                 }) { Text(str(R.string.save)) }

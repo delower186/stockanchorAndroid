@@ -60,6 +60,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
@@ -312,18 +313,21 @@ fun NumberField(
     prefix: String? = null,
     suffix: String? = null,
     decimal: Boolean = true,
-    isError: Boolean = false,
+    error: String? = null,
 ) {
+    val touched = rememberFieldTouched()
+    val shown = error.takeIf { touched.value }
     OutlinedTextField(
         value = value,
-        onValueChange = { v -> if (v.isEmpty() || v.matches(Regex(if (decimal) "^-?\\d*\\.?\\d*$" else "^\\d*$"))) onValueChange(v) },
+        onValueChange = { v -> if (v.isEmpty() || v.matches(Regex(if (decimal) "^\\d*\\.?\\d*$" else "^\\d*$"))) { touched.onEdit(); onValueChange(v) } },
         label = { Text(label) },
         singleLine = true,
-        isError = isError,
+        isError = shown != null,
+        supportingText = shown?.let { { Text(it) } },
         prefix = if (prefix != null) { { Text(prefix) } } else null,
         suffix = if (suffix != null) { { Text(suffix) } } else null,
         keyboardOptions = KeyboardOptions(keyboardType = if (decimal) KeyboardType.Decimal else KeyboardType.Number),
-        modifier = modifier,
+        modifier = modifier.onFocusChanged { touched.onFocus(it.isFocused) },
     )
 }
 

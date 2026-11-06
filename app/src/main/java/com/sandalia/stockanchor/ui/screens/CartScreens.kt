@@ -2,6 +2,9 @@ package com.sandalia.stockanchor.ui.screens
 
 import com.sandalia.stockanchor.util.plural
 import com.sandalia.stockanchor.R
+import com.sandalia.stockanchor.ui.components.FormField
+import com.sandalia.stockanchor.util.FieldLimit
+import com.sandalia.stockanchor.util.Validate
 import com.sandalia.stockanchor.util.str
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -124,6 +127,8 @@ fun SellScreen(onDone: (Long) -> Unit, nav: NavHostController) {
     val subtotal = vm.lines.sumOf { it.lineTotal }
     val discount = (vm.discount.toDoubleOrNull() ?: 0.0).coerceIn(0.0, subtotal)
     val total = subtotal - discount
+    val discountError = Validate.money(vm.discount) ?: str(R.string.discount_cant_exceed_subtotal).takeIf { (vm.discount.toDoubleOrNull() ?: 0.0) > subtotal }
+    val linesValid = vm.lines.all { it.quantity > 0 && it.quantity <= FieldLimit.QUANTITY_MAX && it.unitAmount >= 0 && it.unitAmount <= FieldLimit.MONEY_MAX }
 
     ScreenScaffold(
         str(R.string.new_sale), busy = runner.busy,
@@ -145,7 +150,8 @@ fun SellScreen(onDone: (Long) -> Unit, nav: NavHostController) {
                                 onDone(id)
                             }
                         },
-                        enabled = !runner.busy && vm.customer.isNotBlank() && session.can(Perm.SALES_CREATE),
+                        enabled = !runner.busy && Validate.name(vm.customer) == null && Validate.phone(vm.phone) == null && discountError == null &&
+                            vm.warehouseId != null && linesValid && session.can(Perm.SALES_CREATE),
                         modifier = Modifier.height(52.dp),
                     ) { Text(str(R.string.complete_sale)) }
                 }
@@ -159,7 +165,7 @@ fun SellScreen(onDone: (Long) -> Unit, nav: NavHostController) {
         ) {
             item {
                 AppCard(Modifier.fillMaxWidth()) {
-                    OutlinedTextField(vm.customer, { vm.customer = it }, label = { Text(str(R.string.customer_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                    FormField(vm.customer, { vm.customer = it }, str(R.string.customer_name), Modifier.fillMaxWidth(), singleLine = true, maxLength = FieldLimit.NAME, error = Validate.name(vm.customer))
                     Spacer(Modifier.height(8.dp))
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                         PhoneField(vm.phone, { vm.phone = it }, Modifier.weight(1f))
@@ -210,9 +216,9 @@ fun SellScreen(onDone: (Long) -> Unit, nav: NavHostController) {
             }
             if (vm.lines.isNotEmpty()) item {
                 AppCard(Modifier.fillMaxWidth()) {
-                    NumberField(vm.discount, { vm.discount = it }, str(R.string.discount), Modifier.fillMaxWidth(), prefix = session.currency)
+                    NumberField(vm.discount, { vm.discount = it }, str(R.string.discount), Modifier.fillMaxWidth(), prefix = session.currency, error = discountError)
                     Spacer(Modifier.height(8.dp))
-                    OutlinedTextField(vm.note, { vm.note = it }, label = { Text(str(R.string.note_optional)) }, modifier = Modifier.fillMaxWidth())
+                    FormField(vm.note, { vm.note = it }, str(R.string.note_optional), Modifier.fillMaxWidth(), maxLength = FieldLimit.NOTE)
                     Spacer(Modifier.height(8.dp))
                     KeyValue(str(R.string.subtotal), Fmt.money(session.currency, subtotal))
                     if (discount > 0) KeyValue(str(R.string.discount), "-" + Fmt.money(session.currency, discount))
@@ -252,7 +258,7 @@ private fun CartLineCard(
                 keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Decimal),
             )
             FilledTonalIconButton(onClick = { onQty(line.quantity + 1) }, modifier = Modifier.size(38.dp)) { Icon(Icons.Filled.Add, str(R.string.more)) }
-            NumberField(amountText, { amountText = it; onAmount(it.toDoubleOrNull() ?: 0.0) }, amountLabel, Modifier.weight(1f), prefix = currency)
+            NumberField(amountText, { amountText = it; onAmount(it.toDoubleOrNull() ?: 0.0) }, amountLabel, Modifier.weight(1f), prefix = currency, error = Validate.money(amountText, required = true))
         }
         Spacer(Modifier.height(6.dp))
         Text(
@@ -299,7 +305,8 @@ fun PurchaseScreen(onBack: () -> Unit) {
                                 vm.reset()
                             }
                         },
-                        enabled = !runner.busy && session.can(Perm.PURCHASES_CREATE),
+                        enabled = !runner.busy && vm.warehouseId != null && session.can(Perm.PURCHASES_CREATE) &&
+                            vm.lines.all { it.quantity > 0 && it.quantity <= FieldLimit.QUANTITY_MAX && it.unitAmount >= 0 && it.unitAmount <= FieldLimit.MONEY_MAX },
                         modifier = Modifier.height(52.dp),
                     ) { Text(str(R.string.save_purchase)) }
                 }
@@ -321,7 +328,7 @@ fun PurchaseScreen(onBack: () -> Unit) {
                         }
                     }
                     Spacer(Modifier.height(8.dp))
-                    OutlinedTextField(vm.note, { vm.note = it }, label = { Text(str(R.string.reference_note)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                    FormField(vm.note, { vm.note = it }, str(R.string.reference_note), Modifier.fillMaxWidth(), singleLine = true, maxLength = FieldLimit.NOTE)
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Checkbox(vm.updateCost, { vm.updateCost = it })
                         Text(str(R.string.update_product_cost_price_to_this), style = MaterialTheme.typography.bodySmall)

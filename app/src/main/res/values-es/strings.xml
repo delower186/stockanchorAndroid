@@ -607,4 +607,14 @@
     <string name="type_the_number">Escribir el número</string>
     <string name="no_contacts_app_found">No se encontró ninguna app de contactos en este dispositivo.</string>
     <string name="promo_code_accepted_one_last_step">Código promocional aceptado: un último paso</string>
+    <string name="this_field_is_required">Este campo es obligatorio</string>
+    <string name="use_at_most_x_characters">Usa como máximo %1$d caracteres</string>
+    <string name="enter_a_valid_email">Introduce un correo válido</string>
+    <string name="enter_a_valid_phone_number">Introduce un número de teléfono válido</string>
+    <string name="enter_a_valid_number">Introduce un número válido</string>
+    <string name="must_be_more_than_zero">Debe ser mayor que cero</string>
+    <string name="this_number_is_too_large">Este número es demasiado grande</string>
+    <string name="discount_cant_exceed_subtotal">El descuento no puede superar el subtotal</string>
+    <string name="only_x_x_available_here">Solo hay %1$s %2$s disponibles aquí</string>
+    <string name="sku_is_already_used_by_x">El SKU ya lo usa %1$s</string>
 </resources>

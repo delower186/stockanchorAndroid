@@ -601,4 +601,14 @@
     <string name="type_the_number">नंबर टाइप करें</string>
     <string name="no_contacts_app_found">इस डिवाइस पर कोई संपर्क ऐप नहीं मिला।</string>
     <string name="promo_code_accepted_one_last_step">प्रोमो कोड स्वीकार — बस एक कदम बाकी</string>
+    <string name="this_field_is_required">यह फ़ील्ड आवश्यक है</string>
+    <string name="use_at_most_x_characters">अधिकतम %1$d अक्षर इस्तेमाल करें</string>
+    <string name="enter_a_valid_email">एक मान्य ईमेल पता दर्ज करें</string>
+    <string name="enter_a_valid_phone_number">एक मान्य फ़ोन नंबर दर्ज करें</string>
+    <string name="enter_a_valid_number">एक मान्य संख्या दर्ज करें</string>
+    <string name="must_be_more_than_zero">शून्य से अधिक होना चाहिए</string>
+    <string name="this_number_is_too_large">यह संख्या बहुत बड़ी है</string>
+    <string name="discount_cant_exceed_subtotal">छूट उप-योग से अधिक नहीं हो सकती</string>
+    <string name="only_x_x_available_here">यहाँ केवल %1$s %2$s उपलब्ध है</string>
+    <string name="sku_is_already_used_by_x">SKU पहले से %1$s द्वारा उपयोग में है</string>
 </resources>

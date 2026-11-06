@@ -99,7 +99,7 @@ object InvoicePdf {
     private fun header(c: Canvas, sale: SaleEntity, company: String, warehouse: String?): Float {
         c.drawRect(0f, 0f, W.toFloat(), 120f, fill(navy))
         c.drawRect(0f, 120f, W.toFloat(), 124f, fill(teal))
-        c.drawText(company, M, 58f, paint(22f, Color.WHITE, bold = true))
+        c.drawText(ellipsize(company, FieldLimit.COMPANY), M, 58f, paint(22f, Color.WHITE, bold = true))
         warehouse?.let { c.drawText(it, M, 80f, paint(11f, Color.parseColor("#B8C7D9"))) }
         c.drawText(str(R.string.label_invoice), W - M, 58f, paint(26f, Color.WHITE, bold = true, align = Paint.Align.RIGHT))
         c.drawText(sale.invoiceNo, W - M, 80f, paint(11f, Color.parseColor("#B8C7D9"), align = Paint.Align.RIGHT))

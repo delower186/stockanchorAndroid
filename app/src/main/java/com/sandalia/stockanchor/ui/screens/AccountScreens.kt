@@ -1,6 +1,9 @@
 package com.sandalia.stockanchor.ui.screens
 
 import com.sandalia.stockanchor.R
+import com.sandalia.stockanchor.ui.components.FormField
+import com.sandalia.stockanchor.util.FieldLimit
+import com.sandalia.stockanchor.util.Validate
 import com.sandalia.stockanchor.util.str
 import com.sandalia.stockanchor.ui.components.LocalSnackbar
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -88,6 +91,7 @@ import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
@@ -396,7 +400,7 @@ private fun PromoCodeDialog(busy: Boolean, error: String?, onSubmit: (String) ->
         title = { Text(str(R.string.have_a_promo_code)) },
         text = {
             OutlinedTextField(
-                code, { code = it.uppercase().take(40) }, label = { Text(str(R.string.promo_code)) }, singleLine = true, isError = error != null,
+                code, { typed -> code = typed.uppercase().filter { it in 'A'..'Z' || it in '0'..'9' || it == '-' || it == '_' }.take(FieldLimit.PROMO_CODE) }, label = { Text(str(R.string.promo_code)) }, singleLine = true, isError = error != null,
                 supportingText = { error?.let { Text(it) } },
                 keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Characters, keyboardType = KeyboardType.Ascii),
                 modifier = Modifier.fillMaxWidth(),
@@ -532,8 +536,8 @@ fun AccountScreen(mode: String, nav: NavHostController) {
                 Tab(tab == 1, { tab = 1 }, text = { Text(str(R.string.sign_in)) })
             }
             if (tab == 0) {
-                OutlinedTextField(name, { name = it }, label = { Text(str(R.string.your_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
-                OutlinedTextField(company, { company = it }, label = { Text(str(R.string.business_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                FormField(name, { name = it }, str(R.string.your_name), Modifier.fillMaxWidth(), singleLine = true, maxLength = FieldLimit.NAME, error = Validate.name(name))
+                FormField(company, { company = it }, str(R.string.business_name), Modifier.fillMaxWidth(), singleLine = true, maxLength = FieldLimit.COMPANY, counter = true, error = Validate.name(company, FieldLimit.COMPANY))
                 DropdownField(str(R.string.currency), listOf("BDT", "USD", "EUR", "GBP", "INR", "PKR"), currency, { it }, { if (it != null) currency = it }, Modifier.fillMaxWidth())
             }
             if (tab == 0 && accountEmail.isNotBlank()) {
@@ -546,12 +550,13 @@ fun AccountScreen(mode: String, nav: NavHostController) {
             } else if (tab == 0 && !BuildConfig.ALLOW_TEST_PURCHASES) {
                 OutlinedButton(onClick = pickAccount, modifier = Modifier.fillMaxWidth()) { Text(str(R.string.choose_google_account)) }
             } else {
-                OutlinedTextField(email, { email = it }, label = { Text(str(R.string.email)) }, singleLine = true, modifier = Modifier.fillMaxWidth(),
+                FormField(email, { email = it }, str(R.string.email), Modifier.fillMaxWidth(), singleLine = true, maxLength = FieldLimit.EMAIL, error = Validate.email(email, required = true),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email))
             }
-            OutlinedTextField(password, { password = it }, label = { Text(str(R.string.password)) }, singleLine = true, modifier = Modifier.fillMaxWidth(),
-                visualTransformation = PasswordVisualTransformation(), keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-                supportingText = { if (tab == 0) Text(str(R.string.at_least_8_characters)) })
+            FormField(password, { password = it }, str(R.string.password), Modifier.fillMaxWidth(), singleLine = true, maxLength = FieldLimit.PASSWORD,
+                error = if (tab == 0) Validate.password(password) else Validate.required(password),
+                hint = if (tab == 0) str(R.string.at_least_8_characters) else null,
+                visualTransformation = PasswordVisualTransformation(), keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password))
             Button(
                 onClick = {
                     runner.run {
@@ -562,8 +567,12 @@ fun AccountScreen(mode: String, nav: NavHostController) {
                         }
                     }
                 },
-                enabled = !runner.busy && password.length >= (if (tab == 0) 8 else 1) &&
-                    (if (tab == 0) newAccountEmail.isNotBlank() && name.isNotBlank() && company.isNotBlank() else email.isNotBlank()),
+                enabled = !runner.busy && (if (tab == 0) {
+                    Validate.password(password) == null && Validate.email(newAccountEmail, required = true) == null &&
+                        Validate.name(name) == null && Validate.name(company, FieldLimit.COMPANY) == null
+                } else {
+                    password.isNotEmpty() && Validate.email(email, required = true) == null
+                }),
                 modifier = Modifier.fillMaxWidth().height(52.dp),
             ) { Text(if (tab == 0) str(R.string.create_account) else str(R.string.sign_in)) }
             if (!paid) TextButton(onClick = { nav.navigate(Routes.PAYWALL) { popUpTo(Routes.PAYWALL) { inclusive = true } } }, modifier = Modifier.align(Alignment.CenterHorizontally)) {
@@ -714,7 +723,7 @@ fun MoreScreen(nav: NavHostController) {
             AppCard(Modifier.fillMaxWidth(), onClick = { go(Routes.SUBSCRIPTION) }) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Column(Modifier.weight(1f)) {
-                        Text(session.companyName, style = MaterialTheme.typography.titleMedium)
+                        Text(session.companyName, style = MaterialTheme.typography.titleMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
                         Text(
                             if (session.loggedIn) "${session.userName} · ${session.role}" else str(R.string.basic_plan_data_on_this_device),
                             style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -787,11 +796,11 @@ fun SettingsScreen(nav: NavHostController) {
         Column(Modifier.padding(pad).imePadding().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             SectionTitle(str(R.string.business_profile))
             AppCard(Modifier.fillMaxWidth()) {
-                OutlinedTextField(company, { company = it }, label = { Text(str(R.string.business_name_on_invoices)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                FormField(company, { company = it }, str(R.string.business_name_on_invoices), Modifier.fillMaxWidth(), singleLine = true, maxLength = FieldLimit.COMPANY, counter = true, error = Validate.name(company, FieldLimit.COMPANY))
                 Spacer(Modifier.height(8.dp))
-                OutlinedTextField(currency, { currency = it.take(4) }, label = { Text(str(R.string.currency_symbol)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                FormField(currency, { currency = it }, str(R.string.currency_symbol), Modifier.fillMaxWidth(), singleLine = true, maxLength = FieldLimit.CURRENCY_SYMBOL, error = Validate.required(currency))
                 Spacer(Modifier.height(8.dp))
-                Button(onClick = { container.session.setCompany(company.ifBlank { "My Business" }, currency.ifBlank { "৳" }); runner.toast(str(R.string.saved)) }) { Text(str(R.string.save)) }
+                Button(enabled = Validate.name(company, FieldLimit.COMPANY) == null && Validate.required(currency) == null, onClick = { container.session.setCompany(company.trim(), currency.trim()); runner.toast(str(R.string.saved)) }) { Text(str(R.string.save)) }
             }
             SectionTitle(str(R.string.language))
             AppCard(Modifier.fillMaxWidth()) {

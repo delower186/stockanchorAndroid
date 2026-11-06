@@ -601,4 +601,14 @@
     <string name="type_the_number">নম্বর টাইপ করুন</string>
     <string name="no_contacts_app_found">এই ডিভাইসে কোনো কন্টাক্টস অ্যাপ পাওয়া যায়নি।</string>
     <string name="promo_code_accepted_one_last_step">প্রোমো কোড গৃহীত — শেষ একটি ধাপ</string>
+    <string name="this_field_is_required">এই ঘরটি পূরণ করা আবশ্যক</string>
+    <string name="use_at_most_x_characters">সর্বোচ্চ %1$d অক্ষর ব্যবহার করুন</string>
+    <string name="enter_a_valid_email">একটি সঠিক ইমেইল ঠিকানা লিখুন</string>
+    <string name="enter_a_valid_phone_number">একটি সঠিক ফোন নম্বর লিখুন</string>
+    <string name="enter_a_valid_number">একটি সঠিক সংখ্যা লিখুন</string>
+    <string name="must_be_more_than_zero">শূন্যের চেয়ে বেশি হতে হবে</string>
+    <string name="this_number_is_too_large">সংখ্যাটি অনেক বড়</string>
+    <string name="discount_cant_exceed_subtotal">ছাড় সাবটোটালের চেয়ে বেশি হতে পারে না</string>
+    <string name="only_x_x_available_here">এখানে মাত্র %1$s %2$s আছে</string>
+    <string name="sku_is_already_used_by_x">SKU আগেই %1$s ব্যবহার করছে</string>
 </resources>

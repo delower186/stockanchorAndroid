@@ -1,6 +1,9 @@
 package com.sandalia.stockanchor.ui.screens
 
 import com.sandalia.stockanchor.R
+import com.sandalia.stockanchor.ui.components.FormField
+import com.sandalia.stockanchor.util.FieldLimit
+import com.sandalia.stockanchor.util.Validate
 import com.sandalia.stockanchor.util.str
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -187,19 +190,19 @@ private fun ExpenseDialog(
         title = { Text(if (expense.id == 0L) str(R.string.add_expense) else str(R.string.edit_expense)) },
         text = {
             Column(Modifier.verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedTextField(category, { category = it }, label = { Text(str(R.string.category)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                FormField(category, { category = it }, str(R.string.category), Modifier.fillMaxWidth(), singleLine = true, maxLength = FieldLimit.EXPENSE_CATEGORY, error = Validate.name(category, FieldLimit.EXPENSE_CATEGORY))
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp)) {
                     suggestions.forEach { s -> FilterChip(selected = category == s, onClick = { category = s }, label = { Text(s) }) }
                 }
-                NumberField(amount, { amount = it }, str(R.string.amount), Modifier.fillMaxWidth(), prefix = currency)
+                NumberField(amount, { amount = it }, str(R.string.amount), Modifier.fillMaxWidth(), prefix = currency, error = Validate.money(amount, required = true, aboveZero = true))
                 OutlinedButton(onClick = { picking = true }, modifier = Modifier.fillMaxWidth()) {
                     Icon(Icons.Filled.CalendarMonth, null); Spacer(Modifier.width(8.dp)); Text(Fmt.date(date))
                 }
-                OutlinedTextField(note, { note = it }, label = { Text(str(R.string.note)) }, modifier = Modifier.fillMaxWidth())
+                FormField(note, { note = it }, str(R.string.note), Modifier.fillMaxWidth(), maxLength = FieldLimit.NOTE)
             }
         },
         confirmButton = {
-            TextButton(enabled = category.isNotBlank() && value > 0, onClick = {
+            TextButton(enabled = Validate.name(category, FieldLimit.EXPENSE_CATEGORY) == null && Validate.money(amount, required = true, aboveZero = true) == null, onClick = {
                 onSave(expense.copy(category = category, amount = value, note = note, date = date))
             }) { Text(str(R.string.save)) }
         },

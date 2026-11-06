@@ -194,6 +194,10 @@ class StockRepository(
             val other = catalog.productByCode(code)
             if (other != null && other.id != p.id) throw UserFacingException(str(R.string.barcode_is_already_used_by_x, other.name))
         }
+        clean.sku?.let { code ->
+            val other = catalog.productByCode(code)
+            if (other != null && other.id != p.id) throw UserFacingException(str(R.string.sku_is_already_used_by_x, other.name))
+        }
         catalog.upsertProduct(clean)
     }
 

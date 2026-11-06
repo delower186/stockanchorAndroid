@@ -601,4 +601,14 @@
     <string name="type_the_number">Nummer eingeben</string>
     <string name="no_contacts_app_found">Auf diesem Gerät wurde keine Kontakte-App gefunden.</string>
     <string name="promo_code_accepted_one_last_step">Promo-Code akzeptiert – ein letzter Schritt</string>
+    <string name="this_field_is_required">Dieses Feld ist erforderlich</string>
+    <string name="use_at_most_x_characters">Verwenden Sie höchstens %1$d Zeichen</string>
+    <string name="enter_a_valid_email">Geben Sie eine gültige E-Mail-Adresse ein</string>
+    <string name="enter_a_valid_phone_number">Geben Sie eine gültige Telefonnummer ein</string>
+    <string name="enter_a_valid_number">Geben Sie eine gültige Zahl ein</string>
+    <string name="must_be_more_than_zero">Muss größer als null sein</string>
+    <string name="this_number_is_too_large">Diese Zahl ist zu groß</string>
+    <string name="discount_cant_exceed_subtotal">Der Rabatt darf die Zwischensumme nicht übersteigen</string>
+    <string name="only_x_x_available_here">Hier sind nur %1$s %2$s verfügbar</string>
+    <string name="sku_is_already_used_by_x">SKU wird bereits von %1$s verwendet</string>
 </resources>

@@ -625,4 +625,14 @@
     <string name="type_the_number">كتابة الرقم</string>
     <string name="no_contacts_app_found">لم يتم العثور على تطبيق جهات اتصال على هذا الجهاز.</string>
     <string name="promo_code_accepted_one_last_step">تم قبول الرمز الترويجي — خطوة أخيرة</string>
+    <string name="this_field_is_required">هذا الحقل مطلوب</string>
+    <string name="use_at_most_x_characters">استخدم %1$d حرفًا كحد أقصى</string>
+    <string name="enter_a_valid_email">أدخل بريدًا إلكترونيًا صالحًا</string>
+    <string name="enter_a_valid_phone_number">أدخل رقم هاتف صالحًا</string>
+    <string name="enter_a_valid_number">أدخل رقمًا صالحًا</string>
+    <string name="must_be_more_than_zero">يجب أن يكون أكبر من صفر</string>
+    <string name="this_number_is_too_large">هذا الرقم كبير جدًا</string>
+    <string name="discount_cant_exceed_subtotal">لا يمكن أن يتجاوز الخصم المجموع الفرعي</string>
+    <string name="only_x_x_available_here">المتوفر هنا %1$s %2$s فقط</string>
+    <string name="sku_is_already_used_by_x">رمز SKU مستخدم بالفعل بواسطة %1$s</string>
 </resources>

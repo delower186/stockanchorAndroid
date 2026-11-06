@@ -2,6 +2,9 @@ package com.sandalia.stockanchor.ui.screens
 
 import androidx.annotation.StringRes
 import com.sandalia.stockanchor.R
+import androidx.compose.ui.text.style.TextOverflow
+import com.sandalia.stockanchor.ui.components.FormField
+import com.sandalia.stockanchor.util.FieldLimit
 import com.sandalia.stockanchor.util.str
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
@@ -177,7 +180,7 @@ fun InvoiceScreen(saleId: Long, onBack: () -> Unit) {
                         Box(Modifier.fillMaxWidth().background(Navy).padding(20.dp)) {
                             Column {
                                 Row(verticalAlignment = Alignment.CenterVertically) {
-                                    Text(session.companyName, color = Color.White, style = MaterialTheme.typography.titleLarge, modifier = Modifier.weight(1f))
+                                    Text(session.companyName, color = Color.White, style = MaterialTheme.typography.titleLarge, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.weight(1f))
                                     Text(str(R.string.label_invoice), color = Color.White, style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Black)
                                 }
                                 Text(s.invoiceNo, color = Color(0xFFB8C7D9), style = MaterialTheme.typography.bodySmall)
@@ -272,7 +275,7 @@ fun InvoiceScreen(saleId: Long, onBack: () -> Unit) {
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(str(R.string.all_items_go_back_into_stock))
-                    OutlinedTextField(reason, { reason = it }, label = { Text(str(R.string.reason)) }, singleLine = true)
+                    FormField(reason, { reason = it }, str(R.string.reason), singleLine = true, maxLength = FieldLimit.SHORT_NOTE)
                 }
             },
             confirmButton = {
