@@ -1,4 +1,4 @@
-#Tue Nov 03 11:50:01 BDT 2026
+#Fri Nov 06 23:02:43 BDT 2026
 base.0=/run/media/delower/Development/DevSync/Workspaces/Claude/StockAnchor/android/app/build/intermediates/dex/debug/mergeExtDexDebug/classes.dex
 base.1=/run/media/delower/Development/DevSync/Workspaces/Claude/StockAnchor/android/app/build/intermediates/dex/debug/mergeProjectDexDebug/0/classes.dex
 base.10=/run/media/delower/Development/DevSync/Workspaces/Claude/StockAnchor/android/app/build/intermediates/dex/debug/mergeProjectDexDebug/8/classes.dex

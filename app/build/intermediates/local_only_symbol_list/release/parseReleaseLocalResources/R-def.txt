@@ -91,7 +91,10 @@ string checked_twice_a_day_and_after
 string checking
 string choose_a_category
 string choose_csv
+string choose_from_contacts
+string choose_google_account
 string choose_product
+string choose_the_google_account_for_google_play
 string choose_two_different_warehouses
 string clear
 string cloud_backup
@@ -107,6 +110,7 @@ string code
 string columns_name_sku_barcode_category_warehouse
 string complete_sale
 string completed_sales_and_their_invoices_appear
+string confirm_your_email
 string confirm_your_password_to_continue
 string continue_label
 string continue_on_basic
@@ -146,6 +150,7 @@ string delete_product
 string delete_x
 string description
 string discount
+string discount_cant_exceed_subtotal
 string discount_x
 string edit
 string edit_category
@@ -157,6 +162,9 @@ string edit_x
 string email
 string email_login
 string ends
+string enter_a_valid_email
+string enter_a_valid_number
+string enter_a_valid_phone_number
 string enter_an_amount_greater_than_zero
 string enter_one_of_the_recovery_codes
 string enter_the_6_digit_code_from
@@ -177,6 +185,7 @@ string export_products_stock_sales_and_movements
 string exported_x_x_rows
 string filter
 string filtered
+string free_for_x_then_y
 string free_trial_x
 string from
 string full_re_sync
@@ -184,12 +193,15 @@ string full_sync_complete
 string generated_by_stock_anchor_page_x
 string get_notified_before_you_run_out
 string get_notified_when_products_drop_below
+string google_play_account
+string google_play_account_hint
 string google_play_billing_error_x_x
 string google_play_can_t_sell_subscriptions
 string google_play_doesn_t_offer_this
 string gross_loss
 string gross_profit
 string group_products_e_g_electronics_groceries
+string have_a_promo_code
 string history
 string history_cancellations_pdf
 string i_saved_them
@@ -223,8 +235,8 @@ string label_qty
 string label_status
 string label_total
 string language
+string language_auto_x
 string language_hint
-string language_system
 string last_synced
 string later
 string less
@@ -255,6 +267,7 @@ string move_products_between_your_warehouses_with
 string move_stock_between_warehouses
 string move_your_data_to_the_cloud
 string movement_history
+string must_be_more_than_zero
 string name
 string name_2
 string name_sku_or_barcode
@@ -271,6 +284,7 @@ string new_product
 string new_recovery_codes
 string new_sale
 string new_supplier
+string new_to_stock_anchor_see_plans
 string new_warehouse
 string nightly_automatic_backups_of_your_whole
 string no_access
@@ -283,6 +297,7 @@ string no_backups_yet
 string no_categories
 string no_category
 string no_contact_details
+string no_contacts_app_found
 string no_expenses_x
 string no_items_yet
 string no_matches
@@ -309,6 +324,7 @@ string off_ask_for_a_code_from
 string ok
 string on_x_recovery_codes_left
 string only_empty_warehouses_can_be_deleted
+string only_x_x_available_here
 string only_x_x_in_this_warehouse
 string open_authenticator_app
 string open_web_panel
@@ -358,8 +374,11 @@ string products
 string products_below_minimum
 string products_in_this_category_will_become
 string profit
+string promo_code
+string promo_code_accepted_one_last_step
 string purchase
 string purchase_failed_x
+string purchase_no_longer_active
 string purchase_total
 string purchases
 string quantities_must_be_greater_than_zero
@@ -375,6 +394,7 @@ string record_purchases
 string record_rent_salaries_and_other_costs
 string record_rent_salaries_and_other_costs_2
 string recovery_code
+string redeem
 string reference_note
 string refresh_plan_status
 string remove
@@ -382,6 +402,8 @@ string remove_x
 string renew
 string renews
 string rent_salaries_for_net_profit
+string resend_code
+string resend_code_in_x_seconds
 string reset
 string restore
 string restore_purchase
@@ -397,6 +419,7 @@ string s_1_year
 string s_2_enter_the_6_digit_code
 string s_3_days
 string s_3_months
+string s_4_weeks
 string s_6_months
 string s_7_days
 string sale
@@ -435,9 +458,11 @@ string sign_out_of_the_cloud
 string signed_in_as
 string signed_out
 string skipped_rows
+string sku_is_already_used_by_x
 string something_went_wrong
 string spreadsheets_in_and_out
 string staff_accounts
+string start_free_trial
 string start_fresh
 string status
 string stock_added
@@ -488,8 +513,11 @@ string the_basic_plan_includes_x_upgrade
 string the_subscription_has_no_active_plans
 string the_web_panel_is_part_of
 string they_will_be_signed_out_on
+string this_account_has_no_active_plan
 string this_device_only
+string this_field_is_required
 string this_month
+string this_number_is_too_large
 string this_product_has_no_stock_in
 string this_snapshot_will_be_permanently_removed
 string this_warehouse
@@ -515,6 +543,7 @@ string turn_on
 string two_step_verification
 string two_step_verification_is_off
 string two_step_verification_is_on
+string type_the_number
 string uncategorised
 string unit
 string unit_cost
@@ -526,9 +555,11 @@ string upgrade_to_premium
 string upload_my_data
 string upload_the_products_stock_and_sales
 string use_a_recovery_code
+string use_at_most_x_characters
 string use_cloud_only
 string use_premium_features_in_your_browser
 string use_the_authenticator_app
+string verification_code
 string verify
 string view_dashboard_reports
 string warehouse
@@ -537,6 +568,7 @@ string warehouse_name_is_required
 string warehouse_saved
 string warehouses
 string we_couldn_t_confirm_the_subscription
+string we_sent_a_6_digit_code_to_x
 string who_you_buy_from
 string work_offline_on_basic_keep_data
 string x_continued
@@ -571,4 +603,5 @@ string your_team_s_current_data_will
 string your_team_s_stock_anchor_premium
 style Theme.StockAnchor
 style Theme.StockAnchor.Splash
+xml data_extraction_rules
 xml file_paths

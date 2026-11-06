@@ -126,7 +126,10 @@
     <string name="checking">جارٍ التحقق…</string>
     <string name="choose_a_category">اختر فئة.</string>
     <string name="choose_csv">اختر ملف CSV</string>
+    <string name="choose_from_contacts">الاختيار من جهات الاتصال</string>
+    <string name="choose_google_account">اختيار حساب Google</string>
     <string name="choose_product">اختر منتجًا</string>
+    <string name="choose_the_google_account_for_google_play">اختر حساب Google الذي تستخدمه على Google Play</string>
     <string name="choose_two_different_warehouses">اختر مستودعين مختلفين.</string>
     <string name="clear">مسح</string>
     <string name="cloud_backup">النسخ الاحتياطي السحابي</string>
@@ -142,6 +145,7 @@
     <string name="columns_name_sku_barcode_category_warehouse">الأعمدة: name, sku, barcode, category, warehouse, quantity, unit_cost, sale_price. تتم مطابقة المنتجات حسب SKU ثم الباركود ثم الاسم، ويتم إنشاء المنتجات والفئات غير الموجودة. تُضاف الكميات إلى المخزون.</string>
     <string name="complete_sale">إتمام البيع</string>
     <string name="completed_sales_and_their_invoices_appear">تظهر هنا المبيعات المكتملة وفواتيرها.</string>
+    <string name="confirm_your_email">تأكيد بريدك الإلكتروني</string>
     <string name="confirm_your_password_to_continue">أكّد كلمة المرور للمتابعة.</string>
     <string name="continue_label">متابعة</string>
     <string name="continue_on_basic">المتابعة على Basic</string>
@@ -181,6 +185,7 @@
     <string name="delete_x">حذف «%1$s»؟</string>
     <string name="description">الوصف</string>
     <string name="discount">الخصم</string>
+    <string name="discount_cant_exceed_subtotal">لا يمكن أن يتجاوز الخصم المجموع الفرعي</string>
     <string name="discount_x">الخصم: -%1$s</string>
     <string name="edit">تعديل</string>
     <string name="edit_category">تعديل الفئة</string>
@@ -192,6 +197,9 @@
     <string name="email">البريد الإلكتروني</string>
     <string name="email_login">البريد الإلكتروني (تسجيل الدخول)</string>
     <string name="ends">ينتهي في</string>
+    <string name="enter_a_valid_email">أدخل بريدًا إلكترونيًا صالحًا</string>
+    <string name="enter_a_valid_number">أدخل رقمًا صالحًا</string>
+    <string name="enter_a_valid_phone_number">أدخل رقم هاتف صالحًا</string>
     <string name="enter_an_amount_greater_than_zero">أدخل مبلغًا أكبر من صفر.</string>
     <string name="enter_one_of_the_recovery_codes">أدخل أحد رموز الاسترداد التي حفظتها. كل رمز يعمل مرة واحدة.</string>
     <string name="enter_the_6_digit_code_from">أدخل الرمز المكون من 6 أرقام من تطبيق المصادقة.</string>
@@ -212,6 +220,7 @@
     <string name="exported_x_x_rows">تم تصدير %1$s صفًا (%2$s)</string>
     <string name="filter">تصفية</string>
     <string name="filtered">مُصفّى</string>
+    <string name="free_for_x_then_y">مجانًا لمدة %1$s، ثم %2$s %3$s. يمكنك الإلغاء في أي وقت من Google Play.</string>
     <string name="free_trial_x">تجربة مجانية لمدة %1$s</string>
     <string name="from">من مستودع</string>
     <string name="full_re_sync">إعادة مزامنة كاملة</string>
@@ -219,12 +228,15 @@
     <string name="generated_by_stock_anchor_page_x">أُنشئت بواسطة Stock Anchor  •  صفحة %1$s من %2$s</string>
     <string name="get_notified_before_you_run_out">احصل على إشعار قبل نفاد المخزون.</string>
     <string name="get_notified_when_products_drop_below">احصل على إشعار عندما ينخفض منتج عن حده الأدنى.</string>
+    <string name="google_play_account">حساب Google Play</string>
+    <string name="google_play_account_hint">حساب Google الخاص بك على هذا الجهاز. لا يمكن تغييره هنا.</string>
     <string name="google_play_billing_error_x_x">خطأ في Google Play Billing %1$s%2$s</string>
     <string name="google_play_can_t_sell_subscriptions">لا يمكن لـ Google Play بيع اشتراكات لهذه النسخة من التطبيق. ثبّت Stock Anchor من Google Play (للمختبرين: عبر رابط الاختبار) مع تسجيل الدخول إلى متجر Play، ثم حاول مجددًا.</string>
     <string name="google_play_doesn_t_offer_this">لا يوفر Google Play هذا الاشتراك لهذا التطبيق. ثبّت Stock Anchor من Google Play (للمختبرين: استخدم رابط الاختبار)، وتأكد من أن الاشتراك \"%1$s\" نشط في Play Console.</string>
     <string name="gross_loss">إجمالي الخسارة</string>
     <string name="gross_profit">إجمالي الربح</string>
     <string name="group_products_e_g_electronics_groceries">جمّع المنتجات (مثل الإلكترونيات، البقالة) لتصفيتها بسرعة.</string>
+    <string name="have_a_promo_code">هل لديك رمز ترويجي؟</string>
     <string name="history">السجل</string>
     <string name="history_cancellations_pdf">السجل، الإلغاءات، PDF</string>
     <string name="i_saved_them">لقد حفظتها</string>
@@ -258,8 +270,8 @@
     <string name="label_status">الحالة</string>
     <string name="label_total">الإجمالي</string>
     <string name="language">اللغة</string>
-    <string name="language_hint">يغيّر نصوص التطبيق. تتبع الأرقام والتواريخ إعدادات هاتفك.</string>
-    <string name="language_system">لغة الهاتف</string>
+    <string name="language_auto_x">تلقائي (حسب البلد): %1$s</string>
+    <string name="language_hint">يستخدم الوضع التلقائي لغة بلدك إذا كانت متوفرة في التطبيق، وإلا فالإنجليزية. تتبع الأرقام والتواريخ إعدادات هاتفك.</string>
     <string name="last_synced">آخر مزامنة</string>
     <string name="later">لاحقًا</string>
     <string name="less">أقل</string>
@@ -290,6 +302,7 @@
     <string name="move_stock_between_warehouses">انقل المخزون بين المستودعات</string>
     <string name="move_your_data_to_the_cloud">نقل بياناتك إلى السحابة؟</string>
     <string name="movement_history">سجل الحركات</string>
+    <string name="must_be_more_than_zero">يجب أن يكون أكبر من صفر</string>
     <string name="name">الاسم</string>
     <string name="name_2">الاسم *</string>
     <string name="name_sku_or_barcode">الاسم أو SKU أو الباركود</string>
@@ -306,6 +319,7 @@
     <string name="new_recovery_codes">رموز استرداد جديدة</string>
     <string name="new_sale">بيع جديد</string>
     <string name="new_supplier">مورد جديد</string>
+    <string name="new_to_stock_anchor_see_plans">جديد في Stock Anchor؟ اطلع على الخطط</string>
     <string name="new_warehouse">مستودع جديد</string>
     <string name="nightly_automatic_backups_of_your_whole">نسخ احتياطي تلقائي كل ليلة لمخزونك بالكامل، مع استعادة بنقرة واحدة.</string>
     <string name="no_access">لا توجد صلاحية</string>
@@ -318,6 +332,7 @@
     <string name="no_categories">لا توجد فئات</string>
     <string name="no_category">بدون فئة</string>
     <string name="no_contact_details">لا توجد بيانات اتصال</string>
+    <string name="no_contacts_app_found">لم يتم العثور على تطبيق جهات اتصال على هذا الجهاز.</string>
     <string name="no_expenses_x">لا توجد مصروفات · %1$s</string>
     <string name="no_items_yet">لا توجد أصناف بعد</string>
     <string name="no_matches">لا توجد نتائج</string>
@@ -344,6 +359,7 @@
     <string name="ok">حسنًا</string>
     <string name="on_x_recovery_codes_left">مفعّل · تبقى %1$s رموز استرداد</string>
     <string name="only_empty_warehouses_can_be_deleted">يمكن حذف المستودعات الفارغة فقط.</string>
+    <string name="only_x_x_available_here">المتوفر هنا %1$s %2$s فقط</string>
     <string name="only_x_x_in_this_warehouse">فقط %1$s %2$s في هذا المستودع</string>
     <string name="open_authenticator_app">فتح تطبيق المصادقة</string>
     <string name="open_web_panel">فتح لوحة الويب</string>
@@ -393,8 +409,11 @@
     <string name="products_below_minimum">منتجات أقل من الحد الأدنى</string>
     <string name="products_in_this_category_will_become">ستصبح منتجات هذه الفئة بدون فئة.</string>
     <string name="profit">الربح</string>
+    <string name="promo_code">الرمز الترويجي</string>
+    <string name="promo_code_accepted_one_last_step">تم قبول الرمز الترويجي — خطوة أخيرة</string>
     <string name="purchase">شراء</string>
     <string name="purchase_failed_x">فشلت عملية الشراء (%1$s).</string>
+    <string name="purchase_no_longer_active">يفيد Google Play بأن عملية الشراء هذه لم تعد نشطة، لذلك لم يتم إنشاء أي حساب. اختر خطة للمحاولة مرة أخرى. تبقى بياناتك الأساسية على هذا الجهاز.</string>
     <string name="purchase_total">إجمالي الشراء</string>
     <string name="purchases">المشتريات</string>
     <string name="quantities_must_be_greater_than_zero">يجب أن تكون الكميات أكبر من صفر.</string>
@@ -410,6 +429,7 @@
     <string name="record_rent_salaries_and_other_costs">سجّل الإيجار والرواتب والتكاليف الأخرى لمعرفة ربحك الحقيقي بعد المصروفات.</string>
     <string name="record_rent_salaries_and_other_costs_2">سجّل الإيجار والرواتب والتكاليف الأخرى لرؤية صافي ربحك في لوحة التحكم.</string>
     <string name="recovery_code">رمز الاسترداد</string>
+    <string name="redeem">استرداد</string>
     <string name="reference_note">المرجع / ملاحظة</string>
     <string name="refresh_plan_status">تحديث حالة الخطة</string>
     <string name="remove">إزالة</string>
@@ -417,6 +437,8 @@
     <string name="renew">تجديد</string>
     <string name="renews">يتجدد في</string>
     <string name="rent_salaries_for_net_profit">الإيجار، الرواتب… لحساب صافي الربح</string>
+    <string name="resend_code">إعادة إرسال الرمز</string>
+    <string name="resend_code_in_x_seconds">إعادة الإرسال خلال %1$d ث</string>
     <string name="reset">إعادة تعيين</string>
     <string name="restore">استعادة</string>
     <string name="restore_purchase">استعادة الشراء</string>
@@ -432,6 +454,7 @@
     <string name="s_2_enter_the_6_digit_code">2. أدخل الرمز المكون من 6 أرقام الذي يعرضه التطبيق:</string>
     <string name="s_3_days">3 أيام</string>
     <string name="s_3_months">3 أشهر</string>
+    <string name="s_4_weeks">4 أسابيع</string>
     <string name="s_6_months">6 أشهر</string>
     <string name="s_7_days">7 أيام</string>
     <string name="sale">بيع</string>
@@ -470,13 +493,15 @@
     <string name="signed_in_as">مسجّل الدخول باسم</string>
     <string name="signed_out">تم تسجيل الخروج</string>
     <string name="skipped_rows">تم التخطي:</string>
+    <string name="sku_is_already_used_by_x">رمز SKU مستخدم بالفعل بواسطة %1$s</string>
     <string name="something_went_wrong">حدث خطأ ما</string>
     <string name="spreadsheets_in_and_out">جداول بيانات للاستيراد والتصدير</string>
     <string name="staff_accounts">حسابات الموظفين</string>
+    <string name="start_free_trial">بدء الفترة التجريبية المجانية</string>
     <string name="start_fresh">البدء من جديد</string>
     <string name="status">الحالة</string>
     <string name="stock_added">تمت إضافة المخزون</string>
-    <string name="stock_anchor_cloud">Stock Anchor Cloud</string>
+    <string name="stock_anchor_cloud">سحابة مرساة الأسهم</string>
     <string name="stock_anchor_premium">Stock Anchor Premium</string>
     <string name="stock_anchor_premium_is_active">تم تفعيل Stock Anchor Premium 🎉</string>
     <string name="stock_by_warehouse">المخزون حسب المستودع</string>
@@ -523,8 +548,11 @@
     <string name="the_subscription_has_no_active_plans">لا توجد خطط نشطة في الاشتراك بعد. فعّل الخطتين الأساسيتين الشهرية والسنوية في Play Console.</string>
     <string name="the_web_panel_is_part_of">لوحة الويب جزء من Premium</string>
     <string name="they_will_be_signed_out_on">سيتم تسجيل خروجه من جميع الأجهزة وسيفقد الوصول إلى هذا المخزون.</string>
+    <string name="this_account_has_no_active_plan">لا يملك هذا الحساب خطة Premium نشطة، لذلك لم يتم تسجيل دخولك. اشترك لاستخدام السحابة. تبقى بيانات Basic على هذا الجهاز.</string>
     <string name="this_device_only">هذا الجهاز فقط</string>
+    <string name="this_field_is_required">هذا الحقل مطلوب</string>
     <string name="this_month">هذا الشهر</string>
+    <string name="this_number_is_too_large">هذا الرقم كبير جدًا</string>
     <string name="this_product_has_no_stock_in">لا يوجد مخزون لهذا المنتج في أي مستودع.</string>
     <string name="this_snapshot_will_be_permanently_removed">ستُحذف هذه اللقطة نهائيًا.</string>
     <string name="this_warehouse">هذا المستودع</string>
@@ -550,6 +578,7 @@
     <string name="two_step_verification">التحقق بخطوتين</string>
     <string name="two_step_verification_is_off">التحقق بخطوتين غير مفعّل</string>
     <string name="two_step_verification_is_on">التحقق بخطوتين مفعّل</string>
+    <string name="type_the_number">كتابة الرقم</string>
     <string name="uncategorised">بدون فئة</string>
     <string name="unit">الوحدة</string>
     <string name="unit_cost">تكلفة الوحدة</string>
@@ -561,9 +590,11 @@
     <string name="upload_my_data">رفع بياناتي</string>
     <string name="upload_the_products_stock_and_sales">ارفع المنتجات والمخزون والمبيعات من هذا الجهاز إلى حسابك السحابي الجديد، أو ابدأ بمخزون سحابي فارغ.</string>
     <string name="use_a_recovery_code">استخدام رمز استرداد</string>
+    <string name="use_at_most_x_characters">استخدم %1$d حرفًا كحد أقصى</string>
     <string name="use_cloud_only">السحابة فقط</string>
     <string name="use_premium_features_in_your_browser">استخدم ميزات Premium في متصفحك على %1$s</string>
     <string name="use_the_authenticator_app">استخدام تطبيق المصادقة</string>
+    <string name="verification_code">رمز التحقق</string>
     <string name="verify">تحقق</string>
     <string name="view_dashboard_reports">عرض لوحة التحكم والتقارير</string>
     <string name="warehouse">المستودع</string>
@@ -572,6 +603,7 @@
     <string name="warehouse_saved">تم حفظ المستودع</string>
     <string name="warehouses">المستودعات</string>
     <string name="we_couldn_t_confirm_the_subscription">لم نتمكن من تأكيد الاشتراك بعد.</string>
+    <string name="we_sent_a_6_digit_code_to_x">أرسلنا رمزًا من 6 أرقام إلى %1$s. أدخله لإكمال إنشاء حسابك.</string>
     <string name="who_you_buy_from">من تشتري منهم</string>
     <string name="work_offline_on_basic_keep_data">العمل دون اتصال على Basic (تبقى البيانات على هذا الجهاز)</string>
     <string name="x_continued">%1$s — تابع</string>

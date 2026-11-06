@@ -1,4 +1,4 @@
-# The proguard configuration file for the following section is Android Gradle plugin 9.5.0 (extracted file: /run/media/delower/Development/DevSync/Workspaces/Claude/StockAnchor/android/app/build/intermediates/default_proguard_files/global/proguard-android-optimize.txt-9.5.0)
+# The proguard configuration file for the following section is Android Gradle plugin 9.5.1 (extracted file: /run/media/delower/Development/DevSync/Workspaces/Claude/StockAnchor/android/app/build/intermediates/default_proguard_files/global/proguard-android-optimize.txt-9.5.1)
 # This is a configuration file for ProGuard.
 # http://proguard.sourceforge.net/index.html#manual/usage.html
 #
@@ -89,7 +89,7 @@
 # These classes are duplicated between android.jar and core-lambda-stubs.jar.
 -dontnote java.lang.invoke.**
 
-# End of content from Android Gradle plugin 9.5.0 (extracted file: /run/media/delower/Development/DevSync/Workspaces/Claude/StockAnchor/android/app/build/intermediates/default_proguard_files/global/proguard-android-optimize.txt-9.5.0)
+# End of content from Android Gradle plugin 9.5.1 (extracted file: /run/media/delower/Development/DevSync/Workspaces/Claude/StockAnchor/android/app/build/intermediates/default_proguard_files/global/proguard-android-optimize.txt-9.5.1)
 # The proguard configuration file for the following section is /run/media/delower/Development/DevSync/Workspaces/Claude/StockAnchor/android/app/proguard-rules.pro
 # Gson DTOs (reflection)
 -keep class com.sandalia.stockanchor.data.remote.** { *; }
@@ -104,7 +104,38 @@
 -keepclassmembers class com.sandalia.stockanchor.data.local.*Entity { <fields>; }
 
 # End of content from /run/media/delower/Development/DevSync/Workspaces/Claude/StockAnchor/android/app/proguard-rules.pro
-# The proguard configuration file for the following section is com.android.billingclient:billing-ktx:8.3.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/9a8943cf702c9e3578cddc6a34b3e280/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.navigation:navigation-common:2.8.5 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/54334d9ee67411722674464bad3cb444/transformed/proguard.txt)
+# Copyright (C) 2019 The Android Open Source Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# NavArgsLazy creates NavArgs instances using reflection
+-if public class ** implements androidx.navigation.NavArgs
+-keepclassmembers public class <1> {
+    ** fromBundle(android.os.Bundle);
+}
+
+# Retain the @Navigator.Name annotation on each subclass of Navigator.
+# R8 full mode only retains annotations on items matched by a -keep rule,
+# hence the extra -keep rule for the subclasses of Navigator.
+#
+# A -keep rule for the Navigator.Name annotation class is not required
+# since the annotation is referenced from the code.
+-keepattributes RuntimeVisibleAnnotations
+-keep,allowobfuscation,allowshrinking class * extends androidx.navigation.Navigator
+
+# End of content from androidx.navigation:navigation-common:2.8.5 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/54334d9ee67411722674464bad3cb444/transformed/proguard.txt)
+# The proguard configuration file for the following section is com.android.billingclient:billing-ktx:8.3.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/ef83859e8f47b4bd51dd83ba57949242/transformed/proguard.txt)
 # See https://discuss.gradle.org/t/meta-inf-version-duplicate-error-when-using-proguard/31380
 -dontwarn module-info
 
@@ -113,8 +144,8 @@
 -dontwarn java.lang.instrument.Instrumentation
 -dontwarn sun.misc.Signal
 
-# End of content from com.android.billingclient:billing-ktx:8.3.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/9a8943cf702c9e3578cddc6a34b3e280/transformed/proguard.txt)
-# The proguard configuration file for the following section is com.android.billingclient:billing:8.3.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/93ad588d4d6424f8381c57ebcdbfb24d/transformed/proguard.txt)
+# End of content from com.android.billingclient:billing-ktx:8.3.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/ef83859e8f47b4bd51dd83ba57949242/transformed/proguard.txt)
+# The proguard configuration file for the following section is com.android.billingclient:billing:8.3.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/4e08be11cb722fd988be93fd0e584b93/transformed/proguard.txt)
 # Keep the AIDL interface
 -keep class com.android.vending.billing.** { *; }
 -keep class com.google.android.apps.play.billingtestcompanion.aidl.** { *; }
@@ -150,8 +181,8 @@
   <fields>;
 }
 
-# End of content from com.android.billingclient:billing:8.3.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/93ad588d4d6424f8381c57ebcdbfb24d/transformed/proguard.txt)
-# The proguard configuration file for the following section is com.google.mlkit:common:18.9.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/1dc190cb51175efaadedbe696d31e97a/transformed/proguard.txt)
+# End of content from com.android.billingclient:billing:8.3.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/4e08be11cb722fd988be93fd0e584b93/transformed/proguard.txt)
+# The proguard configuration file for the following section is com.google.mlkit:common:18.9.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/f3052e814a003d54fe4328b44e9b3565/transformed/proguard.txt)
 # Annotations are implemented as attributes, so we have to explicitly keep them.
 # Catch all which encompasses attributes like RuntimeVisibleParameterAnnotations
 # and RuntimeVisibleTypeAnnotations
@@ -173,8 +204,8 @@
     @com.google.android.apps.common.proguard.UsedBy* *;
 }
 
-# End of content from com.google.mlkit:common:18.9.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/1dc190cb51175efaadedbe696d31e97a/transformed/proguard.txt)
-# The proguard configuration file for the following section is com.google.android.gms:play-services-base:18.5.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/e6afd56e46c31d17f65d39440efec38b/transformed/proguard.txt)
+# End of content from com.google.mlkit:common:18.9.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/f3052e814a003d54fe4328b44e9b3565/transformed/proguard.txt)
+# The proguard configuration file for the following section is com.google.android.gms:play-services-base:18.5.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/628bd0a104e8524385a1342c6f0236b6/transformed/proguard.txt)
 # b/35135904 Ensure that proguard will not strip the mResultGuardian.
 -keepclassmembers class com.google.android.gms.common.api.internal.BasePendingResult {
   com.google.android.gms.common.api.internal.BasePendingResult$ReleasableResultGuardian mResultGuardian;
@@ -182,8 +213,8 @@
 
 
 
-# End of content from com.google.android.gms:play-services-base:18.5.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/e6afd56e46c31d17f65d39440efec38b/transformed/proguard.txt)
-# The proguard configuration file for the following section is androidx.work:work-runtime:2.10.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/f23c312ef6be2b4f2c23878b8d4cb020/transformed/proguard.txt)
+# End of content from com.google.android.gms:play-services-base:18.5.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/628bd0a104e8524385a1342c6f0236b6/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.work:work-runtime:2.10.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/71f73470ebdc8fd2a266e75ce505cf9e/transformed/proguard.txt)
 # Keep ListenableWorker / Worker if not removed during shrinking
 -keepnames class * extends androidx.work.ListenableWorker
 # Keep all constructors on ListenableWorker, Worker if class is kept
@@ -200,19 +231,23 @@
 # Keep constructor on InputMerger if class is kept
 -keepclassmembers class * extends androidx.work.InputMerger { void <init>(); }
 
-# End of content from androidx.work:work-runtime:2.10.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/f23c312ef6be2b4f2c23878b8d4cb020/transformed/proguard.txt)
-# The proguard configuration file for the following section is androidx.room:room-ktx:2.7.2 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/ce659970a5b08c0caa261130a0f1540b/transformed/proguard.txt)
+# End of content from androidx.work:work-runtime:2.10.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/71f73470ebdc8fd2a266e75ce505cf9e/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.room:room-ktx:2.7.2 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/6bf4bae8cfb98ed13e5528752758f5b6/transformed/proguard.txt)
 # Intentionally empty proguard rules to indicate this library is safe to shrink
 
-# End of content from androidx.room:room-ktx:2.7.2 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/ce659970a5b08c0caa261130a0f1540b/transformed/proguard.txt)
-# The proguard configuration file for the following section is androidx.room:room-runtime-android:2.7.2 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/e875701799258f6837dc94f1a72f8863/transformed/proguard.txt)
+# End of content from androidx.room:room-ktx:2.7.2 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/6bf4bae8cfb98ed13e5528752758f5b6/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.room:room-runtime-android:2.7.2 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/4afa6fc13fb1985266bb2f95374b3c90/transformed/proguard.txt)
 -keep class * extends androidx.room.RoomDatabase { void <init>(); }
 -dontwarn androidx.room.paging.**
 -dontwarn androidx.lifecycle.LiveData
 
-# End of content from androidx.room:room-runtime-android:2.7.2 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/e875701799258f6837dc94f1a72f8863/transformed/proguard.txt)
-# The proguard configuration file for the following section is androidx.navigation:navigation-common:2.8.5 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/b51103e2edfedbc1821f0998557164db/transformed/proguard.txt)
-# Copyright (C) 2019 The Android Open Source Project
+# End of content from androidx.room:room-runtime-android:2.7.2 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/4afa6fc13fb1985266bb2f95374b3c90/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.core:core-splashscreen:1.2.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/8a3494b1c40ae00f4ade826802e3d3cd/transformed/proguard.txt)
+# Intentionally empty proguard rules to indicate this library is safe to shrink
+
+# End of content from androidx.core:core-splashscreen:1.2.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/8a3494b1c40ae00f4ade826802e3d3cd/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.vectordrawable:vectordrawable-animated:1.1.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/2c30bff3969935c41ad34d9adf2b412c/transformed/proguard.txt)
+# Copyright (C) 2016 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -226,29 +261,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# NavArgsLazy creates NavArgs instances using reflection
--if public class ** implements androidx.navigation.NavArgs
--keepclassmembers public class <1> {
-    ** fromBundle(android.os.Bundle);
+# keep setters in VectorDrawables so that animations can still work.
+-keepclassmembers class androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$* {
+   void set*(***);
+   *** get*();
 }
 
-# Retain the @Navigator.Name annotation on each subclass of Navigator.
-# R8 full mode only retains annotations on items matched by a -keep rule,
-# hence the extra -keep rule for the subclasses of Navigator.
-#
-# A -keep rule for the Navigator.Name annotation class is not required
-# since the annotation is referenced from the code.
--keepattributes RuntimeVisibleAnnotations
--keep,allowobfuscation,allowshrinking class * extends androidx.navigation.Navigator
-
-# End of content from androidx.navigation:navigation-common:2.8.5 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/b51103e2edfedbc1821f0998557164db/transformed/proguard.txt)
-# The proguard configuration file for the following section is androidx.graphics:graphics-path:1.0.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/e376b395340cd0814dc1ac7d09398c10/transformed/proguard.txt)
+# End of content from androidx.vectordrawable:vectordrawable-animated:1.1.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/2c30bff3969935c41ad34d9adf2b412c/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.graphics:graphics-path:1.0.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/1a7e0196c3a923274ec496d6bfbab9a7/transformed/proguard.txt)
 -keepclasseswithmembers class androidx.graphics.path.** {
     native <methods>;
 }
 
-# End of content from androidx.graphics:graphics-path:1.0.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/e376b395340cd0814dc1ac7d09398c10/transformed/proguard.txt)
-# The proguard configuration file for the following section is androidx.core:core:1.15.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/4c7ddbbe5a8b69f786d0fe535f5042dd/transformed/proguard.txt)
+# End of content from androidx.graphics:graphics-path:1.0.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/1a7e0196c3a923274ec496d6bfbab9a7/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.core:core:1.15.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/6e9e46cf818f455fea43cfa9dbb1fe6b/transformed/proguard.txt)
 # Never inline methods, but allow shrinking and obfuscation.
 -keepclassmembernames,allowobfuscation,allowshrinking class androidx.core.view.ViewCompat$Api* {
   <methods>;
@@ -266,8 +292,8 @@
   <methods>;
 }
 
-# End of content from androidx.core:core:1.15.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/4c7ddbbe5a8b69f786d0fe535f5042dd/transformed/proguard.txt)
-# The proguard configuration file for the following section is androidx.savedstate:savedstate:1.2.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/7f2e3d7f23c1c6860b98a3215954ef82/transformed/proguard.txt)
+# End of content from androidx.core:core:1.15.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/6e9e46cf818f455fea43cfa9dbb1fe6b/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.savedstate:savedstate:1.2.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/929db698ca10e43c28679ed35e970aec/transformed/proguard.txt)
 # Copyright (C) 2019 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -286,13 +312,13 @@
     <init>();
 }
 
-# End of content from androidx.savedstate:savedstate:1.2.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/7f2e3d7f23c1c6860b98a3215954ef82/transformed/proguard.txt)
-# The proguard configuration file for the following section is androidx.lifecycle:lifecycle-process:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/f8b20d5113babfc0d04daa70a0ca2b1f/transformed/proguard.txt)
+# End of content from androidx.savedstate:savedstate:1.2.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/929db698ca10e43c28679ed35e970aec/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.lifecycle:lifecycle-process:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/8f6540f673ceeecfd18817bb4151d442/transformed/proguard.txt)
 # this rule is need to work properly when app is compiled with api 28, see b/142778206
 -keepclassmembers class * extends androidx.lifecycle.EmptyActivityLifecycleCallbacks { *; }
 
-# End of content from androidx.lifecycle:lifecycle-process:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/f8b20d5113babfc0d04daa70a0ca2b1f/transformed/proguard.txt)
-# The proguard configuration file for the following section is androidx.lifecycle:lifecycle-viewmodel-android:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/966b98ccc07bac96760e7ff3589e7aa9/transformed/proguard.txt)
+# End of content from androidx.lifecycle:lifecycle-process:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/8f6540f673ceeecfd18817bb4151d442/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.lifecycle:lifecycle-viewmodel-android:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/89df197bf248e96800db7f270e3e8215/transformed/proguard.txt)
 -keepclassmembers,allowobfuscation class * extends androidx.lifecycle.ViewModel {
     <init>();
 }
@@ -301,8 +327,8 @@
     <init>(android.app.Application);
 }
 
-# End of content from androidx.lifecycle:lifecycle-viewmodel-android:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/966b98ccc07bac96760e7ff3589e7aa9/transformed/proguard.txt)
-# The proguard configuration file for the following section is androidx.lifecycle:lifecycle-runtime-android:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/9bd07578b340f85546f219e0dc237d0e/transformed/proguard.txt)
+# End of content from androidx.lifecycle:lifecycle-viewmodel-android:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/89df197bf248e96800db7f270e3e8215/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.lifecycle:lifecycle-runtime-android:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/80e58db914d03cbd82f4729c7631232a/transformed/proguard.txt)
 -keepattributes AnnotationDefault,
                 RuntimeVisibleAnnotations,
                 RuntimeVisibleParameterAnnotations,
@@ -330,8 +356,8 @@
 # Also this rule prevents registerIn from being inlined.
 -keepclassmembers class androidx.lifecycle.ReportFragment$LifecycleCallbacks { *; }
 
-# End of content from androidx.lifecycle:lifecycle-runtime-android:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/9bd07578b340f85546f219e0dc237d0e/transformed/proguard.txt)
-# The proguard configuration file for the following section is androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/2652c74015fbc07478fe7b13c2268b2f/transformed/proguard.txt)
+# End of content from androidx.lifecycle:lifecycle-runtime-android:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/80e58db914d03cbd82f4729c7631232a/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/f41e73d415272499c4eaa0014c7ebcb7/transformed/proguard.txt)
 -keepclassmembers,allowobfuscation class * extends androidx.lifecycle.ViewModel {
     <init>(androidx.lifecycle.SavedStateHandle);
 }
@@ -340,8 +366,8 @@
     <init>(android.app.Application,androidx.lifecycle.SavedStateHandle);
 }
 
-# End of content from androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/2652c74015fbc07478fe7b13c2268b2f/transformed/proguard.txt)
-# The proguard configuration file for the following section is androidx.lifecycle:lifecycle-runtime-compose-android:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/61517021d9aa7313b5e47007666bb73a/transformed/proguard.txt)
+# End of content from androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/f41e73d415272499c4eaa0014c7ebcb7/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.lifecycle:lifecycle-runtime-compose-android:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/d760c924e5a1cf898a5c377b809cae3a/transformed/proguard.txt)
 # Workaround for https://issuetracker.google.com/issues/346808608
 #
 # `androidx.lifecycle.compose.LocalLifecycleOwner` will reflectively lookup for
@@ -361,8 +387,8 @@
     public static *** getLocalLifecycleOwner();
 }
 
-# End of content from androidx.lifecycle:lifecycle-runtime-compose-android:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/61517021d9aa7313b5e47007666bb73a/transformed/proguard.txt)
-# The proguard configuration file for the following section is androidx.compose.ui:ui-android:1.7.6 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/3e4e8e47fa79173372406e1e2b833113/transformed/proguard.txt)
+# End of content from androidx.lifecycle:lifecycle-runtime-compose-android:2.8.7 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/d760c924e5a1cf898a5c377b809cae3a/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.compose.ui:ui-android:1.7.6 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/067d4336d54f19cd4c913e7a4e8d2c16/transformed/proguard.txt)
 # Copyright (C) 2020 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -397,8 +423,8 @@
 # reflection to determine the class type. See b/265188224 for more context.
 -keep,allowshrinking class * extends androidx.compose.ui.node.ModifierNodeElement
 
-# End of content from androidx.compose.ui:ui-android:1.7.6 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/3e4e8e47fa79173372406e1e2b833113/transformed/proguard.txt)
-# The proguard configuration file for the following section is androidx.compose.runtime:runtime-android:1.7.6 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/5dfbc01c04cebe48c8d2e4ba449d619e/transformed/proguard.txt)
+# End of content from androidx.compose.ui:ui-android:1.7.6 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/067d4336d54f19cd4c913e7a4e8d2c16/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.compose.runtime:runtime-android:1.7.6 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/ccdbc9f4485b289ba377b0625b1ce0f5/transformed/proguard.txt)
 -assumenosideeffects public class androidx.compose.runtime.ComposerKt {
     void sourceInformation(androidx.compose.runtime.Composer,java.lang.String);
     void sourceInformationMarkerStart(androidx.compose.runtime.Composer,int,java.lang.String);
@@ -415,8 +441,8 @@
     void <clinit>();
 }
 
-# End of content from androidx.compose.runtime:runtime-android:1.7.6 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/5dfbc01c04cebe48c8d2e4ba449d619e/transformed/proguard.txt)
-# The proguard configuration file for the following section is org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/b91edac004cf6a2cf655a7aae94aab66/transformed/shrink-rules/lib/META-INF/com.android.tools/r8-from-1.6.0/coroutines.pro)
+# End of content from androidx.compose.runtime:runtime-android:1.7.6 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/ccdbc9f4485b289ba377b0625b1ce0f5/transformed/proguard.txt)
+# The proguard configuration file for the following section is org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/c8b91f5ed25d17f6881396d30e018b3a/transformed/shrink-rules/lib/META-INF/com.android.tools/r8-from-1.6.0/coroutines.pro)
 # Allow R8 to optimize away the FastServiceLoader.
 # Together with ServiceLoader optimization in R8
 # this results in direct instantiation when loading Dispatchers.Main
@@ -440,8 +466,8 @@
     boolean getRECOVER_STACK_TRACES() return false;
 }
 
-# End of content from org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/b91edac004cf6a2cf655a7aae94aab66/transformed/shrink-rules/lib/META-INF/com.android.tools/r8-from-1.6.0/coroutines.pro)
-# The proguard configuration file for the following section is org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/ee5546f17b2aae0599774aebd3fb4f08/transformed/shrink-rules/lib/META-INF/com.android.tools/r8/coroutines.pro)
+# End of content from org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/c8b91f5ed25d17f6881396d30e018b3a/transformed/shrink-rules/lib/META-INF/com.android.tools/r8-from-1.6.0/coroutines.pro)
+# The proguard configuration file for the following section is org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/fe5fea70239f56ba6d091af93c1b3a72/transformed/shrink-rules/lib/META-INF/com.android.tools/r8/coroutines.pro)
 # When editing this file, update the following files as well:
 # - META-INF/proguard/coroutines.pro
 # - META-INF/com.android.tools/proguard/coroutines.pro
@@ -470,12 +496,12 @@
 # An annotation used for build tooling, won't be directly accessed.
 -dontwarn org.codehaus.mojo.animal_sniffer.IgnoreJRERequirement
 
-# End of content from org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/ee5546f17b2aae0599774aebd3fb4f08/transformed/shrink-rules/lib/META-INF/com.android.tools/r8/coroutines.pro)
-# The proguard configuration file for the following section is com.google.android.gms:play-services-tasks:18.2.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/a0c58706a1fe51cb62de181d99f1e2ed/transformed/proguard.txt)
+# End of content from org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:1.9.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/fe5fea70239f56ba6d091af93c1b3a72/transformed/shrink-rules/lib/META-INF/com.android.tools/r8/coroutines.pro)
+# The proguard configuration file for the following section is com.google.android.gms:play-services-tasks:18.2.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/d2764f3ae21a362114fcb2c33a4e398e/transformed/proguard.txt)
 
 
-# End of content from com.google.android.gms:play-services-tasks:18.2.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/a0c58706a1fe51cb62de181d99f1e2ed/transformed/proguard.txt)
-# The proguard configuration file for the following section is com.google.android.gms:play-services-basement:18.9.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/7a857d6552724775588bfbdd08eb1568/transformed/proguard.txt)
+# End of content from com.google.android.gms:play-services-tasks:18.2.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/d2764f3ae21a362114fcb2c33a4e398e/transformed/proguard.txt)
+# The proguard configuration file for the following section is com.google.android.gms:play-services-basement:18.9.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/de76056499a948039646617dcbee0753/transformed/proguard.txt)
 # Needed when building against pre-Marshmallow SDK.
 -dontwarn android.security.NetworkSecurityPolicy
 
@@ -552,8 +578,8 @@
 
 
 
-# End of content from com.google.android.gms:play-services-basement:18.9.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/7a857d6552724775588bfbdd08eb1568/transformed/proguard.txt)
-# The proguard configuration file for the following section is androidx.fragment:fragment:1.8.5 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/231b59cb80cfc6c2ac38671dce55e2d9/transformed/proguard.txt)
+# End of content from com.google.android.gms:play-services-basement:18.9.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/de76056499a948039646617dcbee0753/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.fragment:fragment:1.8.5 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/7b56defc7de7c52a1b24a8becacf8225/transformed/proguard.txt)
 # Copyright (C) 2020 The Android Open Source Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -584,8 +610,8 @@
     public <init>();
 }
 
-# End of content from androidx.fragment:fragment:1.8.5 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/231b59cb80cfc6c2ac38671dce55e2d9/transformed/proguard.txt)
-# The proguard configuration file for the following section is org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.6.3 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/f49e96eb0ea0fb3932abdac14864d2ca/transformed/shrink-rules/lib/META-INF/com.android.tools/r8/kotlinx-serialization-r8.pro)
+# End of content from androidx.fragment:fragment:1.8.5 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/7b56defc7de7c52a1b24a8becacf8225/transformed/proguard.txt)
+# The proguard configuration file for the following section is org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.6.3 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/b1f0043f6925db1ffd6970bb22cc5795/transformed/shrink-rules/lib/META-INF/com.android.tools/r8/kotlinx-serialization-r8.pro)
 # Rule to save runtime annotations on serializable class.
 # If the R8 full mode is used, annotations are removed from classes-files.
 #
@@ -599,8 +625,8 @@
  -if @kotlinx.serialization.Serializable class **
  -keep, allowshrinking, allowoptimization, allowobfuscation, allowaccessmodification class <1>
 
-# End of content from org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.6.3 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/f49e96eb0ea0fb3932abdac14864d2ca/transformed/shrink-rules/lib/META-INF/com.android.tools/r8/kotlinx-serialization-r8.pro)
-# The proguard configuration file for the following section is org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.6.3 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/f49e96eb0ea0fb3932abdac14864d2ca/transformed/shrink-rules/lib/META-INF/com.android.tools/r8/kotlinx-serialization-common.pro)
+# End of content from org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.6.3 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/b1f0043f6925db1ffd6970bb22cc5795/transformed/shrink-rules/lib/META-INF/com.android.tools/r8/kotlinx-serialization-r8.pro)
+# The proguard configuration file for the following section is org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.6.3 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/b1f0043f6925db1ffd6970bb22cc5795/transformed/shrink-rules/lib/META-INF/com.android.tools/r8/kotlinx-serialization-common.pro)
 # Keep `Companion` object fields of serializable classes.
 # This avoids serializer lookup through `getDeclaredClasses` as done for named companion objects.
 -if @kotlinx.serialization.Serializable class **
@@ -637,8 +663,8 @@
 # However, since in this case they will not be used, we can disable these warnings
 -dontwarn kotlinx.serialization.internal.ClassValueReferences
 
-# End of content from org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.6.3 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/f49e96eb0ea0fb3932abdac14864d2ca/transformed/shrink-rules/lib/META-INF/com.android.tools/r8/kotlinx-serialization-common.pro)
-# The proguard configuration file for the following section is androidx.startup:startup-runtime:1.1.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/00f87145d2203188f549052e56620830/transformed/proguard.txt)
+# End of content from org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.6.3 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/b1f0043f6925db1ffd6970bb22cc5795/transformed/shrink-rules/lib/META-INF/com.android.tools/r8/kotlinx-serialization-common.pro)
+# The proguard configuration file for the following section is androidx.startup:startup-runtime:1.1.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/c87ea54821d9efdf9ffffd55085df59e/transformed/proguard.txt)
 # It's important that we preserve initializer names, given they are used in the AndroidManifest.xml.
 -keepnames class * extends androidx.startup.Initializer
 
@@ -652,8 +678,12 @@
 
 -assumenosideeffects class androidx.startup.StartupLogger { public static <methods>; }
 
-# End of content from androidx.startup:startup-runtime:1.1.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/00f87145d2203188f549052e56620830/transformed/proguard.txt)
-# The proguard configuration file for the following section is com.squareup.retrofit2:retrofit:2.11.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/db9ee77ded5bd3bd0f4760a0f1af5693/transformed/shrink-rules/lib/META-INF/proguard/retrofit2.pro)
+# End of content from androidx.startup:startup-runtime:1.1.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/c87ea54821d9efdf9ffffd55085df59e/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.core:core-viewtree:1.0.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/47cce920e6b1ac74427e714d653a8a25/transformed/proguard.txt)
+# Intentionally empty proguard rules to indicate this library is safe to shrink
+
+# End of content from androidx.core:core-viewtree:1.0.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/47cce920e6b1ac74427e714d653a8a25/transformed/proguard.txt)
+# The proguard configuration file for the following section is com.squareup.retrofit2:retrofit:2.11.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/17cbe7f9b529a7bd73b1f0ddcc5ab36c/transformed/shrink-rules/lib/META-INF/proguard/retrofit2.pro)
 # Retrofit does reflection on generic parameters. InnerClasses is required to use Signature and
 # EnclosingMethod is required to use InnerClasses.
 -keepattributes Signature, InnerClasses, EnclosingMethod
@@ -703,8 +733,8 @@
 # With R8 full mode generic signatures are stripped for classes that are not kept.
 -keep,allowobfuscation,allowshrinking class retrofit2.Response
 
-# End of content from com.squareup.retrofit2:retrofit:2.11.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/db9ee77ded5bd3bd0f4760a0f1af5693/transformed/shrink-rules/lib/META-INF/proguard/retrofit2.pro)
-# The proguard configuration file for the following section is com.squareup.okhttp3:okhttp:4.12.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/15e2f5a0f4836ca3865cee725ae48820/transformed/shrink-rules/lib/META-INF/proguard/okhttp3.pro)
+# End of content from com.squareup.retrofit2:retrofit:2.11.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/17cbe7f9b529a7bd73b1f0ddcc5ab36c/transformed/shrink-rules/lib/META-INF/proguard/retrofit2.pro)
+# The proguard configuration file for the following section is com.squareup.okhttp3:okhttp:4.12.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/ddb3ccd31660db2d26b10c63d7075c41/transformed/shrink-rules/lib/META-INF/proguard/okhttp3.pro)
 # JSR 305 annotations are for embedding nullability information.
 -dontwarn javax.annotation.**
 
@@ -720,43 +750,43 @@
 -dontwarn org.bouncycastle.**
 -dontwarn org.openjsse.**
 
-# End of content from com.squareup.okhttp3:okhttp:4.12.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/15e2f5a0f4836ca3865cee725ae48820/transformed/shrink-rules/lib/META-INF/proguard/okhttp3.pro)
-# The proguard configuration file for the following section is androidx.sqlite:sqlite-framework-android:2.5.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/06eea7709590c5a3921b16f87d0fd133/transformed/proguard.txt)
+# End of content from com.squareup.okhttp3:okhttp:4.12.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/ddb3ccd31660db2d26b10c63d7075c41/transformed/shrink-rules/lib/META-INF/proguard/okhttp3.pro)
+# The proguard configuration file for the following section is androidx.sqlite:sqlite-framework-android:2.5.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/4189446b91afb038583ec836bd96749c/transformed/proguard.txt)
 # Intentionally empty proguard rules to indicate this library is safe to shrink
 
-# End of content from androidx.sqlite:sqlite-framework-android:2.5.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/06eea7709590c5a3921b16f87d0fd133/transformed/proguard.txt)
-# The proguard configuration file for the following section is androidx.sqlite:sqlite-android:2.5.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/c9167e98bc3b68e021255d95c02d8312/transformed/proguard.txt)
+# End of content from androidx.sqlite:sqlite-framework-android:2.5.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/4189446b91afb038583ec836bd96749c/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.sqlite:sqlite-android:2.5.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/17a8e2f0db4399c8cf33697eb3be4792/transformed/proguard.txt)
 # Intentionally empty proguard rules to indicate this library is safe to shrink
 
-# End of content from androidx.sqlite:sqlite-android:2.5.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/c9167e98bc3b68e021255d95c02d8312/transformed/proguard.txt)
-# The proguard configuration file for the following section is androidx.versionedparcelable:versionedparcelable:1.1.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/345c7d63d254a7e6e8310d7de939ebc9/transformed/proguard.txt)
+# End of content from androidx.sqlite:sqlite-android:2.5.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/17a8e2f0db4399c8cf33697eb3be4792/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.versionedparcelable:versionedparcelable:1.1.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/42b52285c3d3080de1723189b998a2e7/transformed/proguard.txt)
 -keep class * implements androidx.versionedparcelable.VersionedParcelable
 -keep public class android.support.**Parcelizer { *; }
 -keep public class androidx.**Parcelizer { *; }
 -keep public class androidx.versionedparcelable.ParcelImpl
 
-# End of content from androidx.versionedparcelable:versionedparcelable:1.1.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/345c7d63d254a7e6e8310d7de939ebc9/transformed/proguard.txt)
-# The proguard configuration file for the following section is com.google.firebase:firebase-components:16.1.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/7b329b60038e26319a8f485c4e7c9b43/transformed/proguard.txt)
+# End of content from androidx.versionedparcelable:versionedparcelable:1.1.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/42b52285c3d3080de1723189b998a2e7/transformed/proguard.txt)
+# The proguard configuration file for the following section is com.google.firebase:firebase-components:16.1.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/925721e3e3a7018a8b8417a4251e7839/transformed/proguard.txt)
 -dontwarn com.google.firebase.components.Component$Instantiation
 -dontwarn com.google.firebase.components.Component$ComponentType
 
 -keep class * implements com.google.firebase.components.ComponentRegistrar
 
-# End of content from com.google.firebase:firebase-components:16.1.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/7b329b60038e26319a8f485c4e7c9b43/transformed/proguard.txt)
-# The proguard configuration file for the following section is com.google.android.datatransport:transport-backend-cct:3.1.8 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/d3f15e4ff78d762db61e0e94cc44db2e/transformed/proguard.txt)
+# End of content from com.google.firebase:firebase-components:16.1.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/925721e3e3a7018a8b8417a4251e7839/transformed/proguard.txt)
+# The proguard configuration file for the following section is com.google.android.datatransport:transport-backend-cct:3.1.8 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/7ce45ab09f0dc467e500e8d3e6e73955/transformed/proguard.txt)
 -dontwarn com.google.auto.value.AutoValue
 -dontwarn com.google.auto.value.AutoValue$Builder
 
-# End of content from com.google.android.datatransport:transport-backend-cct:3.1.8 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/d3f15e4ff78d762db61e0e94cc44db2e/transformed/proguard.txt)
-# The proguard configuration file for the following section is com.google.android.datatransport:transport-api:3.0.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/17349f729c6f48b1d7797fc54bd32347/transformed/proguard.txt)
+# End of content from com.google.android.datatransport:transport-backend-cct:3.1.8 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/7ce45ab09f0dc467e500e8d3e6e73955/transformed/proguard.txt)
+# The proguard configuration file for the following section is com.google.android.datatransport:transport-api:3.0.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/bb5b33a55a26548d984deefb6c99b199/transformed/proguard.txt)
 -dontwarn com.google.auto.value.AutoValue
 -dontwarn com.google.auto.value.AutoValue$Builder
 
-# End of content from com.google.android.datatransport:transport-api:3.0.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/17349f729c6f48b1d7797fc54bd32347/transformed/proguard.txt)
-# The proguard configuration file for the following section is com.google.firebase:firebase-encoders-json:18.0.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/073b43b72a16ecdd9ca9432f38cc5838/transformed/proguard.txt)
+# End of content from com.google.android.datatransport:transport-api:3.0.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/bb5b33a55a26548d984deefb6c99b199/transformed/proguard.txt)
+# The proguard configuration file for the following section is com.google.firebase:firebase-encoders-json:18.0.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/62c58590963a52f2b7c7aa4b39e3b68b/transformed/proguard.txt)
 
-# End of content from com.google.firebase:firebase-encoders-json:18.0.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/073b43b72a16ecdd9ca9432f38cc5838/transformed/proguard.txt)
-# The proguard configuration file for the following section is androidx.annotation:annotation-jvm:1.9.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/f89fa157e1017ab3583344126ec4adc0/transformed/shrink-rules/lib/META-INF/proguard/androidx-annotations.pro)
+# End of content from com.google.firebase:firebase-encoders-json:18.0.0 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/62c58590963a52f2b7c7aa4b39e3b68b/transformed/proguard.txt)
+# The proguard configuration file for the following section is androidx.annotation:annotation-jvm:1.9.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/7fe270bc51466e28db0f59aca87321d4/transformed/shrink-rules/lib/META-INF/proguard/androidx-annotations.pro)
 -keep,allowobfuscation @interface androidx.annotation.Keep
 -keep @androidx.annotation.Keep class * {*;}
 
@@ -776,7 +806,7 @@
   @androidx.annotation.DoNotInline <methods>;
 }
 
-# End of content from androidx.annotation:annotation-jvm:1.9.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/f89fa157e1017ab3583344126ec4adc0/transformed/shrink-rules/lib/META-INF/proguard/androidx-annotations.pro)
+# End of content from androidx.annotation:annotation-jvm:1.9.1 (extracted file: /home/delower/.gradle/caches/9.6.0/transforms/7fe270bc51466e28db0f59aca87321d4/transformed/shrink-rules/lib/META-INF/proguard/androidx-annotations.pro)
 # The proguard configuration file for the following section is AAPT2 generated keep rules (extracted file: /run/media/delower/Development/DevSync/Workspaces/Claude/StockAnchor/android/app/build/intermediates/aapt_proguard_file/release/processReleaseResources/aapt_rules.txt)
 -keep class androidx.core.app.CoreComponentFactory { <init>(); }
 -keep class androidx.core.content.FileProvider { <init>(); }

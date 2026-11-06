@@ -4,11 +4,11 @@
     name=":app"
     type="APP"
     maven="StockAnchor:app:unspecified"
-    agpVersion="9.5.0"
+    agpVersion="9.5.1"
     buildFolder="build"
-    bootClassPath="/home/delower/Android/Sdk/platforms/android-35/android.jar:/home/delower/Android/Sdk/build-tools/36.0.0/core-lambda-stubs.jar"
+    bootClassPath="/home/delower/Android/Sdk/platforms/android-37.0/android.jar:/home/delower/Android/Sdk/build-tools/36.0.0/core-lambda-stubs.jar"
     javaSourceLevel="17"
-    compileTarget="android-35"
+    compileTarget="android-37.0"
     highlightGradualR8Api="false">
   <lintOptions
       abortOnError="true"

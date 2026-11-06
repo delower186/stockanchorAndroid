@@ -102,7 +102,10 @@
     <string name="checking">Wird geprüft…</string>
     <string name="choose_a_category">Wähle eine Kategorie.</string>
     <string name="choose_csv">CSV wählen</string>
+    <string name="choose_from_contacts">Aus Kontakten wählen</string>
+    <string name="choose_google_account">Google-Konto wählen</string>
     <string name="choose_product">Produkt wählen</string>
+    <string name="choose_the_google_account_for_google_play">Wählen Sie das Google-Konto, das Sie bei Google Play verwenden</string>
     <string name="choose_two_different_warehouses">Wähle zwei verschiedene Lager.</string>
     <string name="clear">Leeren</string>
     <string name="cloud_backup">Cloud-Sicherung</string>
@@ -118,6 +121,7 @@
     <string name="columns_name_sku_barcode_category_warehouse">Spalten: name, sku, barcode, category, warehouse, quantity, unit_cost, sale_price. Produkte werden über SKU, dann Barcode, dann Name zugeordnet; fehlende Produkte und Kategorien werden angelegt. Mengen werden zum Bestand addiert.</string>
     <string name="complete_sale">Verkauf abschließen</string>
     <string name="completed_sales_and_their_invoices_appear">Abgeschlossene Verkäufe und ihre Rechnungen erscheinen hier.</string>
+    <string name="confirm_your_email">E-Mail bestätigen</string>
     <string name="confirm_your_password_to_continue">Bestätige dein Passwort, um fortzufahren.</string>
     <string name="continue_label">Weiter</string>
     <string name="continue_on_basic">Mit Basic weitermachen</string>
@@ -157,6 +161,7 @@
     <string name="delete_x">„%1$s“ löschen?</string>
     <string name="description">Beschreibung</string>
     <string name="discount">Rabatt</string>
+    <string name="discount_cant_exceed_subtotal">Der Rabatt darf die Zwischensumme nicht übersteigen</string>
     <string name="discount_x">Rabatt: -%1$s</string>
     <string name="edit">Bearbeiten</string>
     <string name="edit_category">Kategorie bearbeiten</string>
@@ -168,6 +173,9 @@
     <string name="email">E-Mail</string>
     <string name="email_login">E-Mail (Login)</string>
     <string name="ends">Endet</string>
+    <string name="enter_a_valid_email">Geben Sie eine gültige E-Mail-Adresse ein</string>
+    <string name="enter_a_valid_number">Geben Sie eine gültige Zahl ein</string>
+    <string name="enter_a_valid_phone_number">Geben Sie eine gültige Telefonnummer ein</string>
     <string name="enter_an_amount_greater_than_zero">Gib einen Betrag größer als null ein.</string>
     <string name="enter_one_of_the_recovery_codes">Gib einen deiner gespeicherten Wiederherstellungscodes ein. Jeder Code funktioniert einmal.</string>
     <string name="enter_the_6_digit_code_from">Gib den 6-stelligen Code aus deiner Authenticator-App ein.</string>
@@ -188,6 +196,7 @@
     <string name="exported_x_x_rows">%1$s Zeilen exportiert (%2$s)</string>
     <string name="filter">Filter</string>
     <string name="filtered">Gefiltert</string>
+    <string name="free_for_x_then_y">%1$s kostenlos, danach %2$s %3$s. Jederzeit in Google Play kündbar.</string>
     <string name="free_trial_x">%1$s kostenlos testen</string>
     <string name="from">Von</string>
     <string name="full_re_sync">Alles neu synchronisieren</string>
@@ -195,12 +204,15 @@
     <string name="generated_by_stock_anchor_page_x">Erstellt mit Stock Anchor  •  Seite %1$s von %2$s</string>
     <string name="get_notified_before_you_run_out">Lass dich benachrichtigen, bevor die Ware ausgeht.</string>
     <string name="get_notified_when_products_drop_below">Lass dich benachrichtigen, wenn Produkte unter ihren Mindestbestand fallen.</string>
+    <string name="google_play_account">Google Play-Konto</string>
+    <string name="google_play_account_hint">Ihr Google-Konto auf diesem Gerät. Es kann hier nicht geändert werden.</string>
     <string name="google_play_billing_error_x_x">Google Play Billing-Fehler %1$s%2$s</string>
     <string name="google_play_can_t_sell_subscriptions">Google Play kann für diese Kopie der App keine Abos verkaufen. Installiere Stock Anchor aus Google Play (Tester: über den Testlink), während du im Play Store angemeldet bist, und versuche es erneut.</string>
     <string name="google_play_doesn_t_offer_this">Google Play bietet dieses Abo für diese App nicht an. Installiere Stock Anchor aus Google Play (Tester: über den Testlink) und prüfe, ob das Abo „%1$s“ in der Play Console aktiv ist.</string>
     <string name="gross_loss">Bruttoverlust</string>
     <string name="gross_profit">Bruttogewinn</string>
     <string name="group_products_e_g_electronics_groceries">Gruppiere Produkte (z. B. Elektronik, Lebensmittel), um sie schnell zu filtern.</string>
+    <string name="have_a_promo_code">Haben Sie einen Promo-Code?</string>
     <string name="history">Verlauf</string>
     <string name="history_cancellations_pdf">Verlauf, Stornos, PDF</string>
     <string name="i_saved_them">Gespeichert</string>
@@ -234,8 +246,8 @@
     <string name="label_status">STATUS</string>
     <string name="label_total">GESAMT</string>
     <string name="language">Sprache</string>
-    <string name="language_hint">Ändert die Texte der App. Zahlen und Daten folgen den Einstellungen deines Telefons.</string>
-    <string name="language_system">Sprache des Telefons</string>
+    <string name="language_auto_x">Automatisch (nach Land): %1$s</string>
+    <string name="language_hint">Automatisch verwendet die Sprache deines Landes, wenn die App sie hat, sonst Englisch. Zahlen und Daten folgen den Einstellungen deines Telefons.</string>
     <string name="last_synced">Zuletzt synchronisiert</string>
     <string name="later">Später</string>
     <string name="less">Weniger</string>
@@ -266,6 +278,7 @@
     <string name="move_stock_between_warehouses">Bestand zwischen Lagern verschieben</string>
     <string name="move_your_data_to_the_cloud">Daten in die Cloud übertragen?</string>
     <string name="movement_history">Bewegungsverlauf</string>
+    <string name="must_be_more_than_zero">Muss größer als null sein</string>
     <string name="name">Name</string>
     <string name="name_2">Name *</string>
     <string name="name_sku_or_barcode">Name, SKU oder Barcode</string>
@@ -282,6 +295,7 @@
     <string name="new_recovery_codes">Neue Wiederherstellungscodes</string>
     <string name="new_sale">Neuer Verkauf</string>
     <string name="new_supplier">Neuer Lieferant</string>
+    <string name="new_to_stock_anchor_see_plans">Neu bei Stock Anchor? Tarife ansehen</string>
     <string name="new_warehouse">Neues Lager</string>
     <string name="nightly_automatic_backups_of_your_whole">Nächtliche automatische Sicherung deines gesamten Inventars und Wiederherstellung mit einem Tippen.</string>
     <string name="no_access">Kein Zugriff</string>
@@ -294,6 +308,7 @@
     <string name="no_categories">Keine Kategorien</string>
     <string name="no_category">Keine Kategorie</string>
     <string name="no_contact_details">Keine Kontaktdaten</string>
+    <string name="no_contacts_app_found">Auf diesem Gerät wurde keine Kontakte-App gefunden.</string>
     <string name="no_expenses_x">Keine Ausgaben · %1$s</string>
     <string name="no_items_yet">Noch keine Artikel</string>
     <string name="no_matches">Keine Treffer</string>
@@ -320,6 +335,7 @@
     <string name="ok">OK</string>
     <string name="on_x_recovery_codes_left">An · noch %1$s Wiederherstellungscodes</string>
     <string name="only_empty_warehouses_can_be_deleted">Nur leere Lager können gelöscht werden.</string>
+    <string name="only_x_x_available_here">Hier sind nur %1$s %2$s verfügbar</string>
     <string name="only_x_x_in_this_warehouse">Nur %1$s %2$s in diesem Lager</string>
     <string name="open_authenticator_app">Authenticator-App öffnen</string>
     <string name="open_web_panel">Webportal öffnen</string>
@@ -369,8 +385,11 @@
     <string name="products_below_minimum">Produkte unter Mindestbestand</string>
     <string name="products_in_this_category_will_become">Produkte in dieser Kategorie sind danach ohne Kategorie.</string>
     <string name="profit">Gewinn</string>
+    <string name="promo_code">Promo-Code</string>
+    <string name="promo_code_accepted_one_last_step">Promo-Code akzeptiert – ein letzter Schritt</string>
     <string name="purchase">Einkauf</string>
     <string name="purchase_failed_x">Kauf fehlgeschlagen (%1$s).</string>
+    <string name="purchase_no_longer_active">Laut Google Play ist dieser Kauf nicht mehr aktiv, daher wurde kein Konto erstellt. Wähle einen Tarif, um es erneut zu versuchen. Deine Basic-Daten bleiben auf diesem Gerät.</string>
     <string name="purchase_total">EINKAUF GESAMT</string>
     <string name="purchases">Einkäufe</string>
     <string name="quantities_must_be_greater_than_zero">Mengen müssen größer als null sein.</string>
@@ -386,6 +405,7 @@
     <string name="record_rent_salaries_and_other_costs">Erfasse Miete, Gehälter und andere Kosten, um deinen echten Gewinn nach Ausgaben zu sehen.</string>
     <string name="record_rent_salaries_and_other_costs_2">Erfasse Miete, Gehälter und andere Kosten, um deinen Nettogewinn in der Übersicht zu sehen.</string>
     <string name="recovery_code">Wiederherstellungscode</string>
+    <string name="redeem">Einlösen</string>
     <string name="reference_note">Referenz / Notiz</string>
     <string name="refresh_plan_status">Tarifstatus aktualisieren</string>
     <string name="remove">Entfernen</string>
@@ -393,6 +413,8 @@
     <string name="renew">Verlängern</string>
     <string name="renews">Verlängert sich</string>
     <string name="rent_salaries_for_net_profit">Miete, Gehälter… für den Nettogewinn</string>
+    <string name="resend_code">Code erneut senden</string>
+    <string name="resend_code_in_x_seconds">Erneut senden in %1$d s</string>
     <string name="reset">Zurücksetzen</string>
     <string name="restore">Wiederherstellen</string>
     <string name="restore_purchase">Kauf wiederherstellen</string>
@@ -408,6 +430,7 @@
     <string name="s_2_enter_the_6_digit_code">2. Gib den 6-stelligen Code aus der App ein:</string>
     <string name="s_3_days">3 Tage</string>
     <string name="s_3_months">3 Monate</string>
+    <string name="s_4_weeks">4 Wochen</string>
     <string name="s_6_months">6 Monate</string>
     <string name="s_7_days">7 Tage</string>
     <string name="sale">Verkauf</string>
@@ -446,13 +469,15 @@
     <string name="signed_in_as">Angemeldet als</string>
     <string name="signed_out">Abgemeldet</string>
     <string name="skipped_rows">Übersprungen:</string>
+    <string name="sku_is_already_used_by_x">SKU wird bereits von %1$s verwendet</string>
     <string name="something_went_wrong">Etwas ist schiefgelaufen</string>
     <string name="spreadsheets_in_and_out">Tabellen rein und raus</string>
     <string name="staff_accounts">Mitarbeiterkonten</string>
+    <string name="start_free_trial">Kostenlose Testphase starten</string>
     <string name="start_fresh">Neu beginnen</string>
     <string name="status">Status</string>
     <string name="stock_added">Bestand hinzugefügt</string>
-    <string name="stock_anchor_cloud">Stock Anchor Cloud</string>
+    <string name="stock_anchor_cloud">Stock-Anker-Cloud</string>
     <string name="stock_anchor_premium">Stock Anchor Premium</string>
     <string name="stock_anchor_premium_is_active">Stock Anchor Premium ist aktiv 🎉</string>
     <string name="stock_by_warehouse">Bestand pro Lager</string>
@@ -499,8 +524,11 @@
     <string name="the_subscription_has_no_active_plans">Das Abo hat noch keine aktiven Tarife. Aktiviere in der Play Console die monatlichen und jährlichen Basis-Abos.</string>
     <string name="the_web_panel_is_part_of">Das Webportal ist Teil von Premium</string>
     <string name="they_will_be_signed_out_on">Die Person wird auf allen Geräten abgemeldet und verliert den Zugriff auf dieses Inventar.</string>
+    <string name="this_account_has_no_active_plan">Dieses Konto hat keinen aktiven Premium-Tarif, daher wurden Sie nicht angemeldet. Abonnieren Sie, um die Cloud zu nutzen. Ihre Basic-Daten bleiben auf diesem Gerät.</string>
     <string name="this_device_only">Nur dieses Gerät</string>
+    <string name="this_field_is_required">Dieses Feld ist erforderlich</string>
     <string name="this_month">Dieser Monat</string>
+    <string name="this_number_is_too_large">Diese Zahl ist zu groß</string>
     <string name="this_product_has_no_stock_in">Dieses Produkt hat in keinem Lager Bestand.</string>
     <string name="this_snapshot_will_be_permanently_removed">Diese Sicherung wird endgültig gelöscht.</string>
     <string name="this_warehouse">diesem Lager</string>
@@ -526,6 +554,7 @@
     <string name="two_step_verification">Bestätigung in zwei Schritten</string>
     <string name="two_step_verification_is_off">Bestätigung in zwei Schritten ist aus</string>
     <string name="two_step_verification_is_on">Bestätigung in zwei Schritten ist an</string>
+    <string name="type_the_number">Nummer eingeben</string>
     <string name="uncategorised">Ohne Kategorie</string>
     <string name="unit">Einheit</string>
     <string name="unit_cost">Stückpreis</string>
@@ -537,9 +566,11 @@
     <string name="upload_my_data">Meine Daten hochladen</string>
     <string name="upload_the_products_stock_and_sales">Lade die Produkte, Bestände und Verkäufe von diesem Gerät in dein neues Cloud-Konto hoch oder starte mit einem leeren Cloud-Inventar.</string>
     <string name="use_a_recovery_code">Wiederherstellungscode verwenden</string>
+    <string name="use_at_most_x_characters">Verwenden Sie höchstens %1$d Zeichen</string>
     <string name="use_cloud_only">Nur Cloud verwenden</string>
     <string name="use_premium_features_in_your_browser">Nutze Premium-Funktionen im Browser unter %1$s</string>
     <string name="use_the_authenticator_app">Authenticator-App verwenden</string>
+    <string name="verification_code">Bestätigungscode</string>
     <string name="verify">Bestätigen</string>
     <string name="view_dashboard_reports">Übersicht &amp; Berichte ansehen</string>
     <string name="warehouse">Lager</string>
@@ -548,6 +579,7 @@
     <string name="warehouse_saved">Lager gespeichert</string>
     <string name="warehouses">Lager</string>
     <string name="we_couldn_t_confirm_the_subscription">Wir konnten das Abo noch nicht bestätigen.</string>
+    <string name="we_sent_a_6_digit_code_to_x">Wir haben einen 6-stelligen Code an %1$s gesendet. Geben Sie ihn ein, um Ihr Konto fertig zu erstellen.</string>
     <string name="who_you_buy_from">Bei wem du einkaufst</string>
     <string name="work_offline_on_basic_keep_data">Offline mit Basic arbeiten (Daten bleiben auf diesem Gerät)</string>
     <string name="x_continued">%1$s (Fortsetzung)</string>

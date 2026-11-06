@@ -1,18 +1,22 @@
 [
     {
-        "merged": "com.sandalia.stockanchor.app-debug-69:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "com.sandalia.stockanchor.app-main-71:/drawable/ic_launcher_foreground.xml"
+        "merged": "com.sandalia.stockanchor.app-debug-71:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.sandalia.stockanchor.app-main-73:/mipmap-anydpi-v26/ic_launcher_round.xml"
     },
     {
-        "merged": "com.sandalia.stockanchor.app-debug-69:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "com.sandalia.stockanchor.app-main-71:/mipmap-anydpi-v26/ic_launcher_round.xml"
+        "merged": "com.sandalia.stockanchor.app-debug-71:/xml_file_paths.xml.flat",
+        "source": "com.sandalia.stockanchor.app-main-73:/xml/file_paths.xml"
     },
     {
-        "merged": "com.sandalia.stockanchor.app-debug-69:/xml_file_paths.xml.flat",
-        "source": "com.sandalia.stockanchor.app-main-71:/xml/file_paths.xml"
+        "merged": "com.sandalia.stockanchor.app-debug-71:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.sandalia.stockanchor.app-main-73:/drawable/ic_launcher_foreground.xml"
     },
     {
-        "merged": "com.sandalia.stockanchor.app-debug-69:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "com.sandalia.stockanchor.app-main-71:/mipmap-anydpi-v26/ic_launcher.xml"
+        "merged": "com.sandalia.stockanchor.app-debug-71:/xml_data_extraction_rules.xml.flat",
+        "source": "com.sandalia.stockanchor.app-main-73:/xml/data_extraction_rules.xml"
+    },
+    {
+        "merged": "com.sandalia.stockanchor.app-debug-71:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.sandalia.stockanchor.app-main-73:/mipmap-anydpi-v26/ic_launcher.xml"
     }
 ]

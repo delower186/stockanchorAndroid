@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sandalia.stockanchor"
-    android:versionCode="5"
-    android:versionName="v1.0.5" >
+    android:versionCode="8"
+    android:versionName="v1.0.8" >
 
     <uses-sdk
         android:minSdkVersion="26"
-        android:targetSdkVersion="36" />
+        android:targetSdkVersion="37" />
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -36,6 +36,7 @@
         android:name="com.sandalia.stockanchor.StockAnchorApp"
         android:allowBackup="false"
         android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+        android:dataExtractionRules="@xml/data_extraction_rules"
         android:debuggable="true"
         android:extractNativeLibs="false"
         android:icon="@mipmap/ic_launcher"
@@ -55,6 +56,12 @@
             </intent-filter>
         </activity>
 
+        <!-- ML Kit locks its scanner to portrait; large screens ignore that from Android 16, so don't request it. -->
+        <activity
+            android:name="com.google.mlkit.vision.codescanner.internal.GmsBarcodeScanningDelegateActivity"
+            android:exported="false"
+            android:screenOrientation="unspecified" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.sandalia.stockanchor.fileprovider"
@@ -69,17 +76,6 @@
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="barcode_ui" />
-        <!--
-        This activity is an invisible delegate activity to start scanner activity
-        and receive result, so it's unnecessary to support screen orientation and
-        we can avoid any side effect from activity recreation in any case.
-        -->
-        <activity
-            android:name="com.google.mlkit.vision.codescanner.internal.GmsBarcodeScanningDelegateActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" >
-        </activity>
-
         <meta-data
             android:name="com.google.android.play.billingclient.version"
             android:value="8.3.0" />
