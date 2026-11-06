@@ -19,15 +19,15 @@ val keystoreProps = Properties().apply {
 
 android {
     namespace = "com.sandalia.stockanchor"
-    compileSdk = 35
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.sandalia.stockanchor"
         minSdk = 26
-        targetSdk = 36
+        targetSdk = 37
         // Bump versionCode on every Play upload
-        versionCode = 6
-        versionName = "v1.0.6"
+        versionCode = 7
+        versionName = "v1.0.7"
 
         // Base URL of the Laravel API (must end with /api/). 10.0.2.2 = host machine from the emulator.
         buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:8000/api/\"")
