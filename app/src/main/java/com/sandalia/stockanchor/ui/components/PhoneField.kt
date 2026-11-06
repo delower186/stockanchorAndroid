@@ -54,12 +54,12 @@ fun PhoneField(value: String, onValueChange: (String) -> Unit, modifier: Modifie
     var menuOpen by remember { mutableStateOf(false) }
     var typing by remember { mutableStateOf(false) }
     val isEmpty by rememberUpdatedState(value.isEmpty())
-    val touched = rememberFieldTouched()
+    val touched = rememberFieldTouched(value)
     val error = Validate.phone(value).takeIf { touched.value }
     val latestOnChange by rememberUpdatedState(onValueChange)
 
     val picker = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        result.data?.data?.let { uri -> phoneNumberAt(context, uri)?.let { touched.onEdit(); latestOnChange(it.take(FieldLimit.PHONE)) } }
+        result.data?.data?.let { uri -> phoneNumberAt(context, uri)?.let { touched.onEdit(it); latestOnChange(it.take(FieldLimit.PHONE)) } }
     }
     val openContacts = {
         runCatching { picker.launch(Intent(Intent.ACTION_PICK, ContactsContract.CommonDataKinds.Phone.CONTENT_URI)) }
@@ -73,7 +73,7 @@ fun PhoneField(value: String, onValueChange: (String) -> Unit, modifier: Modifie
 
     Box(modifier) {
         OutlinedTextField(
-            value, { touched.onEdit(); onValueChange(it.take(FieldLimit.PHONE)) },
+            value, { touched.onEdit(it); onValueChange(it.take(FieldLimit.PHONE)) },
             label = { Text(str(R.string.phone)) },
             singleLine = true,
             isError = error != null,

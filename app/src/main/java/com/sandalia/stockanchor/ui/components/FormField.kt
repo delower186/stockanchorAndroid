@@ -4,9 +4,12 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -15,15 +18,30 @@ import androidx.compose.ui.text.input.VisualTransformation
 
 /**
  * Remembers whether a field has been used, so its error appears after typing in it or leaving it, not on an untouched form.
+ * When the form empties the field itself (after a successful save) it counts as untouched again; emptying it by hand does not.
  */
 @Composable
-fun rememberFieldTouched(): FieldTouched {
+fun rememberFieldTouched(fieldValue: String): FieldTouched {
     var touched by rememberSaveable { mutableStateOf(false) }
     var hadFocus by remember { mutableStateOf(false) }
+    var lastValue by rememberSaveable { mutableStateOf(fieldValue) }
+    SideEffect { if (fieldValue.isNotEmpty()) lastValue = fieldValue }
+    val clearedByForm = fieldValue.isEmpty() && lastValue.isNotEmpty()
+    val isClearedByForm by rememberUpdatedState(clearedByForm)
+    LaunchedEffect(clearedByForm) {
+        if (clearedByForm) {
+            touched = false
+            hadFocus = false
+            lastValue = ""
+        }
+    }
     return remember {
         object : FieldTouched {
-            override val value get() = touched
-            override fun onEdit() { touched = true }
+            override val value get() = touched && !isClearedByForm
+            override fun onEdit(typed: String) {
+                touched = true
+                lastValue = typed
+            }
             override fun onFocus(focused: Boolean) {
                 if (focused) hadFocus = true else if (hadFocus) touched = true
             }
@@ -33,7 +51,7 @@ fun rememberFieldTouched(): FieldTouched {
 
 interface FieldTouched {
     val value: Boolean
-    fun onEdit()
+    fun onEdit(typed: String)
     fun onFocus(focused: Boolean)
 }
 
@@ -58,14 +76,14 @@ fun FormField(
     trailingIcon: (@Composable () -> Unit)? = null,
     supporting: (@Composable () -> Unit)? = null,
 ) {
-    val touched = rememberFieldTouched()
+    val touched = rememberFieldTouched(value)
     // A value saved before the limit existed is flagged at once and can only get shorter, never cut off behind the person's back.
     val overLimit = maxLength != null && value.length > maxLength
     val shown = error.takeIf { touched.value || overLimit }
     OutlinedTextField(
         value = value,
         onValueChange = { typed ->
-            touched.onEdit()
+            touched.onEdit(typed)
             when {
                 maxLength == null || typed.length <= maxLength || typed.length < value.length -> onValueChange(typed)
                 !overLimit -> onValueChange(typed.take(maxLength))

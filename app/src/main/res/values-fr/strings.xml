@@ -603,6 +603,7 @@
     <string name="resend_code_in_x_seconds">Renvoyer le code dans %1$d s</string>
     <string name="new_to_stock_anchor_see_plans">Nouveau sur Stock Anchor ? Voir les formules</string>
     <string name="this_account_has_no_active_plan">Ce compte n\'a pas de formule Premium active, vous n\'avez donc pas été connecté. Abonnez-vous pour utiliser le cloud. Vos données Basic restent sur cet appareil.</string>
+    <string name="purchase_no_longer_active">Selon Google Play, cet achat n\'est plus actif : aucun compte n\'a donc été créé. Choisissez un forfait pour réessayer. Vos données Basic restent sur cet appareil.</string>
     <string name="choose_from_contacts">Choisir dans les contacts</string>
     <string name="type_the_number">Saisir le numéro</string>
     <string name="no_contacts_app_found">Aucune application de contacts trouvée sur cet appareil.</string>

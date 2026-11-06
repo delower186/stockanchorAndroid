@@ -621,6 +621,7 @@
     <string name="resend_code_in_x_seconds">إعادة الإرسال خلال %1$d ث</string>
     <string name="new_to_stock_anchor_see_plans">جديد في Stock Anchor؟ اطلع على الخطط</string>
     <string name="this_account_has_no_active_plan">لا يملك هذا الحساب خطة Premium نشطة، لذلك لم يتم تسجيل دخولك. اشترك لاستخدام السحابة. تبقى بيانات Basic على هذا الجهاز.</string>
+    <string name="purchase_no_longer_active">يفيد Google Play بأن عملية الشراء هذه لم تعد نشطة، لذلك لم يتم إنشاء أي حساب. اختر خطة للمحاولة مرة أخرى. تبقى بياناتك الأساسية على هذا الجهاز.</string>
     <string name="choose_from_contacts">الاختيار من جهات الاتصال</string>
     <string name="type_the_number">كتابة الرقم</string>
     <string name="no_contacts_app_found">لم يتم العثور على تطبيق جهات اتصال على هذا الجهاز.</string>

@@ -597,6 +597,7 @@
     <string name="resend_code_in_x_seconds">Erneut senden in %1$d s</string>
     <string name="new_to_stock_anchor_see_plans">Neu bei Stock Anchor? Tarife ansehen</string>
     <string name="this_account_has_no_active_plan">Dieses Konto hat keinen aktiven Premium-Tarif, daher wurden Sie nicht angemeldet. Abonnieren Sie, um die Cloud zu nutzen. Ihre Basic-Daten bleiben auf diesem Gerät.</string>
+    <string name="purchase_no_longer_active">Laut Google Play ist dieser Kauf nicht mehr aktiv, daher wurde kein Konto erstellt. Wähle einen Tarif, um es erneut zu versuchen. Deine Basic-Daten bleiben auf diesem Gerät.</string>
     <string name="choose_from_contacts">Aus Kontakten wählen</string>
     <string name="type_the_number">Nummer eingeben</string>
     <string name="no_contacts_app_found">Auf diesem Gerät wurde keine Kontakte-App gefunden.</string>

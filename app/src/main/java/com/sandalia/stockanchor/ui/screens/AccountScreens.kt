@@ -497,6 +497,7 @@ fun AccountScreen(mode: String, nav: NavHostController) {
     var email by rememberSaveable { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var notPremium by remember { mutableStateOf(false) }
+    var purchaseRefused by remember { mutableStateOf(false) }
     var challenge by rememberSaveable { mutableStateOf<String?>(null) }
 
     // A new account always uses the Google account from the paywall. It can arrive here without one (Restore purchase).
@@ -532,11 +533,25 @@ fun AccountScreen(mode: String, nav: NavHostController) {
         }
     }
 
+    // Google Play no longer counts this purchase, so retrying with it can never work: forget it and go back to the plans.
+    fun purchaseNoLongerActive() {
+        container.session.setPendingPurchase(null, null)
+        codeSentTo = null
+        purchaseRefused = true
+        notPremium = true
+    }
+
     suspend fun sendCode() {
-        val sent = container.account.sendRegistrationCode(newAccountEmail)
+        val sent = try {
+            container.account.sendRegistrationCode(newAccountEmail)
+        } catch (e: ApiException) {
+            if (e.code == "premium_required") { purchaseNoLongerActive(); return } else throw e
+        }
         codeError = null
         codeSentTo = newAccountEmail
         resendIn = sent.resendAfterSeconds
+        // The server just confirmed the purchase. Acknowledge it now, or Google refunds it while the person is still signing up.
+        runCatching { container.billing.acknowledgeAll() }
     }
 
     ScreenScaffold(
@@ -615,7 +630,7 @@ fun AccountScreen(mode: String, nav: NavHostController) {
                         container.account.register(name, address, password, company, currency, code)
                         codeSentTo = null
                     } catch (e: ApiException) {
-                        codeError = e.message
+                        if (e.code == "premium_required") purchaseNoLongerActive() else codeError = e.message
                         return@run
                     }
                     afterAuth()
@@ -651,9 +666,9 @@ fun AccountScreen(mode: String, nav: NavHostController) {
     }
 
     if (notPremium) AlertDialog(
-        onDismissRequest = { notPremium = false },
+        onDismissRequest = { notPremium = false; if (purchaseRefused) nav.popBackStack() },
         title = { Text(str(R.string.no_active_subscription)) },
-        text = { Text(str(R.string.this_account_has_no_active_plan)) },
+        text = { Text(str(if (purchaseRefused) R.string.purchase_no_longer_active else R.string.this_account_has_no_active_plan)) },
         confirmButton = { TextButton(onClick = { notPremium = false; nav.navigate(Routes.PAYWALL) { popUpTo(Routes.PAYWALL) { inclusive = true } } }) { Text(str(R.string.see_plans)) } },
         dismissButton = { TextButton(onClick = { notPremium = false; nav.popBackStack() }) { Text(str(R.string.later)) } },
     )

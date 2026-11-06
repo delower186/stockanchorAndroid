@@ -597,6 +597,7 @@
     <string name="resend_code_in_x_seconds">%1$d सेकंड में दोबारा भेजें</string>
     <string name="new_to_stock_anchor_see_plans">Stock Anchor पर नए हैं? प्लान देखें</string>
     <string name="this_account_has_no_active_plan">इस खाते में कोई सक्रिय Premium प्लान नहीं है, इसलिए आपको साइन इन नहीं किया गया। क्लाउड इस्तेमाल करने के लिए सब्सक्राइब करें। आपका Basic डेटा इसी डिवाइस पर रहेगा।</string>
+    <string name="purchase_no_longer_active">Google Play के अनुसार यह खरीदारी अब सक्रिय नहीं है, इसलिए कोई खाता नहीं बनाया गया। फिर से कोशिश करने के लिए कोई प्लान चुनें। आपका बेसिक डेटा इसी डिवाइस पर रहेगा।</string>
     <string name="choose_from_contacts">संपर्कों से चुनें</string>
     <string name="type_the_number">नंबर टाइप करें</string>
     <string name="no_contacts_app_found">इस डिवाइस पर कोई संपर्क ऐप नहीं मिला।</string>

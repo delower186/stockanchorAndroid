@@ -597,6 +597,7 @@
     <string name="resend_code_in_x_seconds">%1$d সেকেন্ড পরে আবার পাঠান</string>
     <string name="new_to_stock_anchor_see_plans">Stock Anchor-এ নতুন? প্ল্যান দেখুন</string>
     <string name="this_account_has_no_active_plan">এই অ্যাকাউন্টে কোনো সক্রিয় Premium প্ল্যান নেই, তাই আপনাকে সাইন ইন করানো হয়নি। ক্লাউড ব্যবহার করতে সাবস্ক্রাইব করুন। আপনার Basic ডেটা এই ডিভাইসেই থাকবে।</string>
+    <string name="purchase_no_longer_active">Google Play জানাচ্ছে এই কেনাকাটাটি আর সক্রিয় নেই, তাই কোনো অ্যাকাউন্ট তৈরি হয়নি। আবার চেষ্টা করতে একটি প্ল্যান বেছে নিন। আপনার বেসিক ডেটা এই ডিভাইসেই থাকবে।</string>
     <string name="choose_from_contacts">পরিচিতি থেকে বেছে নিন</string>
     <string name="type_the_number">নম্বর টাইপ করুন</string>
     <string name="no_contacts_app_found">এই ডিভাইসে কোনো কন্টাক্টস অ্যাপ পাওয়া যায়নি।</string>

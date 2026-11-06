@@ -315,11 +315,11 @@ fun NumberField(
     decimal: Boolean = true,
     error: String? = null,
 ) {
-    val touched = rememberFieldTouched()
+    val touched = rememberFieldTouched(value)
     val shown = error.takeIf { touched.value }
     OutlinedTextField(
         value = value,
-        onValueChange = { v -> if (v.isEmpty() || v.matches(Regex(if (decimal) "^\\d*\\.?\\d*$" else "^\\d*$"))) { touched.onEdit(); onValueChange(v) } },
+        onValueChange = { v -> if (v.isEmpty() || v.matches(Regex(if (decimal) "^\\d*\\.?\\d*$" else "^\\d*$"))) { touched.onEdit(v); onValueChange(v) } },
         label = { Text(label) },
         singleLine = true,
         isError = shown != null,

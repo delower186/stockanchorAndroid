@@ -597,6 +597,7 @@
     <string name="resend_code_in_x_seconds">Resend code in %1$d s</string>
     <string name="new_to_stock_anchor_see_plans">New to Stock Anchor? See plans</string>
     <string name="this_account_has_no_active_plan">This account doesn\'t have an active Premium plan, so you weren\'t signed in. Subscribe to use the cloud. Your Basic data stays on this device.</string>
+    <string name="purchase_no_longer_active">Google Play says this purchase is no longer active, so no account was created. Choose a plan to try again. Your Basic data stays on this device.</string>
     <string name="choose_from_contacts">Choose from contacts</string>
     <string name="type_the_number">Type the number</string>
     <string name="no_contacts_app_found">No contacts app found on this device.</string>
