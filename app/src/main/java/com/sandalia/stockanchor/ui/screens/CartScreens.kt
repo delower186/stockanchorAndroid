@@ -76,9 +76,10 @@ import com.sandalia.stockanchor.ui.components.PhoneField
 import com.sandalia.stockanchor.ui.components.ScreenScaffold
 import com.sandalia.stockanchor.ui.components.rememberRunner
 import com.sandalia.stockanchor.ui.navigation.Routes
-import com.sandalia.stockanchor.ui.theme.Amber
 import com.sandalia.stockanchor.util.BarcodeScanner
 import com.sandalia.stockanchor.util.Fmt
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 /** Cart state survives tab switches and rotation. */
@@ -120,15 +121,25 @@ fun SellScreen(onDone: (Long) -> Unit, nav: NavHostController) {
     val openPaywall = LocalOpenPaywall.current
     var picking by remember { mutableStateOf(false) }
 
+    // The list is briefly empty while it loads; that must not lose the warehouse the person chose.
     LaunchedEffect(warehouses) {
-        if (vm.warehouseId == null || warehouses.none { it.id == vm.warehouseId }) vm.warehouseId = warehouses.firstOrNull { it.isDefault }?.id ?: warehouses.firstOrNull()?.id
+        if (warehouses.isNotEmpty() && warehouses.none { it.id == vm.warehouseId }) vm.warehouseId = warehouses.firstOrNull { it.isDefault }?.id ?: warehouses.first().id
     }
+
+    // Live stock of the selected warehouse, so changing warehouse with a filled cart is checked too. Null while loading.
+    val stockHere by remember(vm.warehouseId) {
+        vm.warehouseId?.let { id -> container.db.catalog().products("", null, id, null).map { rows -> rows.associate { it.id to it.quantity } } } ?: flowOf(null)
+    }.collectAsStateWithLifecycle(null)
+    val availableHere = { line: CartLine -> stockHere?.let { it[line.productId] ?: 0.0 } }
 
     val subtotal = vm.lines.sumOf { it.lineTotal }
     val discount = (vm.discount.toDoubleOrNull() ?: 0.0).coerceIn(0.0, subtotal)
     val total = subtotal - discount
     val discountError = Validate.money(vm.discount) ?: str(R.string.discount_cant_exceed_subtotal).takeIf { (vm.discount.toDoubleOrNull() ?: 0.0) > subtotal }
-    val linesValid = vm.lines.all { it.quantity > 0 && it.quantity <= FieldLimit.QUANTITY_MAX && it.unitAmount >= 0 && it.unitAmount <= FieldLimit.MONEY_MAX }
+    val linesValid = vm.lines.all { line ->
+        line.quantity > 0 && line.quantity <= FieldLimit.QUANTITY_MAX && line.unitAmount >= 0 && line.unitAmount <= FieldLimit.MONEY_MAX &&
+            line.quantity <= (availableHere(line) ?: line.quantity)
+    }
 
     ScreenScaffold(
         str(R.string.new_sale), busy = runner.busy,
@@ -189,9 +200,9 @@ fun SellScreen(onDone: (Long) -> Unit, nav: NavHostController) {
                                 val code = BarcodeScanner.scan(context) ?: return@launch
                                 val p = container.repo.findByCode(code)
                                 val here = p?.let { found -> vm.warehouseId?.let { container.repo.stockOf(found.id, it) } } ?: 0.0
-                                // Same rule as the picker: assigned to the selected warehouse, or stocked there.
+                                // Same rule as the picker: only what the selected warehouse has in stock.
                                 if (p == null) runner.toast(str(R.string.no_product_with_barcode_x, code))
-                                else if (p.warehouseId != vm.warehouseId && here <= 0) {
+                                else if (here <= 0) {
                                     val wName = warehouses.firstOrNull { it.id == vm.warehouseId }?.name ?: str(R.string.this_warehouse)
                                     runner.toast(str(R.string.x_isn_t_available_in_x, p.name, wName))
                                 } else {
@@ -212,7 +223,7 @@ fun SellScreen(onDone: (Long) -> Unit, nav: NavHostController) {
             }
             itemsIndexed(vm.lines, key = { _, l -> l.productId }) { i, line ->
                 CartLineCard(line, session.currency, str(R.string.price), onQty = { vm.setQty(i, it) }, onAmount = { vm.setAmount(i, it) },
-                    warnStock = line.quantity > line.available)
+                    availableHere = availableHere(line) ?: line.available)
             }
             if (vm.lines.isNotEmpty()) item {
                 AppCard(Modifier.fillMaxWidth()) {
@@ -236,7 +247,7 @@ fun SellScreen(onDone: (Long) -> Unit, nav: NavHostController) {
 
 @Composable
 private fun CartLineCard(
-    line: CartLine, currency: String, amountLabel: String, onQty: (Double) -> Unit, onAmount: (Double) -> Unit, warnStock: Boolean = false,
+    line: CartLine, currency: String, amountLabel: String, onQty: (Double) -> Unit, onAmount: (Double) -> Unit, availableHere: Double? = null,
 ) {
     var amountText by remember(line.productId) { mutableStateOf(Fmt.qty(line.unitAmount).replace(",", "")) }
     var qtyText by remember(line.productId, line.quantity) { mutableStateOf(Fmt.qty(line.quantity).replace(",", "")) }
@@ -244,8 +255,8 @@ private fun CartLineCard(
         Row(verticalAlignment = Alignment.CenterVertically) {
             Column(Modifier.weight(1f)) {
                 Text(line.name, style = MaterialTheme.typography.titleSmall)
-                if (warnStock) Text(str(R.string.only_x_x_in_this_warehouse, Fmt.qty(line.available), line.unit),
-                    style = MaterialTheme.typography.bodySmall, color = Amber)
+                if (availableHere != null && line.quantity > availableHere) Text(str(R.string.only_x_x_in_this_warehouse, Fmt.qty(availableHere), line.unit),
+                    style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
             }
             IconButton(onClick = { onQty(0.0) }) { Icon(Icons.Filled.Close, str(R.string.remove)) }
         }
@@ -283,9 +294,11 @@ fun PurchaseScreen(onBack: () -> Unit) {
     val openPaywall = LocalOpenPaywall.current
     var picking by remember { mutableStateOf(false) }
 
+    // The list is briefly empty while it loads; that must not lose the warehouse the person chose.
     LaunchedEffect(warehouses) {
-        if (vm.warehouseId == null || warehouses.none { it.id == vm.warehouseId }) vm.warehouseId = warehouses.firstOrNull { it.isDefault }?.id ?: warehouses.firstOrNull()?.id
+        if (warehouses.isNotEmpty() && warehouses.none { it.id == vm.warehouseId }) vm.warehouseId = warehouses.firstOrNull { it.isDefault }?.id ?: warehouses.first().id
     }
+    val supplierFilter = vm.supplierId.takeIf { session.premiumActive }
     val total = vm.lines.sumOf { it.lineTotal }
 
     ScreenScaffold(
@@ -349,6 +362,7 @@ fun PurchaseScreen(onBack: () -> Unit) {
                             val code = BarcodeScanner.scan(context) ?: return@launch
                             val p = container.repo.findByCode(code)
                             if (p == null) runner.toast(str(R.string.no_product_with_barcode_x, code))
+                            else if (supplierFilter != null && p.supplierId != supplierFilter) runner.toast(str(R.string.x_isn_t_from_this_supplier, p.name))
                             else vm.add(ProductWithStock(p.id, p.name, p.sku, p.barcode, p.categoryId, null, p.warehouseId, null, p.unit, p.costPrice, p.salePrice, p.lowStockThreshold, 0.0), purchase = true)
                         }
                     }, modifier = Modifier.height(48.dp)) { Icon(Icons.Filled.QrCodeScanner, str(R.string.scan)) }
@@ -363,7 +377,7 @@ fun PurchaseScreen(onBack: () -> Unit) {
         }
     }
 
-    if (picking) ProductPickerSheet(vm.warehouseId, showCost = true, onPick = { vm.add(it, purchase = true); picking = false }, onDismiss = { picking = false })
+    if (picking) ProductPickerSheet(vm.warehouseId, showCost = true, supplierId = supplierFilter, onPick = { vm.add(it, purchase = true); picking = false }, onDismiss = { picking = false })
 }
 
 /* ============================================================ Purchase history */

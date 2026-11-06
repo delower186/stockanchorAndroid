@@ -152,6 +152,8 @@ data class RegisterCodeRequest(
 
 data class RegisterCodeResponse(val expiresInMinutes: Int = 10, val resendAfterSeconds: Int = 60)
 
+data class CompanyRequest(val name: String, val currency: String?)
+
 data class PromoRequest(val code: String)
 
 data class SubscriptionPlansResponse(val productId: String? = null)

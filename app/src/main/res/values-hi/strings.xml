@@ -114,6 +114,8 @@
     <string name="business_name_on_invoices">कारोबार का नाम (इनवॉइस पर)</string>
     <string name="currency_symbol">मुद्रा चिह्न</string>
     <string name="saved">सहेजा गया</string>
+    <string name="use_a_supported_currency_x">इनमें से कोई एक इस्तेमाल करें: %1$s</string>
+    <string name="only_a_team_manager_can_change_this">इसे केवल मालिक या टीम मैनेजर बदल सकते हैं।</string>
     <string name="save">सहेजें</string>
     <string name="notifications">सूचनाएँ</string>
     <string name="daily_reminders_for_products_below_minimum">न्यूनतम से नीचे के उत्पादों के लिए रोज़ाना रिमाइंडर</string>
@@ -502,6 +504,8 @@
     <string name="x_more">+%1$s और</string>
     <string name="name_sku_or_barcode">नाम, SKU या बारकोड</string>
     <string name="no_products_in_this_warehouse_yet">इस गोदाम में अभी कोई उत्पाद नहीं।</string>
+    <string name="no_products_from_this_supplier">इस सप्लायर से कोई उत्पाद जुड़ा नहीं है। किसी उत्पाद पर सप्लायर सेट करें, या \"कोई सप्लायर नहीं\" चुनें।</string>
+    <string name="x_isn_t_from_this_supplier">\"%1$s\" इस सप्लायर का नहीं है</string>
     <string name="no_matches_2">कुछ नहीं मिला।</string>
     <string name="cost_x">लागत %1$s</string>
     <string name="manage_products_categories">उत्पाद और श्रेणियाँ प्रबंधित करें</string>

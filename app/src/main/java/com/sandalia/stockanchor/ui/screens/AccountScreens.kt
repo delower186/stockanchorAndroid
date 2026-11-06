@@ -103,6 +103,7 @@ import com.sandalia.stockanchor.billing.PurchaseEvent
 import com.sandalia.stockanchor.data.remote.ApiException
 import com.sandalia.stockanchor.data.repo.ActivationResult
 import com.sandalia.stockanchor.domain.Limits
+import com.sandalia.stockanchor.data.prefs.SessionStore
 import com.sandalia.stockanchor.domain.Perm
 import com.sandalia.stockanchor.domain.PremiumFeature
 import com.sandalia.stockanchor.ui.components.AppCard
@@ -834,9 +835,23 @@ fun SettingsScreen(nav: NavHostController) {
             AppCard(Modifier.fillMaxWidth()) {
                 FormField(company, { company = it }, str(R.string.business_name_on_invoices), Modifier.fillMaxWidth(), singleLine = true, maxLength = FieldLimit.COMPANY, counter = true, error = Validate.name(company, FieldLimit.COMPANY))
                 Spacer(Modifier.height(8.dp))
-                FormField(currency, { currency = it }, str(R.string.currency_symbol), Modifier.fillMaxWidth(), singleLine = true, maxLength = FieldLimit.CURRENCY_SYMBOL, error = Validate.required(currency))
+                // The cloud stores a currency code, so there only the symbols it knows can be kept.
+                val currencyError = Validate.required(currency)
+                    ?: str(R.string.use_a_supported_currency_x, SessionStore.SUPPORTED_SYMBOLS).takeIf { session.isCloud && SessionStore.codeFor(currency) == null }
+                FormField(currency, { currency = it }, str(R.string.currency_symbol), Modifier.fillMaxWidth(), singleLine = true, maxLength = FieldLimit.CURRENCY_SYMBOL, error = currencyError)
                 Spacer(Modifier.height(8.dp))
-                Button(enabled = Validate.name(company, FieldLimit.COMPANY) == null && Validate.required(currency) == null, onClick = { container.session.setCompany(company.trim(), currency.trim()); runner.toast(str(R.string.saved)) }) { Text(str(R.string.save)) }
+                val canEdit = !session.isCloud || session.can(Perm.TEAM_MANAGE)
+                Button(
+                    enabled = canEdit && !runner.busy && Validate.name(company, FieldLimit.COMPANY) == null && currencyError == null,
+                    onClick = {
+                        runner.run(str(R.string.saved)) {
+                            container.account.saveCompany(company.trim(), currency.trim())
+                            company = container.session.current.companyName
+                            currency = container.session.current.currency
+                        }
+                    },
+                ) { Text(str(R.string.save)) }
+                if (!canEdit) Text(str(R.string.only_a_team_manager_can_change_this), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 6.dp))
             }
             SectionTitle(str(R.string.language))
             AppCard(Modifier.fillMaxWidth()) {

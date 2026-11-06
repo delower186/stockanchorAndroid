@@ -15,6 +15,7 @@ import com.sandalia.stockanchor.data.remote.PasswordRequest
 import com.sandalia.stockanchor.data.remote.PromoRequest
 import com.sandalia.stockanchor.data.remote.RegisterCodeRequest
 import com.sandalia.stockanchor.data.remote.RegisterCodeResponse
+import com.sandalia.stockanchor.data.remote.CompanyRequest
 import com.sandalia.stockanchor.data.remote.RegisterRequest
 import com.sandalia.stockanchor.data.remote.TwoFactorChallengeRequest
 import com.sandalia.stockanchor.data.remote.TwoFactorSetup
@@ -91,6 +92,12 @@ class AccountManager(
         val r = api.call { redeemPromo(PromoRequest(code.trim())) }
         store(r)
         return r.subscription?.isPremium == true
+    }
+
+    /** Business name and currency: on the server for a cloud account (nothing changes here if it refuses), otherwise on this device. */
+    suspend fun saveCompany(name: String, currencySymbol: String) {
+        if (session.current.isCloud) store(api.call { updateCompany(CompanyRequest(name, SessionStore.codeFor(currencySymbol))) })
+        else session.setCompany(name, currencySymbol)
     }
 
     /** A session on this device without Premium: drop it, keeping every local record (unlike [signOut]). */

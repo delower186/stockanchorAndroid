@@ -18,6 +18,7 @@ interface ApiService {
     @POST("auth/login") suspend fun login(@Body body: LoginRequest): AuthResponse
     @POST("auth/logout") suspend fun logout(): MessageResponse
     @GET("me") suspend fun me(): AuthResponse
+    @PUT("team/company") suspend fun updateCompany(@Body body: CompanyRequest): AuthResponse
     @POST("auth/two-factor") suspend fun twoFactorChallenge(@Body body: TwoFactorChallengeRequest): AuthResponse
     @GET("me/two-factor") suspend fun twoFactorStatus(): TwoFactorStatus
     @POST("me/two-factor") suspend fun enableTwoFactor(@Body body: PasswordRequest): TwoFactorSetup

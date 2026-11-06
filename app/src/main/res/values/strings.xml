@@ -114,6 +114,8 @@
     <string name="business_name_on_invoices">Business name (on invoices)</string>
     <string name="currency_symbol">Currency symbol</string>
     <string name="saved">Saved</string>
+    <string name="use_a_supported_currency_x">Use one of these: %1$s</string>
+    <string name="only_a_team_manager_can_change_this">Only the owner or a team manager can change this.</string>
     <string name="save">Save</string>
     <string name="notifications">Notifications</string>
     <string name="daily_reminders_for_products_below_minimum">Daily reminders for products below minimum</string>
@@ -502,6 +504,8 @@
     <string name="x_more">+%1$s more</string>
     <string name="name_sku_or_barcode">Name, SKU or barcode</string>
     <string name="no_products_in_this_warehouse_yet">No products in this warehouse yet.</string>
+    <string name="no_products_from_this_supplier">No products linked to this supplier. Set the supplier on a product, or choose No supplier.</string>
+    <string name="x_isn_t_from_this_supplier">\"%1$s\" isn\'t from this supplier</string>
     <string name="no_matches_2">No matches.</string>
     <string name="cost_x">Cost %1$s</string>
     <string name="manage_products_categories">Manage products &amp; categories</string>

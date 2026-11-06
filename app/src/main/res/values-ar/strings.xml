@@ -114,6 +114,8 @@
     <string name="business_name_on_invoices">اسم النشاط (على الفواتير)</string>
     <string name="currency_symbol">رمز العملة</string>
     <string name="saved">تم الحفظ</string>
+    <string name="use_a_supported_currency_x">استخدم أحد هذه الرموز: %1$s</string>
+    <string name="only_a_team_manager_can_change_this">يمكن للمالك أو مدير الفريق فقط تغيير هذا.</string>
     <string name="save">حفظ</string>
     <string name="notifications">الإشعارات</string>
     <string name="daily_reminders_for_products_below_minimum">تذكيرات يومية بالمنتجات الأقل من الحد الأدنى</string>
@@ -502,6 +504,8 @@
     <string name="x_more">+%1$s أخرى</string>
     <string name="name_sku_or_barcode">الاسم أو SKU أو الباركود</string>
     <string name="no_products_in_this_warehouse_yet">لا توجد منتجات في هذا المستودع بعد.</string>
+    <string name="no_products_from_this_supplier">لا توجد منتجات مرتبطة بهذا المورد. عيّن المورد في المنتج أو اختر بدون مورد.</string>
+    <string name="x_isn_t_from_this_supplier">\"%1$s\" ليس من هذا المورد</string>
     <string name="no_matches_2">لا توجد نتائج.</string>
     <string name="cost_x">التكلفة %1$s</string>
     <string name="manage_products_categories">إدارة المنتجات والفئات</string>

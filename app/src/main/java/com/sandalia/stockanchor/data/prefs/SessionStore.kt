@@ -159,5 +159,13 @@ class SessionStore(context: Context) {
             "BDT" -> "৳"; "USD" -> "$"; "EUR" -> "€"; "GBP" -> "£"; "INR" -> "₹"; "PKR" -> "Rs"
             else -> code
         }
+
+        const val SUPPORTED_SYMBOLS = "৳ $ € £ ₹ Rs"
+
+        /** The server's currency code for a typed symbol or code, or null when the server doesn't have it. */
+        fun codeFor(symbol: String): String? = when (symbol.trim().uppercase()) {
+            "৳", "BDT" -> "BDT"; "$", "USD" -> "USD"; "€", "EUR" -> "EUR"; "£", "GBP" -> "GBP"; "₹", "INR" -> "INR"; "RS", "₨", "PKR" -> "PKR"
+            else -> null
+        }
     }
 }

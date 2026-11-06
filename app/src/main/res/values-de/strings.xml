@@ -114,6 +114,8 @@
     <string name="business_name_on_invoices">Firmenname (auf Rechnungen)</string>
     <string name="currency_symbol">Währungssymbol</string>
     <string name="saved">Gespeichert</string>
+    <string name="use_a_supported_currency_x">Verwende eines davon: %1$s</string>
+    <string name="only_a_team_manager_can_change_this">Nur der Inhaber oder ein Team-Manager kann das ändern.</string>
     <string name="save">Speichern</string>
     <string name="notifications">Benachrichtigungen</string>
     <string name="daily_reminders_for_products_below_minimum">Tägliche Erinnerungen für Produkte unter Mindestbestand</string>
@@ -502,6 +504,8 @@
     <string name="x_more">+%1$s weitere</string>
     <string name="name_sku_or_barcode">Name, SKU oder Barcode</string>
     <string name="no_products_in_this_warehouse_yet">Noch keine Produkte in diesem Lager.</string>
+    <string name="no_products_from_this_supplier">Keine Produkte mit diesem Lieferanten verknüpft. Lege den Lieferanten beim Produkt fest oder wähle Kein Lieferant.</string>
+    <string name="x_isn_t_from_this_supplier">\"%1$s\" ist nicht von diesem Lieferanten</string>
     <string name="no_matches_2">Keine Treffer.</string>
     <string name="cost_x">Einkauf %1$s</string>
     <string name="manage_products_categories">Produkte &amp; Kategorien verwalten</string>
