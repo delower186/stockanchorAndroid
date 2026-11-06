@@ -99,7 +99,7 @@ class AccountManager(
         session.clearCloud()
     }
 
-    private fun productIdIfPurchase() = BuildConfig.SUBSCRIPTION_PRODUCT_ID.takeIf { session.pendingPurchaseToken() != null }
+    private fun productIdIfPurchase() = session.subscriptionProductId().takeIf { session.pendingPurchaseToken() != null }
 
     private fun storeSignedIn(r: AuthResponse) {
         store(r)
@@ -125,7 +125,7 @@ class AccountManager(
     suspend fun verifyPendingPurchase(): Boolean {
         val token = session.pendingPurchaseToken() ?: return session.current.isPremium
         val r = api.call {
-            verifyPurchase(VerifyPurchaseRequest(token, BuildConfig.SUBSCRIPTION_PRODUCT_ID, session.pendingPlan()))
+            verifyPurchase(VerifyPurchaseRequest(token, session.subscriptionProductId(), session.pendingPlan()))
         }
         store(r)
         if (r.subscription?.isPremium == true) session.setPendingPurchase(null, null)

@@ -32,7 +32,7 @@ android {
         // Base URL of the Laravel API (must end with /api/). 10.0.2.2 = host machine from the emulator.
         buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:8000/api/\"")
         // Google Play subscription product and its base plans (Play Console → Monetize → Subscriptions).
-        buildConfigField("String", "SUBSCRIPTION_PRODUCT_ID", "\"stock_anchor_premium\"")
+        buildConfigField("String", "SUBSCRIPTION_PRODUCT_ID", "\"sa_premium\"")
         buildConfigField("String", "PLAN_MONTHLY", "\"monthly\"")
         buildConfigField("String", "PLAN_YEARLY", "\"yearly\"")
         // Developer-determined offer on both base plans (Play Console → the base plan → Add offer), free for P1M.

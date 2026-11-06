@@ -154,6 +154,8 @@ data class RegisterCodeResponse(val expiresInMinutes: Int = 10, val resendAfterS
 
 data class PromoRequest(val code: String)
 
+data class SubscriptionPlansResponse(val productId: String? = null)
+
 data class PromoCheckResponse(val valid: Boolean = false, val code: String? = null, val durationDays: Int = 0)
 
 data class TwoFactorChallengeRequest(

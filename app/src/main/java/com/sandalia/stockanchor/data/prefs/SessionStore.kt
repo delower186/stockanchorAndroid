@@ -53,6 +53,9 @@ class SessionStore(context: Context) {
     fun baseUrl(): String = prefs.getString(K_BASE_URL, null)?.takeIf { BuildConfig.ALLOW_SERVER_OVERRIDE && it.isNotBlank() }
         ?: BuildConfig.API_BASE_URL
     fun pendingPurchaseToken(): String? = prefs.getString(K_PENDING_TOKEN, null)
+    /** The Play subscription to sell: the latest from the server, else the one built into the app. */
+    fun subscriptionProductId(): String = prefs.getString(K_SUBSCRIPTION_PRODUCT, null) ?: BuildConfig.SUBSCRIPTION_PRODUCT_ID
+    fun setSubscriptionProductId(id: String) = update { putString(K_SUBSCRIPTION_PRODUCT, id) }
     fun pendingPlan(): String? = prefs.getString(K_PENDING_PLAN, null)
     /** Promo code accepted on the paywall, waiting for the account it will activate. */
     fun pendingPromo(): String? = prefs.getString(K_PENDING_PROMO, null)
@@ -149,6 +152,7 @@ class SessionStore(context: Context) {
         private const val K_PENDING_PLAN = "pending_plan"
         private const val K_PENDING_PROMO = "pending_promo"
         private const val K_BILLING_EMAIL = "billing_email"
+        private const val K_SUBSCRIPTION_PRODUCT = "subscription_product_id"
         private const val K_ONBOARDED = "onboarded"
 
         fun symbolFor(code: String): String = when (code.uppercase()) {

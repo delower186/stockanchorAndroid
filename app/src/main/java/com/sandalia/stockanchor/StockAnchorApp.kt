@@ -13,6 +13,7 @@ import com.sandalia.stockanchor.work.LowStockWorker
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /** Manual dependency container — small enough that a DI framework would only add build time. */
 class AppContainer(app: Application) {
@@ -24,6 +25,13 @@ class AppContainer(app: Application) {
     val repo = StockRepository(db, api, session, sync)
     val account = AccountManager(api, session, sync)
     val billing = BillingManager(app, session, appScope)
+
+    /** Asks the server which Play subscription to sell. Offline, the last known one stays in use. */
+    fun syncSubscriptionProduct() {
+        appScope.launch {
+            runCatching { api.call { subscriptionPlans() } }.getOrNull()?.productId?.let { billing.useProductId(it) }
+        }
+    }
 }
 
 class StockAnchorApp : Application() {
@@ -35,6 +43,7 @@ class StockAnchorApp : Application() {
         I18n.init(this)
         container = AppContainer(this)
         container.billing.connect()
+        container.syncSubscriptionProduct()
         LowStockWorker.schedule(this)
     }
 }

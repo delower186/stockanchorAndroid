@@ -25,6 +25,7 @@ interface ApiService {
     @POST("me/two-factor/recovery-codes") suspend fun newRecoveryCodes(@Body body: PasswordRequest): RecoveryCodesResponse
     @HTTP(method = "DELETE", path = "me/two-factor", hasBody = true) suspend fun disableTwoFactor(@Body body: PasswordRequest): MessageResponse
     @POST("subscription/verify") suspend fun verifyPurchase(@Body body: VerifyPurchaseRequest): AuthResponse
+    @GET("subscription/plans") suspend fun subscriptionPlans(): SubscriptionPlansResponse
     @POST("promo/check") suspend fun checkPromo(@Body body: PromoRequest): PromoCheckResponse
     @POST("subscription/promo") suspend fun redeemPromo(@Body body: PromoRequest): AuthResponse
 

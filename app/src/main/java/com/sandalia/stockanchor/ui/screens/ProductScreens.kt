@@ -10,6 +10,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -432,9 +435,9 @@ fun ProductDetailScreen(productId: Long, nav: NavHostController) {
                 }
             }
             item {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(Modifier.height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     if (session.can(Perm.PURCHASES_CREATE)) DetailAction(str(R.string.add_stock), Icons.Filled.AddBox, Modifier.weight(1f)) { nav.navigate(Routes.PURCHASE) }
-                    if (session.can(Perm.TRANSFERS_CREATE)) DetailAction(str(R.string.transfer), Icons.AutoMirrored.Filled.CompareArrows, Modifier.weight(1f)) {
+                    if (session.can(Perm.TRANSFERS_CREATE)) DetailAction(str(R.string.transfer), Icons.AutoMirrored.Filled.CompareArrows, Modifier.weight(1f), premium = !session.premiumActive) {
                         if (session.premiumActive) nav.navigate(Routes.TRANSFERS) else openPaywall()
                     }
                     DetailAction(str(R.string.history), Icons.Filled.History, Modifier.weight(1f)) {
@@ -487,12 +490,13 @@ fun ProductDetailScreen(productId: Long, nav: NavHostController) {
 
 /** Icon-over-label button so three fit side by side on narrow screens without wrapping. */
 @Composable
-private fun DetailAction(label: String, icon: ImageVector, modifier: Modifier, onClick: () -> Unit) {
-    OutlinedButton(onClick = onClick, modifier = modifier.height(64.dp), contentPadding = PaddingValues(horizontal = 4.dp, vertical = 6.dp)) {
+private fun DetailAction(label: String, icon: ImageVector, modifier: Modifier, premium: Boolean = false, onClick: () -> Unit) {
+    OutlinedButton(onClick = onClick, modifier = modifier.fillMaxHeight().heightIn(min = 64.dp), contentPadding = PaddingValues(horizontal = 4.dp, vertical = 6.dp)) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Icon(icon, null, modifier = Modifier.size(20.dp))
             Spacer(Modifier.height(2.dp))
             Text(label, style = MaterialTheme.typography.labelMedium, maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis)
+            if (premium) { Spacer(Modifier.height(4.dp)); PremiumChip() }
         }
     }
 }

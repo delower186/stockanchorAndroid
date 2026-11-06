@@ -83,6 +83,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -192,6 +193,7 @@ fun PaywallScreen(nav: NavHostController) {
     val offers by container.billing.offers.collectAsStateWithLifecycle()
     val billingReady by container.billing.ready.collectAsStateWithLifecycle()
     val billingProblem by container.billing.problem.collectAsStateWithLifecycle()
+    val offerSummary by container.billing.offerSummary.collectAsStateWithLifecycle()
     val context = LocalContext.current
     val runner = rememberRunner()
     val activation = rememberActivation(nav)
@@ -221,7 +223,7 @@ fun PaywallScreen(nav: NavHostController) {
     }
 
     // Retry every visit: a connection that failed at app start (Play Store updating, offline) would otherwise never recover.
-    LaunchedEffect(Unit) { container.billing.connect() }
+    LaunchedEffect(Unit) { container.billing.connect(); container.syncSubscriptionProduct() }
 
     // Purchase completed in Google Play → verify with our server (or create the cloud account first).
     LaunchedEffect(Unit) {
@@ -322,6 +324,9 @@ fun PaywallScreen(nav: NavHostController) {
                         TextButton(onClick = { container.billing.connect() }) { Text(str(R.string.try_again)) }
                     }
                 }
+            }
+            if (BuildConfig.DEBUG) offerSummary?.let {
+                Text("Debug: offers from Google Play for this account: $it", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
             if (!billingReady && BuildConfig.ALLOW_TEST_PURCHASES) {
                 Text("Debug build: Play Billing not connected — a test purchase will be used (API must run SUBSCRIPTION_VERIFY_MODE=fake).",
@@ -439,6 +444,22 @@ private fun EmailCodeDialog(email: String, busy: Boolean, error: String?, resend
     )
 }
 
+/** Local prices vary a lot in length ("\$4.99", "BDT 7,100.00"): shrinks to stay on one line instead of breaking mid-number. */
+@Composable
+private fun PlanPrice(price: String) {
+    val style = MaterialTheme.typography.headlineSmall
+    var fontSize by remember(price) { mutableStateOf(style.fontSize) }
+    var fits by remember(price) { mutableStateOf(false) }
+    Text(
+        price,
+        style = style, fontSize = fontSize, fontWeight = FontWeight.Bold, maxLines = 1, softWrap = false,
+        onTextLayout = { layout ->
+            if (layout.hasVisualOverflow && fontSize.value > 12f) fontSize *= 0.92f else fits = true
+        },
+        modifier = Modifier.drawWithContent { if (fits) drawContent() },
+    )
+}
+
 @Composable
 private fun PlanCard(offer: PlanOffer, selected: Boolean, modifier: Modifier, onClick: () -> Unit) {
     val yearly = offer.planId == BuildConfig.PLAN_YEARLY
@@ -453,7 +474,7 @@ private fun PlanCard(offer: PlanOffer, selected: Boolean, modifier: Modifier, on
             } else Spacer(Modifier.height(18.dp))
             Spacer(Modifier.height(8.dp))
             Text(offer.title, style = MaterialTheme.typography.titleMedium)
-            Text(offer.price, style = MaterialTheme.typography.headlineSmall, fontWeight = FontWeight.Bold)
+            PlanPrice(offer.price)
             Text(if (yearly) str(R.string.per_year) else str(R.string.per_month), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
             offer.trial?.let { Text(it, style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.secondary) }
         }
@@ -675,7 +696,7 @@ fun SubscriptionScreen(nav: NavHostController) {
                 }
             } else {
                 if (session.role == "owner") OutlinedButton(onClick = {
-                    val uri = Uri.parse("https://play.google.com/store/account/subscriptions?sku=${BuildConfig.SUBSCRIPTION_PRODUCT_ID}&package=${context.packageName}")
+                    val uri = Uri.parse("https://play.google.com/store/account/subscriptions?sku=${container.session.subscriptionProductId()}&package=${context.packageName}")
                     context.startActivity(Intent(Intent.ACTION_VIEW, uri))
                 }, modifier = Modifier.fillMaxWidth()) { Text(str(R.string.manage_or_cancel_in_google_play)) }
                 if (session.role == "owner") OutlinedButton(onClick = { nav.navigate(Routes.PAYWALL) }, modifier = Modifier.fillMaxWidth()) {
