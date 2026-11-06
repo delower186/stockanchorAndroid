@@ -69,6 +69,7 @@ import com.sandalia.stockanchor.ui.components.LocalOpenPaywall
 import com.sandalia.stockanchor.ui.components.NumberField
 import com.sandalia.stockanchor.ui.components.PremiumChip
 import com.sandalia.stockanchor.ui.components.ProductPickerSheet
+import com.sandalia.stockanchor.ui.components.PhoneField
 import com.sandalia.stockanchor.ui.components.ScreenScaffold
 import com.sandalia.stockanchor.ui.components.rememberRunner
 import com.sandalia.stockanchor.ui.navigation.Routes
@@ -161,7 +162,7 @@ fun SellScreen(onDone: (Long) -> Unit, nav: NavHostController) {
                     OutlinedTextField(vm.customer, { vm.customer = it }, label = { Text(str(R.string.customer_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
                     Spacer(Modifier.height(8.dp))
                     Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        OutlinedTextField(vm.phone, { vm.phone = it }, label = { Text(str(R.string.phone)) }, singleLine = true, modifier = Modifier.weight(1f))
+                        PhoneField(vm.phone, { vm.phone = it }, Modifier.weight(1f))
                         DropdownField(str(R.string.sell_from), warehouses, warehouses.firstOrNull { it.id == vm.warehouseId }, { it.name },
                             { it?.let { w -> vm.warehouseId = w.id } }, Modifier.weight(1f))
                     }

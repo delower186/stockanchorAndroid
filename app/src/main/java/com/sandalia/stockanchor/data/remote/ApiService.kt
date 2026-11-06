@@ -13,6 +13,7 @@ import retrofit2.http.Query
 
 interface ApiService {
     // ---- Auth & subscription ----
+    @POST("auth/register/code") suspend fun sendRegistrationCode(@Body body: RegisterCodeRequest): RegisterCodeResponse
     @POST("auth/register") suspend fun register(@Body body: RegisterRequest): AuthResponse
     @POST("auth/login") suspend fun login(@Body body: LoginRequest): AuthResponse
     @POST("auth/logout") suspend fun logout(): MessageResponse
@@ -24,6 +25,8 @@ interface ApiService {
     @POST("me/two-factor/recovery-codes") suspend fun newRecoveryCodes(@Body body: PasswordRequest): RecoveryCodesResponse
     @HTTP(method = "DELETE", path = "me/two-factor", hasBody = true) suspend fun disableTwoFactor(@Body body: PasswordRequest): MessageResponse
     @POST("subscription/verify") suspend fun verifyPurchase(@Body body: VerifyPurchaseRequest): AuthResponse
+    @POST("promo/check") suspend fun checkPromo(@Body body: PromoRequest): PromoCheckResponse
+    @POST("subscription/promo") suspend fun redeemPromo(@Body body: PromoRequest): AuthResponse
 
     // ---- Sync ----
     @GET("sync") suspend fun sync(@Query("since") since: String?): SyncResponse

@@ -26,8 +26,8 @@ android {
         minSdk = 26
         targetSdk = 36
         // Bump versionCode on every Play upload
-        versionCode = 5
-        versionName = "v1.0.5"
+        versionCode = 6
+        versionName = "v1.0.6"
 
         // Base URL of the Laravel API (must end with /api/). 10.0.2.2 = host machine from the emulator.
         buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:8000/api/\"")
@@ -35,6 +35,8 @@ android {
         buildConfigField("String", "SUBSCRIPTION_PRODUCT_ID", "\"stock_anchor_premium\"")
         buildConfigField("String", "PLAN_MONTHLY", "\"monthly\"")
         buildConfigField("String", "PLAN_YEARLY", "\"yearly\"")
+        // Developer-determined offer on both base plans (Play Console → the base plan → Add offer), free for P1M.
+        buildConfigField("String", "TRIAL_OFFER_ID", "\"free-trial-1-month\"")
         // Company web panel opened from More → "Open web panel" (Premium only)
         buildConfigField("String", "WEB_PANEL_URL", "\"https://stockanchor.sandalia.bd\"")
     }
@@ -110,11 +112,11 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
 
     implementation("androidx.core:core-ktx:1.15.0")
-    implementation("androidx.activity:activity-compose:1.9.3")
+    implementation("androidx.activity:activity-compose:1.10.1")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.7")
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.7")
     implementation("androidx.navigation:navigation-compose:2.8.5")
-    implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation("androidx.core:core-splashscreen:1.2.0")
     // Play Services pulls in an old Fragment that breaks registerForActivityResult (permission prompt)
     implementation("androidx.fragment:fragment-ktx:1.8.5")
 

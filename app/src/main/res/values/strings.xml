@@ -539,8 +539,8 @@
     <string name="pf_team_blurb">Invite staff with roles and fine-grained permissions.</string>
     <string name="pf_backup_blurb">Nightly automatic backups plus one-tap restore.</string>
     <string name="language">Language</string>
-    <string name="language_system">Phone default</string>
-    <string name="language_hint">Changes the app\'s text. Numbers and dates follow your phone settings.</string>
+    <string name="language_auto_x">Automatic (by country): %1$s</string>
+    <string name="language_hint">Automatic uses your country\'s language when the app has it, otherwise English. Numbers and dates follow your phone settings.</string>
     <plurals name="n_warehouses">
         <item quantity="one">%1$d warehouse</item>
         <item quantity="other">%1$d warehouses</item>
@@ -580,4 +580,25 @@
         <item quantity="one">%1$d sale</item>
         <item quantity="other">%1$d sales</item>
     </plurals>
+    <string name="s_4_weeks">4 weeks</string>
+    <string name="google_play_account">Google Play account</string>
+    <string name="google_play_account_hint">Your Google account on this device. It can\'t be changed here.</string>
+    <string name="choose_the_google_account_for_google_play">Choose the Google account you use on Google Play</string>
+    <string name="choose_google_account">Choose Google account</string>
+    <string name="start_free_trial">Start free trial</string>
+    <string name="free_for_x_then_y">Free for %1$s, then %2$s %3$s. Cancel anytime in Google Play.</string>
+    <string name="have_a_promo_code">Have a promo code?</string>
+    <string name="promo_code">Promo code</string>
+    <string name="redeem">Redeem</string>
+    <string name="confirm_your_email">Confirm your email</string>
+    <string name="we_sent_a_6_digit_code_to_x">We sent a 6-digit code to %1$s. Enter it to finish creating your account.</string>
+    <string name="verification_code">Verification code</string>
+    <string name="resend_code">Resend code</string>
+    <string name="resend_code_in_x_seconds">Resend code in %1$d s</string>
+    <string name="new_to_stock_anchor_see_plans">New to Stock Anchor? See plans</string>
+    <string name="this_account_has_no_active_plan">This account doesn\'t have an active Premium plan, so you weren\'t signed in. Subscribe to use the cloud. Your Basic data stays on this device.</string>
+    <string name="choose_from_contacts">Choose from contacts</string>
+    <string name="type_the_number">Type the number</string>
+    <string name="no_contacts_app_found">No contacts app found on this device.</string>
+    <string name="promo_code_accepted_one_last_step">Promo code accepted — one last step</string>
 </resources>

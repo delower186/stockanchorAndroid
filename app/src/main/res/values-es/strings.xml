@@ -539,8 +539,8 @@
     <string name="pf_team_blurb">Invita al personal con roles y permisos detallados.</string>
     <string name="pf_backup_blurb">Copias automáticas cada noche y restauración con un toque.</string>
     <string name="language">Idioma</string>
-    <string name="language_system">Idioma del teléfono</string>
-    <string name="language_hint">Cambia los textos de la app. Los números y las fechas siguen la configuración del teléfono.</string>
+    <string name="language_auto_x">Automático (según el país): %1$s</string>
+    <string name="language_hint">Automático usa el idioma de tu país si la app lo tiene; si no, inglés. Los números y las fechas siguen la configuración del teléfono.</string>
     <string name="premium_chip">PREMIUM</string>
     <string name="ok">Aceptar</string>
     <string name="balance_x_x">saldo %1$s %2$s</string>
@@ -586,4 +586,25 @@
         <item quantity="many">%1$d ventas</item>
         <item quantity="other">%1$d ventas</item>
     </plurals>
+    <string name="s_4_weeks">4 semanas</string>
+    <string name="google_play_account">Cuenta de Google Play</string>
+    <string name="google_play_account_hint">Tu cuenta de Google en este dispositivo. No se puede cambiar aquí.</string>
+    <string name="choose_the_google_account_for_google_play">Elige la cuenta de Google que usas en Google Play</string>
+    <string name="choose_google_account">Elegir cuenta de Google</string>
+    <string name="start_free_trial">Iniciar prueba gratis</string>
+    <string name="free_for_x_then_y">Gratis durante %1$s, después %2$s %3$s. Cancela cuando quieras en Google Play.</string>
+    <string name="have_a_promo_code">¿Tienes un código promocional?</string>
+    <string name="promo_code">Código promocional</string>
+    <string name="redeem">Canjear</string>
+    <string name="confirm_your_email">Confirma tu correo</string>
+    <string name="we_sent_a_6_digit_code_to_x">Enviamos un código de 6 dígitos a %1$s. Introdúcelo para terminar de crear tu cuenta.</string>
+    <string name="verification_code">Código de verificación</string>
+    <string name="resend_code">Reenviar código</string>
+    <string name="resend_code_in_x_seconds">Reenviar código en %1$d s</string>
+    <string name="new_to_stock_anchor_see_plans">¿Nuevo en Stock Anchor? Ver planes</string>
+    <string name="this_account_has_no_active_plan">Esta cuenta no tiene un plan Premium activo, así que no se ha iniciado sesión. Suscríbete para usar la nube. Tus datos de Basic siguen en este dispositivo.</string>
+    <string name="choose_from_contacts">Elegir de los contactos</string>
+    <string name="type_the_number">Escribir el número</string>
+    <string name="no_contacts_app_found">No se encontró ninguna app de contactos en este dispositivo.</string>
+    <string name="promo_code_accepted_one_last_step">Código promocional aceptado: un último paso</string>
 </resources>

@@ -12,6 +12,9 @@ import com.sandalia.stockanchor.data.remote.AuthResponse
 import com.sandalia.stockanchor.data.remote.CodeRequest
 import com.sandalia.stockanchor.data.remote.LoginRequest
 import com.sandalia.stockanchor.data.remote.PasswordRequest
+import com.sandalia.stockanchor.data.remote.PromoRequest
+import com.sandalia.stockanchor.data.remote.RegisterCodeRequest
+import com.sandalia.stockanchor.data.remote.RegisterCodeResponse
 import com.sandalia.stockanchor.data.remote.RegisterRequest
 import com.sandalia.stockanchor.data.remote.TwoFactorChallengeRequest
 import com.sandalia.stockanchor.data.remote.TwoFactorSetup
@@ -29,8 +32,9 @@ sealed interface ActivationResult {
 /**
  * Basic → Premium upgrade, cloud sign-in and the reverse downgrade.
  *
- *  Upgrade:  Play purchase → (register | login) → verifyPendingPurchase() → activateCloud()
+ *  Upgrade:  Play purchase or promo code → (sendRegistrationCode + register | login) → activateCloud()
  *  New device / team member: login() → activateCloud()
+ *  The server creates an account or issues a token only together with an active Premium plan.
  *  Lapsed subscription: downgradeToBasic() keeps every record on the device, premium screens lock.
  */
 class AccountManager(
@@ -41,25 +45,65 @@ class AccountManager(
     private val deviceName get() = "${Build.MANUFACTURER} ${Build.MODEL}".trim()
 
     /**
-     * Password sign-in. Returns a two-step verification challenge when the account has it on;
-     * finish with [completeTwoFactor]. Returns null when signed in.
+     * Password sign-in, refused by the server (code premium_required, nothing saved here) without an active plan.
+     * Any payment or promo code waiting on this device is sent along and activates the plan.
+     * Returns a two-step verification challenge when the account has it on; finish with [completeTwoFactor].
+     * Returns null when signed in.
      */
     suspend fun login(email: String, password: String): String? {
-        val r = api.call { login(LoginRequest(email.trim(), password, deviceName)) }
+        val r = api.call {
+            login(LoginRequest(email.trim(), password, deviceName, true, session.pendingPurchaseToken(), session.pendingPromo(), productIdIfPurchase(), session.pendingPlan()))
+        }
         if (r.twoFactorRequired == true) return r.challenge
-        store(r)
+        storeSignedIn(r)
         return null
     }
 
     /** Code from the authenticator app (or a recovery code) for the challenge returned by [login]. */
     suspend fun completeTwoFactor(challenge: String, code: String) {
-        store(api.call { twoFactorChallenge(TwoFactorChallengeRequest(challenge, code.trim())) })
+        storeSignedIn(api.call {
+            twoFactorChallenge(TwoFactorChallengeRequest(challenge, code.trim(), true, session.pendingPurchaseToken(), session.pendingPromo(), productIdIfPurchase(), session.pendingPlan()))
+        })
     }
 
-    suspend fun register(name: String, email: String, password: String, company: String, currency: String): AuthResponse {
-        val r = api.call { register(RegisterRequest(name.trim(), email.trim(), password, company.trim(), currency, deviceName)) }
-        store(r)
+    /** Emails the verification code. The server only does this when the waiting payment or promo code is valid. */
+    suspend fun sendRegistrationCode(email: String): RegisterCodeResponse = api.call {
+        sendRegistrationCode(RegisterCodeRequest(email.trim(), session.pendingPurchaseToken(), session.pendingPromo(), productIdIfPurchase(), session.pendingPlan()))
+    }
+
+    /** Creates the account with the emailed code; Premium is active in the same step or nothing is created. */
+    suspend fun register(name: String, email: String, password: String, company: String, currency: String, emailCode: String): AuthResponse {
+        val r = api.call {
+            register(RegisterRequest(name.trim(), email.trim(), password, company.trim(), currency, deviceName, emailCode.trim(), session.pendingPurchaseToken(), session.pendingPromo(), productIdIfPurchase(), session.pendingPlan()))
+        }
+        storeSignedIn(r)
         return r
+    }
+
+    /** Checks a promo code before a new customer is asked to create an account; throws when it can't be used. */
+    suspend fun checkPromo(code: String) {
+        val checked = api.call { checkPromo(PromoRequest(code.trim())) }
+        session.setPendingPromo(checked.code ?: code.trim())
+    }
+
+    /** Promo code for the signed-in company. Returns true when Premium is active. */
+    suspend fun redeemPromo(code: String): Boolean {
+        val r = api.call { redeemPromo(PromoRequest(code.trim())) }
+        store(r)
+        return r.subscription?.isPremium == true
+    }
+
+    /** A session on this device without Premium: drop it, keeping every local record (unlike [signOut]). */
+    suspend fun discardUnpaidSession() {
+        runCatching { api.call { logout() } }
+        session.clearCloud()
+    }
+
+    private fun productIdIfPurchase() = BuildConfig.SUBSCRIPTION_PRODUCT_ID.takeIf { session.pendingPurchaseToken() != null }
+
+    private fun storeSignedIn(r: AuthResponse) {
+        store(r)
+        if (r.subscription?.isPremium == true) session.clearPendingProof()
     }
 
     /* ---- Two-step verification for the signed-in account ---- */

@@ -3,9 +3,18 @@ package com.sandalia.stockanchor.ui.navigation
 import androidx.annotation.StringRes
 import com.sandalia.stockanchor.R
 import com.sandalia.stockanchor.util.str
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
+import androidx.compose.foundation.layout.widthIn
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.Dashboard
@@ -28,9 +37,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -98,9 +109,11 @@ object Routes {
     fun product(id: Long) = "product/$id"
     fun invoice(id: Long) = "invoice/$id"
     fun movements(productId: Long? = null) = "movements?productId=${productId ?: -1}"
-    /** mode: "upgrade" (after purchase), "login" or "register" */
+    /** mode: "upgrade" (after a purchase or promo code: create an account or sign in) or "login" (sign in only) */
     fun account(mode: String) = "account?mode=$mode"
 }
+
+private val MAX_CONTENT_WIDTH = 840.dp
 
 private data class Tab(val route: String, @StringRes val labelRes: Int, val icon: ImageVector, val selectedIcon: ImageVector) {
     val label: String get() = str(labelRes)
@@ -134,6 +147,9 @@ fun AppNav(startRoute: String?, onStartRouteConsumed: () -> Unit) {
 
     CompositionLocalProvider(LocalOpenPaywall provides { nav.navigate(Routes.PAYWALL) }) {
         Scaffold(
+            // Edge-to-edge: landscape cutouts and side navigation bars. The modifier consumes them for every screen below.
+            modifier = Modifier.background(MaterialTheme.colorScheme.background)
+                .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Horizontal)),
             bottomBar = {
                 if (showBar) NavigationBar(containerColor = MaterialTheme.colorScheme.surface) {
                     visibleTabs.forEach { tab ->
@@ -156,7 +172,9 @@ fun AppNav(startRoute: String?, onStartRouteConsumed: () -> Unit) {
         ) { inner ->
             // Only the bottom bar is handled here; each screen's own top bar still needs the status bar inset.
             val bottom = PaddingValues(bottom = inner.calculateBottomPadding())
-            NavHost(nav, startDestination = Routes.DASHBOARD, modifier = Modifier.padding(bottom).consumeWindowInsets(bottom)) {
+            // Tablets and unfolded foldables: keep forms and lists at a readable width instead of stretching them.
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
+            NavHost(nav, startDestination = Routes.DASHBOARD, modifier = Modifier.widthIn(max = MAX_CONTENT_WIDTH).padding(bottom).consumeWindowInsets(bottom)) {
                 val back: () -> Unit = { nav.popBackStack() }
 
                 composable(Routes.DASHBOARD) { DashboardScreen(nav) }
@@ -194,6 +212,7 @@ fun AppNav(startRoute: String?, onStartRouteConsumed: () -> Unit) {
                 }
                 composable(Routes.SUBSCRIPTION) { SubscriptionScreen(nav) }
                 composable(Routes.SETTINGS) { SettingsScreen(nav) }
+            }
             }
         }
     }

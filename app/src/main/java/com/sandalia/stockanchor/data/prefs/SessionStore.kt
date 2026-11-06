@@ -54,11 +54,25 @@ class SessionStore(context: Context) {
         ?: BuildConfig.API_BASE_URL
     fun pendingPurchaseToken(): String? = prefs.getString(K_PENDING_TOKEN, null)
     fun pendingPlan(): String? = prefs.getString(K_PENDING_PLAN, null)
+    /** Promo code accepted on the paywall, waiting for the account it will activate. */
+    fun pendingPromo(): String? = prefs.getString(K_PENDING_PROMO, null)
+    /** Payment or promo code that hasn't been linked to an account yet. Create Account is only offered with one. */
+    fun hasPendingProof(): Boolean = pendingPurchaseToken() != null || pendingPromo() != null
+    /** Google account chosen on the paywall: the address a new cloud account is created for. */
+    fun billingEmail(): String? = prefs.getString(K_BILLING_EMAIL, null)
 
     fun setBaseUrl(url: String) = update { putString(K_BASE_URL, url.trim()) }
 
     fun setPendingPurchase(token: String?, plan: String?) = update {
         putString(K_PENDING_TOKEN, token); putString(K_PENDING_PLAN, plan)
+    }
+
+    fun setPendingPromo(code: String?) = update { putString(K_PENDING_PROMO, code) }
+
+    fun setBillingEmail(email: String?) = update { putString(K_BILLING_EMAIL, email) }
+
+    fun clearPendingProof() = update {
+        remove(K_PENDING_TOKEN); remove(K_PENDING_PLAN); remove(K_PENDING_PROMO); remove(K_BILLING_EMAIL)
     }
 
     fun saveAuth(
@@ -133,6 +147,8 @@ class SessionStore(context: Context) {
         private const val K_BASE_URL = "base_url"
         private const val K_PENDING_TOKEN = "pending_purchase_token"
         private const val K_PENDING_PLAN = "pending_plan"
+        private const val K_PENDING_PROMO = "pending_promo"
+        private const val K_BILLING_EMAIL = "billing_email"
         private const val K_ONBOARDED = "onboarded"
 
         fun symbolFor(code: String): String = when (code.uppercase()) {

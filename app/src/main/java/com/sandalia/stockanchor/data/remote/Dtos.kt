@@ -133,14 +133,33 @@ data class SyncResponse(
 
 /* ---------- Requests ---------- */
 
-data class LoginRequest(val email: String, val password: String, val deviceName: String)
+/** [requirePremium]: the server issues no token unless the company has Premium or this request brings valid proof of payment. */
+data class LoginRequest(
+    val email: String, val password: String, val deviceName: String, val requirePremium: Boolean = true,
+    val purchaseToken: String? = null, val promoCode: String? = null, val productId: String? = null, val basePlanId: String? = null,
+)
 
 data class RegisterRequest(
     val name: String, val email: String, val password: String, val companyName: String,
-    val currency: String?, val deviceName: String,
+    val currency: String?, val deviceName: String, val emailCode: String,
+    val purchaseToken: String?, val promoCode: String?, val productId: String?, val basePlanId: String?,
 )
 
-data class TwoFactorChallengeRequest(val challenge: String, val code: String)
+/** Asks for the email code; the server sends it only when the proof of payment is valid. */
+data class RegisterCodeRequest(
+    val email: String, val purchaseToken: String?, val promoCode: String?, val productId: String?, val basePlanId: String?,
+)
+
+data class RegisterCodeResponse(val expiresInMinutes: Int = 10, val resendAfterSeconds: Int = 60)
+
+data class PromoRequest(val code: String)
+
+data class PromoCheckResponse(val valid: Boolean = false, val code: String? = null, val durationDays: Int = 0)
+
+data class TwoFactorChallengeRequest(
+    val challenge: String, val code: String, val requirePremium: Boolean = true,
+    val purchaseToken: String? = null, val promoCode: String? = null, val productId: String? = null, val basePlanId: String? = null,
+)
 
 data class PasswordRequest(val password: String)
 

@@ -31,7 +31,7 @@
     <string name="per_year">pro Jahr</string>
     <string name="per_month">pro Monat</string>
     <string name="create_your_cloud_account">Erstelle dein Cloud-Konto</string>
-    <string name="stock_anchor_cloud">Stock Anchor Cloud</string>
+    <string name="stock_anchor_cloud">Stock-Anker-Cloud</string>
     <string name="payment_received_one_last_step">Zahlung erhalten – ein letzter Schritt</string>
     <string name="your_subscription_is_ready_create_an">Dein Abo ist bereit. Erstelle ein Konto (oder melde dich an), um es mit deinem Unternehmen zu verknüpfen.</string>
     <string name="create_account">Konto erstellen</string>
@@ -539,8 +539,8 @@
     <string name="pf_team_blurb">Lade Mitarbeitende mit Rollen und fein abgestuften Berechtigungen ein.</string>
     <string name="pf_backup_blurb">Nächtliche automatische Sicherungen und Wiederherstellung mit einem Tippen.</string>
     <string name="language">Sprache</string>
-    <string name="language_system">Sprache des Telefons</string>
-    <string name="language_hint">Ändert die Texte der App. Zahlen und Daten folgen den Einstellungen deines Telefons.</string>
+    <string name="language_auto_x">Automatisch (nach Land): %1$s</string>
+    <string name="language_hint">Automatisch verwendet die Sprache deines Landes, wenn die App sie hat, sonst Englisch. Zahlen und Daten folgen den Einstellungen deines Telefons.</string>
     <string name="premium_chip">PREMIUM</string>
     <string name="ok">OK</string>
     <string name="balance_x_x">Bestand %1$s %2$s</string>
@@ -580,4 +580,25 @@
         <item quantity="one">%1$d Verkauf</item>
         <item quantity="other">%1$d Verkäufe</item>
     </plurals>
+    <string name="s_4_weeks">4 Wochen</string>
+    <string name="google_play_account">Google Play-Konto</string>
+    <string name="google_play_account_hint">Ihr Google-Konto auf diesem Gerät. Es kann hier nicht geändert werden.</string>
+    <string name="choose_the_google_account_for_google_play">Wählen Sie das Google-Konto, das Sie bei Google Play verwenden</string>
+    <string name="choose_google_account">Google-Konto wählen</string>
+    <string name="start_free_trial">Kostenlose Testphase starten</string>
+    <string name="free_for_x_then_y">%1$s kostenlos, danach %2$s %3$s. Jederzeit in Google Play kündbar.</string>
+    <string name="have_a_promo_code">Haben Sie einen Promo-Code?</string>
+    <string name="promo_code">Promo-Code</string>
+    <string name="redeem">Einlösen</string>
+    <string name="confirm_your_email">E-Mail bestätigen</string>
+    <string name="we_sent_a_6_digit_code_to_x">Wir haben einen 6-stelligen Code an %1$s gesendet. Geben Sie ihn ein, um Ihr Konto fertig zu erstellen.</string>
+    <string name="verification_code">Bestätigungscode</string>
+    <string name="resend_code">Code erneut senden</string>
+    <string name="resend_code_in_x_seconds">Erneut senden in %1$d s</string>
+    <string name="new_to_stock_anchor_see_plans">Neu bei Stock Anchor? Tarife ansehen</string>
+    <string name="this_account_has_no_active_plan">Dieses Konto hat keinen aktiven Premium-Tarif, daher wurden Sie nicht angemeldet. Abonnieren Sie, um die Cloud zu nutzen. Ihre Basic-Daten bleiben auf diesem Gerät.</string>
+    <string name="choose_from_contacts">Aus Kontakten wählen</string>
+    <string name="type_the_number">Nummer eingeben</string>
+    <string name="no_contacts_app_found">Auf diesem Gerät wurde keine Kontakte-App gefunden.</string>
+    <string name="promo_code_accepted_one_last_step">Promo-Code akzeptiert – ein letzter Schritt</string>
 </resources>

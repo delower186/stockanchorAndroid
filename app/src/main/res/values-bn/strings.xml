@@ -31,7 +31,7 @@
     <string name="per_year">প্রতি বছর</string>
     <string name="per_month">প্রতি মাস</string>
     <string name="create_your_cloud_account">আপনার ক্লাউড অ্যাকাউন্ট তৈরি করুন</string>
-    <string name="stock_anchor_cloud">Stock Anchor Cloud</string>
+    <string name="stock_anchor_cloud">স্টক অ্যাঙ্কর ক্লাউড</string>
     <string name="payment_received_one_last_step">পেমেন্ট পাওয়া গেছে — শেষ একটি ধাপ</string>
     <string name="your_subscription_is_ready_create_an">আপনার সাবস্ক্রিপশন প্রস্তুত। আপনার ব্যবসার সাথে যুক্ত করতে একটি অ্যাকাউন্ট তৈরি করুন (অথবা সাইন ইন করুন)।</string>
     <string name="create_account">অ্যাকাউন্ট তৈরি করুন</string>
@@ -539,8 +539,8 @@
     <string name="pf_team_blurb">ভূমিকা ও বিস্তারিত অনুমতিসহ কর্মীদের আমন্ত্রণ জানান।</string>
     <string name="pf_backup_blurb">প্রতি রাতে স্বয়ংক্রিয় ব্যাকআপ, সাথে এক ট্যাপে পুনরুদ্ধার।</string>
     <string name="language">ভাষা</string>
-    <string name="language_system">ফোনের ভাষা</string>
-    <string name="language_hint">অ্যাপের লেখা বদলায়। সংখ্যা ও তারিখ আপনার ফোনের সেটিংস অনুযায়ী থাকে।</string>
+    <string name="language_auto_x">স্বয়ংক্রিয় (দেশ অনুযায়ী): %1$s</string>
+    <string name="language_hint">স্বয়ংক্রিয় অবস্থায় অ্যাপে আপনার দেশের ভাষা থাকলে সেটি, না থাকলে ইংরেজি দেখানো হয়। সংখ্যা ও তারিখ আপনার ফোনের সেটিংস অনুযায়ী থাকে।</string>
     <string name="premium_chip">PREMIUM</string>
     <string name="ok">ঠিক আছে</string>
     <string name="balance_x_x">স্থিতি %1$s %2$s</string>
@@ -580,4 +580,25 @@
         <item quantity="one">%1$dটি বিক্রয়</item>
         <item quantity="other">%1$dটি বিক্রয়</item>
     </plurals>
+    <string name="s_4_weeks">৪ সপ্তাহ</string>
+    <string name="google_play_account">Google Play অ্যাকাউন্ট</string>
+    <string name="google_play_account_hint">এই ডিভাইসে আপনার Google অ্যাকাউন্ট। এখানে এটি পরিবর্তন করা যাবে না।</string>
+    <string name="choose_the_google_account_for_google_play">Google Play-তে যে Google অ্যাকাউন্ট ব্যবহার করেন সেটি বেছে নিন</string>
+    <string name="choose_google_account">Google অ্যাকাউন্ট বেছে নিন</string>
+    <string name="start_free_trial">বিনামূল্যে ট্রায়াল শুরু করুন</string>
+    <string name="free_for_x_then_y">%1$s বিনামূল্যে, এরপর %2$s %3$s। Google Play-তে যেকোনো সময় বাতিল করুন।</string>
+    <string name="have_a_promo_code">প্রোমো কোড আছে?</string>
+    <string name="promo_code">প্রোমো কোড</string>
+    <string name="redeem">রিডিম করুন</string>
+    <string name="confirm_your_email">আপনার ইমেইল নিশ্চিত করুন</string>
+    <string name="we_sent_a_6_digit_code_to_x">আমরা %1$s-এ একটি ৬ অঙ্কের কোড পাঠিয়েছি। অ্যাকাউন্ট তৈরি শেষ করতে কোডটি লিখুন।</string>
+    <string name="verification_code">যাচাইকরণ কোড</string>
+    <string name="resend_code">কোড আবার পাঠান</string>
+    <string name="resend_code_in_x_seconds">%1$d সেকেন্ড পরে আবার পাঠান</string>
+    <string name="new_to_stock_anchor_see_plans">Stock Anchor-এ নতুন? প্ল্যান দেখুন</string>
+    <string name="this_account_has_no_active_plan">এই অ্যাকাউন্টে কোনো সক্রিয় Premium প্ল্যান নেই, তাই আপনাকে সাইন ইন করানো হয়নি। ক্লাউড ব্যবহার করতে সাবস্ক্রাইব করুন। আপনার Basic ডেটা এই ডিভাইসেই থাকবে।</string>
+    <string name="choose_from_contacts">পরিচিতি থেকে বেছে নিন</string>
+    <string name="type_the_number">নম্বর টাইপ করুন</string>
+    <string name="no_contacts_app_found">এই ডিভাইসে কোনো কন্টাক্টস অ্যাপ পাওয়া যায়নি।</string>
+    <string name="promo_code_accepted_one_last_step">প্রোমো কোড গৃহীত — শেষ একটি ধাপ</string>
 </resources>

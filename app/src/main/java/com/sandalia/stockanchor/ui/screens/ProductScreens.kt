@@ -74,6 +74,7 @@ import com.sandalia.stockanchor.ui.components.LocalContainer
 import com.sandalia.stockanchor.ui.components.LocalOpenPaywall
 import com.sandalia.stockanchor.ui.components.NumberField
 import com.sandalia.stockanchor.ui.components.PremiumChip
+import com.sandalia.stockanchor.ui.components.PhoneField
 import com.sandalia.stockanchor.ui.components.ScreenScaffold
 import com.sandalia.stockanchor.ui.components.SearchField
 import com.sandalia.stockanchor.ui.components.SectionTitle
@@ -353,7 +354,7 @@ fun ProductEditScreen(productId: Long, onBack: () -> Unit) {
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     OutlinedTextField(text, { newSupplier = it }, label = { Text(str(R.string.name_2)) }, singleLine = true)
-                    OutlinedTextField(phone, { phone = it }, label = { Text(str(R.string.phone)) }, singleLine = true)
+                    PhoneField(phone, { phone = it })
                 }
             },
             confirmButton = {

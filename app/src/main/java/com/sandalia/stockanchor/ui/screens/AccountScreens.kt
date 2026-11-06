@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.SnackbarHost
 import android.app.Activity
+import androidx.activity.compose.LocalActivity
 import android.content.Intent
 import android.net.Uri
 import android.widget.Toast
@@ -34,7 +35,9 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.CompareArrows
 import androidx.compose.material.icons.automirrored.filled.Logout
 import androidx.compose.material.icons.automirrored.filled.ReceiptLong
+import androidx.compose.material.icons.filled.MarkEmailRead
 import androidx.compose.material.icons.filled.Payments
+import androidx.compose.material.icons.filled.Redeem
 import androidx.compose.material.icons.filled.AddBox
 import androidx.compose.material.icons.filled.Anchor
 import androidx.compose.material.icons.filled.Backup
@@ -81,6 +84,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
@@ -91,6 +95,7 @@ import com.sandalia.stockanchor.AppContainer
 import com.sandalia.stockanchor.BuildConfig
 import com.sandalia.stockanchor.billing.PlanOffer
 import com.sandalia.stockanchor.billing.PurchaseEvent
+import com.sandalia.stockanchor.data.remote.ApiException
 import com.sandalia.stockanchor.data.repo.ActivationResult
 import com.sandalia.stockanchor.domain.Limits
 import com.sandalia.stockanchor.domain.Perm
@@ -115,6 +120,8 @@ import com.sandalia.stockanchor.ui.theme.TealLight
 import com.sandalia.stockanchor.util.Dates
 import com.sandalia.stockanchor.util.Fmt
 import com.sandalia.stockanchor.util.I18n
+import com.sandalia.stockanchor.util.rememberGoogleAccountPicker
+import kotlinx.coroutines.delay
 
 /* ============================================================ Upgrade → cloud activation */
 
@@ -185,6 +192,29 @@ fun PaywallScreen(nav: NavHostController) {
     val runner = rememberRunner()
     val activation = rememberActivation(nav)
     var selected by rememberSaveable { mutableStateOf(BuildConfig.PLAN_YEARLY) }
+    var promoOpen by rememberSaveable { mutableStateOf(false) }
+    var promoError by remember { mutableStateOf<String?>(null) }
+
+    // A new customer's Google account: filled by Android's account picker, never typed. Debug builds with a simulated
+    // purchase may run on an emulator without any Google account, so they don't need one.
+    val needsAccount = !session.loggedIn && !(BuildConfig.ALLOW_TEST_PURCHASES && !billingReady)
+    var accountEmail by rememberSaveable {
+        mutableStateOf(if (container.session.hasPendingProof()) container.session.billingEmail().orEmpty() else "")
+    }
+    var askedForAccount by rememberSaveable { mutableStateOf(false) }
+    var afterAccountChosen by remember { mutableStateOf<(() -> Unit)?>(null) }
+    val pickAccount = rememberGoogleAccountPicker(str(R.string.choose_the_google_account_for_google_play)) { email ->
+        accountEmail = email
+        container.session.setBillingEmail(email)
+        afterAccountChosen?.invoke()
+        afterAccountChosen = null
+    }
+    val withAccount: (() -> Unit) -> Unit = { action ->
+        if (!needsAccount || accountEmail.isNotBlank()) action() else { afterAccountChosen = action; pickAccount() }
+    }
+    LaunchedEffect(needsAccount) {
+        if (needsAccount && accountEmail.isBlank() && !askedForAccount) { askedForAccount = true; pickAccount() }
+    }
 
     // Retry every visit: a connection that failed at app start (Play Store updating, offline) would otherwise never recover.
     LaunchedEffect(Unit) { container.billing.connect() }
@@ -205,7 +235,7 @@ fun PaywallScreen(nav: NavHostController) {
     }
 
     Box(Modifier.fillMaxSize()) {
-    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).verticalScroll(rememberScrollState())) {
+    Column(Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).verticalScroll(rememberScrollState()).navigationBarsPadding()) {
         Box(
             Modifier.fillMaxWidth().background(Brush.verticalGradient(listOf(Navy, NavyLight, Color(0xFF0D5A6B))))
                 .statusBarsPadding().padding(20.dp)
@@ -230,6 +260,15 @@ fun PaywallScreen(nav: NavHostController) {
                 }
             }
 
+            if (needsAccount) {
+                OutlinedTextField(
+                    accountEmail, {}, readOnly = true, enabled = false, singleLine = true,
+                    label = { Text(str(R.string.google_play_account)) },
+                    supportingText = { Text(str(R.string.google_play_account_hint)) },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            }
+
             Row(horizontalArrangement = Arrangement.spacedBy(10.dp)) {
                 offers.forEach { o -> PlanCard(o, selected == o.planId, Modifier.weight(1f)) { selected = o.planId } }
             }
@@ -238,7 +277,7 @@ fun PaywallScreen(nav: NavHostController) {
                 onClick = {
                     val offer = offers.firstOrNull { it.planId == selected } ?: return@Button
                     when {
-                        billingReady -> container.billing.launch(context as Activity, offer)
+                        billingReady -> withAccount { container.billing.launch(context as Activity, offer, accountEmail.takeIf { needsAccount }) }
                         BuildConfig.ALLOW_TEST_PURCHASES -> container.billing.testPurchase(offer.planId)
                         else -> { container.billing.connect(); runner.toast(billingProblem ?: str(R.string.loading_prices_from_google_play)) }
                     }
@@ -248,7 +287,24 @@ fun PaywallScreen(nav: NavHostController) {
                 colors = ButtonDefaults.buttonColors(containerColor = Amber, contentColor = Navy),
             ) {
                 Icon(Icons.Filled.WorkspacePremium, null); Spacer(Modifier.width(8.dp))
-                Text(if (selected == BuildConfig.PLAN_YEARLY) str(R.string.subscribe_yearly) else str(R.string.subscribe_monthly), fontWeight = FontWeight.Bold)
+                val selectedOffer = offers.firstOrNull { it.planId == selected }
+                Text(
+                    when {
+                        selectedOffer?.trial != null -> str(R.string.start_free_trial)
+                        selected == BuildConfig.PLAN_YEARLY -> str(R.string.subscribe_yearly)
+                        else -> str(R.string.subscribe_monthly)
+                    },
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+            offers.firstOrNull { it.planId == selected }?.let { o ->
+                o.trialPeriod?.let { period ->
+                    Text(
+                        str(R.string.free_for_x_then_y, period, o.price, if (o.planId == BuildConfig.PLAN_YEARLY) str(R.string.per_year) else str(R.string.per_month)),
+                        Modifier.fillMaxWidth(), textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant,
+                    )
+                }
             }
             if (!billingReady && !BuildConfig.ALLOW_TEST_PURCHASES) {
                 AppCard(Modifier.fillMaxWidth()) {
@@ -280,6 +336,7 @@ fun PaywallScreen(nav: NavHostController) {
                 }) { Text(str(R.string.restore_purchase)) }
                 if (!session.loggedIn) TextButton(onClick = { nav.navigate(Routes.account("login")) }) { Text(str(R.string.team_member_sign_in)) }
             }
+            TextButton(onClick = { promoOpen = true }, modifier = Modifier.align(Alignment.CenterHorizontally)) { Text(str(R.string.have_a_promo_code)) }
 
             SectionTitle(str(R.string.everything_in_basic_plus))
             AppCard(Modifier.fillMaxWidth()) {
@@ -304,6 +361,78 @@ fun PaywallScreen(nav: NavHostController) {
     // The paywall has no ScreenScaffold, so it hosts the snackbar itself (purchase errors, billing problems).
     SnackbarHost(LocalSnackbar.current, Modifier.align(Alignment.BottomCenter).navigationBarsPadding())
     }
+
+    if (promoOpen) PromoCodeDialog(
+        busy = runner.busy,
+        error = promoError,
+        onDismiss = { promoOpen = false; promoError = null },
+        onSubmit = { code ->
+            withAccount {
+                runner.run {
+                    try {
+                        promoError = null
+                        if (container.session.current.loggedIn) {
+                            if (container.account.redeemPromo(code)) { promoOpen = false; activation.begin() }
+                        } else {
+                            container.account.checkPromo(code)
+                            promoOpen = false
+                            nav.navigate(Routes.account("upgrade"))
+                        }
+                    } catch (e: ApiException) {
+                        promoError = e.message
+                    }
+                }
+            }
+        },
+    )
+}
+
+@Composable
+private fun PromoCodeDialog(busy: Boolean, error: String?, onSubmit: (String) -> Unit, onDismiss: () -> Unit) {
+    var code by rememberSaveable { mutableStateOf("") }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        icon = { Icon(Icons.Filled.Redeem, null) },
+        title = { Text(str(R.string.have_a_promo_code)) },
+        text = {
+            OutlinedTextField(
+                code, { code = it.uppercase().take(40) }, label = { Text(str(R.string.promo_code)) }, singleLine = true, isError = error != null,
+                supportingText = { error?.let { Text(it) } },
+                keyboardOptions = KeyboardOptions(capitalization = KeyboardCapitalization.Characters, keyboardType = KeyboardType.Ascii),
+                modifier = Modifier.fillMaxWidth(),
+            )
+        },
+        confirmButton = { Button(onClick = { onSubmit(code) }, enabled = !busy && code.isNotBlank()) { Text(str(R.string.redeem)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(str(R.string.cancel)) } },
+    )
+}
+
+/** Six-digit code from the verification email. A wrong code keeps the dialog open and says so. */
+@Composable
+private fun EmailCodeDialog(email: String, busy: Boolean, error: String?, resendInSeconds: Int, onSubmit: (String) -> Unit, onResend: () -> Unit, onDismiss: () -> Unit) {
+    var code by rememberSaveable { mutableStateOf("") }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        icon = { Icon(Icons.Filled.MarkEmailRead, null) },
+        title = { Text(str(R.string.confirm_your_email)) },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text(str(R.string.we_sent_a_6_digit_code_to_x, email), style = MaterialTheme.typography.bodyMedium)
+                OutlinedTextField(
+                    code, { code = it.filter(Char::isDigit).take(6) },
+                    label = { Text(str(R.string.verification_code)) }, singleLine = true, isError = error != null,
+                    supportingText = { error?.let { Text(it) } },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
+                    modifier = Modifier.fillMaxWidth(),
+                )
+                TextButton(onClick = onResend, enabled = !busy && resendInSeconds == 0) {
+                    Text(if (resendInSeconds > 0) str(R.string.resend_code_in_x_seconds, resendInSeconds) else str(R.string.resend_code))
+                }
+            }
+        },
+        confirmButton = { Button(onClick = { onSubmit(code) }, enabled = !busy && code.length == 6) { Text(str(R.string.verify)) } },
+        dismissButton = { TextButton(onClick = onDismiss) { Text(str(R.string.cancel)) } },
+    )
 }
 
 @Composable
@@ -334,8 +463,9 @@ fun AccountScreen(mode: String, nav: NavHostController) {
     val container = LocalContainer.current
     val runner = rememberRunner()
     val activation = rememberActivation(nav)
-    val upgrading = mode == "upgrade"
-    var tab by rememberSaveable { mutableStateOf(if (mode == "login") 1 else 0) }
+    // Create Account exists only after a payment or a valid promo code; otherwise this screen is sign-in only.
+    val paid = remember(mode) { mode == "upgrade" && container.session.hasPendingProof() }
+    var tab by rememberSaveable { mutableStateOf(if (paid) 0 else 1) }
     var name by rememberSaveable { mutableStateOf("") }
     var company by rememberSaveable { mutableStateOf(container.session.current.companyName.takeIf { it != "My Business" }.orEmpty()) }
     var currency by rememberSaveable { mutableStateOf("BDT") }
@@ -344,26 +474,60 @@ fun AccountScreen(mode: String, nav: NavHostController) {
     var notPremium by remember { mutableStateOf(false) }
     var challenge by rememberSaveable { mutableStateOf<String?>(null) }
 
-    // Plain suspend fun: it runs inside the button's runner.run, and a nested runner.run is dropped while busy.
+    // A new account always uses the Google account from the paywall. It can arrive here without one (Restore purchase).
+    var accountEmail by rememberSaveable { mutableStateOf(container.session.billingEmail().orEmpty()) }
+    var askedForAccount by rememberSaveable { mutableStateOf(false) }
+    val pickAccount = rememberGoogleAccountPicker(str(R.string.choose_the_google_account_for_google_play)) {
+        accountEmail = it
+        container.session.setBillingEmail(it)
+    }
+    LaunchedEffect(paid) {
+        if (paid && accountEmail.isBlank() && !BuildConfig.ALLOW_TEST_PURCHASES && !askedForAccount) { askedForAccount = true; pickAccount() }
+    }
+    val newAccountEmail = accountEmail.ifBlank { if (BuildConfig.ALLOW_TEST_PURCHASES) email else "" }
+
+    var codeSentTo by rememberSaveable { mutableStateOf<String?>(null) }
+    var codeError by remember { mutableStateOf<String?>(null) }
+    var resendIn by rememberSaveable { mutableStateOf(0) }
+    LaunchedEffect(resendIn) {
+        if (resendIn > 0) { delay(1000); resendIn -= 1 }
+    }
+
+    // Plain suspend funs: they run inside the button's runner.run, and a nested runner.run is dropped while busy.
     suspend fun afterAuth() {
-        val premium = if (container.session.pendingPurchaseToken() != null) container.account.verifyPendingPurchase() else container.account.refresh()
-        if (premium) activation.begin() else { notPremium = true }
+        if (container.session.current.isPremium) activation.begin()
+        else { container.account.discardUnpaidSession(); notPremium = true }
+    }
+
+    suspend fun refusedForNoPlan(block: suspend () -> Unit) {
+        try {
+            block()
+        } catch (e: ApiException) {
+            if (e.code == "premium_required") { challenge = null; notPremium = true } else throw e
+        }
+    }
+
+    suspend fun sendCode() {
+        val sent = container.account.sendRegistrationCode(newAccountEmail)
+        codeError = null
+        codeSentTo = newAccountEmail
+        resendIn = sent.resendAfterSeconds
     }
 
     ScreenScaffold(
-        title = if (upgrading) str(R.string.create_your_cloud_account) else str(R.string.stock_anchor_cloud),
-        subtitle = if (upgrading) str(R.string.payment_received_one_last_step) else null,
+        title = if (paid) str(R.string.create_your_cloud_account) else str(R.string.stock_anchor_cloud),
+        subtitle = if (!paid) null else if (container.session.pendingPromo() != null) str(R.string.promo_code_accepted_one_last_step) else str(R.string.payment_received_one_last_step),
         onBack = { nav.popBackStack() }, busy = runner.busy,
     ) { pad ->
         Column(Modifier.padding(pad).fillMaxSize().imePadding().verticalScroll(rememberScrollState()).padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-            if (upgrading) AppCard(Modifier.fillMaxWidth()) {
+            if (paid) AppCard(Modifier.fillMaxWidth()) {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(Icons.Filled.CheckCircle, null, tint = MaterialTheme.colorScheme.secondary)
                     Spacer(Modifier.width(10.dp))
                     Text(str(R.string.your_subscription_is_ready_create_an), style = MaterialTheme.typography.bodyMedium)
                 }
             }
-            PrimaryTabRow(selectedTabIndex = tab, containerColor = MaterialTheme.colorScheme.background) {
+            if (paid) PrimaryTabRow(selectedTabIndex = tab, containerColor = MaterialTheme.colorScheme.background) {
                 Tab(tab == 0, { tab = 0 }, text = { Text(str(R.string.create_account)) })
                 Tab(tab == 1, { tab = 1 }, text = { Text(str(R.string.sign_in)) })
             }
@@ -372,25 +536,72 @@ fun AccountScreen(mode: String, nav: NavHostController) {
                 OutlinedTextField(company, { company = it }, label = { Text(str(R.string.business_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
                 DropdownField(str(R.string.currency), listOf("BDT", "USD", "EUR", "GBP", "INR", "PKR"), currency, { it }, { if (it != null) currency = it }, Modifier.fillMaxWidth())
             }
-            OutlinedTextField(email, { email = it }, label = { Text(str(R.string.email)) }, singleLine = true, modifier = Modifier.fillMaxWidth(),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email))
+            if (tab == 0 && accountEmail.isNotBlank()) {
+                OutlinedTextField(
+                    accountEmail, {}, readOnly = true, enabled = false, singleLine = true,
+                    label = { Text(str(R.string.google_play_account)) },
+                    supportingText = { Text(str(R.string.google_play_account_hint)) },
+                    modifier = Modifier.fillMaxWidth(),
+                )
+            } else if (tab == 0 && !BuildConfig.ALLOW_TEST_PURCHASES) {
+                OutlinedButton(onClick = pickAccount, modifier = Modifier.fillMaxWidth()) { Text(str(R.string.choose_google_account)) }
+            } else {
+                OutlinedTextField(email, { email = it }, label = { Text(str(R.string.email)) }, singleLine = true, modifier = Modifier.fillMaxWidth(),
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email))
+            }
             OutlinedTextField(password, { password = it }, label = { Text(str(R.string.password)) }, singleLine = true, modifier = Modifier.fillMaxWidth(),
                 visualTransformation = PasswordVisualTransformation(), keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 supportingText = { if (tab == 0) Text(str(R.string.at_least_8_characters)) })
             Button(
                 onClick = {
                     runner.run {
-                        if (tab == 0) container.account.register(name, email, password, company, currency)
-                        else challenge = container.account.login(email, password)
-                        if (challenge == null) afterAuth()
+                        if (tab == 0) sendCode()
+                        else refusedForNoPlan {
+                            challenge = container.account.login(email, password)
+                            if (challenge == null) afterAuth()
+                        }
                     }
                 },
-                enabled = !runner.busy && email.isNotBlank() && password.length >= (if (tab == 0) 8 else 1) &&
-                    (tab == 1 || (name.isNotBlank() && company.isNotBlank())),
+                enabled = !runner.busy && password.length >= (if (tab == 0) 8 else 1) &&
+                    (if (tab == 0) newAccountEmail.isNotBlank() && name.isNotBlank() && company.isNotBlank() else email.isNotBlank()),
                 modifier = Modifier.fillMaxWidth().height(52.dp),
             ) { Text(if (tab == 0) str(R.string.create_account) else str(R.string.sign_in)) }
+            if (!paid) TextButton(onClick = { nav.navigate(Routes.PAYWALL) { popUpTo(Routes.PAYWALL) { inclusive = true } } }, modifier = Modifier.align(Alignment.CenterHorizontally)) {
+                Text(str(R.string.new_to_stock_anchor_see_plans))
+            }
             if (BuildConfig.ALLOW_SERVER_OVERRIDE) Text("Server: ${container.session.baseUrl()}", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
+    }
+
+    codeSentTo?.let { address ->
+        EmailCodeDialog(
+            email = address,
+            busy = runner.busy,
+            error = codeError,
+            resendInSeconds = resendIn,
+            onSubmit = { code ->
+                runner.run {
+                    try {
+                        container.account.register(name, address, password, company, currency, code)
+                        codeSentTo = null
+                    } catch (e: ApiException) {
+                        codeError = e.message
+                        return@run
+                    }
+                    afterAuth()
+                }
+            },
+            onResend = {
+                runner.run {
+                    try {
+                        sendCode()
+                    } catch (e: ApiException) {
+                        codeError = e.message
+                    }
+                }
+            },
+            onDismiss = { codeSentTo = null },
+        )
     }
 
     challenge?.let { pending ->
@@ -398,9 +609,11 @@ fun AccountScreen(mode: String, nav: NavHostController) {
             busy = runner.busy,
             onSubmit = { code ->
                 runner.run {
-                    container.account.completeTwoFactor(pending, code)
-                    challenge = null
-                    afterAuth()
+                    refusedForNoPlan {
+                        container.account.completeTwoFactor(pending, code)
+                        challenge = null
+                        afterAuth()
+                    }
                 }
             },
             onDismiss = { challenge = null },
@@ -410,7 +623,7 @@ fun AccountScreen(mode: String, nav: NavHostController) {
     if (notPremium) AlertDialog(
         onDismissRequest = { notPremium = false },
         title = { Text(str(R.string.no_active_subscription)) },
-        text = { Text(str(R.string.you_re_signed_in_but_your)) },
+        text = { Text(str(R.string.this_account_has_no_active_plan)) },
         confirmButton = { TextButton(onClick = { notPremium = false; nav.navigate(Routes.PAYWALL) { popUpTo(Routes.PAYWALL) { inclusive = true } } }) { Text(str(R.string.see_plans)) } },
         dismissButton = { TextButton(onClick = { notPremium = false; nav.popBackStack() }) { Text(str(R.string.later)) } },
     )
@@ -468,7 +681,7 @@ fun SubscriptionScreen(nav: NavHostController) {
                 HorizontalDivider()
                 TextButton(onClick = { confirmDowngrade = true }) { Text(str(R.string.work_offline_on_basic_keep_data)) }
             }
-            if (session.loggedIn) TextButton(onClick = { confirmSignOut = true }) {
+            if (session.loggedIn && session.isPremium) TextButton(onClick = { confirmSignOut = true }) {
                 Icon(Icons.AutoMirrored.Filled.Logout, null, tint = MaterialTheme.colorScheme.error); Spacer(Modifier.width(6.dp))
                 Text(str(R.string.sign_out_of_the_cloud), color = MaterialTheme.colorScheme.error)
             }
@@ -582,11 +795,11 @@ fun SettingsScreen(nav: NavHostController) {
             }
             SectionTitle(str(R.string.language))
             AppCard(Modifier.fillMaxWidth()) {
-                val activity = LocalContext.current as Activity
+                val activity = LocalActivity.current ?: return@AppCard
                 val currentLanguage = remember { I18n.current(activity) }
                 DropdownField(
                     str(R.string.language), I18n.LANGUAGES.map { it.first }, currentLanguage,
-                    { tag -> I18n.LANGUAGES.first { it.first == tag }.second ?: str(R.string.language_system) },
+                    { tag -> I18n.LANGUAGES.first { it.first == tag }.second ?: str(R.string.language_auto_x, I18n.nameOf(I18n.automatic(activity))) },
                     { tag -> if (tag != null && tag != currentLanguage) I18n.setLanguage(activity, tag) },
                     Modifier.fillMaxWidth(),
                 )

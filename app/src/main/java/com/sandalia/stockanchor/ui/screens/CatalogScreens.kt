@@ -51,6 +51,7 @@ import com.sandalia.stockanchor.ui.components.LocalContainer
 import com.sandalia.stockanchor.ui.components.LocalOpenPaywall
 import com.sandalia.stockanchor.ui.components.LockedFeature
 import com.sandalia.stockanchor.ui.components.PremiumChip
+import com.sandalia.stockanchor.ui.components.PhoneField
 import com.sandalia.stockanchor.ui.components.ScreenScaffold
 import com.sandalia.stockanchor.ui.components.rememberRunner
 import com.sandalia.stockanchor.ui.theme.Amber
@@ -275,7 +276,7 @@ fun SuppliersScreen(onBack: () -> Unit) {
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     OutlinedTextField(name, { name = it }, label = { Text(str(R.string.name_2)) }, singleLine = true)
-                    OutlinedTextField(phone, { phone = it }, label = { Text(str(R.string.phone)) }, singleLine = true)
+                    PhoneField(phone, { phone = it })
                     OutlinedTextField(email, { email = it }, label = { Text(str(R.string.email)) }, singleLine = true)
                     OutlinedTextField(address, { address = it }, label = { Text(str(R.string.address)) })
                     OutlinedTextField(note, { note = it }, label = { Text(str(R.string.note)) })
