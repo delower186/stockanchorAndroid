@@ -46,6 +46,8 @@ androidx.activity.ActivityViewModelLazyKt$viewModels$factoryPromise$1
 androidx.activity.ActivityViewModelLazyKt$viewModels$factoryPromise$2
 androidx.activity.ActivityViewModelLazyKt
 androidx.activity.Api26Impl
+androidx.activity.Api34Impl:
+    public final android.window.BackEvent createOnBackEvent(float,float,float,int)
 androidx.activity.BackEventCompat$SwipeEdge
 androidx.activity.BackEventCompat:
     public static final int EDGE_LEFT
@@ -133,8 +135,6 @@ androidx.activity.SystemBarStyle:
     public static final androidx.activity.SystemBarStyle dark(int)
     public final int getDarkScrim$activity_release()
     public static final androidx.activity.SystemBarStyle light(int,int)
-androidx.activity.ViewTreeFullyDrawnReporterOwner$findViewTreeFullyDrawnReporterOwner$1
-androidx.activity.ViewTreeFullyDrawnReporterOwner$findViewTreeFullyDrawnReporterOwner$2
 androidx.activity.ViewTreeFullyDrawnReporterOwner:
     public static final androidx.activity.FullyDrawnReporterOwner get(android.view.View)
 androidx.activity.compose.ActivityComposeUtilsKt
@@ -225,6 +225,9 @@ androidx.activity.result.contract.ActivityResultContracts$PickContact
 androidx.activity.result.contract.ActivityResultContracts$PickMultipleVisualMedia$Companion
 androidx.activity.result.contract.ActivityResultContracts$PickMultipleVisualMedia
 androidx.activity.result.contract.ActivityResultContracts$PickVisualMedia$Companion
+androidx.activity.result.contract.ActivityResultContracts$PickVisualMedia$DefaultTab$AlbumsTab
+androidx.activity.result.contract.ActivityResultContracts$PickVisualMedia$DefaultTab$PhotosTab
+androidx.activity.result.contract.ActivityResultContracts$PickVisualMedia$DefaultTab
 androidx.activity.result.contract.ActivityResultContracts$PickVisualMedia$ImageAndVideo
 androidx.activity.result.contract.ActivityResultContracts$PickVisualMedia$ImageOnly
 androidx.activity.result.contract.ActivityResultContracts$PickVisualMedia$SingleMimeType
@@ -326,6 +329,63 @@ androidx.annotation.experimental.Experimental$Level
 androidx.annotation.experimental.Experimental
 androidx.annotation.experimental.R
 androidx.annotation.experimental.UseExperimental
+androidx.appcompat.content.res.AppCompatResources:
+    private void <init>()
+    public static android.content.res.ColorStateList getColorStateList(android.content.Context,int)
+androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat$1
+androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat$AnimatableTransition
+androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat$AnimatedStateListState
+androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat$AnimatedVectorDrawableTransition
+androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat$AnimationDrawableTransition
+androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat$FrameInterpolator
+androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat$Transition
+androidx.appcompat.graphics.drawable.AnimatedStateListDrawableCompat
+androidx.appcompat.graphics.drawable.DrawableContainerCompat$1
+androidx.appcompat.graphics.drawable.DrawableContainerCompat$Api21Impl
+androidx.appcompat.graphics.drawable.DrawableContainerCompat$BlockInvalidateCallback
+androidx.appcompat.graphics.drawable.DrawableContainerCompat$DrawableContainerState
+androidx.appcompat.graphics.drawable.DrawableContainerCompat
+androidx.appcompat.graphics.drawable.DrawableWrapperCompat
+androidx.appcompat.graphics.drawable.StateListDrawableCompat$StateListState
+androidx.appcompat.graphics.drawable.StateListDrawableCompat
+androidx.appcompat.resources.Compatibility$Api21Impl
+androidx.appcompat.resources.Compatibility
+androidx.appcompat.resources.R$drawable:
+    private void <init>()
+androidx.appcompat.resources.R$styleable
+androidx.appcompat.resources.R
+androidx.appcompat.widget.DrawableUtils$Api18Impl
+androidx.appcompat.widget.DrawableUtils$Api29Impl
+androidx.appcompat.widget.DrawableUtils:
+    private void <init>()
+    public static boolean canSafelyMutateDrawable(android.graphics.drawable.Drawable)
+    public static android.graphics.Rect getOpticalBounds(android.graphics.drawable.Drawable)
+    public static android.graphics.PorterDuff$Mode parseTintMode(int,android.graphics.PorterDuff$Mode)
+androidx.appcompat.widget.ResourceManagerInternal$AsldcInflateDelegate
+androidx.appcompat.widget.ResourceManagerInternal$AvdcInflateDelegate
+androidx.appcompat.widget.ResourceManagerInternal$ColorFilterLruCache:
+    private static int generateCacheKey(int,android.graphics.PorterDuff$Mode)
+    android.graphics.PorterDuffColorFilter get(int,android.graphics.PorterDuff$Mode)
+    android.graphics.PorterDuffColorFilter put(int,android.graphics.PorterDuff$Mode,android.graphics.PorterDuffColorFilter)
+androidx.appcompat.widget.ResourceManagerInternal$DrawableDelegate
+androidx.appcompat.widget.ResourceManagerInternal$VdcInflateDelegate
+androidx.appcompat.widget.ResourceManagerInternal:
+    private static final boolean DEBUG
+    private static final java.lang.String PLATFORM_VD_CLAZZ
+    private static final java.lang.String SKIP_DRAWABLE_TAG
+    private static final java.lang.String TAG
+    private void addDelegate(java.lang.String,androidx.appcompat.widget.ResourceManagerInternal$InflateDelegate)
+    private static android.graphics.PorterDuffColorFilter createTintFilter(android.content.res.ColorStateList,android.graphics.PorterDuff$Mode,int[])
+    public static synchronized android.graphics.PorterDuffColorFilter getPorterDuffColorFilter(int,android.graphics.PorterDuff$Mode)
+    public synchronized void onConfigurationChanged(android.content.Context)
+    synchronized android.graphics.drawable.Drawable onDrawableLoadedFromResources(android.content.Context,androidx.appcompat.widget.VectorEnabledTintResources,int)
+    public synchronized void setHooks(androidx.appcompat.widget.ResourceManagerInternal$ResourceManagerHooks)
+    static void tintDrawable(android.graphics.drawable.Drawable,androidx.appcompat.widget.TintInfo,int[])
+androidx.appcompat.widget.ResourcesWrapper
+androidx.appcompat.widget.TintContextWrapper
+androidx.appcompat.widget.TintInfo
+androidx.appcompat.widget.TintResources
+androidx.appcompat.widget.VectorEnabledTintResources
 androidx.arch.core.R
 androidx.arch.core.executor.ArchTaskExecutor:
     public static java.util.concurrent.Executor getMainThreadExecutor()
@@ -736,7 +796,6 @@ androidx.collection.LongSetKt:
     public static final androidx.collection.MutableLongSet mutableLongSetOf(long,long,long)
     public static final varargs androidx.collection.MutableLongSet mutableLongSetOf(long[])
 androidx.collection.LongSparseArray:
-    public void <init>()
     public void append(long,java.lang.Object)
     public boolean containsValue(java.lang.Object)
     public void delete(long)
@@ -1394,7 +1453,6 @@ androidx.collection.SimpleArrayMap:
     public void putAll(androidx.collection.SimpleArrayMap)
 androidx.collection.SimpleArrayMapKt
 androidx.collection.SparseArrayCompat:
-    public void append(int,java.lang.Object)
     public boolean containsValue(java.lang.Object)
     public void delete(int)
     public java.lang.Object get(int,java.lang.Object)
@@ -3407,7 +3465,6 @@ androidx.compose.foundation.layout.SizeElement:
 androidx.compose.foundation.layout.SizeKt$requiredHeightIn-VpY3zN4$$inlined$debugInspectorInfo$1
 androidx.compose.foundation.layout.SizeKt$requiredWidthIn-VpY3zN4$$inlined$debugInspectorInfo$1
 androidx.compose.foundation.layout.SizeKt:
-    public static synthetic androidx.compose.ui.Modifier fillMaxHeight$default(androidx.compose.ui.Modifier,float,int,java.lang.Object)
     public static final androidx.compose.ui.Modifier requiredHeightIn-VpY3zN4(androidx.compose.ui.Modifier,float,float)
     public static synthetic androidx.compose.ui.Modifier requiredHeightIn-VpY3zN4$default(androidx.compose.ui.Modifier,float,float,int,java.lang.Object)
     public static final androidx.compose.ui.Modifier requiredSize-6HolHcs(androidx.compose.ui.Modifier,long)
@@ -6503,7 +6560,6 @@ androidx.compose.material.icons.filled.ContactPageKt
 androidx.compose.material.icons.filled.ContactPhoneKt
 androidx.compose.material.icons.filled.ContactSupportKt
 androidx.compose.material.icons.filled.ContactlessKt
-androidx.compose.material.icons.filled.ContactsKt
 androidx.compose.material.icons.filled.ContentCutKt
 androidx.compose.material.icons.filled.ContentPasteGoKt
 androidx.compose.material.icons.filled.ContentPasteKt
@@ -6594,7 +6650,6 @@ androidx.compose.material.icons.filled.DevicesFoldKt
 androidx.compose.material.icons.filled.DevicesKt
 androidx.compose.material.icons.filled.DevicesOtherKt
 androidx.compose.material.icons.filled.DialerSipKt
-androidx.compose.material.icons.filled.DialpadKt
 androidx.compose.material.icons.filled.DiamondKt
 androidx.compose.material.icons.filled.DifferenceKt
 androidx.compose.material.icons.filled.DiningKt
@@ -7194,7 +7249,6 @@ androidx.compose.material.icons.filled.MarginKt
 androidx.compose.material.icons.filled.MarkAsUnreadKt
 androidx.compose.material.icons.filled.MarkChatReadKt
 androidx.compose.material.icons.filled.MarkChatUnreadKt
-androidx.compose.material.icons.filled.MarkEmailReadKt
 androidx.compose.material.icons.filled.MarkEmailUnreadKt
 androidx.compose.material.icons.filled.MarkUnreadChatAltKt
 androidx.compose.material.icons.filled.MarkunreadKt
@@ -7557,7 +7611,6 @@ androidx.compose.material.icons.filled.RecommendKt
 androidx.compose.material.icons.filled.RecordVoiceOverKt
 androidx.compose.material.icons.filled.RectangleKt
 androidx.compose.material.icons.filled.RecyclingKt
-androidx.compose.material.icons.filled.RedeemKt
 androidx.compose.material.icons.filled.RedoKt
 androidx.compose.material.icons.filled.ReduceCapacityKt
 androidx.compose.material.icons.filled.RefreshKt
@@ -16769,15 +16822,11 @@ androidx.compose.material3.AnalogTimePickerState$animateToCurrent$2
 androidx.compose.material3.AnalogTimePickerState$onGestureEnd$2
 androidx.compose.material3.AnalogTimePickerState$rotateTo$2
 androidx.compose.material3.AnalogTimePickerState
-androidx.compose.material3.AndroidMenu_androidKt$DropdownMenu$1
-androidx.compose.material3.AndroidMenu_androidKt$DropdownMenu$2
 androidx.compose.material3.AndroidMenu_androidKt$DropdownMenu$3
 androidx.compose.material3.AndroidMenu_androidKt$DropdownMenu$4
-androidx.compose.material3.AndroidMenu_androidKt$DropdownMenu$popupPositionProvider$1$1
 androidx.compose.material3.AndroidMenu_androidKt:
     public static final synthetic void DropdownMenu-4kj-_NE(boolean,kotlin.jvm.functions.Function0,androidx.compose.ui.Modifier,long,androidx.compose.foundation.ScrollState,androidx.compose.ui.window.PopupProperties,kotlin.jvm.functions.Function3,androidx.compose.runtime.Composer,int,int)
     public static final synthetic void DropdownMenu-ILWXrKs(boolean,kotlin.jvm.functions.Function0,androidx.compose.ui.Modifier,long,androidx.compose.ui.window.PopupProperties,kotlin.jvm.functions.Function3,androidx.compose.runtime.Composer,int,int)
-    public static final void DropdownMenu-IlH_yew(boolean,kotlin.jvm.functions.Function0,androidx.compose.ui.Modifier,long,androidx.compose.foundation.ScrollState,androidx.compose.ui.window.PopupProperties,androidx.compose.ui.graphics.Shape,long,float,float,androidx.compose.foundation.BorderStroke,kotlin.jvm.functions.Function3,androidx.compose.runtime.Composer,int,int,int)
     public static final androidx.compose.ui.window.PopupProperties getDefaultMenuProperties()
 androidx.compose.material3.AppBarKt$BottomAppBar$1
 androidx.compose.material3.AppBarKt$BottomAppBar$2
@@ -18599,8 +18648,18 @@ androidx.compose.material3.internal.DraggableAnchorsElement:
     public void inspectableProperties(androidx.compose.ui.platform.InspectorInfo)
 androidx.compose.material3.internal.DraggableAnchorsNode:
     public final kotlin.jvm.functions.Function2 getAnchors()
-androidx.compose.material3.internal.DropdownMenuPositionProvider$2
-androidx.compose.material3.internal.DropdownMenuPositionProvider
+androidx.compose.material3.internal.DropdownMenuPositionProvider:
+    public static final int $stable
+    public final long component1-RKDOV3M()
+    public final androidx.compose.ui.unit.Density component2()
+    public final int component3()
+    public final kotlin.jvm.functions.Function2 component4()
+    public final androidx.compose.material3.internal.DropdownMenuPositionProvider copy-uVxBXkw(long,androidx.compose.ui.unit.Density,int,kotlin.jvm.functions.Function2)
+    public static synthetic androidx.compose.material3.internal.DropdownMenuPositionProvider copy-uVxBXkw$default(androidx.compose.material3.internal.DropdownMenuPositionProvider,long,androidx.compose.ui.unit.Density,int,kotlin.jvm.functions.Function2,int,java.lang.Object)
+    public final long getContentOffset-RKDOV3M()
+    public final androidx.compose.ui.unit.Density getDensity()
+    public final kotlin.jvm.functions.Function2 getOnPositionCalculated()
+    public final int getVerticalMargin()
 androidx.compose.material3.internal.ElevationKt:
     public static synthetic java.lang.Object animateElevation-rAjV9yQ$default(androidx.compose.animation.core.Animatable,float,androidx.compose.foundation.interaction.Interaction,androidx.compose.foundation.interaction.Interaction,kotlin.coroutines.Continuation,int,java.lang.Object)
 androidx.compose.material3.internal.InternalMutatorMutex$Mutator:
@@ -18624,7 +18683,6 @@ androidx.compose.material3.internal.MappedInteractionSource:
 androidx.compose.material3.internal.MenuPosition:
     public static final int $stable
     public static synthetic androidx.compose.material3.internal.MenuPosition$Vertical bottomToWindowBottom$default(androidx.compose.material3.internal.MenuPosition,int,int,java.lang.Object)
-    public final androidx.compose.material3.internal.MenuPosition$Vertical centerToAnchorTop(int)
     public static synthetic androidx.compose.material3.internal.MenuPosition$Vertical centerToAnchorTop$default(androidx.compose.material3.internal.MenuPosition,int,int,java.lang.Object)
     public static synthetic androidx.compose.material3.internal.MenuPosition$Vertical topToWindowTop$default(androidx.compose.material3.internal.MenuPosition,int,int,java.lang.Object)
 androidx.compose.material3.internal.MutableWindowInsets:
@@ -26955,7 +27013,6 @@ androidx.compose.ui.unit.DpOffset:
     public static final synthetic long access$getZero$cp()
     public static final long copy-tPigGR8(long,float,float)
     public static synthetic long copy-tPigGR8$default(long,float,float,int,java.lang.Object)
-    public static final boolean equals-impl0(long,long)
     public static synthetic void getPackedValue$annotations()
     public static synthetic void getX-D9Ej5fM$annotations()
     public static synthetic void getY-D9Ej5fM$annotations()
@@ -28222,7 +28279,10 @@ androidx.core.app.unusedapprestrictions.IUnusedAppRestrictionsBackportService
 androidx.core.content.ContentProviderCompat
 androidx.core.content.ContentResolverCompat
 androidx.core.content.ContentValuesKt
-androidx.core.content.ContextCompat$Api21Impl
+androidx.core.content.ContextCompat$Api21Impl:
+    private void <init>()
+    static java.io.File getCodeCacheDir(android.content.Context)
+    static java.io.File getNoBackupFilesDir(android.content.Context)
 androidx.core.content.ContextCompat$Api23Impl
 androidx.core.content.ContextCompat$Api24Impl
 androidx.core.content.ContextCompat$Api26Impl:
@@ -28250,7 +28310,6 @@ androidx.core.content.ContextCompat:
     public static android.content.Context getContextForLanguage(android.content.Context)
     public static java.io.File getDataDir(android.content.Context)
     public static android.view.Display getDisplayOrDefault(android.content.Context)
-    public static android.graphics.drawable.Drawable getDrawable(android.content.Context,int)
     public static java.util.concurrent.Executor getMainExecutor(android.content.Context)
     public static java.io.File getNoBackupFilesDir(android.content.Context)
     public static java.io.File[] getObbDirs(android.content.Context)
@@ -28503,9 +28562,38 @@ androidx.core.graphics.WeightTypefaceApi21
 androidx.core.graphics.WeightTypefaceApi26
 androidx.core.graphics.drawable.BitmapDrawableKt
 androidx.core.graphics.drawable.ColorDrawableKt
-androidx.core.graphics.drawable.DrawableCompat$Api21Impl
+androidx.core.graphics.drawable.DrawableCompat$Api21Impl:
+    private void <init>()
+    static void applyTheme(android.graphics.drawable.Drawable,android.content.res.Resources$Theme)
+    static boolean canApplyTheme(android.graphics.drawable.Drawable)
+    static android.graphics.ColorFilter getColorFilter(android.graphics.drawable.Drawable)
+    static void inflate(android.graphics.drawable.Drawable,android.content.res.Resources,org.xmlpull.v1.XmlPullParser,android.util.AttributeSet,android.content.res.Resources$Theme)
+    static void setHotspot(android.graphics.drawable.Drawable,float,float)
+    static void setHotspotBounds(android.graphics.drawable.Drawable,int,int,int,int)
+    static void setTint(android.graphics.drawable.Drawable,int)
 androidx.core.graphics.drawable.DrawableCompat$Api23Impl
-androidx.core.graphics.drawable.DrawableCompat
+androidx.core.graphics.drawable.DrawableCompat:
+    private static final java.lang.String TAG
+    private static java.lang.reflect.Method sGetLayoutDirectionMethod
+    private static boolean sGetLayoutDirectionMethodFetched
+    private static java.lang.reflect.Method sSetLayoutDirectionMethod
+    private static boolean sSetLayoutDirectionMethodFetched
+    private void <init>()
+    public static void applyTheme(android.graphics.drawable.Drawable,android.content.res.Resources$Theme)
+    public static boolean canApplyTheme(android.graphics.drawable.Drawable)
+    public static void clearColorFilter(android.graphics.drawable.Drawable)
+    public static int getAlpha(android.graphics.drawable.Drawable)
+    public static android.graphics.ColorFilter getColorFilter(android.graphics.drawable.Drawable)
+    public static int getLayoutDirection(android.graphics.drawable.Drawable)
+    public static void inflate(android.graphics.drawable.Drawable,android.content.res.Resources,org.xmlpull.v1.XmlPullParser,android.util.AttributeSet,android.content.res.Resources$Theme)
+    public static boolean isAutoMirrored(android.graphics.drawable.Drawable)
+    public static void jumpToCurrentState(android.graphics.drawable.Drawable)
+    public static void setAutoMirrored(android.graphics.drawable.Drawable,boolean)
+    public static void setHotspot(android.graphics.drawable.Drawable,float,float)
+    public static void setHotspotBounds(android.graphics.drawable.Drawable,int,int,int,int)
+    public static boolean setLayoutDirection(android.graphics.drawable.Drawable,int)
+    public static void setTint(android.graphics.drawable.Drawable,int)
+    public static android.graphics.drawable.Drawable unwrap(android.graphics.drawable.Drawable)
 androidx.core.graphics.drawable.DrawableKt
 androidx.core.graphics.drawable.IconCompat$Api23Impl:
     private void <init>()
@@ -28840,6 +28928,7 @@ androidx.core.service.quicksettings.TileServiceCompat$TileServiceWrapper
 androidx.core.service.quicksettings.TileServiceCompat
 androidx.core.splashscreen.MaskedDrawable
 androidx.core.splashscreen.R$attr:
+    public static int isLightTheme
     public static int windowSplashScreenAnimationDuration
     public static int windowSplashScreenIconBackgroundColor
     private void <init>()
@@ -28870,16 +28959,16 @@ androidx.core.splashscreen.SplashScreen$Impl31:
     public final android.view.ViewTreeObserver$OnPreDrawListener getPreDrawListener()
     public void setKeepOnScreenCondition(androidx.core.splashscreen.SplashScreen$KeepOnScreenCondition)
     public void setOnExitAnimationListener(androidx.core.splashscreen.SplashScreen$OnExitAnimationListener)
-    private static final void setOnExitAnimationListener$lambda-0(androidx.core.splashscreen.SplashScreen$Impl31,androidx.core.splashscreen.SplashScreen$OnExitAnimationListener,android.window.SplashScreenView)
+    private static final void setOnExitAnimationListener$lambda$0(androidx.core.splashscreen.SplashScreen$Impl31,androidx.core.splashscreen.SplashScreen$OnExitAnimationListener,android.window.SplashScreenView)
     public final void setPreDrawListener(android.view.ViewTreeObserver$OnPreDrawListener)
 androidx.core.splashscreen.SplashScreen$Impl:
     private androidx.core.splashscreen.SplashScreen$OnExitAnimationListener animationListener
     private androidx.core.splashscreen.SplashScreenViewProvider mSplashScreenViewProvider
-    public static synthetic boolean $r8$lambda$kKfeCoJXk552lTF8ql1mm-IlINg()
+    public static synthetic boolean $r8$lambda$_GEmHzIfsOIitKo3capcUTeFMtU()
     public static final synthetic androidx.core.splashscreen.SplashScreenViewProvider access$getMSplashScreenViewProvider$p(androidx.core.splashscreen.SplashScreen$Impl)
     public static final synthetic void access$setMSplashScreenViewProvider$p(androidx.core.splashscreen.SplashScreen$Impl,androidx.core.splashscreen.SplashScreenViewProvider)
     public final void dispatchOnExitAnimation(androidx.core.splashscreen.SplashScreenViewProvider)
-    private static final void dispatchOnExitAnimation$lambda-3(androidx.core.splashscreen.SplashScreenViewProvider,androidx.core.splashscreen.SplashScreen$OnExitAnimationListener)
+    private static final void dispatchOnExitAnimation$lambda$3(androidx.core.splashscreen.SplashScreenViewProvider,androidx.core.splashscreen.SplashScreen$OnExitAnimationListener)
     private final void displaySplashScreenIcon(android.view.View,android.graphics.drawable.Drawable)
     public final java.lang.Integer getBackgroundColor()
     public final java.lang.Integer getBackgroundResId()
@@ -28895,7 +28984,7 @@ androidx.core.splashscreen.SplashScreen$Impl:
     public void setKeepOnScreenCondition(androidx.core.splashscreen.SplashScreen$KeepOnScreenCondition)
     public void setOnExitAnimationListener(androidx.core.splashscreen.SplashScreen$OnExitAnimationListener)
     public final void setSplashScreenWaitPredicate(androidx.core.splashscreen.SplashScreen$KeepOnScreenCondition)
-    private static final boolean splashScreenWaitPredicate$lambda-0()
+    private static final boolean splashScreenWaitPredicate$lambda$0()
 androidx.core.splashscreen.SplashScreen$KeepOnScreenCondition:
     public abstract boolean shouldKeepOnScreen()
 androidx.core.splashscreen.SplashScreen$OnExitAnimationListener
@@ -28904,7 +28993,6 @@ androidx.core.splashscreen.SplashScreen:
     public static final androidx.core.splashscreen.SplashScreen installSplashScreen(android.app.Activity)
     public final void setKeepOnScreenCondition(androidx.core.splashscreen.SplashScreen$KeepOnScreenCondition)
     public final void setOnExitAnimationListener(androidx.core.splashscreen.SplashScreen$OnExitAnimationListener)
-androidx.core.splashscreen.SplashScreenViewProvider$ViewImpl$_splashScreenView$2
 androidx.core.splashscreen.SplashScreenViewProvider$ViewImpl31
 androidx.core.splashscreen.SplashScreenViewProvider$ViewImpl
 androidx.core.splashscreen.SplashScreenViewProvider
@@ -30114,6 +30202,11 @@ androidx.core.view.inputmethod.InputContentInfoCompat$InputContentInfoCompatApi2
 androidx.core.view.inputmethod.InputContentInfoCompat$InputContentInfoCompatBaseImpl
 androidx.core.view.inputmethod.InputContentInfoCompat$InputContentInfoCompatImpl
 androidx.core.view.inputmethod.InputContentInfoCompat
+androidx.core.viewtree.R$id:
+    private void <init>()
+androidx.core.viewtree.R
+androidx.core.viewtree.ViewTree:
+    public static final void setViewTreeDisjointParent(android.view.View,android.view.ViewParent)
 androidx.core.widget.AutoScrollHelper$ClampedScroller
 androidx.core.widget.AutoScrollHelper$ScrollAnimationRunnable
 androidx.core.widget.AutoScrollHelper
@@ -31882,7 +31975,8 @@ androidx.navigation.serialization.RouteSerializerKt:
     private static final java.lang.String unknownNavTypeErrorMessage(java.lang.String,java.lang.String,java.lang.String,java.lang.String)
 androidx.navigation.serialization.SavedStateArgStore
 androidx.navigation.serialization.UNKNOWN
-androidx.profileinstaller.BenchmarkOperation$Api21ContextHelper
+androidx.profileinstaller.BenchmarkOperation$Api21ContextHelper:
+    private void <init>()
 androidx.profileinstaller.BenchmarkOperation$Api24ContextHelper:
     private void <init>()
 androidx.profileinstaller.BenchmarkOperation:
@@ -31919,7 +32013,7 @@ androidx.profileinstaller.ProfileInstaller:
     private static final java.lang.String PROFILE_FILE
     private static final java.lang.String PROFILE_INSTALLER_SKIP_FILE_NAME
     private static final java.lang.String PROFILE_META_LOCATION
-    private static final java.lang.String PROFILE_SOURCE_LOCATION
+    static final java.lang.String PROFILE_SOURCE_LOCATION
     public static final int RESULT_ALREADY_INSTALLED
     public static final int RESULT_BASELINE_PROFILE_NOT_FOUND
     public static final int RESULT_BENCHMARK_OPERATION_FAILURE
@@ -31940,16 +32034,16 @@ androidx.profileinstaller.ProfileInstaller:
     private void <init>()
     static void diagnostic(java.util.concurrent.Executor,androidx.profileinstaller.ProfileInstaller$DiagnosticsCallback,int,java.lang.Object)
     private static synthetic void lambda$diagnostic$1(androidx.profileinstaller.ProfileInstaller$DiagnosticsCallback,int,java.lang.Object)
-androidx.profileinstaller.ProfileInstallerInitializer$Choreographer16Impl:
-    private void <init>()
 androidx.profileinstaller.ProfileInstallerInitializer$Handler28Impl:
     private void <init>()
 androidx.profileinstaller.ProfileInstallerInitializer:
     private static final int DELAY_MS
 androidx.profileinstaller.ProfileTranscoder:
+    private static final int FIRST_FLAG
     private static final int HOT
     private static final int INLINE_CACHE_MEGAMORPHIC_ENCODING
     private static final int INLINE_CACHE_MISSING_TYPES_ENCODING
+    private static final int LAST_FLAG
     private static final int POST_STARTUP
     private static final int STARTUP
     private void <init>()
@@ -31964,10 +32058,13 @@ androidx.profileinstaller.ProfileVerifier$CompilationStatus:
     public static final int RESULT_CODE_ERROR_CACHE_FILE_EXISTS_BUT_CANNOT_BE_READ
     public static final int RESULT_CODE_ERROR_CANT_WRITE_PROFILE_VERIFICATION_RESULT_CACHE_FILE
     private static final int RESULT_CODE_ERROR_CODE_BIT_SHIFT
+    public static final int RESULT_CODE_ERROR_NO_PROFILE_EMBEDDED
     public static final int RESULT_CODE_ERROR_PACKAGE_NAME_DOES_NOT_EXIST
     public static final int RESULT_CODE_ERROR_UNSUPPORTED_API_VERSION
     public static final int RESULT_CODE_NO_PROFILE
+    public static final int RESULT_CODE_NO_PROFILE_INSTALLED
     public static final int RESULT_CODE_PROFILE_ENQUEUED_FOR_COMPILATION
+    public boolean appApkHasEmbeddedProfile()
     public int getProfileInstallResultCode()
     public boolean hasProfileEnqueuedForCompilation()
     public boolean isCompiledWithProfile()
@@ -31981,7 +32078,6 @@ androidx.profileinstaller.ProfileVerifier:
     public static com.google.common.util.concurrent.ListenableFuture getCompilationStatusAsync()
     public static androidx.profileinstaller.ProfileVerifier$CompilationStatus writeProfileVerification(android.content.Context)
 androidx.profileinstaller.ProfileVersion:
-    public static final int MAX_SUPPORTED_SDK
     public static final int MIN_SUPPORTED_SDK
     private void <init>()
 androidx.profileinstaller.R
@@ -32753,6 +32849,151 @@ androidx.tracing.TraceApi29Impl:
 androidx.tracing.TraceKt$traceAsync$1
 androidx.tracing.TraceKt
 androidx.tracing.ktx.R
+androidx.vectordrawable.R$attr
+androidx.vectordrawable.R$color
+androidx.vectordrawable.R$dimen
+androidx.vectordrawable.R$drawable
+androidx.vectordrawable.R$id
+androidx.vectordrawable.R$integer
+androidx.vectordrawable.R$layout
+androidx.vectordrawable.R$string
+androidx.vectordrawable.R$style
+androidx.vectordrawable.R$styleable
+androidx.vectordrawable.R
+androidx.vectordrawable.animated.R$attr
+androidx.vectordrawable.animated.R$color
+androidx.vectordrawable.animated.R$dimen
+androidx.vectordrawable.animated.R$drawable
+androidx.vectordrawable.animated.R$id
+androidx.vectordrawable.animated.R$integer
+androidx.vectordrawable.animated.R$layout
+androidx.vectordrawable.animated.R$string
+androidx.vectordrawable.animated.R$style
+androidx.vectordrawable.animated.R$styleable
+androidx.vectordrawable.animated.R
+androidx.vectordrawable.graphics.drawable.AndroidResources
+androidx.vectordrawable.graphics.drawable.Animatable2Compat$AnimationCallback$1
+androidx.vectordrawable.graphics.drawable.Animatable2Compat$AnimationCallback
+androidx.vectordrawable.graphics.drawable.Animatable2Compat
+androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat$1
+androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat$2
+androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat$AnimatedVectorDrawableCompatState
+androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat$AnimatedVectorDrawableDelegateState
+androidx.vectordrawable.graphics.drawable.AnimatedVectorDrawableCompat
+androidx.vectordrawable.graphics.drawable.AnimationUtilsCompat
+androidx.vectordrawable.graphics.drawable.AnimatorInflaterCompat$PathDataEvaluator
+androidx.vectordrawable.graphics.drawable.AnimatorInflaterCompat
+androidx.vectordrawable.graphics.drawable.ArgbEvaluator
+androidx.vectordrawable.graphics.drawable.PathInterpolatorCompat
+androidx.vectordrawable.graphics.drawable.VectorDrawableCommon:
+    android.graphics.drawable.Drawable mDelegateDrawable
+    void <init>()
+    public void applyTheme(android.content.res.Resources$Theme)
+    public void clearColorFilter()
+    public android.graphics.drawable.Drawable getCurrent()
+    public int getMinimumHeight()
+    public int getMinimumWidth()
+    public boolean getPadding(android.graphics.Rect)
+    public int[] getState()
+    public android.graphics.Region getTransparentRegion()
+    public void jumpToCurrentState()
+    protected void onBoundsChange(android.graphics.Rect)
+    protected boolean onLevelChange(int)
+    public void setChangingConfigurations(int)
+    public void setColorFilter(int,android.graphics.PorterDuff$Mode)
+    public void setFilterBitmap(boolean)
+    public void setHotspot(float,float)
+    public void setHotspotBounds(int,int,int,int)
+    public boolean setState(int[])
+androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$1
+androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$VClipPath
+androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$VFullPath
+androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$VGroup
+androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$VObject
+androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$VPath
+androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$VPathRenderer
+androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$VectorDrawableCompatState
+androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$VectorDrawableDelegateState
+androidx.vectordrawable.graphics.drawable.VectorDrawableCompat:
+    private static final boolean DBG_VECTOR_DRAWABLE
+    static final android.graphics.PorterDuff$Mode DEFAULT_TINT_MODE
+    private static final int LINECAP_BUTT
+    private static final int LINECAP_ROUND
+    private static final int LINECAP_SQUARE
+    private static final int LINEJOIN_BEVEL
+    private static final int LINEJOIN_MITER
+    private static final int LINEJOIN_ROUND
+    static final java.lang.String LOGTAG
+    private static final int MAX_CACHED_BITMAP_SIZE
+    private static final java.lang.String SHAPE_CLIP_PATH
+    private static final java.lang.String SHAPE_GROUP
+    private static final java.lang.String SHAPE_PATH
+    private static final java.lang.String SHAPE_VECTOR
+    private boolean mAllowCaching
+    private android.graphics.drawable.Drawable$ConstantState mCachedConstantStateDelegate
+    private android.graphics.ColorFilter mColorFilter
+    private boolean mMutated
+    private android.graphics.PorterDuffColorFilter mTintFilter
+    private final android.graphics.Rect mTmpBounds
+    private final float[] mTmpFloats
+    private final android.graphics.Matrix mTmpMatrix
+    private androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$VectorDrawableCompatState mVectorState
+    static void <clinit>()
+    void <init>()
+    void <init>(androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$VectorDrawableCompatState)
+    static int applyAlpha(int,float)
+    public synthetic bridge void applyTheme(android.content.res.Resources$Theme)
+    public boolean canApplyTheme()
+    public synthetic bridge void clearColorFilter()
+    public static androidx.vectordrawable.graphics.drawable.VectorDrawableCompat create(android.content.res.Resources,int,android.content.res.Resources$Theme)
+    public static androidx.vectordrawable.graphics.drawable.VectorDrawableCompat createFromXmlInner(android.content.res.Resources,org.xmlpull.v1.XmlPullParser,android.util.AttributeSet,android.content.res.Resources$Theme)
+    public void draw(android.graphics.Canvas)
+    public int getAlpha()
+    public int getChangingConfigurations()
+    public android.graphics.ColorFilter getColorFilter()
+    public android.graphics.drawable.Drawable$ConstantState getConstantState()
+    public synthetic bridge android.graphics.drawable.Drawable getCurrent()
+    public int getIntrinsicHeight()
+    public int getIntrinsicWidth()
+    public synthetic bridge int getMinimumHeight()
+    public synthetic bridge int getMinimumWidth()
+    public int getOpacity()
+    public synthetic bridge boolean getPadding(android.graphics.Rect)
+    public float getPixelSize()
+    public synthetic bridge int[] getState()
+    java.lang.Object getTargetByName(java.lang.String)
+    public synthetic bridge android.graphics.Region getTransparentRegion()
+    public void inflate(android.content.res.Resources,org.xmlpull.v1.XmlPullParser,android.util.AttributeSet)
+    public void inflate(android.content.res.Resources,org.xmlpull.v1.XmlPullParser,android.util.AttributeSet,android.content.res.Resources$Theme)
+    private void inflateInternal(android.content.res.Resources,org.xmlpull.v1.XmlPullParser,android.util.AttributeSet,android.content.res.Resources$Theme)
+    public void invalidateSelf()
+    public boolean isAutoMirrored()
+    public boolean isStateful()
+    public synthetic bridge void jumpToCurrentState()
+    public android.graphics.drawable.Drawable mutate()
+    private boolean needMirroring()
+    protected void onBoundsChange(android.graphics.Rect)
+    protected boolean onStateChange(int[])
+    private static android.graphics.PorterDuff$Mode parseTintModeCompat(int,android.graphics.PorterDuff$Mode)
+    private void printGroupTree(androidx.vectordrawable.graphics.drawable.VectorDrawableCompat$VGroup,int)
+    public void scheduleSelf(java.lang.Runnable,long)
+    void setAllowCaching(boolean)
+    public void setAlpha(int)
+    public void setAutoMirrored(boolean)
+    public synthetic bridge void setChangingConfigurations(int)
+    public synthetic bridge void setColorFilter(int,android.graphics.PorterDuff$Mode)
+    public void setColorFilter(android.graphics.ColorFilter)
+    public synthetic bridge void setFilterBitmap(boolean)
+    public synthetic bridge void setHotspot(float,float)
+    public synthetic bridge void setHotspotBounds(int,int,int,int)
+    public synthetic bridge boolean setState(int[])
+    public void setTint(int)
+    public void setTintList(android.content.res.ColorStateList)
+    public void setTintMode(android.graphics.PorterDuff$Mode)
+    public boolean setVisible(boolean,boolean)
+    public void unscheduleSelf(java.lang.Runnable)
+    private void updateStateFromTypedArray(android.content.res.TypedArray,org.xmlpull.v1.XmlPullParser,android.content.res.Resources$Theme)
+    android.graphics.PorterDuffColorFilter updateTintFilter(android.graphics.PorterDuffColorFilter,android.content.res.ColorStateList,android.graphics.PorterDuff$Mode)
 androidx.versionedparcelable.CustomVersionedParcelable:
     public void onPostParceling()
     public void onPreParceling(boolean)
@@ -33861,7 +34102,6 @@ com.android.billingclient.api.BillingFlowParams$Builder:
     private void <init>()
     public com.android.billingclient.api.BillingFlowParams$Builder enableDeveloperBillingOption(com.android.billingclient.api.DeveloperBillingOptionParams)
     public com.android.billingclient.api.BillingFlowParams$Builder setIsOfferPersonalized(boolean)
-    public com.android.billingclient.api.BillingFlowParams$Builder setObfuscatedAccountId(java.lang.String)
     public com.android.billingclient.api.BillingFlowParams$Builder setObfuscatedProfileId(java.lang.String)
     public com.android.billingclient.api.BillingFlowParams$Builder setSkuDetails(com.android.billingclient.api.SkuDetails)
     public com.android.billingclient.api.BillingFlowParams$Builder setSubscriptionUpdateParams(com.android.billingclient.api.BillingFlowParams$SubscriptionUpdateParams)
@@ -33981,7 +34221,6 @@ com.android.billingclient.api.ProductDetails$PricingPhase:
 com.android.billingclient.api.ProductDetails$RecurrenceMode
 com.android.billingclient.api.ProductDetails$SubscriptionOfferDetails:
     public com.android.billingclient.api.ProductDetails$InstallmentPlanDetails getInstallmentPlanDetails()
-    public java.lang.String getOfferId()
     public java.util.List getOfferTags()
 com.android.billingclient.api.ProductDetails:
     public java.lang.String getDescription()
@@ -38223,11 +38462,13 @@ com.sandalia.stockanchor.R$string:
     public static int app_name
     public static int cloud_server
     public static int server_updated
+    public static int you_re_signed_in_but_your
     private void <init>()
 com.sandalia.stockanchor.R$style
 com.sandalia.stockanchor.R$xml
 com.sandalia.stockanchor.R
 com.sandalia.stockanchor.billing.BillingManager:
+    public static synthetic void launch$default(com.sandalia.stockanchor.billing.BillingManager,android.app.Activity,com.sandalia.stockanchor.billing.PlanOffer,java.lang.String,int,java.lang.Object)
     public final void testPurchase(java.lang.String)
 com.sandalia.stockanchor.billing.PlanOffer:
     public final java.lang.String component1()
@@ -38237,8 +38478,9 @@ com.sandalia.stockanchor.billing.PlanOffer:
     public final java.lang.String component5()
     public final com.android.billingclient.api.ProductDetails component6()
     public final java.lang.String component7()
-    public final com.sandalia.stockanchor.billing.PlanOffer copy(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.android.billingclient.api.ProductDetails,java.lang.String)
-    public static synthetic com.sandalia.stockanchor.billing.PlanOffer copy$default(com.sandalia.stockanchor.billing.PlanOffer,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.android.billingclient.api.ProductDetails,java.lang.String,int,java.lang.Object)
+    public final java.lang.String component8()
+    public final com.sandalia.stockanchor.billing.PlanOffer copy(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.android.billingclient.api.ProductDetails,java.lang.String,java.lang.String)
+    public static synthetic com.sandalia.stockanchor.billing.PlanOffer copy$default(com.sandalia.stockanchor.billing.PlanOffer,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,com.android.billingclient.api.ProductDetails,java.lang.String,java.lang.String,int,java.lang.Object)
     public final java.lang.String getBillingPeriod()
 com.sandalia.stockanchor.billing.PurchaseEvent$Cancelled:
     public static final int $stable
@@ -38538,6 +38780,7 @@ com.sandalia.stockanchor.data.prefs.Session:
 com.sandalia.stockanchor.data.prefs.SessionStore:
     private static final java.lang.String K_ALERTS
     private static final java.lang.String K_BASE_URL
+    private static final java.lang.String K_BILLING_EMAIL
     private static final java.lang.String K_COMPANY
     private static final java.lang.String K_CURRENCY
     private static final java.lang.String K_EMAIL
@@ -38546,18 +38789,21 @@ com.sandalia.stockanchor.data.prefs.SessionStore:
     private static final java.lang.String K_MODE
     private static final java.lang.String K_ONBOARDED
     private static final java.lang.String K_PENDING_PLAN
+    private static final java.lang.String K_PENDING_PROMO
     private static final java.lang.String K_PENDING_TOKEN
     private static final java.lang.String K_PERMS
     private static final java.lang.String K_PLAN
     private static final java.lang.String K_PREMIUM
     private static final java.lang.String K_ROLE
+    private static final java.lang.String K_SUBSCRIPTION_PRODUCT
     private static final java.lang.String K_SUB_STATUS
     private static final java.lang.String K_TOKEN
     private static final java.lang.String K_USER
+    public static final java.lang.String SUPPORTED_SYMBOLS
     public final void setBaseUrl(java.lang.String)
-    private static final kotlin.Unit setBaseUrl$lambda$1(java.lang.String,android.content.SharedPreferences$Editor)
+    private static final kotlin.Unit setBaseUrl$lambda$2(java.lang.String,android.content.SharedPreferences$Editor)
     public final void setOnboarded()
-    private static final kotlin.Unit setOnboarded$lambda$11(android.content.SharedPreferences$Editor)
+    private static final kotlin.Unit setOnboarded$lambda$15(android.content.SharedPreferences$Editor)
 com.sandalia.stockanchor.data.repo.AccountManager:
     public static synthetic java.lang.Object activateCloud$default(com.sandalia.stockanchor.data.repo.AccountManager,boolean,boolean,kotlin.coroutines.Continuation,int,java.lang.Object)
     public final java.lang.Object verifyToken(java.lang.String,java.lang.String,kotlin.coroutines.Continuation)
@@ -38637,12 +38883,13 @@ com.sandalia.stockanchor.ui.navigation.Tab:
     public static synthetic com.sandalia.stockanchor.ui.navigation.Tab copy$default(com.sandalia.stockanchor.ui.navigation.Tab,java.lang.String,int,androidx.compose.ui.graphics.vector.ImageVector,androidx.compose.ui.graphics.vector.ImageVector,int,java.lang.Object)
     public final int getLabelRes()
 com.sandalia.stockanchor.ui.screens.AccountScreensKt:
-    private static final java.lang.String SettingsScreen$lambda$228(androidx.compose.runtime.MutableState)
-    private static final void SettingsScreen$lambda$229(androidx.compose.runtime.MutableState,java.lang.String)
-    private static final kotlin.Unit SettingsScreen$lambda$262$lambda$261$lambda$254(androidx.compose.runtime.MutableState,com.sandalia.stockanchor.AppContainer,com.sandalia.stockanchor.ui.components.Runner,androidx.compose.foundation.layout.ColumnScope,androidx.compose.runtime.Composer,int)
-    private static final kotlin.Unit SettingsScreen$lambda$262$lambda$261$lambda$254$lambda$248$lambda$247(androidx.compose.runtime.MutableState,java.lang.String)
-    private static final kotlin.Unit SettingsScreen$lambda$262$lambda$261$lambda$254$lambda$253$lambda$250$lambda$249(com.sandalia.stockanchor.AppContainer,com.sandalia.stockanchor.ui.components.Runner,androidx.compose.runtime.MutableState)
-    private static final kotlin.Unit SettingsScreen$lambda$262$lambda$261$lambda$254$lambda$253$lambda$252$lambda$251(com.sandalia.stockanchor.AppContainer,androidx.compose.runtime.MutableState)
+    private static final java.lang.String PaywallScreen$lambda$22(androidx.compose.runtime.State)
+    private static final java.lang.String SettingsScreen$lambda$352(androidx.compose.runtime.MutableState)
+    private static final void SettingsScreen$lambda$353(androidx.compose.runtime.MutableState,java.lang.String)
+    private static final kotlin.Unit SettingsScreen$lambda$385$lambda$384$lambda$377(androidx.compose.runtime.MutableState,com.sandalia.stockanchor.AppContainer,com.sandalia.stockanchor.ui.components.Runner,androidx.compose.foundation.layout.ColumnScope,androidx.compose.runtime.Composer,int)
+    private static final kotlin.Unit SettingsScreen$lambda$385$lambda$384$lambda$377$lambda$371$lambda$370(androidx.compose.runtime.MutableState,java.lang.String)
+    private static final kotlin.Unit SettingsScreen$lambda$385$lambda$384$lambda$377$lambda$376$lambda$373$lambda$372(com.sandalia.stockanchor.AppContainer,com.sandalia.stockanchor.ui.components.Runner,androidx.compose.runtime.MutableState)
+    private static final kotlin.Unit SettingsScreen$lambda$385$lambda$384$lambda$377$lambda$376$lambda$375$lambda$374(com.sandalia.stockanchor.AppContainer,androidx.compose.runtime.MutableState)
 com.sandalia.stockanchor.ui.screens.ComposableSingletons$AccountScreensKt:
     public final kotlin.jvm.functions.Function2 getLambda$1078509922$app_release()
     public final kotlin.jvm.functions.Function3 getLambda$1850038820$app_release()
@@ -38672,7 +38919,12 @@ com.sandalia.stockanchor.util.CsvExport:
 com.sandalia.stockanchor.util.Dates:
     public static final int $stable
     public static synthetic long endOfDay$default(com.sandalia.stockanchor.util.Dates,java.time.LocalDate,int,java.lang.Object)
+com.sandalia.stockanchor.util.FieldLimit
+com.sandalia.stockanchor.util.GoogleAccount:
+    public static final int $stable
+    private static final java.lang.String GOOGLE_ACCOUNT_TYPE
 com.sandalia.stockanchor.util.I18n:
+    public static final java.lang.String FALLBACK
     private static final java.lang.String KEY
     private static final java.lang.String PREFS
 com.sandalia.stockanchor.util.InvoicePdf:
@@ -40235,7 +40487,6 @@ kotlin.collections.ArraysKt___ArraysKt:
     private static final boolean isNotEmpty(java.lang.Object[])
     private static final boolean isNotEmpty(short[])
     private static final boolean isNotEmpty(boolean[])
-    public static final java.lang.Appendable joinTo(byte[],java.lang.Appendable,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,java.lang.CharSequence,kotlin.jvm.functions.Function1)
     public static final java.lang.Appendable joinTo(char[],java.lang.Appendable,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,java.lang.CharSequence,kotlin.jvm.functions.Function1)
     public static final java.lang.Appendable joinTo(double[],java.lang.Appendable,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,java.lang.CharSequence,kotlin.jvm.functions.Function1)
     public static final java.lang.Appendable joinTo(float[],java.lang.Appendable,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,java.lang.CharSequence,kotlin.jvm.functions.Function1)
@@ -40252,7 +40503,6 @@ kotlin.collections.ArraysKt___ArraysKt:
     public static synthetic java.lang.Appendable joinTo$default(java.lang.Object[],java.lang.Appendable,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,java.lang.CharSequence,kotlin.jvm.functions.Function1,int,java.lang.Object)
     public static synthetic java.lang.Appendable joinTo$default(short[],java.lang.Appendable,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,java.lang.CharSequence,kotlin.jvm.functions.Function1,int,java.lang.Object)
     public static synthetic java.lang.Appendable joinTo$default(boolean[],java.lang.Appendable,java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,java.lang.CharSequence,kotlin.jvm.functions.Function1,int,java.lang.Object)
-    public static final java.lang.String joinToString(byte[],java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,java.lang.CharSequence,kotlin.jvm.functions.Function1)
     public static final java.lang.String joinToString(char[],java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,java.lang.CharSequence,kotlin.jvm.functions.Function1)
     public static final java.lang.String joinToString(double[],java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,java.lang.CharSequence,kotlin.jvm.functions.Function1)
     public static final java.lang.String joinToString(float[],java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,java.lang.CharSequence,kotlin.jvm.functions.Function1)
@@ -40260,7 +40510,6 @@ kotlin.collections.ArraysKt___ArraysKt:
     public static final java.lang.String joinToString(long[],java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,java.lang.CharSequence,kotlin.jvm.functions.Function1)
     public static final java.lang.String joinToString(short[],java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,java.lang.CharSequence,kotlin.jvm.functions.Function1)
     public static final java.lang.String joinToString(boolean[],java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,java.lang.CharSequence,kotlin.jvm.functions.Function1)
-    public static synthetic java.lang.String joinToString$default(byte[],java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,java.lang.CharSequence,kotlin.jvm.functions.Function1,int,java.lang.Object)
     public static synthetic java.lang.String joinToString$default(char[],java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,java.lang.CharSequence,kotlin.jvm.functions.Function1,int,java.lang.Object)
     public static synthetic java.lang.String joinToString$default(double[],java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,java.lang.CharSequence,kotlin.jvm.functions.Function1,int,java.lang.Object)
     public static synthetic java.lang.String joinToString$default(float[],java.lang.CharSequence,java.lang.CharSequence,java.lang.CharSequence,int,java.lang.CharSequence,kotlin.jvm.functions.Function1,int,java.lang.Object)
@@ -48804,9 +49053,15 @@ android.support.v4.app.INotificationSideChannel$Stub$Proxy:
 android.support.v4.app.INotificationSideChannel$_Parcel
 android.support.v4.app.INotificationSideChannel:
     public abstract void notify$1()
+androidx.activity.Api34Impl:
+    public static final androidx.activity.Api34Impl INSTANCE
+    static void <clinit>()
 androidx.activity.BackEventCompat$Companion
 androidx.activity.BackEventCompat:
     public static final androidx.activity.BackEventCompat$Companion Companion
+    static void <clinit>()
+androidx.activity.ComponentActivity$Api33Impl:
+    public static final androidx.activity.ComponentActivity$Api33Impl INSTANCE
     static void <clinit>()
 androidx.activity.ComponentActivity$Companion
 androidx.activity.ComponentActivity$NonConfigurationInstances:
@@ -48873,6 +49128,13 @@ androidx.activity.OnBackPressedDispatcher$4:
     public final void invoke()
 androidx.activity.OnBackPressedDispatcher$5:
     public final void invoke()
+androidx.activity.OnBackPressedDispatcher$Api33Impl:
+    public static final androidx.activity.OnBackPressedDispatcher$Api33Impl INSTANCE
+    static void <clinit>()
+    public static android.window.OnBackInvokedCallback createOnBackInvokedCallback()
+androidx.activity.OnBackPressedDispatcher$Api34Impl:
+    public static final androidx.activity.OnBackPressedDispatcher$Api34Impl INSTANCE
+    static void <clinit>()
 androidx.activity.OnBackPressedDispatcher$addCallback$1:
     public final void invoke()
 androidx.activity.OnBackPressedDispatcher$addCancellableCallback$1:
@@ -48893,10 +49155,6 @@ androidx.activity.SystemBarStyle:
     public final int getScrim$activity_release(boolean)
     public final int getScrimWithEnforcedContrast$activity_release(boolean)
 androidx.activity.ViewTreeFullyDrawnReporterOwner
-androidx.activity.ViewTreeOnBackPressedDispatcherOwner$findViewTreeOnBackPressedDispatcherOwner$1:
-    public final android.view.View invoke()
-androidx.activity.ViewTreeOnBackPressedDispatcherOwner$findViewTreeOnBackPressedDispatcherOwner$2:
-    public static androidx.activity.OnBackPressedDispatcherOwner invoke()
 androidx.activity.ViewTreeOnBackPressedDispatcherOwner
 androidx.activity.compose.ActivityResultLauncherHolder:
     public static final int $stable
@@ -48914,6 +49172,8 @@ androidx.activity.compose.BackHandlerKt$BackHandler$2$1:
 androidx.activity.compose.BackHandlerKt$BackHandler$3:
     public final synthetic int $$default
     public final void invoke$2()
+androidx.activity.compose.LocalActivityKt$LocalActivity$1:
+    public static android.app.Activity invoke()
 androidx.activity.compose.LocalActivityResultRegistryOwner:
     public static final androidx.activity.compose.LocalActivityResultRegistryOwner INSTANCE
     public static androidx.activity.ComponentActivity getCurrent()
@@ -49011,6 +49271,25 @@ androidx.activity.result.contract.ActivityResultContracts$StartIntentSenderForRe
     static void <clinit>()
     public final android.content.Intent createIntent$3()
     public final androidx.activity.result.ActivityResult parseResult()
+androidx.appcompat.content.res.AppCompatResources
+androidx.appcompat.resources.R$drawable
+androidx.appcompat.widget.DrawableUtils:
+    public static final android.graphics.Rect INSETS_NONE
+androidx.appcompat.widget.ResourceManagerInternal$ColorFilterLruCache
+androidx.appcompat.widget.ResourceManagerInternal$InflateDelegate
+androidx.appcompat.widget.ResourceManagerInternal$ResourceManagerHooks
+androidx.appcompat.widget.ResourceManagerInternal:
+    public static final androidx.appcompat.widget.ResourceManagerInternal$ColorFilterLruCache COLOR_FILTER_CACHE
+    public static final android.graphics.PorterDuff$Mode DEFAULT_MODE
+    public androidx.collection.SimpleArrayMap mDelegates
+    public androidx.appcompat.widget.ResourceManagerInternal$ResourceManagerHooks mHooks
+    public androidx.collection.SparseArrayCompat mKnownDrawableIdTags
+    public java.util.WeakHashMap mTintLists
+    public final synchronized boolean addDrawableToCache()
+    public final synchronized android.content.res.ColorStateList getTintList()
+    public static android.graphics.PorterDuff$Mode getTintMode()
+    public static android.graphics.drawable.Drawable loadDrawableFromDelegates()
+    public static boolean tintDrawableUsingColorFilter()
 androidx.arch.core.executor.ArchTaskExecutor:
     public final androidx.arch.core.executor.DefaultTaskExecutor mDefaultTaskExecutor
     public static final java.util.concurrent.Executor sMainThreadExecutor
@@ -49080,10 +49359,9 @@ androidx.collection.LongSparseArray:
     public final void clear()
     public static androidx.collection.LongSparseArray clone()
     public static boolean containsKey()
-    public static java.lang.Object get()
+    public final java.lang.Object get(long)
     public static int indexOfKey()
     public final boolean isEmpty()
-    public final void remove(long)
 androidx.collection.LruCache:
     public int createCount
     public int evictionCount
@@ -49214,6 +49492,7 @@ androidx.collection.SimpleArrayMap:
     public void <init>()
     public static void ensureCapacity()
 androidx.collection.SparseArrayCompat:
+    public static void append()
     public static void clear()
     public final int indexOfKey(int)
     public static void removeAt()
@@ -49677,7 +49956,7 @@ androidx.compose.animation.core.Motion
 androidx.compose.animation.core.MutableTransitionState:
     public static final int $stable
     static void <clinit>()
-    public static void setTargetState()
+    public final void setTargetState(java.lang.Boolean)
 androidx.compose.animation.core.MutatePriority
 androidx.compose.animation.core.MutationInterruptedException:
     static void <clinit>()
@@ -50697,7 +50976,6 @@ androidx.compose.foundation.layout.BoxChildDataElement:
 androidx.compose.foundation.layout.BoxChildDataNode:
     public boolean matchParentSize
 androidx.compose.foundation.layout.BoxKt$Box$2:
-    public final synthetic boolean $$changed
     public final void invoke$2()
 androidx.compose.foundation.layout.BoxKt:
     public static final androidx.compose.ui.layout.MeasurePolicy DefaultBoxMeasurePolicy
@@ -50941,7 +51219,6 @@ androidx.compose.foundation.layout.SizeKt$sizeIn-qDBjuR0$$inlined$debugInspector
 androidx.compose.foundation.layout.SizeKt$width-3ABfNKs$$inlined$debugInspectorInfo$1
 androidx.compose.foundation.layout.SizeKt$widthIn-VpY3zN4$$inlined$debugInspectorInfo$1
 androidx.compose.foundation.layout.SizeKt:
-    public static final androidx.compose.foundation.layout.FillElement FillWholeMaxHeight
     public static final androidx.compose.foundation.layout.WrapContentElement WrapContentWidthCenter
     public static final androidx.compose.foundation.layout.WrapContentElement WrapContentWidthStart
     public static androidx.compose.ui.Modifier fillMaxSize$default(androidx.compose.ui.Modifier)
@@ -50986,8 +51263,6 @@ androidx.compose.foundation.layout.WindowInsetsPaddingKt$onConsumedWindowInsetsC
 androidx.compose.foundation.layout.WindowInsetsPaddingKt$windowInsetsPadding$$inlined$debugInspectorInfo$1
 androidx.compose.foundation.layout.WindowInsetsPaddingKt$windowInsetsPadding$2:
     public final androidx.compose.ui.Modifier invoke()
-androidx.compose.foundation.layout.WindowInsetsPaddingKt:
-    public static final androidx.compose.ui.Modifier windowInsetsPadding(androidx.compose.ui.Modifier,androidx.compose.foundation.layout.WindowInsets)
 androidx.compose.foundation.layout.WindowInsetsPadding_androidKt$imePadding$$inlined$debugInspectorInfo$1
 androidx.compose.foundation.layout.WindowInsetsPadding_androidKt$imePadding$$inlined$windowInsetsPadding$1:
     public final androidx.compose.ui.Modifier invoke()
@@ -50998,7 +51273,6 @@ androidx.compose.foundation.layout.WindowInsetsPadding_androidKt$statusBarsPaddi
 androidx.compose.foundation.layout.WindowInsetsPadding_androidKt$statusBarsPadding$$inlined$windowInsetsPadding$1:
     public final androidx.compose.ui.Modifier invoke()
 androidx.compose.foundation.layout.WindowInsetsPadding_androidKt:
-    public static final androidx.compose.ui.Modifier navigationBarsPadding(androidx.compose.ui.Modifier)
     public static final androidx.compose.ui.Modifier statusBarsPadding(androidx.compose.ui.Modifier)
 androidx.compose.foundation.layout.WindowInsetsSides$Companion
 androidx.compose.foundation.layout.WindowInsetsSides:
@@ -51804,7 +52078,6 @@ androidx.compose.foundation.text.BasicTextFieldKt:
     static void <clinit>()
 androidx.compose.foundation.text.BasicTextKt$BasicText$1:
     public final synthetic androidx.compose.ui.graphics.ColorProducer $color
-    public final synthetic kotlin.jvm.functions.Function1 $onTextLayout
     public final void invoke$2()
 androidx.compose.foundation.text.BasicTextKt$BasicText$selectionController$selectableId$1$1
 androidx.compose.foundation.text.BasicTextKt$selectionIdSaver$1
@@ -51959,7 +52232,6 @@ androidx.compose.foundation.text.KeyboardOptions$Companion
 androidx.compose.foundation.text.KeyboardOptions:
     public static final androidx.compose.foundation.text.KeyboardOptions$Companion Companion
     public static final androidx.compose.foundation.text.KeyboardOptions SecureTextField
-    public final int capitalization
     public final androidx.compose.ui.text.intl.LocaleList hintLocales
     public final androidx.compose.ui.text.input.PlatformImeOptions platformImeOptions
     public final java.lang.Boolean showKeyboardOnFocus
@@ -52225,7 +52497,7 @@ androidx.compose.foundation.text.input.internal.CursorAnimationState:
 androidx.compose.foundation.text.input.internal.EditingBuffer
 androidx.compose.foundation.text.input.internal.EditorInfo_androidKt
 androidx.compose.foundation.text.input.internal.GapBuffer
-androidx.compose.foundation.text.input.internal.HandwritingGestureApi34$$InternalSyntheticLambda$11$c7e5356c15522e57d5c00c36dbeefdb81b31208ea574e70ac3d2be86da581917$8:
+androidx.compose.foundation.text.input.internal.HandwritingGestureApi34$$InternalSyntheticLambda$10$c7e5356c15522e57d5c00c36dbeefdb81b31208ea574e70ac3d2be86da581917$8:
     public final synthetic androidx.compose.foundation.text.input.internal.TransformedTextFieldState f$0
 androidx.compose.foundation.text.input.internal.HandwritingGestureApi34$performRemoveSpaceGesture$newText$1
 androidx.compose.foundation.text.input.internal.HandwritingGestureApi34$performRemoveSpaceGesture$newText$2
@@ -52335,7 +52607,16 @@ androidx.compose.foundation.text.modifiers.MinLinesConstrainer:
     public static final int $stable
     public static final androidx.compose.foundation.text.modifiers.MinLinesConstrainer$Companion Companion
     static void <clinit>()
-androidx.compose.foundation.text.modifiers.MultiParagraphLayoutCache
+androidx.compose.foundation.text.modifiers.MultiParagraphLayoutCache:
+    public static final int $stable
+    public java.util.List placeholders
+    static void <clinit>()
+    public final androidx.compose.ui.text.TextLayoutResult getTextLayoutResult()
+    public static boolean layoutWithConstraints-K40F9xA()
+    public final void markDirty()
+    public static int maxIntrinsicWidth()
+    public static int minIntrinsicWidth()
+    public final void update-ZNqEYIc(androidx.compose.ui.text.AnnotatedString,androidx.compose.ui.text.TextStyle,androidx.compose.ui.text.font.FontFamily$Resolver,int,boolean,int,int)
 androidx.compose.foundation.text.modifiers.ParagraphLayoutCache:
     public static final int $stable
     static void <clinit>()
@@ -52357,14 +52638,43 @@ androidx.compose.foundation.text.modifiers.SelectionControllerKt$makeSelectionMo
 androidx.compose.foundation.text.modifiers.SelectionControllerKt
 androidx.compose.foundation.text.modifiers.StaticTextSelectionParams$Companion
 androidx.compose.foundation.text.modifiers.StaticTextSelectionParams
-androidx.compose.foundation.text.modifiers.TextAnnotatedStringElement
-androidx.compose.foundation.text.modifiers.TextAnnotatedStringNode$TextSubstitutionValue
-androidx.compose.foundation.text.modifiers.TextAnnotatedStringNode$applySemantics$1
-androidx.compose.foundation.text.modifiers.TextAnnotatedStringNode$applySemantics$2
-androidx.compose.foundation.text.modifiers.TextAnnotatedStringNode$applySemantics$3
-androidx.compose.foundation.text.modifiers.TextAnnotatedStringNode$applySemantics$4
-androidx.compose.foundation.text.modifiers.TextAnnotatedStringNode$measure$1
-androidx.compose.foundation.text.modifiers.TextAnnotatedStringNode
+androidx.compose.foundation.text.modifiers.TextAnnotatedStringElement:
+    public final androidx.compose.ui.graphics.ColorProducer color
+    public final kotlin.jvm.functions.Function1 onPlaceholderLayout
+    public final kotlin.jvm.functions.Function1 onShowTranslation
+    public final java.util.List placeholders
+    public final androidx.compose.foundation.text.modifiers.SelectionController selectionController
+    static void <clinit>()
+    public static androidx.compose.foundation.text.modifiers.TextAnnotatedStringNode create()
+    public static void update$34()
+androidx.compose.foundation.text.modifiers.TextAnnotatedStringNode$TextSubstitutionValue:
+    public static final int $stable
+    static void <clinit>()
+androidx.compose.foundation.text.modifiers.TextAnnotatedStringNode$applySemantics$1:
+    public final java.lang.Boolean invoke$8()
+androidx.compose.foundation.text.modifiers.TextAnnotatedStringNode$applySemantics$2:
+    public final java.lang.Boolean invoke$9()
+androidx.compose.foundation.text.modifiers.TextAnnotatedStringNode$applySemantics$3:
+    public final java.lang.Boolean invoke$11()
+androidx.compose.foundation.text.modifiers.TextAnnotatedStringNode$applySemantics$4:
+    public final java.lang.Boolean invoke$3()
+androidx.compose.foundation.text.modifiers.TextAnnotatedStringNode$measure$1:
+    public final void invoke$3()
+androidx.compose.foundation.text.modifiers.TextAnnotatedStringNode:
+    public static final int $stable
+    public kotlin.jvm.functions.Function1 onPlaceholderLayout
+    public kotlin.jvm.functions.Function1 onShowTranslation
+    public androidx.compose.ui.graphics.ColorProducer overrideColor
+    public java.util.List placeholders
+    public androidx.compose.foundation.text.modifiers.SelectionController selectionController
+    static void <clinit>()
+    public static void clearSubstitution$foundation_release()
+    public final void doInvalidations(boolean,boolean,boolean,boolean)
+    public final void invalidateForTranslate()
+    public final boolean updateCallbacks(kotlin.jvm.functions.Function1)
+    public final boolean updateDraw(androidx.compose.ui.text.TextStyle)
+    public final boolean updateLayoutRelatedArgs-MPT68mk(androidx.compose.ui.text.TextStyle,int,int,boolean,androidx.compose.ui.text.font.FontFamily$Resolver,int)
+    public final boolean updateText$foundation_release(androidx.compose.ui.text.AnnotatedString)
 androidx.compose.foundation.text.modifiers.TextAnnotatedStringNodeKt
 androidx.compose.foundation.text.modifiers.TextStringSimpleElement:
     public final androidx.compose.ui.graphics.ColorProducer color
@@ -52695,6 +53005,8 @@ androidx.compose.material.icons.filled.CloudOffKt:
     static void <clinit>()
 androidx.compose.material.icons.filled.CloudUploadKt:
     static void <clinit>()
+androidx.compose.material.icons.filled.ContactsKt:
+    static void <clinit>()
 androidx.compose.material.icons.filled.ContentCopyKt:
     static void <clinit>()
 androidx.compose.material.icons.filled.DashboardKt:
@@ -52702,6 +53014,8 @@ androidx.compose.material.icons.filled.DashboardKt:
 androidx.compose.material.icons.filled.DateRangeKt:
     static void <clinit>()
 androidx.compose.material.icons.filled.DeleteKt:
+    static void <clinit>()
+androidx.compose.material.icons.filled.DialpadKt:
     static void <clinit>()
 androidx.compose.material.icons.filled.DownloadKt:
     static void <clinit>()
@@ -52723,6 +53037,8 @@ androidx.compose.material.icons.filled.LocalShippingKt:
     static void <clinit>()
 androidx.compose.material.icons.filled.LockKt:
     static void <clinit>()
+androidx.compose.material.icons.filled.MarkEmailReadKt:
+    static void <clinit>()
 androidx.compose.material.icons.filled.MonetizationOnKt:
     static void <clinit>()
 androidx.compose.material.icons.filled.NotificationsActiveKt:
@@ -52738,6 +53054,8 @@ androidx.compose.material.icons.filled.PictureAsPdfKt:
 androidx.compose.material.icons.filled.PointOfSaleKt:
     static void <clinit>()
 androidx.compose.material.icons.filled.QrCodeScannerKt:
+    static void <clinit>()
+androidx.compose.material.icons.filled.RedeemKt:
     static void <clinit>()
 androidx.compose.material.icons.filled.RemoveKt:
     static void <clinit>()
@@ -52929,15 +53247,23 @@ androidx.compose.material3.AndroidAlertDialog_androidKt$AlertDialog$1:
     public final synthetic int $$changed1
     public final synthetic float $tonalElevation
     public final void invoke$2()
-androidx.compose.material3.AndroidMenu_androidKt$DropdownMenuItem$1:
+androidx.compose.material3.AndroidMenu_androidKt$DropdownMenu$1:
+    public final synthetic androidx.compose.foundation.BorderStroke $border
+    public final synthetic float $tonalElevation
+    public final void invoke$2()
+androidx.compose.material3.AndroidMenu_androidKt$DropdownMenu$2:
     public final synthetic byte $$changed
+    public final synthetic int $$changed1
     public final synthetic int $$default
+    public final synthetic androidx.compose.foundation.BorderStroke $border
+    public final synthetic float $tonalElevation
+    public final void invoke$2()
+androidx.compose.material3.AndroidMenu_androidKt$DropdownMenu$popupPositionProvider$1$1:
+    public final void invoke$36()
+androidx.compose.material3.AndroidMenu_androidKt$DropdownMenuItem$1:
     public final synthetic androidx.compose.foundation.interaction.MutableInteractionSourceImpl $interactionSource
-    public final synthetic kotlin.jvm.functions.Function2 $leadingIcon
     public final synthetic kotlin.jvm.functions.Function2 $trailingIcon
     public final void invoke$2()
-androidx.compose.material3.AndroidMenu_androidKt:
-    public static final androidx.compose.ui.window.PopupProperties DefaultMenuProperties
 androidx.compose.material3.AppBarKt$SingleRowTopAppBar$2$1:
     public final synthetic float $expandedHeightPx
     public final synthetic androidx.compose.material3.TopAppBarScrollBehavior $scrollBehavior
@@ -53254,7 +53580,7 @@ androidx.compose.material3.ComposableSingletons$SegmentedButtonKt$lambda-1$1:
 androidx.compose.material3.ComposableSingletons$SegmentedButtonKt:
     public static final androidx.compose.material3.ComposableSingletons$SegmentedButtonKt INSTANCE
 androidx.compose.material3.ComposableSingletons$SnackbarHostKt$lambda-1$1:
-    public static void invoke$37()
+    public static void invoke$38()
 androidx.compose.material3.ComposableSingletons$SnackbarHostKt:
     public static final androidx.compose.material3.ComposableSingletons$SnackbarHostKt INSTANCE
 androidx.compose.material3.ComposableSingletons$SnackbarKt$lambda-1$1
@@ -53374,7 +53700,7 @@ androidx.compose.material3.DatePickerKt$DatePicker$4$1$1:
 androidx.compose.material3.DatePickerKt$DatePicker$4:
     public final void invoke$2()
 androidx.compose.material3.DatePickerKt$DatePicker$5$1$1:
-    public static void invoke$38()
+    public static void invoke$39()
 androidx.compose.material3.DatePickerKt$DatePicker$5$2$1:
     public final void invoke$7()
 androidx.compose.material3.DatePickerKt$DatePicker$5:
@@ -53400,7 +53726,7 @@ androidx.compose.material3.DatePickerKt$DatePickerContent$2$4$2$1$1:
 androidx.compose.material3.DatePickerKt$DatePickerContent$2$4$2$2$1$1$1:
     public final java.lang.Object invoke$2()
 androidx.compose.material3.DatePickerKt$DatePickerContent$2$4$2$2$1$1:
-    public static void invoke$39()
+    public static void invoke$40()
 androidx.compose.material3.DatePickerKt$DatePickerContent$2$4$2:
     public final void invoke$4()
 androidx.compose.material3.DatePickerKt$DatePickerContent$3:
@@ -53439,7 +53765,7 @@ androidx.compose.material3.DatePickerKt$HorizontalMonthsList$1$1:
 androidx.compose.material3.DatePickerKt$HorizontalMonthsList$1$2$1$1:
     public final void invoke$19()
 androidx.compose.material3.DatePickerKt$HorizontalMonthsList$1$2$1:
-    public static void invoke$40()
+    public static void invoke$41()
 androidx.compose.material3.DatePickerKt$HorizontalMonthsList$1:
     public final void invoke$2()
 androidx.compose.material3.DatePickerKt$HorizontalMonthsList$2$1:
@@ -53506,16 +53832,16 @@ androidx.compose.material3.DatePickerKt$YearPicker$1$2$1$1$2$1:
 androidx.compose.material3.DatePickerKt$YearPicker$1$2$1$1$3:
     public final void invoke$2()
 androidx.compose.material3.DatePickerKt$YearPicker$1$2$1$1:
-    public static void invoke$41()
-androidx.compose.material3.DatePickerKt$YearPicker$1$2$1:
     public static void invoke$42()
+androidx.compose.material3.DatePickerKt$YearPicker$1$2$1:
+    public static void invoke$43()
 androidx.compose.material3.DatePickerKt$YearPicker$1:
     public final void invoke$2()
 androidx.compose.material3.DatePickerKt$YearPicker$2:
     public final synthetic byte $$changed
     public final void invoke$2()
 androidx.compose.material3.DatePickerKt$YearPickerMenuButton$1:
-    public final void invoke$36()
+    public final void invoke$37()
 androidx.compose.material3.DatePickerKt$YearPickerMenuButton$2:
     public final synthetic short $$changed
     public final synthetic int $$default
@@ -53584,7 +53910,7 @@ androidx.compose.material3.ExposedDropdownMenuBoxScope$ExposedDropdownMenu$3:
     public final synthetic float $tonalElevation
     public final void invoke$2()
 androidx.compose.material3.ExposedDropdownMenuBoxScope$ExposedDropdownMenu$popupPositionProvider$1$1:
-    public static void invoke$43()
+    public final void invoke$36()
 androidx.compose.material3.ExposedDropdownMenuBoxScope:
     public static final int $stable
     static void <clinit>()
@@ -53769,9 +54095,9 @@ androidx.compose.material3.MenuDefaults:
     public static final androidx.compose.material3.MenuDefaults INSTANCE
     public static final float ShadowElevation
     public static final float TonalElevation
-    public static long getContainerColor()
+    public static long getContainerColor(androidx.compose.runtime.Composer)
     public static androidx.compose.material3.MenuItemColors getDefaultMenuItemColors$material3_release()
-    public static androidx.compose.ui.graphics.Shape getShape()
+    public static androidx.compose.ui.graphics.Shape getShape(androidx.compose.runtime.Composer)
     public static androidx.compose.material3.MenuItemColors itemColors()
 androidx.compose.material3.MenuItemColors:
     static void <clinit>()
@@ -53789,21 +54115,19 @@ androidx.compose.material3.MenuKt$DropdownMenuContent$3:
     public final void invoke$2()
 androidx.compose.material3.MenuKt$DropdownMenuContent$alpha$2
 androidx.compose.material3.MenuKt$DropdownMenuContent$scale$2
-androidx.compose.material3.MenuKt$DropdownMenuItemContent$1$1$1
+androidx.compose.material3.MenuKt$DropdownMenuItemContent$1$1$1:
+    public final void invoke$2()
 androidx.compose.material3.MenuKt$DropdownMenuItemContent$1$1$2:
-    public final synthetic kotlin.jvm.functions.Function2 $leadingIcon
     public final synthetic androidx.compose.foundation.layout.RowScope $this_Row
     public final synthetic kotlin.jvm.functions.Function2 $trailingIcon
     public final void invoke$2()
 androidx.compose.material3.MenuKt$DropdownMenuItemContent$1$1$3
 androidx.compose.material3.MenuKt$DropdownMenuItemContent$1$1:
-    public final synthetic kotlin.jvm.functions.Function2 $leadingIcon
     public final synthetic androidx.compose.foundation.layout.RowScope $this_Row
     public final synthetic kotlin.jvm.functions.Function2 $trailingIcon
     public final void invoke$2()
 androidx.compose.material3.MenuKt$DropdownMenuItemContent$2:
     public final synthetic androidx.compose.foundation.interaction.MutableInteractionSourceImpl $interactionSource
-    public final synthetic kotlin.jvm.functions.Function2 $leadingIcon
     public final synthetic kotlin.jvm.functions.Function2 $trailingIcon
     public final void invoke$2()
 androidx.compose.material3.MenuKt:
@@ -54016,18 +54340,12 @@ androidx.compose.material3.OutlinedTextFieldDefaults:
     public static final float UnfocusedBorderThickness
     public static androidx.compose.ui.graphics.Shape getShape(androidx.compose.runtime.Composer)
 androidx.compose.material3.OutlinedTextFieldKt$OutlinedTextField$1$3$1:
-    public final synthetic boolean $isError
     public final void invoke$2()
 androidx.compose.material3.OutlinedTextFieldKt$OutlinedTextField$1$3:
-    public final synthetic boolean $isError
     public final void invoke$25()
 androidx.compose.material3.OutlinedTextFieldKt$OutlinedTextField$1:
-    public final synthetic boolean $isError
     public final void invoke$2()
 androidx.compose.material3.OutlinedTextFieldKt$OutlinedTextField$2:
-    public final synthetic int $$changed2
-    public final synthetic androidx.compose.foundation.interaction.MutableInteractionSourceImpl $interactionSource
-    public final synthetic boolean $isError
     public final void invoke$2()
 androidx.compose.material3.OutlinedTextFieldKt$OutlinedTextField$3$3$1:
     public final void invoke$2()
@@ -54504,7 +54822,6 @@ androidx.compose.material3.TextKt$ProvideTextStyle$1:
     public final void invoke$2()
 androidx.compose.material3.TextKt$Text$1:
     public final synthetic androidx.compose.ui.text.font.FontStyle $fontStyle
-    public final synthetic kotlin.jvm.functions.Function1 $onTextLayout
     public final void invoke$2()
 androidx.compose.material3.ThumbElement:
     public static androidx.compose.material3.ThumbNode create()
@@ -54546,10 +54863,8 @@ androidx.compose.material3.internal.AccessibilityServiceStateProvider_androidKt$
 androidx.compose.material3.internal.AccessibilityServiceStateProvider_androidKt$rememberAccessibilityServiceState$2$1:
     public final void invoke()
 androidx.compose.material3.internal.AnchorAlignmentOffsetPosition$Horizontal:
-    public final int offset
     static void <clinit>()
 androidx.compose.material3.internal.AnchorAlignmentOffsetPosition$Vertical:
-    public final int offset
     static void <clinit>()
 androidx.compose.material3.internal.AnchoredDragScope
 androidx.compose.material3.internal.AnchoredDraggableKt$animateTo$2$1:
@@ -54639,6 +54954,9 @@ androidx.compose.material3.internal.DraggableAnchorsElement:
     public static void update$38()
 androidx.compose.material3.internal.DraggableAnchorsNode$measure$1:
     public final void invoke$3()
+androidx.compose.material3.internal.DropdownMenuPositionProvider$2
+androidx.compose.material3.internal.DropdownMenuPositionProvider:
+    static void <clinit>()
 androidx.compose.material3.internal.ElevationDefaults
 androidx.compose.material3.internal.ElevationKt:
     public static final androidx.compose.animation.core.CubicBezierEasing OutgoingSpecEasing
@@ -55107,10 +55425,8 @@ androidx.compose.runtime.ComposerImpl:
     public static void dispose$runtime_release()
     public static void endGroup()
     public final void endMovableGroup()
-    public final void endNode()
     public final void endProvider()
     public final void endProviders()
-    public final void endReplaceGroup()
     public final void endReplaceableGroup()
     public final void endReusableGroup()
     public static void endReuseFromRoot()
@@ -55225,7 +55541,6 @@ androidx.compose.runtime.CompositionTracer
 androidx.compose.runtime.ComputedProvidableCompositionLocal:
     static void <clinit>()
 androidx.compose.runtime.ComputedValueHolder:
-    public final kotlin.jvm.functions.Function1 compute
     static void <clinit>()
 androidx.compose.runtime.ControlledComposition
 androidx.compose.runtime.DefaultChoreographerFrameClock$choreographer$1:
@@ -56565,7 +56880,6 @@ androidx.compose.ui.focus.FocusRequester$focus$1:
     public final java.lang.Boolean invoke$15()
 androidx.compose.ui.focus.FocusRequester:
     public static final androidx.compose.ui.focus.FocusRequester$Companion Companion
-    public final void focus$ui_release()
 androidx.compose.ui.focus.FocusRequesterElement:
     public static androidx.compose.ui.focus.FocusRequesterNode create()
     public static void update$46()
@@ -58820,7 +59134,7 @@ androidx.compose.ui.platform.AndroidCompositionLocals_androidKt$LocalResourceIdC
 androidx.compose.ui.platform.AndroidCompositionLocals_androidKt$LocalSavedStateRegistryOwner$1:
     public static androidx.savedstate.SavedStateRegistryOwner invoke()
 androidx.compose.ui.platform.AndroidCompositionLocals_androidKt$LocalView$1:
-    public static android.view.View invoke$1()
+    public static android.view.View invoke()
 androidx.compose.ui.platform.AndroidCompositionLocals_androidKt$ProvideAndroidCompositionLocals$1$1:
     public static void invoke$67()
 androidx.compose.ui.platform.AndroidCompositionLocals_androidKt$ProvideAndroidCompositionLocals$2$1:
@@ -59506,9 +59820,7 @@ androidx.compose.ui.text.MultiParagraphIntrinsics$minIntrinsicWidth$2:
     public final java.lang.Float invoke$1()
 androidx.compose.ui.text.MultiParagraphIntrinsics:
     public static final int $stable
-    public final kotlin.Lazy minIntrinsicWidth$delegate
     static void <clinit>()
-    public final float getMinIntrinsicWidth()
 androidx.compose.ui.text.MultiParagraphIntrinsicsKt
 androidx.compose.ui.text.NonNullValueClassSaver
 androidx.compose.ui.text.Paragraph
@@ -59664,7 +59976,6 @@ androidx.compose.ui.text.TextLayoutResult:
     public final androidx.compose.ui.text.TextLayoutResult copy-O0kMr_c(androidx.compose.ui.text.TextLayoutInput,long)
     public final boolean getDidOverflowHeight()
     public static boolean getDidOverflowWidth()
-    public final boolean getHasVisualOverflow()
     public static float getHorizontalPosition()
     public static float getLineBottom()
     public static int getLineCount()
@@ -60148,11 +60459,7 @@ androidx.compose.ui.text.input.KeyboardCapitalization:
     public static final int Sentences
     public static final int Unspecified
     public static final int Words
-    public final int value
     static void <clinit>()
-    public final boolean equals(java.lang.Object)
-    public final int hashCode()
-    public final java.lang.String toString()
 androidx.compose.ui.text.input.KeyboardType$Companion
 androidx.compose.ui.text.input.KeyboardType:
     public static final int Ascii
@@ -60385,6 +60692,7 @@ androidx.compose.ui.text.style.TextAlign:
     public static final int Start
     public static final int Unspecified
     static void <clinit>()
+    public static final synthetic androidx.compose.ui.text.style.TextAlign box-impl()
 androidx.compose.ui.text.style.TextDecoration$Companion
 androidx.compose.ui.text.style.TextDecoration:
     public static final androidx.compose.ui.text.style.TextDecoration$Companion Companion
@@ -60467,12 +60775,12 @@ androidx.compose.ui.unit.IntRect$Companion
 androidx.compose.ui.unit.IntRect:
     public static final androidx.compose.ui.unit.IntRect$Companion Companion
     public static androidx.compose.ui.unit.IntRect copy()
-    public final long getCenter-nOcc-ac()
     public final long getTopLeft-nOcc-ac()
     public final int getWidth()
     public static boolean isEmpty()
     public static androidx.compose.ui.unit.IntRect translate()
-androidx.compose.ui.unit.IntRectKt
+androidx.compose.ui.unit.IntRectKt:
+    public static final androidx.compose.ui.unit.IntRect roundToIntRect(androidx.compose.ui.geometry.Rect)
 androidx.compose.ui.unit.IntSize$Companion
 androidx.compose.ui.unit.IntSize:
     public static final androidx.compose.ui.unit.IntSize$Companion Companion
@@ -60753,6 +61061,7 @@ androidx.core.app.RemoteInput$Api29Impl
 androidx.core.app.RemoteInput
 androidx.core.app.SharedElementCallback
 androidx.core.app.TaskStackBuilder
+androidx.core.content.ContextCompat$Api21Impl
 androidx.core.content.ContextCompat$Api26Impl
 androidx.core.content.ContextCompat:
     public static final java.lang.Object sSync
@@ -60820,6 +61129,8 @@ androidx.core.graphics.TypefaceCompatUtil:
     public static void closeQuietly(java.io.Closeable)
     public static boolean copyToFile(java.io.File,android.content.res.Resources,int)
     public static boolean copyToFile(java.io.File,java.io.InputStream)
+androidx.core.graphics.drawable.DrawableCompat$Api21Impl
+androidx.core.graphics.drawable.DrawableCompat
 androidx.core.graphics.drawable.IconCompat$Api23Impl
 androidx.core.graphics.drawable.IconCompat$Api26Impl
 androidx.core.graphics.drawable.IconCompat:
@@ -61195,6 +61506,8 @@ androidx.core.view.inputmethod.EditorInfoCompat:
     public static final java.lang.String[] EMPTY_STRING_ARRAY
     static void <clinit>()
     public static boolean isCutOnSurrogate(java.lang.CharSequence,int,int)
+androidx.core.viewtree.R$id
+androidx.core.viewtree.ViewTree
 androidx.customview.poolingcontainer.PoolingContainer:
     public static final int IsPoolingContainerTag
     public static final int PoolingContainerListenerHolderTag
@@ -62091,13 +62404,13 @@ androidx.lifecycle.ViewModelStore:
     public final java.util.HashSet keys()
     public static void put()
 androidx.lifecycle.ViewTreeLifecycleOwner$findViewTreeLifecycleOwner$1:
-    public final android.view.View invoke()
+    public final android.view.View invoke$1()
 androidx.lifecycle.ViewTreeLifecycleOwner$findViewTreeLifecycleOwner$2:
     public static androidx.lifecycle.LifecycleOwner invoke()
 androidx.lifecycle.ViewTreeLifecycleOwner:
     public static final void set(android.view.View,androidx.lifecycle.LifecycleOwner)
 androidx.lifecycle.ViewTreeViewModelStoreOwner$findViewTreeViewModelStoreOwner$1:
-    public final android.view.View invoke()
+    public final android.view.View invoke$1()
 androidx.lifecycle.ViewTreeViewModelStoreOwner$findViewTreeViewModelStoreOwner$2:
     public static androidx.lifecycle.ViewModelStoreOwner invoke()
 androidx.lifecycle.ViewTreeViewModelStoreOwner:
@@ -62256,7 +62569,6 @@ androidx.navigation.NavController:
     public final androidx.navigation.NavDestination getCurrentDestination()
     public abstract boolean handleDeepLink()
     public abstract void navigate()
-    public final void navigate(java.lang.String,kotlin.jvm.functions.Function1)
     public final void navigateInternal(androidx.navigation.Navigator,java.util.List,androidx.navigation.NavOptions,kotlin.jvm.functions.Function1)
     public abstract boolean popBackStack()
     public abstract boolean popBackStack$1()
@@ -62411,7 +62723,6 @@ androidx.navigation.NavOptionsBuilder:
     public static androidx.navigation.NavOptions build$navigation_common_release()
     public static void popUpTo()
     public final void popUpTo(int,kotlin.jvm.functions.Function1)
-    public final void setPopUpToId$navigation_common_release(int)
 androidx.navigation.NavType$Companion$BoolArrayType$1:
     public static boolean[] emptyCollection()
     public static boolean[] get()
@@ -62686,6 +62997,7 @@ androidx.navigation.serialization.RouteBuilder
 androidx.navigation.serialization.RouteEncoder
 androidx.navigation.serialization.RouteSerializerKt$generateRouteWithArgs$1
 androidx.navigation.serialization.RouteSerializerKt
+androidx.profileinstaller.BenchmarkOperation$Api21ContextHelper
 androidx.profileinstaller.BenchmarkOperation$Api24ContextHelper
 androidx.profileinstaller.DeviceProfileWriter:
     public final android.content.res.AssetManager mAssetManager
@@ -62716,21 +63028,22 @@ androidx.profileinstaller.FileSectionType
 androidx.profileinstaller.ProfileInstaller:
     public static final androidx.profileinstaller.ProfileInstaller$2 LOG_DIAGNOSTICS
     public static void result(java.util.concurrent.Executor,androidx.profileinstaller.ProfileInstallReceiver$ResultDiagnostics,int,android.content.pm.PackageManager$NameNotFoundException)
-androidx.profileinstaller.ProfileInstallerInitializer$$InternalSyntheticLambda$1$6ec9dfac75596981db3e3904869db8fa3a68f2f6c39f7ab436a95fc7a2110c27$0:
+androidx.profileinstaller.ProfileInstallerInitializer$$InternalSyntheticLambda$1$028a62cc097ff98aed12fc646d05f21adf07fc48d61cf62d5c811adf759a0199$0:
     public final synthetic androidx.profileinstaller.ProfileInstallerInitializer f$0
+androidx.profileinstaller.ProfileInstallerInitializer$Handler28Impl
 androidx.profileinstaller.ProfileInstallerInitializer:
     public static androidx.profileinstaller.ProfileInstallerInitializer$Result create()
-    public static void delayAfterFirstFrame()
     public static void installAfterDelay()
 androidx.profileinstaller.ProfileTranscoder:
     public static java.lang.String enforceSeparator(java.lang.String,java.lang.String)
     public static int getMethodBitmapStorageSize(int)
     public static byte[] readHeader(java.io.FileInputStream,byte[])
+    public static int roundUpToByte(int)
     public static void setMethodBitmapBit(byte[],int,int,androidx.profileinstaller.DexProfileData)
     public static void writeClasses(java.io.ByteArrayOutputStream,androidx.profileinstaller.DexProfileData)
-    public static void writeLineData(java.io.ByteArrayOutputStream,androidx.profileinstaller.DexProfileData)
 androidx.profileinstaller.ProfileVerifier$CompilationStatus:
     public final boolean mHasCurrentProfile
+    public final boolean mHasEmbeddedProfile
     public final boolean mHasReferenceProfile
     public final int mResultCode
 androidx.profileinstaller.ProfileVersion:
@@ -63167,7 +63480,7 @@ androidx.savedstate.SavedStateRegistryController:
     public static final androidx.savedstate.SavedStateRegistryController$Companion Companion
     static void <clinit>()
 androidx.savedstate.ViewTreeSavedStateRegistryOwner$findViewTreeSavedStateRegistryOwner$1:
-    public final android.view.View invoke()
+    public final android.view.View invoke$1()
 androidx.savedstate.ViewTreeSavedStateRegistryOwner$findViewTreeSavedStateRegistryOwner$2:
     public static androidx.savedstate.SavedStateRegistryOwner invoke$1()
 androidx.savedstate.ViewTreeSavedStateRegistryOwner:
@@ -63235,6 +63548,8 @@ androidx.startup.AppInitializer:
 androidx.startup.R$string
 androidx.startup.StartupLogger
 androidx.tracing.TraceApi18Impl
+androidx.vectordrawable.graphics.drawable.VectorDrawableCommon
+androidx.vectordrawable.graphics.drawable.VectorDrawableCompat
 androidx.versionedparcelable.ParcelImpl$1:
     public static androidx.versionedparcelable.ParcelImpl createFromParcel()
 androidx.versionedparcelable.VersionedParcel:
@@ -63954,7 +64269,6 @@ com.android.billingclient.api.BillingFlowParams$SubscriptionUpdateParams:
     public java.lang.String zzb
     public int zzc
 com.android.billingclient.api.BillingFlowParams:
-    public java.lang.String zzb
     public java.lang.String zzc
     public boolean zzg
     public com.android.billingclient.api.DeveloperBillingOptionParams zzh
@@ -63995,7 +64309,6 @@ com.android.billingclient.api.ProductDetails$PricingPhase:
     public final int zze
     public final int zzf
 com.android.billingclient.api.ProductDetails$SubscriptionOfferDetails:
-    public final java.lang.String zzb
     public final java.util.List zze
     public final com.android.billingclient.api.ProductDetails$InstallmentPlanDetails zzf
 com.android.billingclient.api.ProductDetails:
@@ -64020,10 +64333,8 @@ com.android.billingclient.api.PurchasesUpdatedListener
 com.android.billingclient.api.QueryProductDetailsParams$Builder:
     public static com.android.billingclient.api.QueryProductDetailsParams build()
     public static com.android.billingclient.api.QueryProductDetailsParams$Builder setProductList()
-com.android.billingclient.api.QueryProductDetailsParams$Product$Builder
-com.android.billingclient.api.QueryProductDetailsParams$Product:
-    public final java.lang.String zza
-    public final java.lang.String zzb
+com.android.billingclient.api.QueryProductDetailsParams$Product$Builder:
+    public static com.android.billingclient.api.QueryProductDetailsParams$Product build()
 com.android.billingclient.api.QueryPurchasesParams$Builder
 com.android.billingclient.api.QueryPurchasesParams
 com.android.billingclient.api.SkuDetails
@@ -67212,16 +67523,23 @@ com.google.mlkit.vision.common.internal.MultiFlavorDetectorCreator:
     public final java.util.HashMap zza
 com.google.mlkit.vision.common.internal.VisionCommonRegistrar:
     public static final synthetic int zza
+com.sandalia.stockanchor.AppContainer$syncSubscriptionProduct$1$1$1:
+    public final java.lang.Object invoke$51()
+com.sandalia.stockanchor.AppContainer$syncSubscriptionProduct$1:
+    public int I$0
+    public java.lang.Object L$1
+    public final java.lang.Object invoke$2()
 com.sandalia.stockanchor.AppContainer:
     public static final int $stable
-    public final kotlinx.coroutines.internal.ContextScope appScope
     static void <clinit>()
+    public final void syncSubscriptionProduct()
 com.sandalia.stockanchor.ComposableSingletons$MainActivityKt:
     public static final com.sandalia.stockanchor.ComposableSingletons$MainActivityKt INSTANCE
 com.sandalia.stockanchor.MainActivity$Companion
 com.sandalia.stockanchor.MainActivity$onCreate$2$1:
     public int I$0
     public java.lang.Object L$1
+    public java.lang.Object L$2
     public final java.lang.Object invoke$2()
 com.sandalia.stockanchor.MainActivity$onCreate$2:
     public final java.lang.Object invoke$2()
@@ -67245,8 +67563,6 @@ com.sandalia.stockanchor.R$string
 com.sandalia.stockanchor.StockAnchorApp:
     public static final int $stable
     static void <clinit>()
-    public final com.sandalia.stockanchor.AppContainer getContainer()
-com.sandalia.stockanchor.billing.BillingManager$Companion
 com.sandalia.stockanchor.billing.BillingManager$acknowledgeAll$1:
     public int I$0
     public int I$1
@@ -67259,11 +67575,12 @@ com.sandalia.stockanchor.billing.BillingManager:
     public final kotlinx.coroutines.CoroutineScope scope
     static void <clinit>()
     public static void launch()
+    public static synthetic void loadProducts$default(com.sandalia.stockanchor.billing.BillingManager)
     public final void startConnection()
+    public static void useProductId()
 com.sandalia.stockanchor.billing.PlanOffer:
     public static final int $stable
     static void <clinit>()
-    public synthetic void <init>(java.lang.String,java.lang.String,java.lang.String)
 com.sandalia.stockanchor.billing.PurchaseEvent$Error:
     static void <clinit>()
 com.sandalia.stockanchor.billing.PurchaseEvent$Success:
@@ -67641,19 +67958,24 @@ com.sandalia.stockanchor.data.prefs.AppMode:
 com.sandalia.stockanchor.data.prefs.Session:
     public static final int $stable
     static void <clinit>()
-com.sandalia.stockanchor.data.prefs.SessionStore$Companion
+com.sandalia.stockanchor.data.prefs.SessionStore$Companion:
+    public static java.lang.String symbolFor()
 com.sandalia.stockanchor.data.prefs.SessionStore:
     public static final int $stable
     public static final com.sandalia.stockanchor.data.prefs.SessionStore$Companion Companion
     static void <clinit>()
     public final void baseUrl()
+    public final java.lang.String billingEmail()
     public final void clearCloud()
-    public static java.lang.String pendingPlan()
-    public final java.lang.String pendingPurchaseToken()
+    public static void clearPendingProof()
+    public final boolean hasPendingProof()
+    public final java.lang.String pendingPlan()
     public static void saveAuth()
     public static void saveSubscription()
     public static void setCompany()
     public static void setMode()
+    public static void setPendingPromo()
+    public static void setSubscriptionProductId()
     public final java.lang.String token()
     public final void update(kotlin.jvm.functions.Function1)
 com.sandalia.stockanchor.data.remote.AdjustRequest:
@@ -67673,6 +67995,8 @@ com.sandalia.stockanchor.data.remote.CategoryDto:
 com.sandalia.stockanchor.data.remote.CategoryRequest:
     static void <clinit>()
 com.sandalia.stockanchor.data.remote.CodeRequest:
+    static void <clinit>()
+com.sandalia.stockanchor.data.remote.CompanyRequest:
     static void <clinit>()
 com.sandalia.stockanchor.data.remote.DeletedDto:
     static void <clinit>()
@@ -67702,6 +68026,10 @@ com.sandalia.stockanchor.data.remote.ProductDto:
     static void <clinit>()
 com.sandalia.stockanchor.data.remote.ProductRequest:
     static void <clinit>()
+com.sandalia.stockanchor.data.remote.PromoCheckResponse:
+    static void <clinit>()
+com.sandalia.stockanchor.data.remote.PromoRequest:
+    static void <clinit>()
 com.sandalia.stockanchor.data.remote.PurchaseDto:
     static void <clinit>()
 com.sandalia.stockanchor.data.remote.PurchaseItemDto:
@@ -67709,6 +68037,10 @@ com.sandalia.stockanchor.data.remote.PurchaseItemDto:
 com.sandalia.stockanchor.data.remote.PurchaseRequest:
     static void <clinit>()
 com.sandalia.stockanchor.data.remote.RecoveryCodesResponse:
+    static void <clinit>()
+com.sandalia.stockanchor.data.remote.RegisterCodeRequest:
+    static void <clinit>()
+com.sandalia.stockanchor.data.remote.RegisterCodeResponse:
     static void <clinit>()
 com.sandalia.stockanchor.data.remote.RegisterRequest:
     static void <clinit>()
@@ -67721,6 +68053,8 @@ com.sandalia.stockanchor.data.remote.SaleRequest:
 com.sandalia.stockanchor.data.remote.StockDto:
     static void <clinit>()
 com.sandalia.stockanchor.data.remote.SubscriptionDto:
+    static void <clinit>()
+com.sandalia.stockanchor.data.remote.SubscriptionPlansResponse:
     static void <clinit>()
 com.sandalia.stockanchor.data.remote.SupplierDto:
     static void <clinit>()
@@ -67750,6 +68084,8 @@ com.sandalia.stockanchor.data.remote.WarehouseRequest:
     static void <clinit>()
 com.sandalia.stockanchor.data.repo.AccountManager$beginTwoFactor$2:
     public final java.lang.Object invoke$51()
+com.sandalia.stockanchor.data.repo.AccountManager$checkPromo$checked$1:
+    public final java.lang.Object invoke$51()
 com.sandalia.stockanchor.data.repo.AccountManager$completeTwoFactor$1:
     public java.lang.Object L$0
     public java.lang.Object L$1
@@ -67760,6 +68096,11 @@ com.sandalia.stockanchor.data.repo.AccountManager$confirmTwoFactor$1:
 com.sandalia.stockanchor.data.repo.AccountManager$confirmTwoFactor$2:
     public final java.lang.Object invoke$51()
 com.sandalia.stockanchor.data.repo.AccountManager$disableTwoFactor$2:
+    public final java.lang.Object invoke$51()
+com.sandalia.stockanchor.data.repo.AccountManager$discardUnpaidSession$1:
+    public int I$0
+    public java.lang.Object L$0
+com.sandalia.stockanchor.data.repo.AccountManager$discardUnpaidSession$2$1:
     public final java.lang.Object invoke$51()
 com.sandalia.stockanchor.data.repo.AccountManager$endSession$1:
     public int I$0
@@ -67773,6 +68114,10 @@ com.sandalia.stockanchor.data.repo.AccountManager$newRecoveryCodes$1:
     public java.lang.Object L$0
 com.sandalia.stockanchor.data.repo.AccountManager$newRecoveryCodes$2:
     public final java.lang.Object invoke$51()
+com.sandalia.stockanchor.data.repo.AccountManager$redeemPromo$1:
+    public java.lang.Object L$0
+com.sandalia.stockanchor.data.repo.AccountManager$redeemPromo$r$1:
+    public final java.lang.Object invoke$51()
 com.sandalia.stockanchor.data.repo.AccountManager$refresh$r$1:
     public final java.lang.Object invoke$51()
 com.sandalia.stockanchor.data.repo.AccountManager$register$1:
@@ -67781,7 +68126,15 @@ com.sandalia.stockanchor.data.repo.AccountManager$register$1:
     public java.lang.Object L$2
     public java.lang.Object L$3
     public java.lang.Object L$4
+    public java.lang.Object L$5
 com.sandalia.stockanchor.data.repo.AccountManager$register$r$1:
+    public final java.lang.Object invoke$51()
+com.sandalia.stockanchor.data.repo.AccountManager$saveCompany$1:
+    public java.lang.Object L$0
+    public java.lang.Object L$1
+com.sandalia.stockanchor.data.repo.AccountManager$saveCompany$2:
+    public final java.lang.Object invoke$51()
+com.sandalia.stockanchor.data.repo.AccountManager$sendRegistrationCode$2:
     public final java.lang.Object invoke$51()
 com.sandalia.stockanchor.data.repo.AccountManager$signOut$1:
     public int I$0
@@ -67802,6 +68155,8 @@ com.sandalia.stockanchor.data.repo.AccountManager:
     public static java.lang.Object beginTwoFactor()
     public static java.lang.Object disableTwoFactor()
     public final void downgradeToBasic()
+    public final java.lang.String productIdIfPurchase()
+    public static java.lang.Object sendRegistrationCode()
     public final java.lang.Object twoFactorStatus(kotlin.coroutines.jvm.internal.SuspendLambda)
 com.sandalia.stockanchor.data.repo.CartLine:
     static void <clinit>()
@@ -67989,15 +68344,10 @@ com.sandalia.stockanchor.domain.PremiumFeature:
 com.sandalia.stockanchor.ui.components.ComponentsKt$$InternalSyntheticLambda$11$0ef35b0199d9090e5071dfb45eca7667d26151aad76b6d6ae1d307aa537bc9bf$0:
     public final synthetic boolean f$3
     public final synthetic int f$4
-com.sandalia.stockanchor.ui.components.ComponentsKt$$InternalSyntheticLambda$11$11a15a7ea475a5325b97bbb82733f574cc406189ba6e344c3774941a8b36fc8a$0:
-    public final synthetic boolean f$6
 com.sandalia.stockanchor.ui.components.ComponentsKt$$InternalSyntheticLambda$11$8b2e45a29abf8229d447643b17f3b7fb78530a516838086b89c4bbb2b737e66b$1:
-    public final synthetic boolean f$7
     public final synthetic int f$8
-com.sandalia.stockanchor.ui.components.ComponentsKt$$InternalSyntheticLambda$11$cec7a3b2736cd6f4d9f71c1ce4b747920107ba30703a70f74ed3539e03bcc6e6$2:
+com.sandalia.stockanchor.ui.components.ComponentsKt$$InternalSyntheticLambda$11$bac11b0156f080346b861316eacffe0bd71a3e4546a3b31b2af51a7df063a204$4:
     public final synthetic boolean f$0
-com.sandalia.stockanchor.ui.components.ComponentsKt$$InternalSyntheticLambda$11$cec7a3b2736cd6f4d9f71c1ce4b747920107ba30703a70f74ed3539e03bcc6e6$4:
-    public final synthetic boolean f$7
 com.sandalia.stockanchor.ui.components.ComponentsKt$$InternalSyntheticLambda$11$e955ec9bd37400130b2c62f59a4eb50aca80bc3dec363d5af6d54c1c632ac6cf$0:
     public final synthetic boolean f$1
     public final synthetic int f$2
@@ -68011,19 +68361,34 @@ com.sandalia.stockanchor.ui.components.ComponentsKt:
     public static final void DropdownField$lambda$31(androidx.compose.runtime.MutableState,boolean)
 com.sandalia.stockanchor.ui.components.ComposableSingletons$ComponentsKt:
     public static final com.sandalia.stockanchor.ui.components.ComposableSingletons$ComponentsKt INSTANCE
+com.sandalia.stockanchor.ui.components.ComposableSingletons$PhoneFieldKt:
+    public static final com.sandalia.stockanchor.ui.components.ComposableSingletons$PhoneFieldKt INSTANCE
 com.sandalia.stockanchor.ui.components.ComposableSingletons$ProductPickerKt:
     public static final com.sandalia.stockanchor.ui.components.ComposableSingletons$ProductPickerKt INSTANCE
+com.sandalia.stockanchor.ui.components.FieldTouched
+com.sandalia.stockanchor.ui.components.FormFieldKt$rememberFieldTouched$2$1:
+    public int label
+    public final java.lang.Object invoke$2()
+com.sandalia.stockanchor.ui.components.FormFieldKt:
+    public static final void rememberFieldTouched$lambda$3(androidx.compose.runtime.MutableState,boolean)
+    public static final void rememberFieldTouched$lambda$6(androidx.compose.runtime.MutableState,boolean)
+com.sandalia.stockanchor.ui.components.PhoneFieldKt$PhoneField$1$1$1:
+    public final java.lang.Object emit$1()
+com.sandalia.stockanchor.ui.components.PhoneFieldKt$PhoneField$1$1:
+    public final java.lang.Object invoke$2()
+com.sandalia.stockanchor.ui.components.PhoneFieldKt:
+    public static final void PhoneField$lambda$4(androidx.compose.runtime.MutableState,boolean)
 com.sandalia.stockanchor.ui.components.ProductPickerKt$ProductPickerSheet$1$1$2$1$1$1:
     public final java.lang.Object invoke$2()
 com.sandalia.stockanchor.ui.components.ProductPickerKt$ProductPickerSheet$1$1$3$1$2$1$1:
     public final void invoke()
-com.sandalia.stockanchor.ui.components.ProductPickerKt$ProductPickerSheet$lambda$24$lambda$23$lambda$22$lambda$21$$inlined$items$default$1
-com.sandalia.stockanchor.ui.components.ProductPickerKt$ProductPickerSheet$lambda$24$lambda$23$lambda$22$lambda$21$$inlined$items$default$2:
+com.sandalia.stockanchor.ui.components.ProductPickerKt$ProductPickerSheet$lambda$25$lambda$24$lambda$23$lambda$22$$inlined$items$default$1
+com.sandalia.stockanchor.ui.components.ProductPickerKt$ProductPickerSheet$lambda$25$lambda$24$lambda$23$lambda$22$$inlined$items$default$2:
     public final java.lang.Object invoke$52()
-com.sandalia.stockanchor.ui.components.ProductPickerKt$ProductPickerSheet$lambda$24$lambda$23$lambda$22$lambda$21$$inlined$items$default$3:
+com.sandalia.stockanchor.ui.components.ProductPickerKt$ProductPickerSheet$lambda$25$lambda$24$lambda$23$lambda$22$$inlined$items$default$3:
     public final synthetic kotlin.jvm.functions.Function1 $contentType
     public final java.lang.Object invoke$52()
-com.sandalia.stockanchor.ui.components.ProductPickerKt$ProductPickerSheet$lambda$24$lambda$23$lambda$22$lambda$21$$inlined$items$default$4:
+com.sandalia.stockanchor.ui.components.ProductPickerKt$ProductPickerSheet$lambda$25$lambda$24$lambda$23$lambda$22$$inlined$items$default$4:
     public final void invoke$19()
 com.sandalia.stockanchor.ui.components.Runner$run$2:
     public final java.lang.Object invoke$2()
@@ -68038,14 +68403,22 @@ com.sandalia.stockanchor.ui.navigation.AppNavKt$$InternalSyntheticLambda$5$79237
 com.sandalia.stockanchor.ui.navigation.AppNavKt$AppNav$1$1:
     public int label
     public final java.lang.Object invoke$2()
+com.sandalia.stockanchor.ui.navigation.AppNavKt:
+    public static final float MAX_CONTENT_WIDTH
 com.sandalia.stockanchor.ui.navigation.Routes
 com.sandalia.stockanchor.ui.navigation.Tab:
     public final java.lang.String getLabel()
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$$InternalSyntheticLambda$10$2b6d0b33ec96efbde1e0fec51825f744cccfd59c5bf970317c85f9f1f274378f$4:
+    public final synthetic boolean f$4
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$$InternalSyntheticLambda$10$51c5c7f2d5bb01cbb8b2be931dc762f9c0d8e0c3cc1ffe76927b0270561ae7e1$4:
+    public final synthetic boolean f$7
 com.sandalia.stockanchor.ui.screens.AccountScreensKt$$InternalSyntheticLambda$10$6c3c28fd12b2f376830f6904342d833408f25bc08ba82b5d68715104b943f2fb$1:
     public final synthetic boolean f$4
-com.sandalia.stockanchor.ui.screens.AccountScreensKt$$InternalSyntheticLambda$10$8b11c17769abc87c0288715cbadeee5f4d98974f804a331f6d9b822c3c880d10$16:
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$$InternalSyntheticLambda$10$b10aecc15a1789e22703aefeaf3f1925f1c00bc915d14bb601c18b900c01bd5f$16:
     public final synthetic androidx.compose.foundation.layout.ColumnScopeInstance f$1
-com.sandalia.stockanchor.ui.screens.AccountScreensKt$$InternalSyntheticLambda$9$0325a3c4bc4164c11cda1abcf7acad0a8fd3f668aa34bbeca3a8c9ef6210482e$9:
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$$InternalSyntheticLambda$11$7ca714365c82da9032facef10e809d18d6d1f1f91d5f8ef0b06c961ee66289ce$2:
+    public final synthetic boolean f$1
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$$InternalSyntheticLambda$9$0325a3c4bc4164c11cda1abcf7acad0a8fd3f668aa34bbeca3a8c9ef6210482e$18:
     public final synthetic boolean f$1
 com.sandalia.stockanchor.ui.screens.AccountScreensKt$$InternalSyntheticLambda$9$483a03b6318d98d102b7ea09f60e6695885a6173bb55bae52339cbbd4e1e10cf$6:
     public final synthetic boolean f$1
@@ -68055,25 +68428,51 @@ com.sandalia.stockanchor.ui.screens.AccountScreensKt$$InternalSyntheticLambda$9$
     public final synthetic androidx.compose.runtime.MutableState f$5
 com.sandalia.stockanchor.ui.screens.AccountScreensKt$$InternalSyntheticLambda$9$8eaeb44fcb2756e893dfc589d59dcdb8189e36371a6dd156309766b985751259$5:
     public final synthetic boolean f$1
-com.sandalia.stockanchor.ui.screens.AccountScreensKt$$InternalSyntheticLambda$9$94b4fa2b209f82df39f56752377cd600f4bc61d581eb2f235814b3a100b3ecf2$14:
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$$InternalSyntheticLambda$9$94b4fa2b209f82df39f56752377cd600f4bc61d581eb2f235814b3a100b3ecf2$23:
     public final synthetic boolean f$2
-com.sandalia.stockanchor.ui.screens.AccountScreensKt$AccountScreen$2$1$9$1$1:
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$AccountScreen$1$1:
+    public int label
+    public final java.lang.Object invoke$2()
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$AccountScreen$2$1:
+    public final java.lang.Object invoke$2()
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$AccountScreen$4$1$9$1$1$1:
     public final java.lang.Object invoke$5()
-com.sandalia.stockanchor.ui.screens.AccountScreensKt$AccountScreen$3$1$1$1:
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$AccountScreen$4$1$9$1$1:
+    public final java.lang.Object invoke$5()
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$AccountScreen$5$1$1$1:
+    public final java.lang.Object invoke$5()
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$AccountScreen$5$2$1$1:
+    public final java.lang.Object invoke$5()
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$AccountScreen$6$1$1$1$1:
+    public final java.lang.Object invoke$5()
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$AccountScreen$6$1$1$1:
     public final java.lang.Object invoke$5()
 com.sandalia.stockanchor.ui.screens.AccountScreensKt$AccountScreen$afterAuth$1:
     public java.lang.Object L$0
+    public java.lang.Object L$1
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$AccountScreen$refusedForNoPlan$1:
+    public java.lang.Object L$2
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$AccountScreen$sendCode$1:
+    public int I$0
+    public java.lang.Object L$7
 com.sandalia.stockanchor.ui.screens.AccountScreensKt$PaywallScreen$1$1:
     public int label
     public final java.lang.Object invoke$2()
-com.sandalia.stockanchor.ui.screens.AccountScreensKt$PaywallScreen$2$1$1$1:
-    public final java.lang.Object invoke$5()
-com.sandalia.stockanchor.ui.screens.AccountScreensKt$PaywallScreen$2$1$1:
-    public static java.lang.Object emit$7()
 com.sandalia.stockanchor.ui.screens.AccountScreensKt$PaywallScreen$2$1:
+    public int label
     public final java.lang.Object invoke$2()
-com.sandalia.stockanchor.ui.screens.AccountScreensKt$PaywallScreen$3$1$2$6$1$1$1:
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$PaywallScreen$3$1$1$1:
+    public final java.lang.Object invoke$5()
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$PaywallScreen$3$1$1:
+    public static java.lang.Object emit$7()
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$PaywallScreen$3$1:
+    public final java.lang.Object invoke$2()
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$PaywallScreen$4$1$2$10$1$1$1:
     public java.lang.Object L$0
+    public final java.lang.Object invoke$5()
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$PaywallScreen$5$1$1$1:
+    public final java.lang.Object invoke$5()
+com.sandalia.stockanchor.ui.screens.AccountScreensKt$SettingsScreen$2$1$1$3$1$1:
     public final java.lang.Object invoke$5()
 com.sandalia.stockanchor.ui.screens.AccountScreensKt$SettingsScreen$2$1$4$1$2$1$1:
     public final java.lang.Object invoke$5()
@@ -68082,13 +68481,20 @@ com.sandalia.stockanchor.ui.screens.AccountScreensKt$SubscriptionScreen$2$1$6$1$
 com.sandalia.stockanchor.ui.screens.AccountScreensKt$SubscriptionScreen$3$1$1:
     public final java.lang.Object invoke$5()
 com.sandalia.stockanchor.ui.screens.AccountScreensKt:
-    public static final int AccountScreen$lambda$61(androidx.compose.runtime.MutableState)
-    public static final void AccountScreen$lambda$62(androidx.compose.runtime.MutableState,int)
-    public static final void AccountScreen$lambda$86(androidx.compose.runtime.MutableState,boolean)
+    public static final int AccountScreen$lambda$144(androidx.compose.runtime.MutableState)
+    public static final void AccountScreen$lambda$145(androidx.compose.runtime.MutableState,int)
+    public static final boolean AccountScreen$lambda$171(androidx.compose.runtime.MutableState)
+    public static final int AccountScreen$lambda$198(androidx.compose.runtime.MutableState)
+    public static final void AccountScreen$lambda$199(androidx.compose.runtime.MutableState,int)
+    public static final void AccountScreen$purchaseNoLongerActive(com.sandalia.stockanchor.AppContainer,androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableState,androidx.compose.runtime.MutableState)
     public static final com.sandalia.stockanchor.data.prefs.Session PaywallScreen$lambda$18(androidx.compose.runtime.MutableState)
+    public static final java.util.List PaywallScreen$lambda$19(androidx.compose.runtime.MutableState)
     public static final boolean PaywallScreen$lambda$20(androidx.compose.runtime.MutableState)
-    public static final void SubscriptionScreen$lambda$135(androidx.compose.runtime.MutableState,boolean)
-    public static final void SubscriptionScreen$lambda$138(androidx.compose.runtime.MutableState,boolean)
+    public static final java.lang.String PaywallScreen$lambda$25(androidx.compose.runtime.MutableState)
+    public static final void PaywallScreen$lambda$30(androidx.compose.runtime.MutableState,boolean)
+    public static final long PlanPrice$lambda$127(androidx.compose.runtime.MutableState)
+    public static final void SubscriptionScreen$lambda$259(androidx.compose.runtime.MutableState,boolean)
+    public static final void SubscriptionScreen$lambda$262(androidx.compose.runtime.MutableState,boolean)
 com.sandalia.stockanchor.ui.screens.ActivationFlow$activate$1:
     public final java.lang.Object invoke$5()
 com.sandalia.stockanchor.ui.screens.ActivationFlow$begin$1:
@@ -68099,14 +68505,13 @@ com.sandalia.stockanchor.ui.screens.ActivationFlow$doActivate$1:
 com.sandalia.stockanchor.ui.screens.ActivationFlow:
     public static final int $stable
     static void <clinit>()
-    public final void begin()
     public static boolean getAskMerge()
     public static boolean getAskUpload()
     public final void setAskMerge(boolean)
     public final void setAskUpload(boolean)
-com.sandalia.stockanchor.ui.screens.CartScreensKt$$InternalSyntheticLambda$10$f696e2f5570fad0ff4210ef1f04a0fb4fdecd427dc37d496394cf0f74b0ba7b0$5:
+com.sandalia.stockanchor.ui.screens.CartScreensKt$$InternalSyntheticLambda$10$f696e2f5570fad0ff4210ef1f04a0fb4fdecd427dc37d496394cf0f74b0ba7b0$6:
     public final synthetic boolean f$2
-com.sandalia.stockanchor.ui.screens.CartScreensKt$$InternalSyntheticLambda$12$61438e6b04235a80d5452b984f5413927d321ec2068c9565f4876263f697ce20$1:
+com.sandalia.stockanchor.ui.screens.CartScreensKt$$InternalSyntheticLambda$12$1abd74f29dd57fc6a038f2f00a40c91dc0a0dab1bf39bad5aa60ce8067a3c9ba$1:
     public final synthetic boolean f$6
 com.sandalia.stockanchor.ui.screens.CartScreensKt$$InternalSyntheticLambda$9$369ca169af1b53544c7e75ac82f8a664d3b79772e942ec146e7d6b658e2a2a3c$4:
     public final synthetic boolean f$1
@@ -68115,7 +68520,7 @@ com.sandalia.stockanchor.ui.screens.CartScreensKt$$InternalSyntheticLambda$9$ca2
 com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchaseScreen$1$1:
     public int label
     public final java.lang.Object invoke$2()
-com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchaseScreen$2$1$1$2$1$1:
+com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchaseScreen$2$1$1$3$1$1:
     public final java.lang.Object invoke$5()
 com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchaseScreen$3$1$1$2$1$2$1$1:
     public final java.lang.Object invoke$2()
@@ -68123,22 +68528,22 @@ com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchaseScreen$3$1$1$4$1$1:
     public final void invoke$85()
 com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchaseScreen$3$1$1$4$2$1:
     public final void invoke$85()
-com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchaseScreen$lambda$121$lambda$120$lambda$119$$inlined$itemsIndexed$default$1:
-    public final synthetic com.sandalia.stockanchor.ui.screens.CartScreensKt$$InternalSyntheticLambda$11$2101fb662f1a8ece6ef95ec94a86878ce54882a6cc7b39b2d8757cf320a47948$2 $key
+com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchaseScreen$lambda$133$lambda$132$lambda$131$$inlined$itemsIndexed$default$1:
+    public final synthetic com.sandalia.stockanchor.ui.screens.CartScreensKt$$InternalSyntheticLambda$11$3e922c97d64a37978a26e70f48da98c3cdf1b4f40448d6f4c69d389def268a2d$2 $key
     public final java.lang.Object invoke$52()
-com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchaseScreen$lambda$121$lambda$120$lambda$119$$inlined$itemsIndexed$default$2:
+com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchaseScreen$lambda$133$lambda$132$lambda$131$$inlined$itemsIndexed$default$2:
     public final java.lang.Object invoke$52()
-com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchaseScreen$lambda$121$lambda$120$lambda$119$$inlined$itemsIndexed$default$3:
+com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchaseScreen$lambda$133$lambda$132$lambda$131$$inlined$itemsIndexed$default$3:
     public final void invoke$19()
 com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchasesScreen$3$1$1$2$1:
     public final void invoke$12()
-com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchasesScreen$lambda$138$lambda$137$lambda$136$$inlined$items$default$1
-com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchasesScreen$lambda$138$lambda$137$lambda$136$$inlined$items$default$2:
+com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchasesScreen$lambda$150$lambda$149$lambda$148$$inlined$items$default$1
+com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchasesScreen$lambda$150$lambda$149$lambda$148$$inlined$items$default$2:
     public final java.lang.Object invoke$52()
-com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchasesScreen$lambda$138$lambda$137$lambda$136$$inlined$items$default$3:
+com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchasesScreen$lambda$150$lambda$149$lambda$148$$inlined$items$default$3:
     public final synthetic kotlin.jvm.functions.Function1 $contentType
     public final java.lang.Object invoke$52()
-com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchasesScreen$lambda$138$lambda$137$lambda$136$$inlined$items$default$4:
+com.sandalia.stockanchor.ui.screens.CartScreensKt$PurchasesScreen$lambda$150$lambda$149$lambda$148$$inlined$items$default$4:
     public final void invoke$19()
 com.sandalia.stockanchor.ui.screens.CartScreensKt$SellScreen$1$1:
     public int label
@@ -68155,15 +68560,21 @@ com.sandalia.stockanchor.ui.screens.CartScreensKt$SellScreen$4$1$1$4$1$1:
     public final void invoke$85()
 com.sandalia.stockanchor.ui.screens.CartScreensKt$SellScreen$4$1$1$4$2$1:
     public final void invoke$85()
-com.sandalia.stockanchor.ui.screens.CartScreensKt$SellScreen$lambda$49$lambda$48$lambda$47$$inlined$itemsIndexed$default$1:
-    public final synthetic com.sandalia.stockanchor.ui.screens.CartScreensKt$$InternalSyntheticLambda$12$83563d9a56738ca4204feea9e413b063e9768c3dc42ba9f5d6dbcb97cff3700a$2 $key
+com.sandalia.stockanchor.ui.screens.CartScreensKt$SellScreen$lambda$59$lambda$58$lambda$57$$inlined$itemsIndexed$default$1:
+    public final synthetic com.sandalia.stockanchor.ui.screens.CartScreensKt$$InternalSyntheticLambda$12$e8eeac106f47f0071892d6e688d377d37e5219f3db124ea5fdbfff2b83574abd$2 $key
     public final java.lang.Object invoke$52()
-com.sandalia.stockanchor.ui.screens.CartScreensKt$SellScreen$lambda$49$lambda$48$lambda$47$$inlined$itemsIndexed$default$2:
+com.sandalia.stockanchor.ui.screens.CartScreensKt$SellScreen$lambda$59$lambda$58$lambda$57$$inlined$itemsIndexed$default$2:
     public final java.lang.Object invoke$52()
-com.sandalia.stockanchor.ui.screens.CartScreensKt$SellScreen$lambda$49$lambda$48$lambda$47$$inlined$itemsIndexed$default$3:
+com.sandalia.stockanchor.ui.screens.CartScreensKt$SellScreen$lambda$59$lambda$58$lambda$57$$inlined$itemsIndexed$default$3:
     public final void invoke$19()
+com.sandalia.stockanchor.ui.screens.CartScreensKt$SellScreen$lambda$9$lambda$8$$inlined$map$1$2$1:
+    public int I$0
+    public java.lang.Object L$0
+    public java.lang.Object L$1
+    public java.lang.Object L$2
+    public java.lang.Object L$3
 com.sandalia.stockanchor.ui.screens.CartScreensKt:
-    public static final void PurchaseScreen$lambda$82(androidx.compose.runtime.MutableState,boolean)
+    public static final void PurchaseScreen$lambda$92(androidx.compose.runtime.MutableState,boolean)
     public static final void SellScreen$lambda$4(androidx.compose.runtime.MutableState,boolean)
 com.sandalia.stockanchor.ui.screens.CartViewModel:
     public static final int $stable
@@ -68386,23 +68797,23 @@ com.sandalia.stockanchor.ui.screens.PremiumScreensKt$LowStockScreen$2$1$1$3$2$1$
     public final void invoke()
 com.sandalia.stockanchor.ui.screens.PremiumScreensKt$LowStockScreen$2$1$1$3$2:
     public final void invoke$12()
-com.sandalia.stockanchor.ui.screens.PremiumScreensKt$LowStockScreen$lambda$112$lambda$111$lambda$110$$inlined$items$default$1
-com.sandalia.stockanchor.ui.screens.PremiumScreensKt$LowStockScreen$lambda$112$lambda$111$lambda$110$$inlined$items$default$2:
+com.sandalia.stockanchor.ui.screens.PremiumScreensKt$LowStockScreen$lambda$113$lambda$112$lambda$111$$inlined$items$default$1
+com.sandalia.stockanchor.ui.screens.PremiumScreensKt$LowStockScreen$lambda$113$lambda$112$lambda$111$$inlined$items$default$2:
     public final java.lang.Object invoke$52()
-com.sandalia.stockanchor.ui.screens.PremiumScreensKt$LowStockScreen$lambda$112$lambda$111$lambda$110$$inlined$items$default$3:
+com.sandalia.stockanchor.ui.screens.PremiumScreensKt$LowStockScreen$lambda$113$lambda$112$lambda$111$$inlined$items$default$3:
     public final synthetic kotlin.jvm.functions.Function1 $contentType
     public final java.lang.Object invoke$52()
-com.sandalia.stockanchor.ui.screens.PremiumScreensKt$LowStockScreen$lambda$112$lambda$111$lambda$110$$inlined$items$default$4:
+com.sandalia.stockanchor.ui.screens.PremiumScreensKt$LowStockScreen$lambda$113$lambda$112$lambda$111$$inlined$items$default$4:
     public final void invoke$19()
 com.sandalia.stockanchor.ui.screens.PremiumScreensKt$MovementsScreen$1$1$5$1$2$1:
     public final void invoke$12()
-com.sandalia.stockanchor.ui.screens.PremiumScreensKt$MovementsScreen$lambda$95$lambda$94$lambda$93$lambda$92$$inlined$items$default$1
-com.sandalia.stockanchor.ui.screens.PremiumScreensKt$MovementsScreen$lambda$95$lambda$94$lambda$93$lambda$92$$inlined$items$default$2:
+com.sandalia.stockanchor.ui.screens.PremiumScreensKt$MovementsScreen$lambda$96$lambda$95$lambda$94$lambda$93$$inlined$items$default$1
+com.sandalia.stockanchor.ui.screens.PremiumScreensKt$MovementsScreen$lambda$96$lambda$95$lambda$94$lambda$93$$inlined$items$default$2:
     public final java.lang.Object invoke$52()
-com.sandalia.stockanchor.ui.screens.PremiumScreensKt$MovementsScreen$lambda$95$lambda$94$lambda$93$lambda$92$$inlined$items$default$3:
+com.sandalia.stockanchor.ui.screens.PremiumScreensKt$MovementsScreen$lambda$96$lambda$95$lambda$94$lambda$93$$inlined$items$default$3:
     public final synthetic kotlin.jvm.functions.Function1 $contentType
     public final java.lang.Object invoke$52()
-com.sandalia.stockanchor.ui.screens.PremiumScreensKt$MovementsScreen$lambda$95$lambda$94$lambda$93$lambda$92$$inlined$items$default$4:
+com.sandalia.stockanchor.ui.screens.PremiumScreensKt$MovementsScreen$lambda$96$lambda$95$lambda$94$lambda$93$$inlined$items$default$4:
     public final void invoke$19()
 com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TeamScreen$1$1$1$1:
     public final java.lang.Object invoke$51()
@@ -68427,13 +68838,13 @@ com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TeamScreen$5$1$1$1$1:
     public final java.lang.Object invoke$51()
 com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TeamScreen$5$1$1$1:
     public final java.lang.Object invoke$5()
-com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TeamScreen$lambda$188$lambda$187$lambda$186$$inlined$items$default$1
-com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TeamScreen$lambda$188$lambda$187$lambda$186$$inlined$items$default$2:
+com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TeamScreen$lambda$189$lambda$188$lambda$187$$inlined$items$default$1
+com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TeamScreen$lambda$189$lambda$188$lambda$187$$inlined$items$default$2:
     public final java.lang.Object invoke$52()
-com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TeamScreen$lambda$188$lambda$187$lambda$186$$inlined$items$default$3:
+com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TeamScreen$lambda$189$lambda$188$lambda$187$$inlined$items$default$3:
     public final synthetic kotlin.jvm.functions.Function1 $contentType
     public final java.lang.Object invoke$52()
-com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TeamScreen$lambda$188$lambda$187$lambda$186$$inlined$items$default$4:
+com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TeamScreen$lambda$189$lambda$188$lambda$187$$inlined$items$default$4:
     public final void invoke$19()
 com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TransfersScreen$1$1:
     public int label
@@ -68445,19 +68856,19 @@ com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TransfersScreen$3$1$1$1$1$7
     public final java.lang.Object invoke$5()
 com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TransfersScreen$3$1$1$3$1:
     public final void invoke$12()
-com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TransfersScreen$lambda$60$lambda$59$lambda$58$$inlined$items$default$1
-com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TransfersScreen$lambda$60$lambda$59$lambda$58$$inlined$items$default$2:
+com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TransfersScreen$lambda$61$lambda$60$lambda$59$$inlined$items$default$1
+com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TransfersScreen$lambda$61$lambda$60$lambda$59$$inlined$items$default$2:
     public final java.lang.Object invoke$52()
-com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TransfersScreen$lambda$60$lambda$59$lambda$58$$inlined$items$default$3:
+com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TransfersScreen$lambda$61$lambda$60$lambda$59$$inlined$items$default$3:
     public final synthetic kotlin.jvm.functions.Function1 $contentType
     public final java.lang.Object invoke$52()
-com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TransfersScreen$lambda$60$lambda$59$lambda$58$$inlined$items$default$4:
+com.sandalia.stockanchor.ui.screens.PremiumScreensKt$TransfersScreen$lambda$61$lambda$60$lambda$59$$inlined$items$default$4:
     public final void invoke$19()
 com.sandalia.stockanchor.ui.screens.PremiumScreensKt:
-    public static final boolean TeamScreen$lambda$238$lambda$202(androidx.compose.runtime.MutableState)
+    public static final boolean TeamScreen$lambda$238$lambda$203(androidx.compose.runtime.MutableState)
     public static final void TransfersScreen$lambda$24(androidx.compose.runtime.MutableState,boolean)
-com.sandalia.stockanchor.ui.screens.ProductScreensKt$$InternalSyntheticLambda$13$7c64fe81f777aa55796eb6e465b78eeb064f491bd60027e90c1902ab804c9a40$1:
-    public final synthetic boolean f$4
+com.sandalia.stockanchor.ui.screens.ProductScreensKt$$InternalSyntheticLambda$13$9749b03f27f0a4ea275f0fc8c7892cddb2fc9a0b526759b387e5c1c57beb6457$1:
+    public final synthetic boolean f$5
 com.sandalia.stockanchor.ui.screens.ProductScreensKt$$InternalSyntheticLambda$9$46ae34124e145c158fdbd45e6856ec23fdc8d76ca822d3bdc16917875728db7c$8:
     public final synthetic boolean f$2
 com.sandalia.stockanchor.ui.screens.ProductScreensKt$$InternalSyntheticLambda$9$aa239b66d77ca56da87601ff7e790ca7870f29966d0dcd25f8dbe3ef7221d19e$8:
@@ -68470,17 +68881,17 @@ com.sandalia.stockanchor.ui.screens.ProductScreensKt$ProductDetailScreen$3$1$1$4
     public final void invoke$12()
 com.sandalia.stockanchor.ui.screens.ProductScreensKt$ProductDetailScreen$4$2$1$1$1:
     public final java.lang.Object invoke$5()
-com.sandalia.stockanchor.ui.screens.ProductScreensKt$ProductDetailScreen$lambda$265$lambda$264$lambda$263$$inlined$items$default$1
-com.sandalia.stockanchor.ui.screens.ProductScreensKt$ProductDetailScreen$lambda$265$lambda$264$lambda$263$$inlined$items$default$2:
+com.sandalia.stockanchor.ui.screens.ProductScreensKt$ProductDetailScreen$lambda$263$lambda$262$lambda$261$$inlined$items$default$1
+com.sandalia.stockanchor.ui.screens.ProductScreensKt$ProductDetailScreen$lambda$263$lambda$262$lambda$261$$inlined$items$default$2:
     public final java.lang.Object invoke$52()
-com.sandalia.stockanchor.ui.screens.ProductScreensKt$ProductDetailScreen$lambda$265$lambda$264$lambda$263$$inlined$items$default$3:
+com.sandalia.stockanchor.ui.screens.ProductScreensKt$ProductDetailScreen$lambda$263$lambda$262$lambda$261$$inlined$items$default$3:
     public final synthetic kotlin.jvm.functions.Function1 $contentType
     public final java.lang.Object invoke$52()
-com.sandalia.stockanchor.ui.screens.ProductScreensKt$ProductDetailScreen$lambda$265$lambda$264$lambda$263$$inlined$items$default$4:
+com.sandalia.stockanchor.ui.screens.ProductScreensKt$ProductDetailScreen$lambda$263$lambda$262$lambda$261$$inlined$items$default$4:
     public final void invoke$19()
 com.sandalia.stockanchor.ui.screens.ProductScreensKt$ProductEditScreen$1$1:
     public final java.lang.Object invoke$2()
-com.sandalia.stockanchor.ui.screens.ProductScreensKt$ProductEditScreen$3$1$15$1$1:
+com.sandalia.stockanchor.ui.screens.ProductScreensKt$ProductEditScreen$3$1$14$1$1:
     public final java.lang.Object invoke$5()
 com.sandalia.stockanchor.ui.screens.ProductScreensKt$ProductEditScreen$3$1$9$1$1$1:
     public final java.lang.Object invoke$2()
@@ -68508,6 +68919,7 @@ com.sandalia.stockanchor.ui.screens.ProductScreensKt:
     public static final java.lang.String ProductEditScreen$lambda$115(androidx.compose.runtime.MutableState)
     public static final java.lang.String ProductEditScreen$lambda$119(androidx.compose.runtime.MutableState)
     public static final java.lang.String ProductEditScreen$lambda$123(androidx.compose.runtime.MutableState)
+    public static final java.lang.String ProductEditScreen$lambda$127(androidx.compose.runtime.MutableState)
     public static final void ProductEditScreen$lambda$138(androidx.compose.runtime.MutableState,boolean)
     public static final com.sandalia.stockanchor.data.prefs.Session ProductEditScreen$lambda$82(androidx.compose.runtime.MutableState)
     public static final java.util.List ProductEditScreen$lambda$83(androidx.compose.runtime.MutableState)
@@ -68599,12 +69011,16 @@ com.sandalia.stockanchor.util.Dates:
 com.sandalia.stockanchor.util.Fmt:
     public static final int $stable
     public static final com.sandalia.stockanchor.util.Fmt INSTANCE
+com.sandalia.stockanchor.util.GoogleAccount
 com.sandalia.stockanchor.util.I18n:
     public static final int $stable
     public static final com.sandalia.stockanchor.util.I18n INSTANCE
     public static java.lang.String current(android.content.Context)
     public static void init()
+    public static java.lang.String language()
+    public static java.lang.String nameOf()
     public static varargs java.lang.String plural()
+    public static java.lang.String resolved(android.content.Context)
     public static void setLanguage()
     public static varargs java.lang.String string()
 com.sandalia.stockanchor.util.InvoicePdf:
@@ -68615,7 +69031,6 @@ com.sandalia.stockanchor.util.InvoicePdf:
     public static final int teal
     public static java.lang.String asText()
     public static java.io.File create()
-    public static java.lang.String ellipsize(java.lang.String,int)
     public static java.lang.String mimeOf(java.io.File)
     public static boolean open()
     public static boolean share()
@@ -68624,6 +69039,15 @@ com.sandalia.stockanchor.util.InvoicePdf:
 com.sandalia.stockanchor.util.Period:
     public static final enum com.sandalia.stockanchor.util.Period YEAR
 com.sandalia.stockanchor.util.ShareIntents
+com.sandalia.stockanchor.util.Validate:
+    public static final int $stable
+    public static final com.sandalia.stockanchor.util.Validate INSTANCE
+    public static synthetic java.lang.String email$default(java.lang.String)
+    public static java.lang.String maxLength()
+    public static java.lang.String money(java.lang.String,boolean,boolean)
+    public static synthetic java.lang.String name$default(java.lang.String)
+    public static synthetic java.lang.String password$default(java.lang.String)
+    public static java.lang.String quantity(java.lang.String,boolean,boolean)
 com.sandalia.stockanchor.work.LowStockNotifier$check$1:
     public java.lang.Object L$1
 com.sandalia.stockanchor.work.LowStockWorker$Companion
@@ -68834,7 +69258,6 @@ kotlin.collections.builders.MapBuilder$EntriesItr:
 kotlin.collections.builders.MapBuilder:
     public static final kotlin.collections.builders.MapBuilder$Companion Companion
     public final java.lang.Object[] allocateValuesArray()
-    public final kotlin.collections.builders.MapBuilder build()
     public final boolean containsEntry$kotlin_stdlib(java.util.Map$Entry)
     public static kotlin.collections.builders.MapBuilder$EntriesItr entriesIterator$kotlin_stdlib()
     public static int getCapacity$kotlin_stdlib()
@@ -69026,6 +69449,7 @@ kotlin.sequences.SequenceScope
 kotlin.sequences.SequencesKt:
     public static kotlin.sequences.FilteringSequence filterNotNull(kotlin.sequences.TransformingSequence)
     public static kotlin.sequences.TransformingSequence map(kotlin.sequences.Sequence,kotlin.jvm.functions.Function1)
+    public static kotlin.sequences.FilteringSequence mapNotNull(kotlin.sequences.Sequence,kotlin.jvm.functions.Function1)
     public static kotlin.sequences.TakeWhileSequence takeWhile(kotlin.sequences.Sequence,kotlin.jvm.functions.Function1)
 kotlin.sequences.SequencesKt__SequenceBuilderKt$sequence$$inlined$Sequence$1
 kotlin.sequences.SequencesKt__SequencesKt$$InternalSyntheticLambda$2$078dadeb20d922f03abc6c3eb3692c6df22f64afb8749c30e4040d1e4ade7b52$0:

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:ns1="http://schemas.android.com/tools" xmlns:ns2="urn:oasis:names:tc:xliff:document:1.2" xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
     <plurals name="n_invoices">
         <item quantity="one">%1$dটি ইনভয়েস</item>
         <item quantity="other">%1$dটি ইনভয়েস</item>
@@ -109,7 +109,10 @@
     <string name="checking">যাচাই হচ্ছে…</string>
     <string name="choose_a_category">একটি ক্যাটাগরি বাছাই করুন।</string>
     <string name="choose_csv">CSV বাছাই করুন</string>
+    <string name="choose_from_contacts">পরিচিতি থেকে বেছে নিন</string>
+    <string name="choose_google_account">Google অ্যাকাউন্ট বেছে নিন</string>
     <string name="choose_product">পণ্য বাছাই করুন</string>
+    <string name="choose_the_google_account_for_google_play">Google Play-তে যে Google অ্যাকাউন্ট ব্যবহার করেন সেটি বেছে নিন</string>
     <string name="choose_two_different_warehouses">দুটি আলাদা গুদাম বাছাই করুন।</string>
     <string name="clear">মুছুন</string>
     <string msgid="406453423630273620" name="close_drawer">"নেভিগেশন মেনু বন্ধ করুন"</string>
@@ -145,6 +148,7 @@
     <string name="common_signin_button_text_long">Google এর মাধ্যমে সাইন-ইন করুন</string>
     <string name="complete_sale">বিক্রয় সম্পন্ন করুন</string>
     <string name="completed_sales_and_their_invoices_appear">সম্পন্ন বিক্রয় ও তাদের ইনভয়েস এখানে দেখা যাবে।</string>
+    <string name="confirm_your_email">আপনার ইমেইল নিশ্চিত করুন</string>
     <string name="confirm_your_password_to_continue">চালিয়ে যেতে আপনার পাসওয়ার্ড নিশ্চিত করুন।</string>
     <string name="continue_label">চালিয়ে যান</string>
     <string name="continue_on_basic">Basic-এ চালিয়ে যান</string>
@@ -186,6 +190,7 @@
     <string name="delete_x">“%1$s” মুছবেন?</string>
     <string name="description">বিবরণ</string>
     <string name="discount">ছাড়</string>
+    <string name="discount_cant_exceed_subtotal">ছাড় সাবটোটালের চেয়ে বেশি হতে পারে না</string>
     <string name="discount_x">ছাড়: -%1$s</string>
     <string msgid="1890207353314751437" name="dropdown_menu">"ড্রপডাউন মেনু"</string>
     <string name="edit">সম্পাদনা</string>
@@ -198,6 +203,9 @@
     <string name="email">ইমেইল</string>
     <string name="email_login">ইমেইল (লগইন)</string>
     <string name="ends">শেষ হবে</string>
+    <string name="enter_a_valid_email">একটি সঠিক ইমেইল ঠিকানা লিখুন</string>
+    <string name="enter_a_valid_number">একটি সঠিক সংখ্যা লিখুন</string>
+    <string name="enter_a_valid_phone_number">একটি সঠিক ফোন নম্বর লিখুন</string>
     <string name="enter_an_amount_greater_than_zero">শূন্যের চেয়ে বেশি পরিমাণ লিখুন।</string>
     <string name="enter_one_of_the_recovery_codes">আপনার সংরক্ষিত রিকভারি কোডগুলোর একটি লিখুন। প্রতিটি কোড একবার কাজ করে।</string>
     <string name="enter_the_6_digit_code_from">আপনার অথেনটিকেটর অ্যাপ থেকে ৬ অঙ্কের কোড লিখুন।</string>
@@ -218,6 +226,7 @@
     <string name="exported_x_x_rows">%1$sটি সারি এক্সপোর্ট হয়েছে (%2$s)</string>
     <string name="filter">ফিল্টার</string>
     <string name="filtered">ফিল্টার করা</string>
+    <string name="free_for_x_then_y">%1$s বিনামূল্যে, এরপর %2$s %3$s। Google Play-তে যেকোনো সময় বাতিল করুন।</string>
     <string name="free_trial_x">%1$s বিনামূল্যে ট্রায়াল</string>
     <string name="from">উৎস গুদাম</string>
     <string name="full_re_sync">সম্পূর্ণ আবার সিঙ্ক</string>
@@ -225,12 +234,15 @@
     <string name="generated_by_stock_anchor_page_x">Stock Anchor দিয়ে তৈরি  •  পৃষ্ঠা %1$s / %2$s</string>
     <string name="get_notified_before_you_run_out">স্টক শেষ হওয়ার আগেই নোটিফিকেশন পান।</string>
     <string name="get_notified_when_products_drop_below">পণ্য ন্যূনতম মাত্রার নিচে নামলে নোটিফিকেশন পান।</string>
+    <string name="google_play_account">Google Play অ্যাকাউন্ট</string>
+    <string name="google_play_account_hint">এই ডিভাইসে আপনার Google অ্যাকাউন্ট। এখানে এটি পরিবর্তন করা যাবে না।</string>
     <string name="google_play_billing_error_x_x">Google Play Billing ত্রুটি %1$s%2$s</string>
     <string name="google_play_can_t_sell_subscriptions">অ্যাপের এই কপিতে Google Play সাবস্ক্রিপশন বিক্রি করতে পারছে না। Play Store-এ সাইন ইন থাকা অবস্থায় Google Play থেকে Stock Anchor ইনস্টল করুন (টেস্টাররা টেস্টিং লিংক দিয়ে), তারপর আবার চেষ্টা করুন।</string>
     <string name="google_play_doesn_t_offer_this">Google Play এই অ্যাপে এই সাবস্ক্রিপশন দিচ্ছে না। Google Play থেকে Stock Anchor ইনস্টল করুন (টেস্টাররা টেস্টিং লিংক ব্যবহার করুন), এবং Play Console-এ \"%1$s\" সাবস্ক্রিপশন চালু আছে কিনা দেখুন।</string>
     <string name="gross_loss">মোট ক্ষতি</string>
     <string name="gross_profit">মোট লাভ</string>
     <string name="group_products_e_g_electronics_groceries">দ্রুত ফিল্টার করতে পণ্যগুলো গ্রুপ করুন (যেমন ইলেকট্রনিক্স, মুদি)।</string>
+    <string name="have_a_promo_code">প্রোমো কোড আছে?</string>
     <string name="history">ইতিহাস</string>
     <string name="history_cancellations_pdf">ইতিহাস, বাতিল, PDF</string>
     <string name="i_saved_them">আমি সংরক্ষণ করেছি</string>
@@ -266,8 +278,8 @@
     <string name="label_status">অবস্থা</string>
     <string name="label_total">মোট</string>
     <string name="language">ভাষা</string>
-    <string name="language_hint">অ্যাপের লেখা বদলায়। সংখ্যা ও তারিখ আপনার ফোনের সেটিংস অনুযায়ী থাকে।</string>
-    <string name="language_system">ফোনের ভাষা</string>
+    <string name="language_auto_x">স্বয়ংক্রিয় (দেশ অনুযায়ী): %1$s</string>
+    <string name="language_hint">স্বয়ংক্রিয় অবস্থায় অ্যাপে আপনার দেশের ভাষা থাকলে সেটি, না থাকলে ইংরেজি দেখানো হয়। সংখ্যা ও তারিখ আপনার ফোনের সেটিংস অনুযায়ী থাকে।</string>
     <string name="last_synced">শেষ সিঙ্ক</string>
     <string name="later">পরে</string>
     <string name="less">কমান</string>
@@ -355,6 +367,7 @@
     <string name="move_stock_between_warehouses">গুদামের মধ্যে স্টক সরান</string>
     <string name="move_your_data_to_the_cloud">আপনার ডেটা ক্লাউডে নেবেন?</string>
     <string name="movement_history">মুভমেন্টের ইতিহাস</string>
+    <string name="must_be_more_than_zero">শূন্যের চেয়ে বেশি হতে হবে</string>
     <string name="name">নাম</string>
     <string name="name_2">নাম *</string>
     <string name="name_sku_or_barcode">নাম, SKU বা বারকোড</string>
@@ -372,6 +385,7 @@
     <string name="new_recovery_codes">নতুন রিকভারি কোড</string>
     <string name="new_sale">নতুন বিক্রয়</string>
     <string name="new_supplier">নতুন সরবরাহকারী</string>
+    <string name="new_to_stock_anchor_see_plans">Stock Anchor-এ নতুন? প্ল্যান দেখুন</string>
     <string name="new_warehouse">নতুন গুদাম</string>
     <string name="nightly_automatic_backups_of_your_whole">প্রতি রাতে পুরো ইনভেন্টরির স্বয়ংক্রিয় ব্যাকআপ, সাথে এক ট্যাপে পুনরুদ্ধার।</string>
     <string name="no_access">প্রবেশাধিকার নেই</string>
@@ -384,6 +398,7 @@
     <string name="no_categories">কোনো ক্যাটাগরি নেই</string>
     <string name="no_category">কোনো ক্যাটাগরি নেই</string>
     <string name="no_contact_details">যোগাযোগের তথ্য নেই</string>
+    <string name="no_contacts_app_found">এই ডিভাইসে কোনো কন্টাক্টস অ্যাপ পাওয়া যায়নি।</string>
     <string name="no_expenses_x">কোনো খরচ নেই · %1$s</string>
     <string name="no_items_yet">এখনো কোনো আইটেম নেই</string>
     <string name="no_matches">কিছু পাওয়া যায়নি</string>
@@ -391,6 +406,7 @@
     <string name="no_movements">কোনো মুভমেন্ট নেই</string>
     <string name="no_product_is_below_its_minimum">কোনো পণ্য ন্যূনতম মাত্রার নিচে নেই।</string>
     <string name="no_product_with_barcode_x">%1$s বারকোডের কোনো পণ্য নেই</string>
+    <string name="no_products_from_this_supplier">এই সরবরাহকারীর সাথে কোনো পণ্য যুক্ত নেই। পণ্যে সরবরাহকারী সেট করুন, অথবা \"কোনো সরবরাহকারী নেই\" বেছে নিন।</string>
     <string name="no_products_in_this_warehouse_yet">এই গুদামে এখনো কোনো পণ্য নেই।</string>
     <string name="no_products_yet">এখনো কোনো পণ্য নেই</string>
     <string name="no_purchases_yet">এখনো কোনো ক্রয় নেই</string>
@@ -410,7 +426,9 @@
     <string name="off_ask_for_a_code_from">বন্ধ · সাইন ইনের সময় অথেনটিকেটর অ্যাপের কোড চাওয়া হবে</string>
     <string name="ok">ঠিক আছে</string>
     <string name="on_x_recovery_codes_left">চালু · %1$sটি রিকভারি কোড বাকি</string>
+    <string name="only_a_team_manager_can_change_this">শুধু মালিক বা টিম ম্যানেজার এটি পরিবর্তন করতে পারেন।</string>
     <string name="only_empty_warehouses_can_be_deleted">শুধু খালি গুদাম মোছা যায়।</string>
+    <string name="only_x_x_available_here">এখানে মাত্র %1$s %2$s আছে</string>
     <string name="only_x_x_in_this_warehouse">এই গুদামে মাত্র %1$s %2$s আছে</string>
     <string name="open_authenticator_app">অথেনটিকেটর অ্যাপ খুলুন</string>
     <string name="open_web_panel">ওয়েব প্যানেল খুলুন</string>
@@ -460,8 +478,11 @@
     <string name="products_below_minimum">ন্যূনতমের নিচে থাকা পণ্য</string>
     <string name="products_in_this_category_will_become">এই ক্যাটাগরির পণ্যগুলো ক্যাটাগরিহীন হয়ে যাবে।</string>
     <string name="profit">লাভ</string>
+    <string name="promo_code">প্রোমো কোড</string>
+    <string name="promo_code_accepted_one_last_step">প্রোমো কোড গৃহীত — শেষ একটি ধাপ</string>
     <string name="purchase">ক্রয়</string>
     <string name="purchase_failed_x">ক্রয় ব্যর্থ হয়েছে (%1$s)।</string>
+    <string name="purchase_no_longer_active">Google Play জানাচ্ছে এই কেনাকাটাটি আর সক্রিয় নেই, তাই কোনো অ্যাকাউন্ট তৈরি হয়নি। আবার চেষ্টা করতে একটি প্ল্যান বেছে নিন। আপনার বেসিক ডেটা এই ডিভাইসেই থাকবে।</string>
     <string name="purchase_total">মোট ক্রয়</string>
     <string name="purchases">ক্রয়</string>
     <string name="quantities_must_be_greater_than_zero">পরিমাণ শূন্যের চেয়ে বেশি হতে হবে।</string>
@@ -479,6 +500,7 @@
     <string name="record_rent_salaries_and_other_costs">খরচের পরে আপনার আসল লাভ দেখতে ভাড়া, বেতন ও অন্যান্য খরচ লিখুন।</string>
     <string name="record_rent_salaries_and_other_costs_2">ড্যাশবোর্ডে নিট লাভ দেখতে ভাড়া, বেতন ও অন্যান্য খরচ লিখুন।</string>
     <string name="recovery_code">রিকভারি কোড</string>
+    <string name="redeem">রিডিম করুন</string>
     <string name="reference_note">রেফারেন্স / নোট</string>
     <string name="refresh_plan_status">প্ল্যানের অবস্থা হালনাগাদ করুন</string>
     <string name="remove">সরান</string>
@@ -486,6 +508,8 @@
     <string name="renew">নবায়ন করুন</string>
     <string name="renews">নবায়ন হবে</string>
     <string name="rent_salaries_for_net_profit">ভাড়া, বেতন… নিট লাভের জন্য</string>
+    <string name="resend_code">কোড আবার পাঠান</string>
+    <string name="resend_code_in_x_seconds">%1$d সেকেন্ড পরে আবার পাঠান</string>
     <string name="reset">রিসেট</string>
     <string name="restore">পুনরুদ্ধার</string>
     <string name="restore_purchase">ক্রয় পুনরুদ্ধার</string>
@@ -501,6 +525,7 @@
     <string name="s_2_enter_the_6_digit_code">২. অ্যাপে দেখানো ৬ অঙ্কের কোড লিখুন:</string>
     <string name="s_3_days">৩ দিন</string>
     <string name="s_3_months">৩ মাস</string>
+    <string name="s_4_weeks">৪ সপ্তাহ</string>
     <string name="s_6_months">৬ মাস</string>
     <string name="s_7_days">৭ দিন</string>
     <string name="sale">বিক্রয়</string>
@@ -540,9 +565,11 @@
     <string name="signed_in_as">সাইন ইন করা আছে</string>
     <string name="signed_out">সাইন আউট হয়েছে</string>
     <string name="skipped_rows">বাদ দেওয়া হয়েছে:</string>
+    <string name="sku_is_already_used_by_x">SKU আগেই %1$s ব্যবহার করছে</string>
     <string name="something_went_wrong">কিছু একটা ভুল হয়েছে</string>
     <string name="spreadsheets_in_and_out">স্প্রেডশিট আনা-নেওয়া</string>
     <string name="staff_accounts">কর্মীদের অ্যাকাউন্ট</string>
+    <string name="start_free_trial">বিনামূল্যে ট্রায়াল শুরু করুন</string>
     <string name="start_fresh">নতুন করে শুরু করুন</string>
     <string msgid="4139871816613051306" name="state_empty">"ফাঁকা"</string>
     <string msgid="5834637030682409883" name="state_off">"বন্ধ আছে"</string>
@@ -550,7 +577,7 @@
     <string name="status">অবস্থা</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">"৯৯৯+"</string>
     <string name="stock_added">স্টক যোগ হয়েছে</string>
-    <string name="stock_anchor_cloud">Stock Anchor Cloud</string>
+    <string name="stock_anchor_cloud">স্টক অ্যাঙ্কর ক্লাউড</string>
     <string name="stock_anchor_premium">Stock Anchor Premium</string>
     <string name="stock_anchor_premium_is_active">Stock Anchor Premium চালু হয়েছে 🎉</string>
     <string name="stock_by_warehouse">গুদাম অনুযায়ী স্টক</string>
@@ -593,15 +620,18 @@
     <string name="team_member_sign_in">টিমের সদস্য? সাইন ইন করুন</string>
     <string name="team_permissions">টিম ও অনুমতি</string>
     <string name="template">টেমপ্লেট</string>
-    <string msgid="5946805113151406391" name="template_percent">"<ns2:g id="PERCENTAGE">%1$d</ns2:g> শতাংশ।"</string>
+    <string msgid="5946805113151406391" name="template_percent">"<ns1:g id="PERCENTAGE">%1$d</ns1:g> শতাংশ।"</string>
     <string name="template_saved">টেমপ্লেট সংরক্ষিত হয়েছে</string>
     <string name="thank_you_for_your_business">আপনার কেনাকাটার জন্য ধন্যবাদ!</string>
     <string name="the_basic_plan_includes_x_upgrade">Basic প্ল্যানে %1$s আছে। সীমাহীন গুদামের জন্য Premium-এ আপগ্রেড করুন।</string>
     <string name="the_subscription_has_no_active_plans">সাবস্ক্রিপশনে এখনো কোনো সক্রিয় প্ল্যান নেই। Play Console-এ মাসিক ও বার্ষিক বেস প্ল্যান চালু করুন।</string>
     <string name="the_web_panel_is_part_of">ওয়েব প্যানেল Premium-এর অংশ</string>
     <string name="they_will_be_signed_out_on">সব ডিভাইস থেকে তাকে সাইন আউট করা হবে এবং এই ইনভেন্টরিতে আর প্রবেশ করতে পারবে না।</string>
+    <string name="this_account_has_no_active_plan">এই অ্যাকাউন্টে কোনো সক্রিয় Premium প্ল্যান নেই, তাই আপনাকে সাইন ইন করানো হয়নি। ক্লাউড ব্যবহার করতে সাবস্ক্রাইব করুন। আপনার Basic ডেটা এই ডিভাইসেই থাকবে।</string>
     <string name="this_device_only">শুধু এই ডিভাইসে</string>
+    <string name="this_field_is_required">এই ঘরটি পূরণ করা আবশ্যক</string>
     <string name="this_month">এই মাস</string>
+    <string name="this_number_is_too_large">সংখ্যাটি অনেক বড়</string>
     <string name="this_product_has_no_stock_in">এই পণ্যের কোনো গুদামে স্টক নেই।</string>
     <string name="this_snapshot_will_be_permanently_removed">এই স্ন্যাপশট স্থায়ীভাবে মুছে যাবে।</string>
     <string name="this_warehouse">এই গুদাম</string>
@@ -629,6 +659,7 @@
     <string name="two_step_verification">দুই-ধাপের যাচাই</string>
     <string name="two_step_verification_is_off">দুই-ধাপের যাচাই বন্ধ আছে</string>
     <string name="two_step_verification_is_on">দুই-ধাপের যাচাই চালু আছে</string>
+    <string name="type_the_number">নম্বর টাইপ করুন</string>
     <string name="uncategorised">ক্যাটাগরি ছাড়া</string>
     <string name="unit">একক</string>
     <string name="unit_cost">একক মূল্য</string>
@@ -640,9 +671,12 @@
     <string name="upload_my_data">আমার ডেটা আপলোড করুন</string>
     <string name="upload_the_products_stock_and_sales">এই ডিভাইসের পণ্য, স্টক ও বিক্রয় আপনার নতুন ক্লাউড অ্যাকাউন্টে আপলোড করুন, অথবা খালি ক্লাউড ইনভেন্টরি দিয়ে শুরু করুন।</string>
     <string name="use_a_recovery_code">রিকভারি কোড ব্যবহার করুন</string>
+    <string name="use_a_supported_currency_x">এগুলোর একটি ব্যবহার করুন: %1$s</string>
+    <string name="use_at_most_x_characters">সর্বোচ্চ %1$d অক্ষর ব্যবহার করুন</string>
     <string name="use_cloud_only">শুধু ক্লাউড ব্যবহার করুন</string>
     <string name="use_premium_features_in_your_browser">আপনার ব্রাউজারে %1$s-এ Premium ফিচার ব্যবহার করুন</string>
     <string name="use_the_authenticator_app">অথেনটিকেটর অ্যাপ ব্যবহার করুন</string>
+    <string name="verification_code">যাচাইকরণ কোড</string>
     <string name="verify">যাচাই করুন</string>
     <string name="view_dashboard_reports">ড্যাশবোর্ড ও রিপোর্ট দেখা</string>
     <string name="warehouse">গুদাম</string>
@@ -651,11 +685,13 @@
     <string name="warehouse_saved">গুদাম সংরক্ষিত হয়েছে</string>
     <string name="warehouses">গুদাম</string>
     <string name="we_couldn_t_confirm_the_subscription">সাবস্ক্রিপশন এখনো নিশ্চিত করা যায়নি।</string>
+    <string name="we_sent_a_6_digit_code_to_x">আমরা %1$s-এ একটি ৬ অঙ্কের কোড পাঠিয়েছি। অ্যাকাউন্ট তৈরি শেষ করতে কোডটি লিখুন।</string>
     <string name="who_you_buy_from">আপনি যাদের কাছ থেকে কেনেন</string>
     <string name="work_offline_on_basic_keep_data">Basic-এ অফলাইনে কাজ করুন (ডেটা এই ডিভাইসে থাকবে)</string>
     <string name="x_continued">%1$s — চলমান</string>
     <string name="x_in_x">+%1$s · %2$s</string>
     <string name="x_isn_t_available_in_x">\"%1$s\" %2$s-এ পাওয়া যাচ্ছে না</string>
+    <string name="x_isn_t_from_this_supplier">\"%1$s\" এই সরবরাহকারীর পণ্য নয়</string>
     <string name="x_more">+আরও %1$sটি</string>
     <string name="x_of_x_on_basic">Basic-এ %2$s-এর মধ্যে %1$s</string>
     <string name="x_on_basic">Basic-এ %1$s</string>

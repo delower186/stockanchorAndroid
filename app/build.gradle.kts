@@ -26,8 +26,8 @@ android {
         minSdk = 26
         targetSdk = 37
         // Bump versionCode on every Play upload
-        versionCode = 8
-        versionName = "v1.0.8"
+        versionCode = 9
+        versionName = "v1.0.9"
 
         // Base URL of the Laravel API (must end with /api/). 10.0.2.2 = host machine from the emulator.
         buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:8000/api/\"")
