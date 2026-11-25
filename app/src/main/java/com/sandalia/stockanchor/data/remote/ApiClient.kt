@@ -1,6 +1,7 @@
 package com.sandalia.stockanchor.data.remote
 
 import com.sandalia.stockanchor.R
+import com.sandalia.stockanchor.util.I18n
 import com.sandalia.stockanchor.util.str
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
@@ -53,6 +54,7 @@ class ApiClient(private val session: SessionStore) {
                 val builder = chain.request().newBuilder()
                     .header("Accept", "application/json")
                     .header("X-Client", "StockAnchor-Android/${BuildConfig.VERSION_NAME}")
+                    .header("Accept-Language", I18n.language())
                 session.token()?.let { builder.header("Authorization", "Bearer $it") }
                 chain.proceed(builder.build())
             }

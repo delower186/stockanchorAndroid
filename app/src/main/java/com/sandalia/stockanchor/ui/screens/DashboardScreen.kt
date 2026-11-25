@@ -1,5 +1,6 @@
 package com.sandalia.stockanchor.ui.screens
 
+import androidx.compose.ui.text.style.TextOverflow
 import com.sandalia.stockanchor.util.plural
 import com.sandalia.stockanchor.R
 import com.sandalia.stockanchor.util.str
@@ -172,7 +173,7 @@ fun DashboardScreen(nav: NavHostController) {
         item {
             Row(Modifier.fillMaxWidth().padding(top = 12.dp), verticalAlignment = Alignment.CenterVertically) {
                 Column(Modifier.weight(1f)) {
-                    Text(session.companyName, style = MaterialTheme.typography.headlineMedium)
+                    Text(session.companyName, style = MaterialTheme.typography.headlineMedium, maxLines = 1, overflow = TextOverflow.Ellipsis)
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             if (session.isCloud) Icons.Filled.Cloud else Icons.Filled.CloudOff, null,

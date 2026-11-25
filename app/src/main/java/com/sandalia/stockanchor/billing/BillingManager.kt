@@ -4,6 +4,7 @@ import com.sandalia.stockanchor.R
 import com.sandalia.stockanchor.util.str
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
@@ -20,6 +21,7 @@ import com.android.billingclient.api.acknowledgePurchase
 import com.android.billingclient.api.queryPurchasesAsync
 import com.sandalia.stockanchor.BuildConfig
 import com.sandalia.stockanchor.data.prefs.SessionStore
+import com.sandalia.stockanchor.util.GoogleAccount
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -35,8 +37,10 @@ data class PlanOffer(
     val billingPeriod: String,
     val offerToken: String?,
     val details: ProductDetails?,
-    /** e.g. "7-day free trial" when the offer has a free phase */
+    /** e.g. "Free trial 1 month" when the offer has a free phase */
     val trial: String? = null,
+    /** Length of the free phase, e.g. "1 month", for the terms shown before subscribing */
+    val trialPeriod: String? = null,
 )
 
 sealed interface PurchaseEvent {
@@ -49,8 +53,10 @@ sealed interface PurchaseEvent {
 /**
  * Google Play Billing for the monthly & yearly Premium subscription.
  *
- * Play Console setup: Monetize → Subscriptions → product id `stock_anchor_premium`
- * with two auto-renewing base plans: `monthly` (P1M) and `yearly` (P1Y).
+ * Play Console setup: Monetize → Subscriptions → product id set in the server's Admin → System (`sa_premium` by default)
+ * with two auto-renewing base plans: `monthly` (P1M) and `yearly` (P1Y), and on each of them a developer-determined
+ * offer with the id `free-trial-1-month` (a free phase of P1M). Google Play only returns that offer to accounts that
+ * are eligible for it; everyone else gets the normal price.
  *
  * The purchase token is NOT trusted on-device; it is sent to the Laravel API which verifies it with
  * the Play Developer API and unlocks Premium for the whole team.
@@ -75,6 +81,10 @@ class BillingManager(context: Context, private val session: SessionStore, privat
     /** Why prices couldn't be loaded (shown on the paywall), null while loading or when ready. */
     val problem: StateFlow<String?> = _problem
 
+    private val _offerSummary = MutableStateFlow<String?>(null)
+    /** What Google Play returned for this account, e.g. "monthly: base, free-trial-1-month[P1M free]". For diagnosing missing offers. */
+    val offerSummary: StateFlow<String?> = _offerSummary
+
     private val _events = MutableSharedFlow<PurchaseEvent>(extraBufferCapacity = 4)
     val events: SharedFlow<PurchaseEvent> = _events
 
@@ -84,6 +94,17 @@ class BillingManager(context: Context, private val session: SessionStore, privat
     fun connect() {
         if (_ready.value) return
         _problem.value = null
+        if (client.isReady) loadProducts() else startConnection()
+    }
+
+    /** The server names the subscription to sell (Admin → System); a change takes effect without an app update. */
+    fun useProductId(id: String) {
+        if (id.isBlank() || id == session.subscriptionProductId()) return
+        session.setSubscriptionProductId(id)
+        _ready.value = false
+        _problem.value = null
+        _offers.value = fallbackOffers()
+        _offerSummary.value = null
         if (client.isReady) loadProducts() else startConnection()
     }
 
@@ -105,7 +126,7 @@ class BillingManager(context: Context, private val session: SessionStore, privat
         val params = QueryProductDetailsParams.newBuilder().setProductList(
             listOf(
                 QueryProductDetailsParams.Product.newBuilder()
-                    .setProductId(BuildConfig.SUBSCRIPTION_PRODUCT_ID)
+                    .setProductId(session.subscriptionProductId())
                     .setProductType(BillingClient.ProductType.SUBS)
                     .build()
             )
@@ -119,7 +140,8 @@ class BillingManager(context: Context, private val session: SessionStore, privat
                 _problem.value = setupProblem(result)
                 return@queryProductDetailsAsync
             }
-            val details = query.productDetailsList.firstOrNull()
+            // The ID may have changed while this was loading; that newer query has its own answer on the way.
+            val details = query.productDetailsList.firstOrNull { it.productId == session.subscriptionProductId() }
             if (details == null) {
                 _problem.value = productProblem(query.unfetchedProductList.firstOrNull()?.statusCode)
                 return@queryProductDetailsAsync
@@ -128,12 +150,26 @@ class BillingManager(context: Context, private val session: SessionStore, privat
         }
     }
 
+    private fun describeOffers(details: ProductDetails): String = details.subscriptionOfferDetails.orEmpty()
+        .groupBy { it.basePlanId }
+        .entries.joinToString(" | ") { (planId, list) ->
+            planId + ": " + list.joinToString(", ") { offer ->
+                val free = offer.pricingPhases.pricingPhaseList.firstOrNull { it.priceAmountMicros == 0L }
+                (offer.offerId ?: "base") + (free?.let { "[${it.billingPeriod} free]" }.orEmpty())
+            }
+        }
+
     private fun showOffers(details: ProductDetails) {
+        val summary = describeOffers(details)
+        _offerSummary.value = summary
+        Log.i("StockAnchorBilling", "Offers from Google Play: $summary")
         val offers = details.subscriptionOfferDetails.orEmpty()
             .groupBy { it.basePlanId }
             .mapNotNull { (planId, list) ->
-                // Prefer an offer with a free trial / intro phase, else the plain base plan.
-                val offer = list.maxByOrNull { it.pricingPhases.pricingPhaseList.size } ?: return@mapNotNull null
+                // The free trial offer when this account may have it, then any other trial / intro phase, else the plain base plan.
+                val offer = list.firstOrNull { it.offerId == BuildConfig.TRIAL_OFFER_ID }
+                    ?: list.maxByOrNull { it.pricingPhases.pricingPhaseList.size }
+                    ?: return@mapNotNull null
                 val phases = offer.pricingPhases.pricingPhaseList
                 val recurring = phases.last()
                 val free = phases.firstOrNull { it.priceAmountMicros == 0L }
@@ -145,6 +181,7 @@ class BillingManager(context: Context, private val session: SessionStore, privat
                     offerToken = offer.offerToken,
                     details = details,
                     trial = free?.let { str(R.string.free_trial_x, periodLabel(it.billingPeriod)) },
+                    trialPeriod = free?.let { periodLabel(it.billingPeriod) },
                 )
             }
             .sortedBy { if (it.planId == BuildConfig.PLAN_MONTHLY) 0 else 1 }
@@ -168,13 +205,14 @@ class BillingManager(context: Context, private val session: SessionStore, privat
 
     private fun productProblem(status: Int?): String = when (status) {
         UnfetchedProduct.StatusCode.PRODUCT_NOT_FOUND ->
-            str(R.string.google_play_doesn_t_offer_this, BuildConfig.SUBSCRIPTION_PRODUCT_ID)
+            str(R.string.google_play_doesn_t_offer_this, session.subscriptionProductId())
         UnfetchedProduct.StatusCode.NO_ELIGIBLE_OFFER ->
             str(R.string.no_subscription_plan_is_available_for)
         else -> str(R.string.subscription_prices_couldn_t_be_loaded)
     }
 
-    fun launch(activity: Activity, offer: PlanOffer) {
+    /** [accountEmail]: address a new cloud account will use; the purchase is tied to it so the server can check that later. */
+    fun launch(activity: Activity, offer: PlanOffer, accountEmail: String? = null) {
         val details = offer.details
         val token = offer.offerToken
         if (details == null || token == null) {
@@ -192,6 +230,7 @@ class BillingManager(context: Context, private val session: SessionStore, privat
                         .build()
                 )
             )
+            .apply { accountEmail?.let { setObfuscatedAccountId(GoogleAccount.purchaseId(it)) } }
             .build()
         client.launchBillingFlow(activity, params)
     }
@@ -248,7 +287,7 @@ class BillingManager(context: Context, private val session: SessionStore, privat
 
     companion object {
         fun periodLabel(iso: String): String = when (iso) {
-            "P1W" -> str(R.string.s_1_week); "P3D" -> str(R.string.s_3_days); "P7D" -> str(R.string.s_7_days); "P14D" -> str(R.string.s_14_days)
+            "P4W" -> str(R.string.s_4_weeks); "P1W" -> str(R.string.s_1_week); "P3D" -> str(R.string.s_3_days); "P7D" -> str(R.string.s_7_days); "P14D" -> str(R.string.s_14_days)
             "P1M" -> str(R.string.s_1_month); "P3M" -> str(R.string.s_3_months); "P6M" -> str(R.string.s_6_months); "P1Y" -> str(R.string.s_1_year)
             else -> iso.removePrefix("P").lowercase()
         }

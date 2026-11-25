@@ -53,12 +53,29 @@ class SessionStore(context: Context) {
     fun baseUrl(): String = prefs.getString(K_BASE_URL, null)?.takeIf { BuildConfig.ALLOW_SERVER_OVERRIDE && it.isNotBlank() }
         ?: BuildConfig.API_BASE_URL
     fun pendingPurchaseToken(): String? = prefs.getString(K_PENDING_TOKEN, null)
+    /** The Play subscription to sell: the latest from the server, else the one built into the app. */
+    fun subscriptionProductId(): String = prefs.getString(K_SUBSCRIPTION_PRODUCT, null) ?: BuildConfig.SUBSCRIPTION_PRODUCT_ID
+    fun setSubscriptionProductId(id: String) = update { putString(K_SUBSCRIPTION_PRODUCT, id) }
     fun pendingPlan(): String? = prefs.getString(K_PENDING_PLAN, null)
+    /** Promo code accepted on the paywall, waiting for the account it will activate. */
+    fun pendingPromo(): String? = prefs.getString(K_PENDING_PROMO, null)
+    /** Payment or promo code that hasn't been linked to an account yet. Create Account is only offered with one. */
+    fun hasPendingProof(): Boolean = pendingPurchaseToken() != null || pendingPromo() != null
+    /** Google account chosen on the paywall: the address a new cloud account is created for. */
+    fun billingEmail(): String? = prefs.getString(K_BILLING_EMAIL, null)
 
     fun setBaseUrl(url: String) = update { putString(K_BASE_URL, url.trim()) }
 
     fun setPendingPurchase(token: String?, plan: String?) = update {
         putString(K_PENDING_TOKEN, token); putString(K_PENDING_PLAN, plan)
+    }
+
+    fun setPendingPromo(code: String?) = update { putString(K_PENDING_PROMO, code) }
+
+    fun setBillingEmail(email: String?) = update { putString(K_BILLING_EMAIL, email) }
+
+    fun clearPendingProof() = update {
+        remove(K_PENDING_TOKEN); remove(K_PENDING_PLAN); remove(K_PENDING_PROMO); remove(K_BILLING_EMAIL)
     }
 
     fun saveAuth(
@@ -133,11 +150,22 @@ class SessionStore(context: Context) {
         private const val K_BASE_URL = "base_url"
         private const val K_PENDING_TOKEN = "pending_purchase_token"
         private const val K_PENDING_PLAN = "pending_plan"
+        private const val K_PENDING_PROMO = "pending_promo"
+        private const val K_BILLING_EMAIL = "billing_email"
+        private const val K_SUBSCRIPTION_PRODUCT = "subscription_product_id"
         private const val K_ONBOARDED = "onboarded"
 
         fun symbolFor(code: String): String = when (code.uppercase()) {
             "BDT" -> "৳"; "USD" -> "$"; "EUR" -> "€"; "GBP" -> "£"; "INR" -> "₹"; "PKR" -> "Rs"
             else -> code
+        }
+
+        const val SUPPORTED_SYMBOLS = "৳ $ € £ ₹ Rs"
+
+        /** The server's currency code for a typed symbol or code, or null when the server doesn't have it. */
+        fun codeFor(symbol: String): String? = when (symbol.trim().uppercase()) {
+            "৳", "BDT" -> "BDT"; "$", "USD" -> "USD"; "€", "EUR" -> "EUR"; "£", "GBP" -> "GBP"; "₹", "INR" -> "INR"; "RS", "₨", "PKR" -> "PKR"
+            else -> null
         }
     }
 }

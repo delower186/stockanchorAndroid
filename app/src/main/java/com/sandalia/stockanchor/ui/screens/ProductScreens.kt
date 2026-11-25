@@ -2,11 +2,17 @@ package com.sandalia.stockanchor.ui.screens
 
 import com.sandalia.stockanchor.util.plural
 import com.sandalia.stockanchor.R
+import com.sandalia.stockanchor.ui.components.FormField
+import com.sandalia.stockanchor.util.FieldLimit
+import com.sandalia.stockanchor.util.Validate
 import com.sandalia.stockanchor.util.str
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -74,6 +80,7 @@ import com.sandalia.stockanchor.ui.components.LocalContainer
 import com.sandalia.stockanchor.ui.components.LocalOpenPaywall
 import com.sandalia.stockanchor.ui.components.NumberField
 import com.sandalia.stockanchor.ui.components.PremiumChip
+import com.sandalia.stockanchor.ui.components.PhoneField
 import com.sandalia.stockanchor.ui.components.ScreenScaffold
 import com.sandalia.stockanchor.ui.components.SearchField
 import com.sandalia.stockanchor.ui.components.SectionTitle
@@ -253,7 +260,7 @@ fun ProductEditScreen(productId: Long, onBack: () -> Unit) {
             Modifier.padding(pad).fillMaxSize().imePadding().verticalScroll(rememberScrollState()).padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp),
         ) {
-            OutlinedTextField(name, { name = it }, label = { Text(str(R.string.product_name)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+            FormField(name, { name = it }, str(R.string.product_name), Modifier.fillMaxWidth(), singleLine = true, maxLength = FieldLimit.NAME, error = Validate.name(name))
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalAlignment = Alignment.CenterVertically) {
                 DropdownField(str(R.string.category), categories, categories.firstOrNull { it.id == categoryId }, CategoryEntity::name,
                     { categoryId = it?.id }, Modifier.weight(1f), noneLabel = str(R.string.no_category))
@@ -267,22 +274,22 @@ fun ProductEditScreen(productId: Long, onBack: () -> Unit) {
                 if (session.can(Perm.SUPPLIERS_MANAGE)) TextButton(onClick = { newSupplier = "" }) { Text(str(R.string.new_label)) }
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                OutlinedTextField(sku, { sku = it }, label = { Text("SKU") }, singleLine = true, modifier = Modifier.weight(1f))
-                OutlinedTextField(unit, { unit = it }, label = { Text(str(R.string.unit)) }, singleLine = true, modifier = Modifier.weight(0.6f))
+                FormField(sku, { sku = it }, "SKU", Modifier.weight(1f), singleLine = true, maxLength = FieldLimit.SKU)
+                FormField(unit, { unit = it }, str(R.string.unit), Modifier.weight(0.6f), singleLine = true, maxLength = FieldLimit.UNIT)
             }
-            OutlinedTextField(
-                barcode, { barcode = it }, label = { Text(str(R.string.barcode)) }, singleLine = true, modifier = Modifier.fillMaxWidth(),
+            FormField(
+                barcode, { barcode = it }, str(R.string.barcode), Modifier.fillMaxWidth(), singleLine = true, maxLength = FieldLimit.BARCODE,
                 trailingIcon = {
                     IconButton(onClick = {
                         if (!session.premiumActive) openPaywall()
                         else scope.launch { BarcodeScanner.scan(context)?.let { barcode = it } }
                     }) { Icon(Icons.Filled.QrCodeScanner, str(R.string.scan_barcode)) }
                 },
-                supportingText = { if (!session.premiumActive) Row { Text(str(R.string.scanning_is_a_premium_feature)); Spacer(Modifier.width(6.dp)); PremiumChip() } },
+                supporting = if (session.premiumActive) null else { { Row { Text(str(R.string.scanning_is_a_premium_feature)); Spacer(Modifier.width(6.dp)); PremiumChip() } } },
             )
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                NumberField(cost, { cost = it }, str(R.string.cost_price), Modifier.weight(1f), prefix = session.currency)
-                NumberField(price, { price = it }, str(R.string.sale_price), Modifier.weight(1f), prefix = session.currency)
+                NumberField(cost, { cost = it }, str(R.string.cost_price), Modifier.weight(1f), prefix = session.currency, error = Validate.money(cost))
+                NumberField(price, { price = it }, str(R.string.sale_price), Modifier.weight(1f), prefix = session.currency, error = Validate.money(price))
             }
             val c = cost.toDoubleOrNull() ?: 0.0
             val pr = price.toDoubleOrNull() ?: 0.0
@@ -294,8 +301,8 @@ fun ProductEditScreen(productId: Long, onBack: () -> Unit) {
                     color = if (pr >= c) MaterialTheme.colorScheme.secondary else MaterialTheme.colorScheme.error,
                 )
             }
-            NumberField(threshold, { threshold = it }, str(R.string.low_stock_alert_at), Modifier.fillMaxWidth(), suffix = unit)
-            OutlinedTextField(description, { description = it }, label = { Text(str(R.string.description)) }, minLines = 3, modifier = Modifier.fillMaxWidth())
+            NumberField(threshold, { threshold = it }, str(R.string.low_stock_alert_at), Modifier.fillMaxWidth(), suffix = unit, error = Validate.quantity(threshold))
+            FormField(description, { description = it }, str(R.string.description), Modifier.fillMaxWidth(), minLines = 3, maxLength = FieldLimit.PRODUCT_DESCRIPTION)
             Button(
                 onClick = {
                     runner.run(success = str(R.string.product_saved), onDone = onBack) {
@@ -309,7 +316,8 @@ fun ProductEditScreen(productId: Long, onBack: () -> Unit) {
                         )
                     }
                 },
-                enabled = name.isNotBlank() && !runner.busy && session.can(Perm.CATALOG_MANAGE),
+                enabled = Validate.name(name) == null && Validate.money(cost) == null && Validate.money(price) == null && Validate.quantity(threshold) == null &&
+                    !runner.busy && session.can(Perm.CATALOG_MANAGE),
                 modifier = Modifier.fillMaxWidth().height(52.dp),
             ) { Text(str(R.string.save_product)) }
             if (productId == 0L) Text(
@@ -329,7 +337,7 @@ fun ProductEditScreen(productId: Long, onBack: () -> Unit) {
         AlertDialog(
             onDismissRequest = { newCategory = null },
             title = { Text(str(R.string.new_category)) },
-            text = { OutlinedTextField(text, { newCategory = it }, label = { Text(str(R.string.name)) }, singleLine = true) },
+            text = { FormField(text, { newCategory = it }, str(R.string.name), singleLine = true, maxLength = FieldLimit.NAME, error = Validate.name(text)) },
             confirmButton = {
                 TextButton(onClick = {
                     val n = text
@@ -352,8 +360,8 @@ fun ProductEditScreen(productId: Long, onBack: () -> Unit) {
             title = { Text(str(R.string.new_supplier)) },
             text = {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedTextField(text, { newSupplier = it }, label = { Text(str(R.string.name_2)) }, singleLine = true)
-                    OutlinedTextField(phone, { phone = it }, label = { Text(str(R.string.phone)) }, singleLine = true)
+                    FormField(text, { newSupplier = it }, str(R.string.name_2), singleLine = true, maxLength = FieldLimit.NAME, error = Validate.name(text))
+                    PhoneField(phone, { phone = it })
                 }
             },
             confirmButton = {
@@ -366,7 +374,7 @@ fun ProductEditScreen(productId: Long, onBack: () -> Unit) {
                         // pick the new supplier
                         container.db.catalog().allSuppliers().filter { it.name.equals(n.trim(), true) }.maxByOrNull { it.id }?.let { supplierId = it.id }
                     }
-                }, enabled = text.isNotBlank()) { Text(str(R.string.add)) }
+                }, enabled = Validate.name(text) == null && Validate.phone(phone) == null) { Text(str(R.string.add)) }
             },
             dismissButton = { TextButton(onClick = { newSupplier = null }) { Text(str(R.string.cancel)) } },
         )
@@ -427,9 +435,9 @@ fun ProductDetailScreen(productId: Long, nav: NavHostController) {
                 }
             }
             item {
-                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Row(Modifier.height(IntrinsicSize.Min), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     if (session.can(Perm.PURCHASES_CREATE)) DetailAction(str(R.string.add_stock), Icons.Filled.AddBox, Modifier.weight(1f)) { nav.navigate(Routes.PURCHASE) }
-                    if (session.can(Perm.TRANSFERS_CREATE)) DetailAction(str(R.string.transfer), Icons.AutoMirrored.Filled.CompareArrows, Modifier.weight(1f)) {
+                    if (session.can(Perm.TRANSFERS_CREATE)) DetailAction(str(R.string.transfer), Icons.AutoMirrored.Filled.CompareArrows, Modifier.weight(1f), premium = !session.premiumActive) {
                         if (session.premiumActive) nav.navigate(Routes.TRANSFERS) else openPaywall()
                     }
                     DetailAction(str(R.string.history), Icons.Filled.History, Modifier.weight(1f)) {
@@ -464,12 +472,12 @@ fun ProductDetailScreen(productId: Long, nav: NavHostController) {
                 Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(str(R.string.enter_the_quantity_you_physically_counted),
                         style = MaterialTheme.typography.bodySmall)
-                    NumberField(value, { value = it }, str(R.string.counted_quantity), Modifier.fillMaxWidth(), suffix = p?.unit)
-                    OutlinedTextField(note, { note = it }, label = { Text(str(R.string.reason_optional)) }, singleLine = true)
+                    NumberField(value, { value = it }, str(R.string.counted_quantity), Modifier.fillMaxWidth(), suffix = p?.unit, error = Validate.quantity(value, required = true))
+                    FormField(note, { note = it }, str(R.string.reason_optional), singleLine = true, maxLength = FieldLimit.SHORT_NOTE)
                 }
             },
             confirmButton = {
-                TextButton(onClick = {
+                TextButton(enabled = Validate.quantity(value, required = true) == null, onClick = {
                     val target = value.toDoubleOrNull() ?: return@TextButton
                     adjusting = null
                     runner.run(str(R.string.stock_updated)) { container.repo.adjust(productId, w.id, target, note) }
@@ -482,12 +490,13 @@ fun ProductDetailScreen(productId: Long, nav: NavHostController) {
 
 /** Icon-over-label button so three fit side by side on narrow screens without wrapping. */
 @Composable
-private fun DetailAction(label: String, icon: ImageVector, modifier: Modifier, onClick: () -> Unit) {
-    OutlinedButton(onClick = onClick, modifier = modifier.height(64.dp), contentPadding = PaddingValues(horizontal = 4.dp, vertical = 6.dp)) {
+private fun DetailAction(label: String, icon: ImageVector, modifier: Modifier, premium: Boolean = false, onClick: () -> Unit) {
+    OutlinedButton(onClick = onClick, modifier = modifier.fillMaxHeight().heightIn(min = 64.dp), contentPadding = PaddingValues(horizontal = 4.dp, vertical = 6.dp)) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Icon(icon, null, modifier = Modifier.size(20.dp))
             Spacer(Modifier.height(2.dp))
             Text(label, style = MaterialTheme.typography.labelMedium, maxLines = 1, softWrap = false, overflow = TextOverflow.Ellipsis)
+            if (premium) { Spacer(Modifier.height(4.dp)); PremiumChip() }
         }
     }
 }

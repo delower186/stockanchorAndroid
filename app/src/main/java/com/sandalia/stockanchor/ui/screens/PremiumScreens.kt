@@ -2,6 +2,11 @@ package com.sandalia.stockanchor.ui.screens
 
 import com.sandalia.stockanchor.util.plural
 import com.sandalia.stockanchor.R
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.foundation.text.KeyboardOptions
+import com.sandalia.stockanchor.ui.components.FormField
+import com.sandalia.stockanchor.util.FieldLimit
+import com.sandalia.stockanchor.util.Validate
 import com.sandalia.stockanchor.util.str
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -159,9 +164,11 @@ fun TransfersScreen(onBack: () -> Unit) {
                             color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 6.dp))
                     }
                     Spacer(Modifier.height(8.dp))
-                    NumberField(qty, { qty = it }, str(R.string.quantity), Modifier.fillMaxWidth(), suffix = product?.unit)
+                    val qtyError = Validate.quantity(qty, required = true, aboveZero = true)
+                        ?: str(R.string.only_x_x_available_here, Fmt.qty(available ?: 0.0), product?.unit.orEmpty()).takeIf { fromId != null && (qty.toDoubleOrNull() ?: 0.0) > (available ?: 0.0) }
+                    NumberField(qty, { qty = it }, str(R.string.quantity), Modifier.fillMaxWidth(), suffix = product?.unit, error = qtyError)
                     Spacer(Modifier.height(8.dp))
-                    OutlinedTextField(note, { note = it }, label = { Text(str(R.string.note)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                    FormField(note, { note = it }, str(R.string.note), Modifier.fillMaxWidth(), singleLine = true, maxLength = FieldLimit.SHORT_NOTE)
                     Spacer(Modifier.height(12.dp))
                     Button(
                         onClick = {
@@ -171,8 +178,7 @@ fun TransfersScreen(onBack: () -> Unit) {
                                 qty = ""; note = ""
                             }
                         },
-                        enabled = product != null && fromId != null && toId != null && (qty.toDoubleOrNull() ?: 0.0) > 0 &&
-                            (qty.toDoubleOrNull() ?: 0.0) <= (available ?: 0.0) &&
+                        enabled = product != null && fromId != null && toId != null && qtyError == null &&
                             session.can(Perm.TRANSFERS_CREATE) && !runner.busy,
                         modifier = Modifier.fillMaxWidth().height(50.dp),
                     ) { Text(str(R.string.transfer_stock)) }
@@ -462,9 +468,9 @@ fun TeamScreen(onBack: () -> Unit) {
             title = { Text(if (isNew) str(R.string.add_team_member) else str(R.string.edit_x, m.name)) },
             text = {
                 Column(Modifier.heightIn(max = 480.dp).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                    OutlinedTextField(name, { name = it }, label = { Text(str(R.string.name)) }, singleLine = true)
-                    if (isNew) OutlinedTextField(email, { email = it }, label = { Text(str(R.string.email_login)) }, singleLine = true)
-                    OutlinedTextField(password, { password = it }, label = { Text(if (isNew) str(R.string.password_min_8) else str(R.string.new_password_optional)) }, singleLine = true)
+                    FormField(name, { name = it }, str(R.string.name), singleLine = true, maxLength = FieldLimit.NAME, error = Validate.name(name))
+                    if (isNew) FormField(email, { email = it }, str(R.string.email_login), singleLine = true, maxLength = FieldLimit.EMAIL, error = Validate.email(email, required = true), keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email))
+                    FormField(password, { password = it }, if (isNew) str(R.string.password_min_8) else str(R.string.new_password_optional), singleLine = true, maxLength = FieldLimit.PASSWORD, error = Validate.password(password, required = isNew))
                     DropdownField(str(R.string.role), listOf("admin", "manager", "staff"), role, { it.replaceFirstChar { c -> c.uppercase() } }, {
                         if (it != null) { role = it; perms = roles[it].orEmpty().toSet() }
                     }, Modifier.fillMaxWidth())
@@ -481,7 +487,7 @@ fun TeamScreen(onBack: () -> Unit) {
                 }
             },
             confirmButton = {
-                TextButton(enabled = name.isNotBlank() && (!isNew || (email.isNotBlank() && password.length >= 8)), onClick = {
+                TextButton(enabled = Validate.name(name) == null && (!isNew || Validate.email(email, required = true) == null) && Validate.password(password, required = isNew) == null, onClick = {
                     editing = null
                     val body = MemberRequest(name, if (isNew) email else null, password.ifBlank { null }, role, perms.toList(), active)
                     runner.run(if (isNew) str(R.string.member_added) else str(R.string.member_updated)) {
@@ -538,7 +544,7 @@ fun BackupScreen(onBack: () -> Unit) {
                     Text(str(R.string.a_snapshot_of_every_product_stock), style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant)
                     Spacer(Modifier.height(8.dp))
-                    OutlinedTextField(note, { note = it }, label = { Text(str(R.string.label_optional)) }, singleLine = true, modifier = Modifier.fillMaxWidth())
+                    FormField(note, { note = it }, str(R.string.label_optional), Modifier.fillMaxWidth(), singleLine = true, maxLength = FieldLimit.SHORT_NOTE)
                     Spacer(Modifier.height(8.dp))
                     Button(onClick = {
                         runner.run(str(R.string.backup_created)) { container.api.call { createBackup(BackupRequest(note.ifBlank { null })) }; note = ""; reload++ }

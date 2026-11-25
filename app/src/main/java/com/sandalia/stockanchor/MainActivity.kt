@@ -50,7 +50,8 @@ class MainActivity : ComponentActivity() {
 
         val container = (application as StockAnchorApp).container
 
-        if (Build.VERSION.SDK_INT >= 33 &&
+        // Once per launch: a rotation or fold recreates the activity and must not ask again.
+        if (savedInstanceState == null && Build.VERSION.SDK_INT >= 33 &&
             androidx.core.content.ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) !=
             android.content.pm.PackageManager.PERMISSION_GRANTED
         ) {
@@ -61,9 +62,13 @@ class MainActivity : ComponentActivity() {
         // Keep the cache fresh and the plan status current whenever the app comes to the foreground.
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                if (container.session.current.isCloud) {
+                val session = container.session.current
+                if (session.isCloud) {
                     runCatching { container.account.refresh() }
                     runCatching { container.sync.pull() }
+                } else if (session.loggedIn && !session.isPremium) {
+                    // Left by an older version, which kept the sign-in without a plan. Local data stays.
+                    if (runCatching { container.account.refresh() }.getOrNull() == false) container.account.discardUnpaidSession()
                 }
             }
         }

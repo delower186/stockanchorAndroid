@@ -50,16 +50,19 @@ fun ProductPickerSheet(
     warehouseId: Long?,
     showCost: Boolean,
     onlyWarehouse: Boolean = false,
+    supplierId: Long? = null,
     onPick: (ProductWithStock) -> Unit,
     onDismiss: () -> Unit,
 ) {
     val container = LocalContainer.current
     val session by container.session.state.collectAsStateWithLifecycle()
     var query by remember { mutableStateOf("") }
-    val products by remember(query, warehouseId, onlyWarehouse) {
-        container.db.catalog().products(query.trim(), null, if (onlyWarehouse) warehouseId else null, null)
+    val found by remember(query, warehouseId, onlyWarehouse, supplierId) {
+        container.db.catalog().products(query.trim(), null, if (onlyWarehouse) warehouseId else null, supplierId)
     }
         .collectAsStateWithLifecycle(emptyList())
+    // A product's home warehouse doesn't mean it is there: selling offers only what this warehouse actually holds.
+    val products = if (onlyWarehouse) found.filter { it.quantity > 0 } else found
     val stockHere by remember(warehouseId) { container.db.catalog().products("", null, warehouseId, null) }
         .collectAsStateWithLifecycle(emptyList())
     val qtyHere = remember(stockHere) { stockHere.associate { it.id to it.quantity } }
@@ -82,7 +85,12 @@ fun ProductPickerSheet(
                 }) { Icon(Icons.Filled.QrCodeScanner, str(R.string.scan_barcode)) }
             })
             if (products.isEmpty()) Text(
-                if (onlyWarehouse && query.isBlank()) str(R.string.no_products_in_this_warehouse_yet) else str(R.string.no_matches_2),
+                when {
+                    query.isNotBlank() -> str(R.string.no_matches_2)
+                    onlyWarehouse -> str(R.string.no_products_in_this_warehouse_yet)
+                    supplierId != null -> str(R.string.no_products_from_this_supplier)
+                    else -> str(R.string.no_matches_2)
+                },
                 Modifier.padding(vertical = 24.dp), color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
             LazyColumn(Modifier.fillMaxWidth()) {
